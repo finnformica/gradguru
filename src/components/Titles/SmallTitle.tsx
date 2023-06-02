@@ -7,7 +7,7 @@ type SmallTitleProps = {
 
 const SmallTitle = ({ children }: SmallTitleProps) => {
   return (
-    <Typography variant="h5" fontWeight={500}>
+    <Typography variant="h5" fontWeight={500} fontSize={28}>
       {children}
     </Typography>
   );

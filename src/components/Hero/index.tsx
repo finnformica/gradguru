@@ -5,7 +5,7 @@ import { HeroTitle, HeroSubtitle } from "./HeroTitles";
 
 const Hero = () => {
   return (
-    <Box sx={{ display: "flex", gap: 4, alignItems: "center", mt: 6 }}>
+    <Box sx={{ display: "flex", gap: 4, alignItems: "center", mt: 10 }}>
       <Box sx={{ width: "50%" }}>
         <HeroTitle>
           Empower Your Graduate Journey and Land Your Dream Job

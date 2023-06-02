@@ -14,7 +14,7 @@ const CTA = () => {
         textAlign: "center",
         margin: "auto",
         maxWidth: "500px",
-        my: 12,
+        my: 16,
       }}
     >
       <SmallTitle>
@@ -22,7 +22,7 @@ const CTA = () => {
       </SmallTitle>
       <Typography
         variant="subtitle2"
-        fontSize="0.75rem"
+        fontSize={16}
         sx={{ textTransform: "uppercase", pb: 1 }}
       >
         What's included?
