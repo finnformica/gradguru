@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 
 type ColouredContainerProps = {
   children: React.ReactNode;
+  sx?: object;
 };
 
 const ColouredContainer = ({ children, ...props }: ColouredContainerProps) => {
@@ -12,6 +13,7 @@ const ColouredContainer = ({ children, ...props }: ColouredContainerProps) => {
         borderRadius: "24px",
         padding: "2rem 4rem",
         margin: "2rem 3rem",
+        ...props.sx,
       }}
     >
       {children}
