@@ -25,8 +25,18 @@ const CTA = () => {
         <SmallerTitle sx={{ textTransform: "uppercase" }}>
           What's included?
         </SmallerTitle>
-        <Box>
-          <TextInput placeholder="Email address" />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 0.5,
+          }}
+        >
+          <TextInput
+            placeholder="Email address"
+            style={{ paddingLeft: "16px", height: "34px", width: "275px" }}
+          />
           <SquareButton borderRadius="2px 8px 8px 2px">Subscribe</SquareButton>
         </Box>
       </Box>
