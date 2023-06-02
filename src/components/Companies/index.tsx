@@ -1,3 +1,5 @@
+/* eslint react/no-unescaped-entities */
+
 import { Box, useTheme } from "@mui/material";
 
 import SmallTitle from "../Titles/SmallTitle";
