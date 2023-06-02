@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 
 type ColouredContainerProps = {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ const ColouredContainer = ({ children, ...props }: ColouredContainerProps) => {
         ...props.sx,
       }}
     >
-      {children}
+      <Container maxWidth="md">{children}</Container>
     </Box>
   );
 };

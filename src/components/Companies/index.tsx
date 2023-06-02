@@ -1,4 +1,4 @@
-import { Container, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 import SmallTitle from "../Titles/SmallTitle";
 
@@ -8,19 +8,22 @@ import Footer from "./Footer";
 const Companies = () => {
   const theme = useTheme();
   return (
-    <Container
-      maxWidth="xl"
+    <Box
       sx={{
         textAlign: "center",
-        my: 12,
+        mt: 12,
         py: 6,
         backgroundColor: theme.palette.secondary.light,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <SmallTitle>Companies we're familiar with</SmallTitle>
       <CompanyLogos />
       <Footer />
-    </Container>
+    </Box>
   );
 };
 

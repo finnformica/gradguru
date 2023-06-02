@@ -11,13 +11,13 @@ const Footer = () => {
         justifyContent: "space-around",
         pt: 6,
         pb: 2,
+        gap: 4,
       }}
     >
       <Box
         sx={{
-          width: { xs: "90%", md: "50%" },
-          pb: { xs: 4, md: 0 },
-          textAlign: "center",
+          width: { xs: "90%", md: "90%" },
+          textAlign: { xs: "center", md: "left" },
           mx: "auto",
         }}
       >
