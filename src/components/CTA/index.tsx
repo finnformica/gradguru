@@ -2,7 +2,7 @@ import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Inputs/TextInput";
 import { Box, Typography } from "@mui/material";
 
-import SmallTitle from "./Titles/SmallTitle";
+import SmallTitle from "../Titles/SmallTitle";
 
 const CTA = () => {
   return (

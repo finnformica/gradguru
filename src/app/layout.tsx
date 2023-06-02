@@ -8,7 +8,7 @@ import Header from "../components/Header";
 import GradguruThemeProvider from "@/theme";
 
 export const metadata = {
-  title: "Grad Guru",
+  title: "gradguru",
   description: "Coaching platform for graduate students.",
 };
 
