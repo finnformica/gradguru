@@ -2,6 +2,7 @@ import { Typography, useTheme } from "@mui/material";
 
 const NavbarLogo = () => {
   const theme = useTheme();
+
   return (
     <Typography
       variant="h3"

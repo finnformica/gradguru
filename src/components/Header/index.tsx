@@ -1,6 +1,6 @@
 "use client";
 
-import { AppBar, Toolbar, Box, Container, useTheme } from "@mui/material";
+import { AppBar, Toolbar, Box, Container } from "@mui/material";
 
 import SquareButton from "../Buttons/SquareButton";
 import NavLinks from "./NavLinks";
@@ -8,8 +8,6 @@ import NavbarLogo from "./NavbarLogo";
 import NavMenu from "./NavMenu";
 
 const Header = () => {
-  const theme = useTheme();
-
   return (
     <AppBar
       position="static"
