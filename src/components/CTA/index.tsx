@@ -1,8 +1,6 @@
-/* eslint react/no-unescaped-entities */
-
 import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Inputs/TextInput";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import SmallTitle from "../Titles/SmallTitle";
 import SmallerTitle from "../Titles/SmallerTitle";
