@@ -11,6 +11,7 @@ const Practice = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          py: { xs: 2, md: 6 },
         }}
       >
         <SmallTitle sx={{ textAlign: "center", pb: 4 }}>
