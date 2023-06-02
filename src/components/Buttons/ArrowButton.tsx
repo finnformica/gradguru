@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, useTheme } from "@mui/material";
 
 import StraightIcon from "@mui/icons-material/Straight";
 
@@ -13,10 +13,11 @@ const ArrowIcon = () => {
 };
 
 const ArrowButton = ({ children, href, ...props }: ArrowButtonProps) => {
+  const theme = useTheme();
   return (
     <Button
       href={href}
-      sx={{ color: "#CFA284", ...props.sx }}
+      sx={{ color: theme.palette.secondary.main, ...props.sx }}
       endIcon={<ArrowIcon />}
     >
       {children}

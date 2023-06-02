@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 type ColouredContainerProps = {
   children: React.ReactNode;
@@ -6,10 +6,11 @@ type ColouredContainerProps = {
 };
 
 const ColouredContainer = ({ children, ...props }: ColouredContainerProps) => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
-        backgroundColor: "#F3F2E7",
+        backgroundColor: theme.palette.secondary.light,
         borderRadius: "24px",
         padding: "2rem 4rem",
         margin: "2rem 3rem",
