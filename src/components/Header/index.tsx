@@ -10,72 +10,54 @@ import {
 } from "@mui/material";
 
 import SquareButton from "../Buttons/SquareButton";
-import Link from "next/link";
+import NavLink from "./NavLink";
 
 import { pages } from "../../constants";
-
-type NavLinkProps = {
-  children: React.ReactNode;
-  href: string;
-};
-
-const NavLink = ({ children, href }: NavLinkProps) => {
-  return (
-    <Link
-      href={href}
-      style={{
-        textDecoration: "none",
-        color: href === "/" ? "black" : "grey",
-      }}
-    >
-      {children}
-    </Link>
-  );
-};
 
 const Header = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Container maxWidth="xl">
       <AppBar
         position="static"
-        sx={{ background: "transparent", boxShadow: "none", p: 2 }}
+        sx={{
+          background: "transparent",
+          boxShadow: "none",
+          py: 2,
+          m: 0,
+        }}
       >
-        <Container maxWidth="xl">
-          <Toolbar sx={{ m: 0, backgroundColor: "#FFF" }}>
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: "flex",
-                alignItems: "center",
-              }}
+        <Toolbar sx={{ backgroundColor: "#FFF", px: 0 }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="h3"
+              fontWeight={400}
+              sx={{ color: theme.palette.primary.main, letterSpacing: 2 }}
             >
-              <Typography
-                variant="h3"
-                fontWeight={400}
-                sx={{ color: theme.palette.primary.main, letterSpacing: 2 }}
-              >
-                gradguru
-              </Typography>
+              gradguru
+            </Typography>
 
-              <Box
-                sx={{ display: "flex", flexDirection: "row", gap: 4, pl: 4 }}
-              >
-                {pages.map((page, key: number) => (
-                  <NavLink href={page.route} key={key}>
-                    <Typography variant="body1" fontWeight={500}>
-                      {page.name}
-                    </Typography>
-                  </NavLink>
-                ))}
-              </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 4, pl: 4 }}>
+              {pages.map((page, key: number) => (
+                <NavLink href={page.route} key={key}>
+                  <Typography variant="body1" fontWeight={500}>
+                    {page.name}
+                  </Typography>
+                </NavLink>
+              ))}
             </Box>
-            <SquareButton>Log in</SquareButton>
-          </Toolbar>
-        </Container>
+          </Box>
+          <SquareButton>Log in</SquareButton>
+        </Toolbar>
       </AppBar>
-    </Box>
+    </Container>
   );
 };
 
