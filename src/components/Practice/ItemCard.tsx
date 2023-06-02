@@ -13,7 +13,7 @@ type ItemProps = {
 
 const ItemCard = ({ title, description, src }: ItemProps) => {
   return (
-    <Card sx={{ width: 300, height: 300 }}>
+    <Card sx={{ width: 300, height: 300, borderRadius: 4 }} elevation={4}>
       <Image src={src} alt={`${title} image`} />
       <Typography variant="h5" fontWeight={500}>
         {title}
