@@ -1,18 +1,19 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import Image from "next/image";
 
 import { HeroTitle, HeroSubtitle } from "./HeroTitles";
 
 const Hero = () => {
-  const theme = useTheme();
   return (
-    <Box sx={{ display: "flex", gap: 4, alignItems: "center", mt: 4 }}>
+    <Box sx={{ display: "flex", gap: 4, alignItems: "center", mt: 6 }}>
       <Box sx={{ width: "50%" }}>
-        <HeroTitle text="Empower Your Graduate Journey and Land Your Dream Job" />
-        <HeroSubtitle
-          text="Unleash your potential with comprehensive coaching and resources to
-          secure the perfect graduate job after university."
-        />
+        <HeroTitle>
+          Empower Your Graduate Journey and Land Your Dream Job
+        </HeroTitle>
+        <HeroSubtitle>
+          Unleash your potential with comprehensive coaching and resources to
+          secure the perfect graduate job after university.
+        </HeroSubtitle>
       </Box>
       <Box>
         <Image

@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 
 type TitleProps = {
-  text: string;
+  children: string;
 };
 
-const HeroTitle = ({ text }: TitleProps) => {
+const HeroTitle = ({ children }: TitleProps) => {
   return (
     <Typography
       variant="h1"
@@ -12,13 +12,13 @@ const HeroTitle = ({ text }: TitleProps) => {
       fontWeight={500}
       sx={{ pb: 2, letterSpacing: "1px" }}
     >
-      {text}
+      {children}
     </Typography>
   );
 };
 
-const HeroSubtitle = ({ text }: TitleProps) => {
-  return <Typography variant="body1">{text}</Typography>;
+const HeroSubtitle = ({ children }: TitleProps) => {
+  return <Typography variant="body1">{children}</Typography>;
 };
 
 export { HeroTitle, HeroSubtitle };

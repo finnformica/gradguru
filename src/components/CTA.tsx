@@ -1,7 +1,8 @@
 import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Inputs/TextInput";
 import { Box, Typography } from "@mui/material";
-import React from "react";
+
+import SmallTitle from "./Titles/SmallTitle";
 
 const CTA = () => {
   return (
@@ -13,12 +14,12 @@ const CTA = () => {
         textAlign: "center",
         margin: "auto",
         maxWidth: "500px",
-        mt: 12,
+        my: 12,
       }}
     >
-      <Typography variant="h5" fontWeight={500}>
+      <SmallTitle>
         Sign up to the gradguru email list to get notified when we launch!
-      </Typography>
+      </SmallTitle>
       <Typography
         variant="subtitle2"
         fontSize="0.75rem"
