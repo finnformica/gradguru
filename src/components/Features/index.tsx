@@ -6,7 +6,7 @@ import Footer from "./Footer";
 
 const Features = () => {
   return (
-    <ColouredContainer>
+    <ColouredContainer sx={{ mb: 8 }}>
       <Title />
       <Content />
       <Footer />
