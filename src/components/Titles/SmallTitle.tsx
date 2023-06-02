@@ -3,11 +3,12 @@ import React from "react";
 
 type SmallTitleProps = {
   children: React.ReactNode;
+  sx?: any;
 };
 
-const SmallTitle = ({ children }: SmallTitleProps) => {
+const SmallTitle = ({ children, ...props }: SmallTitleProps) => {
   return (
-    <Typography variant="h5" fontWeight={500} fontSize={28}>
+    <Typography {...props} variant="h5" fontWeight={500} fontSize={28}>
       {children}
     </Typography>
   );
