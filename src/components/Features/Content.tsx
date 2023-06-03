@@ -20,7 +20,7 @@ const Content = () => {
           key={key}
           title={feature.title}
           description={feature.description}
-          src={""}
+          src={feature.src}
         />
       ))}
     </Box>

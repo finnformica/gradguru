@@ -23,7 +23,7 @@ const Item = ({ title, description, src }: ItemProps) => {
           alignItems: "center",
         }}
       >
-        <Image src={src} width={100} height={100} alt="Feature icon" />
+        <Image src={src} width={100} height={100} alt={`${title} icon`} />
       </Box>
       <Box>
         <Typography variant="h6" fontWeight={500}>
