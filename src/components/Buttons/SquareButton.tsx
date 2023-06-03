@@ -3,9 +3,14 @@ import { Button, useTheme } from "@mui/material";
 type SquareButtonProps = {
   children: React.ReactNode;
   borderRadius?: string;
+  sx?: object;
 };
 
-const SquareButton = ({ children, borderRadius }: SquareButtonProps) => {
+const SquareButton = ({
+  children,
+  borderRadius,
+  ...props
+}: SquareButtonProps) => {
   const theme = useTheme();
 
   return (
@@ -22,6 +27,7 @@ const SquareButton = ({ children, borderRadius }: SquareButtonProps) => {
           backgroundColor: theme.palette.primary.main,
           opacity: 0.8,
         },
+        ...props.sx,
       }}
     >
       {children}
