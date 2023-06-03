@@ -9,7 +9,6 @@ const BackgroundLogo = () => {
         position: "absolute",
         overflow: "hidden",
         height: "100%",
-        // backgroundColor: "red",
         top: 0,
         right: -80,
       }}
