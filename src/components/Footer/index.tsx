@@ -1,15 +1,19 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
+
+import MobileFooter from "./MobileFooter";
+import NormalFooter from "./NormalFooter";
 
 const Footer = () => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
-      sx={{ backgroundColor: theme.palette.secondary.dark, minHeight: "20vh" }}
+      sx={{
+        backgroundColor: theme.palette.secondary.dark,
+      }}
     >
-      <Typography
-        variant="body2"
-        sx={{ maxWidth: "60%", color: "#FFF" }}
-      ></Typography>
+      {!isMobile ? <NormalFooter /> : <MobileFooter />}
     </Box>
   );
 };

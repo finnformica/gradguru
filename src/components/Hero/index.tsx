@@ -6,8 +6,17 @@ import { HeroTitle, HeroSubtitle } from "./HeroTitles";
 const Hero = () => {
   return (
     <Container maxWidth="xl">
-      <Box sx={{ display: "flex", gap: 4, alignItems: "center", mt: 10 }}>
-        <Box sx={{ width: "50%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          gap: 4,
+          alignItems: "center",
+          mt: { xs: 4, md: 10 },
+        }}
+      >
+        <Box sx={{ width: { xs: "90%", md: "30%" } }}>
           <HeroTitle>
             Empower Your Graduate Journey and Land Your Dream Job
           </HeroTitle>
@@ -16,16 +25,22 @@ const Hero = () => {
             secure the perfect graduate job after university.
           </HeroSubtitle>
         </Box>
-        <Box>
+        <Box
+          sx={{
+            border: "1.5px solid #CFA284",
+            borderRadius: "8px",
+            mt: { xs: 4, md: 0 },
+          }}
+        >
           <Image
             src="/imgs/hero.png"
             alt="Graduate coaching example"
             width={500}
             height={300}
             style={{
-              objectFit: "contain",
+              objectFit: "cover",
               borderRadius: "8px",
-              // border: "2px solid #CFA284",
+              transform: "translateY(-10px) translateX(16px) scale(1.015)",
             }}
             priority
           />

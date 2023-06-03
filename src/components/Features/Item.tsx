@@ -13,17 +13,17 @@ const Item = ({ title, description, src }: ItemProps) => {
       sx={{
         display: "flex",
         flexDirection: { xs: "row", md: "column" },
-        gap: 1,
+        gap: { xs: 3, md: 0 },
       }}
     >
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
           alignItems: "center",
+          transform: { xs: "none", md: "translateX(-8px)" },
         }}
       >
-        <Image src={src} width={100} height={100} alt="Feature icon" />
+        <Image src={src} width={80} height={90} alt={`${title} icon`} />
       </Box>
       <Box>
         <Typography variant="h6" fontWeight={500}>

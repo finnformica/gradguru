@@ -10,7 +10,7 @@ const Content = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
-        gap: 2,
+        gap: 4,
         justifyContent: "center",
         pt: 6,
       }}
@@ -20,7 +20,7 @@ const Content = () => {
           key={key}
           title={feature.title}
           description={feature.description}
-          src={""}
+          src={feature.src}
         />
       ))}
     </Box>

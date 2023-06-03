@@ -12,8 +12,8 @@ const ColouredContainer = ({ children, ...props }: ColouredContainerProps) => {
       sx={{
         backgroundColor: theme.palette.secondary.light,
         borderRadius: "24px",
-        padding: "2rem 4rem",
-        margin: "2rem 3rem",
+        p: { xs: "2rem", md: "2rem 4rem" },
+        m: { xs: "2rem 0", sm: "2rem 3rem" },
         ...props.sx,
       }}
     >
