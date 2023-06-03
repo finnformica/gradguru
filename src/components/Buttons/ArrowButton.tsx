@@ -1,11 +1,12 @@
-import { Button, useTheme } from "@mui/material";
+import Link from "next/link";
+import { Typography, useTheme } from "@mui/material";
 
 import StraightIcon from "@mui/icons-material/Straight";
 
 type ArrowButtonProps = {
   children: React.ReactNode;
   href: string;
-  sx?: object;
+  style?: object;
 };
 
 const ArrowIcon = () => {
@@ -15,13 +16,21 @@ const ArrowIcon = () => {
 const ArrowButton = ({ children, href, ...props }: ArrowButtonProps) => {
   const theme = useTheme();
   return (
-    <Button
+    <Link
       href={href}
-      sx={{ color: theme.palette.secondary.main, ...props.sx }}
-      endIcon={<ArrowIcon />}
+      style={{
+        color: theme.palette.secondary.main,
+        ...props.style,
+        display: "flex",
+        alignItems: "center",
+        textDecoration: "none",
+      }}
     >
-      {children}
-    </Button>
+      <Typography variant="body1" sx={{ pr: 1, fontSize: 12, fontWeight: 500 }}>
+        {children}
+      </Typography>
+      <ArrowIcon />
+    </Link>
   );
 };
 
