@@ -24,7 +24,6 @@ const Practice = () => {
             justifyContent: "center",
             gap: { xs: 4, md: 2, lg: 8 },
             alignItems: "center",
-            textAlign: { xs: "center", md: "left" },
           }}
         >
           {practice.map((item, key) => (
