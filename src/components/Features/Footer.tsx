@@ -29,7 +29,9 @@ const Footer = () => {
           practice drills before you enroll.
         </Typography>
       </Box>
-      <SquareButton>Explore courses</SquareButton>
+      <SquareButton sx={{ maxWidth: 400, mx: "auto" }}>
+        Explore courses
+      </SquareButton>
     </Box>
   );
 };
