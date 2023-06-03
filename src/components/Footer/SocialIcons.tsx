@@ -7,8 +7,9 @@ const SocialIcons = () => {
 
   return (
     <Box sx={{ display: "flex", gap: 1 }}>
-      {socials.map((social) => (
+      {socials.map((social, key) => (
         <a
+          key={key}
           href={social.link}
           style={{
             textDecoration: "none",

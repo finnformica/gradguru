@@ -32,8 +32,8 @@ const FooterLinks = ({ title, links }: FooterLinksProps) => {
           pt: { xs: 2, sm: 4 },
         }}
       >
-        {links.map((link) => (
-          <Link href={link.href} style={{ textDecoration: "none" }}>
+        {links.map((link, key) => (
+          <Link key={key} href={link.href} style={{ textDecoration: "none" }}>
             <Typography
               variant="body2"
               sx={{
