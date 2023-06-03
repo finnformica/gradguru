@@ -1,20 +1,19 @@
-import { Typography, useTheme } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
+import Image from "next/image";
 
 const NavbarLogo = () => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Typography
-      variant="h3"
-      fontWeight={400}
-      sx={{
-        color: theme.palette.primary.main,
-        letterSpacing: 2,
-        mx: { xs: "auto", md: 0 },
-      }}
-    >
-      gradguru
-    </Typography>
+    <Image
+      src="/big-logo.png"
+      alt="Graduate coaching logo"
+      style={{ objectFit: "cover", margin: isMobile ? "0 auto" : "0" }}
+      width={310}
+      height={70}
+      priority
+    />
   );
 };
 
