@@ -13,7 +13,11 @@ const FooterLinks = ({ title, links }: FooterLinksProps) => {
   const theme = useTheme();
 
   return (
-    <Box>
+    <Box
+      sx={{
+        zIndex: 1,
+      }}
+    >
       <Typography
         variant="body2"
         sx={{
@@ -41,6 +45,7 @@ const FooterLinks = ({ title, links }: FooterLinksProps) => {
                 opacity: "60%",
                 "&:hover": {
                   opacity: "100%",
+                  color: theme.palette.secondary.light,
                 },
               }}
             >

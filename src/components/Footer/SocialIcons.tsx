@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
 
 import { socials } from "@/constants";
@@ -7,25 +8,33 @@ const SocialIcons = () => {
 
   return (
     <Box sx={{ display: "flex", gap: 1 }}>
-      {socials.map((social, key) => (
-        <a
-          key={key}
-          href={social.link}
-          style={{
-            textDecoration: "none",
-            color: theme.palette.secondary.main,
-          }}
-        >
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
+      {socials.map((social, key) => {
+        const [isHover, setIsHover] = useState(false);
+
+        return (
+          <a
+            key={key}
+            href={social.link}
+            style={{
+              textDecoration: "none",
+              color: isHover
+                ? theme.palette.secondary.light
+                : theme.palette.secondary.main,
+            }}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
           >
-            {social.icon}
-          </IconButton>
-        </a>
-      ))}
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+            >
+              {social.icon}
+            </IconButton>
+          </a>
+        );
+      })}
     </Box>
   );
 };
