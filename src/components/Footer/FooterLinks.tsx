@@ -24,7 +24,14 @@ const FooterLinks = ({ title, links }: FooterLinksProps) => {
       >
         {title}
       </Typography>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2, pt: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          pt: { xs: 2, sm: 4 },
+        }}
+      >
         {links.map((link) => (
           <Link href={link.href} style={{ textDecoration: "none" }}>
             <Typography
