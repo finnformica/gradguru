@@ -1,7 +1,8 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
 import FooterLinks from "./FooterLinks";
 import CompanyInfo from "./CompanyInfo";
+import BackgroundLogo from "./BackgroundLogo";
 
 import { companyLinks, productLinks } from "@/constants";
 
@@ -14,13 +15,14 @@ const NormalFooter = () => {
         justifyContent: "space-around",
         alignItems: "center",
         py: 12,
+        position: "relative",
       }}
     >
-      {/* <BackgroundLogo /> */}
-
       <CompanyInfo />
       <FooterLinks title="Company" links={companyLinks} />
       <FooterLinks title="Products" links={productLinks} />
+
+      <BackgroundLogo />
     </Container>
   );
 };
