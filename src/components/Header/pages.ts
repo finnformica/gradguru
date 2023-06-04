@@ -7,18 +7,18 @@ export const pages = [
     name: "Courses",
     route: "/courses",
   },
-  {
-    name: "Practice",
-    route: "/practice",
-  },
-  {
-    name: "Coaching",
-    route: "/coaching",
-  },
-  {
-    name: "Resources",
-    route: "/resources",
-  },
+  // {
+  //   name: "Practice",
+  //   route: "/practice",
+  // },
+  // {
+  //   name: "Coaching",
+  //   route: "/coaching",
+  // },
+  // {
+  //   name: "Resources",
+  //   route: "/resources",
+  // },
 ];
 
 export default pages;
