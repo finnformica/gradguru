@@ -14,6 +14,7 @@ const Item = ({ title, description, src }: ItemProps) => {
         display: "flex",
         flexDirection: { xs: "row", md: "column" },
         gap: { xs: 3, md: 0 },
+        maxWidth: { xs: "none", md: "33%" },
       }}
     >
       <Box
