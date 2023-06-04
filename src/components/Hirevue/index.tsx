@@ -1,12 +1,18 @@
+import { useState } from "react";
 import { Box, Container } from "@mui/material";
+
+import MUIModal from "../Global/UdemyModal";
 import SmallTitle from "../Titles/SmallTitle";
 
 import ItemCard from "./ItemCard";
 import cards from "./cards";
 
 const Hirevue = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <Container maxWidth="xl">
+      <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
       <Box
         sx={{
           display: "flex",
@@ -14,7 +20,9 @@ const Hirevue = () => {
           py: { xs: 2, md: 6 },
         }}
       >
-        <SmallTitle sx={{ textAlign: "center", pb: 4 }}>Hirevue</SmallTitle>
+        <SmallTitle sx={{ textAlign: "center", pb: 4 }}>
+          Hirevue coaching
+        </SmallTitle>
         <Box
           sx={{
             display: "flex",
@@ -25,7 +33,11 @@ const Hirevue = () => {
           }}
         >
           {cards.map((item, key) => (
-            <ItemCard key={key} {...item} />
+            <ItemCard
+              key={key}
+              {...item}
+              onClick={() => setIsModalOpen(true)}
+            />
           ))}
         </Box>
       </Box>

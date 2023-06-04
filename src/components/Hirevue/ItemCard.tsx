@@ -9,9 +9,10 @@ type ItemProps = {
   content: string[];
   src: string;
   key: number;
+  onClick: () => void;
 };
 
-const ItemCard = ({ title, content, src }: ItemProps) => {
+const ItemCard = ({ title, content, src, onClick }: ItemProps) => {
   return (
     <Card sx={{ width: 300, borderRadius: 4 }} elevation={2}>
       <Image
@@ -30,7 +31,7 @@ const ItemCard = ({ title, content, src }: ItemProps) => {
           icon={{ transform: "translateY(3px)" }}
           container={{ gap: 2 }}
         />
-        <SquareButton>Enroll now</SquareButton>
+        <SquareButton onClick={onClick}>Enroll now</SquareButton>
       </Box>
     </Card>
   );
