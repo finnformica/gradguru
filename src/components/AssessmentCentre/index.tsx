@@ -10,7 +10,7 @@ import points from "./points";
 
 const AssessmentCentre = () => {
   return (
-    <FullWidthContainer>
+    <FullWidthContainer sx={{ mt: 12 }}>
       <SmallTitle>Assessment centre</SmallTitle>
       <Container
         maxWidth="lg"

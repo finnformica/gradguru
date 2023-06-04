@@ -15,7 +15,7 @@ const Header = () => {
         background: "transparent",
         boxShadow: "none",
         py: 2,
-        m: 0,
+        mb: 4,
       }}
     >
       <Container maxWidth="xl">
