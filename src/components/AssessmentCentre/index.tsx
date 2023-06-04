@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, useTheme, useMediaQuery } from "@mui/material";
 import React from "react";
 
 import FullWidthContainer from "../Containers/FullWidthContainer";
@@ -9,6 +9,9 @@ import BulletPoints from "../Global/BulletPoints";
 import points from "./points";
 
 const AssessmentCentre = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <FullWidthContainer sx={{ mt: 12 }}>
       <SmallTitle>Assessment centre</SmallTitle>
@@ -26,8 +29,8 @@ const AssessmentCentre = () => {
         <Image
           src="/imgs/learn-more/assessment-centre.jpeg"
           alt="Assessment centre image"
-          width={500}
-          height={350}
+          width={!isMobile ? 500 : 350}
+          height={!isMobile ? 350 : 200}
           style={{ objectFit: "cover", borderRadius: 4 }}
         />
         <BulletPoints points={points} container={{ gap: 1 }} />
