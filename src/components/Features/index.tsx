@@ -4,7 +4,7 @@ import ColouredContainer from "@/components/Containers/ColouredContainer";
 
 import ContainerTitle from "../Titles/ContainerTitle";
 import Footer from "./Footer";
-import FeaturesList from "../FeaturesList";
+import FeaturesList from "../Global/FeaturesList";
 import features from "./features";
 
 const Features = () => {

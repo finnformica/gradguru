@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 import ContainerTitle from "@/components/Titles/ContainerTitle";
 import ColouredContainer from "@/components/Containers/ColouredContainer";
 
-import FeaturesList from "@/components/FeaturesList";
+import FeaturesList from "@/components/Global/FeaturesList";
 import features from "./features";
 import Footer from "./Footer";
 
