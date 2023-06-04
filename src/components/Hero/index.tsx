@@ -1,10 +1,13 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 
 import { HeroSubtitle } from "./HeroTitles";
 import BigTitle from "../Titles/BigTitle";
 
 const Hero = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Container maxWidth="xl">
       <Box
@@ -36,8 +39,8 @@ const Hero = () => {
           <Image
             src="/imgs/hero.png"
             alt="Graduate coaching example"
-            width={500}
-            height={300}
+            width={!isMobile ? 500 : 300}
+            height={!isMobile ? 300 : 200}
             style={{
               objectFit: "cover",
               borderRadius: "8px",

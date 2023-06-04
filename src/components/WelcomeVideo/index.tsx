@@ -14,6 +14,7 @@ import BigTitle from "../Titles/BigTitle";
 const WelcomeVideo = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Container
@@ -49,8 +50,8 @@ const WelcomeVideo = () => {
           <Image
             src="/imgs/learn-more/welcome-video.png"
             alt="gradguru welcome video"
-            width={450}
-            height={250}
+            width={!isMobile ? 450 : 300}
+            height={!isMobile ? 250 : 170}
             style={{
               objectFit: "cover",
               borderRadius: "8px",

@@ -4,14 +4,15 @@ import Link from "next/link";
 
 const NavbarLogo = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Link
       href="/"
       style={{
-        margin: isMobile ? "0 auto" : "0",
-        paddingRight: isMobile ? "0" : "1rem",
+        margin: isMediumScreen ? "0 auto" : "0",
+        paddingRight: isMediumScreen ? "0" : "1rem",
       }}
     >
       <Image
@@ -20,8 +21,8 @@ const NavbarLogo = () => {
         style={{
           objectFit: "cover",
         }}
-        width={310}
-        height={70}
+        width={!isMobile ? 310 : 150}
+        height={!isMobile ? 70 : 32}
         priority
       />
     </Link>
