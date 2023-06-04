@@ -1,6 +1,7 @@
 "use client";
 
 import AptitudeTests from "@/components/AptitudeTests";
+import AssessmentCentre from "@/components/AssessmentCentre";
 import Hirevue from "@/components/Hirevue";
 import WelcomeVideo from "@/components/WelcomeVideo";
 
@@ -10,6 +11,7 @@ const LearnMore = () => {
       <WelcomeVideo />
       <AptitudeTests />
       <Hirevue />
+      <AssessmentCentre />
     </>
   );
 };
