@@ -1,6 +1,6 @@
 import { Container, Grid } from "@mui/material";
 
-import { companies } from "@/constants";
+import companies from "./companies";
 import Image from "next/image";
 
 const CompanyLogos = () => {

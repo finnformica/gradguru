@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import SmallTitle from "../Titles/SmallTitle";
 
-import { practice } from "@/constants";
+import practice from "./practice";
 import ItemCard from "./ItemCard";
 
 const Practice = () => {

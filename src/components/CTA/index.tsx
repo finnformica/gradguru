@@ -1,5 +1,5 @@
 import SquareButton from "@/components/Buttons/SquareButton";
-import TextInput from "@/components/Inputs/TextInput";
+import TextInput from "@/components/Global/TextInput";
 import { Box, Container } from "@mui/material";
 
 import SmallTitle from "../Titles/SmallTitle";

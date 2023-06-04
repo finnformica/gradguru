@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
 
-import { socials } from "@/constants";
+import socials from "./socials";
 
 type SocialIconProps = {
   social: {

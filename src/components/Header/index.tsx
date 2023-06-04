@@ -15,7 +15,7 @@ const Header = () => {
         background: "transparent",
         boxShadow: "none",
         py: 2,
-        m: 0,
+        mb: 4,
       }}
     >
       <Container maxWidth="xl">
@@ -32,7 +32,7 @@ const Header = () => {
 
             <NavLinks />
           </Box>
-          <SquareButton>Log in</SquareButton>
+          <SquareButton>Sign up</SquareButton>
         </Toolbar>
       </Container>
     </AppBar>

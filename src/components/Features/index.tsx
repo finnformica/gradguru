@@ -2,16 +2,20 @@ import { Container } from "@mui/material";
 
 import ColouredContainer from "@/components/Containers/ColouredContainer";
 
-import Title from "./Title";
-import Content from "./Content";
+import ContainerTitle from "../Titles/ContainerTitle";
 import Footer from "./Footer";
+import FeaturesList from "../Global/FeaturesList";
+import features from "./features";
 
 const Features = () => {
   return (
     <Container maxWidth="xl">
       <ColouredContainer sx={{ mb: 8 }}>
-        <Title />
-        <Content />
+        <ContainerTitle title="What we do" maxWidth="350px">
+          All the online resources you need for success in your job
+          applications.
+        </ContainerTitle>
+        <FeaturesList features={features} />
         <Footer />
       </ColouredContainer>
     </Container>

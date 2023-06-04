@@ -21,7 +21,7 @@ const ItemCard = ({ title, description, src }: ItemProps) => {
         height={150}
         style={{ objectFit: "cover" }}
       />
-      <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2.5 }}>
+      <Box sx={{ p: 2.5, display: "flex", flexDirection: "column", gap: 2.5 }}>
         <Typography variant="h5" fontWeight={500}>
           {title}
         </Typography>

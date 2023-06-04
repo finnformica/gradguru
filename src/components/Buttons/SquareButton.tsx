@@ -4,6 +4,8 @@ type SquareButtonProps = {
   children: React.ReactNode;
   borderRadius?: string;
   sx?: object;
+  href?: string;
+  onClick?: () => void;
 };
 
 const SquareButton = ({
@@ -15,6 +17,8 @@ const SquareButton = ({
 
   return (
     <Button
+      onClick={props.onClick}
+      href={props.href}
       sx={{
         backgroundColor: theme.palette.primary.main,
         borderRadius: borderRadius ? borderRadius : theme.shape.borderRadius,
