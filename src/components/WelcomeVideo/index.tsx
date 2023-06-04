@@ -1,11 +1,20 @@
 "use client";
 
-import { Container, Box, Typography } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import BigTitle from "../Titles/BigTitle";
 
 const WelcomeVideo = () => {
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <Container
       maxWidth="lg"
@@ -24,17 +33,31 @@ const WelcomeVideo = () => {
           mx: "auto",
         }}
       >
-        <Image
-          src="/imgs/learn-more/welcome-video.png"
-          alt="gradguru welcome video"
-          width={700}
-          height={400}
-          style={{
-            objectFit: "cover",
-            borderRadius: "8px",
-            transform: "translateY(-10px) translateX(16px) scale(1.015)",
-          }}
-        />
+        {!isMediumScreen ? (
+          <Image
+            src="/imgs/learn-more/welcome-video.png"
+            alt="gradguru welcome video"
+            width={700}
+            height={400}
+            style={{
+              objectFit: "cover",
+              borderRadius: "8px",
+              transform: "translateY(-10px) translateX(16px) scale(1.015)",
+            }}
+          />
+        ) : (
+          <Image
+            src="/imgs/learn-more/welcome-video.png"
+            alt="gradguru welcome video"
+            width={350}
+            height={200}
+            style={{
+              objectFit: "cover",
+              borderRadius: "8px",
+              transform: "translateY(-10px) translateX(16px) scale(1.015)",
+            }}
+          />
+        )}
       </Box>
       <BigTitle sx={{ pt: 4 }}>Welcome to your Free Resume Course</BigTitle>
       <Typography
