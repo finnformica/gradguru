@@ -1,7 +1,13 @@
-import React from "react";
+import AptitudeTests from "@/components/AptitudeTests";
+import WelcomeVideo from "@/components/WelcomeVideo";
 
 const LearnMore = () => {
-  return <div>LearnMore</div>;
+  return (
+    <>
+      <WelcomeVideo />
+      <AptitudeTests />
+    </>
+  );
 };
 
 export default LearnMore;
