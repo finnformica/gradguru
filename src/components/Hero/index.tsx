@@ -1,7 +1,8 @@
 import { Box, Container } from "@mui/material";
 import Image from "next/image";
 
-import { HeroTitle, HeroSubtitle } from "./HeroTitles";
+import { HeroSubtitle } from "./HeroTitles";
+import BigTitle from "../Titles/BigTitle";
 
 const Hero = () => {
   return (
@@ -17,9 +18,9 @@ const Hero = () => {
         }}
       >
         <Box sx={{ width: { xs: "90%", md: "30%" } }}>
-          <HeroTitle>
+          <BigTitle>
             Empower Your Graduate Journey and Land Your Dream Job
-          </HeroTitle>
+          </BigTitle>
           <HeroSubtitle>
             Unleash your potential with comprehensive coaching and resources to
             secure the perfect graduate job after university.
