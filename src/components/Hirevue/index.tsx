@@ -14,9 +14,7 @@ const Hirevue = () => {
           py: { xs: 2, md: 6 },
         }}
       >
-        <SmallTitle sx={{ textAlign: "center", pb: 4 }}>
-          Practice drills for every stage of the process
-        </SmallTitle>
+        <SmallTitle sx={{ textAlign: "center", pb: 4 }}>Hirevue</SmallTitle>
         <Box
           sx={{
             display: "flex",
