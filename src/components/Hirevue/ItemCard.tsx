@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Box, Card, Typography } from "@mui/material";
 
 import SquareButton from "../Buttons/SquareButton";
-import BulletPoints from "./BulletPoints";
+import BulletPoints from "../Global/BulletPoints";
 
 type ItemProps = {
   title: string;
@@ -25,7 +25,11 @@ const ItemCard = ({ title, content, src }: ItemProps) => {
         <Typography variant="h5" fontWeight={500}>
           {title}
         </Typography>
-        <BulletPoints points={content} />
+        <BulletPoints
+          points={content}
+          icon={{ transform: "translateY(3px)" }}
+          container={{ gap: 2 }}
+        />
         <SquareButton>Enroll now</SquareButton>
       </Box>
     </Card>
