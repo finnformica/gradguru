@@ -32,7 +32,7 @@ const Header = () => {
 
             <NavLinks />
           </Box>
-          <SquareButton>Log in</SquareButton>
+          <SquareButton>Sign up</SquareButton>
         </Toolbar>
       </Container>
     </AppBar>
