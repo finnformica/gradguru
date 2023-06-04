@@ -1,21 +1,25 @@
 import { Box } from "@mui/material";
 
 type FullWidthContainerProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  sx?: object;
 };
 
-const FullWidthContainer = ({ children }: FullWidthContainerProps) => {
+const FullWidthContainer = ({
+  children,
+  ...props
+}: FullWidthContainerProps) => {
   return (
     <Box
       sx={{
         textAlign: "center",
-        mt: 12,
         py: 6,
         backgroundColor: (theme) => theme.palette.secondary.light,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        ...props.sx,
       }}
     >
       {children}
