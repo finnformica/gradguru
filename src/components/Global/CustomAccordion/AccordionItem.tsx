@@ -10,11 +10,24 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 type AccordionItemProps = {
   title: string;
   description: string;
+  num: number;
+  expanded: false | string;
+  onChange: (
+    panel: string
+  ) => (event: React.SyntheticEvent, isExpanded: boolean) => void;
 };
 
-const AccordionItem = ({ title, description }: AccordionItemProps) => {
+const AccordionItem = ({
+  title,
+  description,
+  num,
+  expanded,
+  onChange,
+}: AccordionItemProps) => {
   return (
     <Accordion
+      onChange={onChange(`panel${num}`)}
+      expanded={expanded === `panel${num}`}
       sx={{
         "&.Mui-expanded": {
           margin: "auto",
@@ -29,6 +42,8 @@ const AccordionItem = ({ title, description }: AccordionItemProps) => {
         sx={{
           borderShadow: "none",
         }}
+        aria-controls={`panel${num}bh-content`}
+        id={`panel${num}bh-header`}
       >
         <Typography fontWeight={500}>{title}</Typography>
       </AccordionSummary>

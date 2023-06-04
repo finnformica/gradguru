@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 
 import ColouredContainer from "../Containers/ColouredContainer";
 import SmallTitle from "../Titles/SmallTitle";
-import AccordionItem from "../Global/AccordionItem";
+import CustomAccordion from "../Global/CustomAccordion";
 
 import questions from "./questions";
 
@@ -23,11 +23,7 @@ const QuestionsAccordion = () => {
         <SmallTitle sx={{ textAlign: "center", pb: 2 }}>
           Frequently asked questions
         </SmallTitle>
-        <Container maxWidth="sm" sx={{ pt: 2 }}>
-          {questions.map((item, key) => (
-            <AccordionItem key={key} {...item} />
-          ))}
-        </Container>
+        <CustomAccordion items={questions} />
       </ColouredContainer>
     </Container>
   );
