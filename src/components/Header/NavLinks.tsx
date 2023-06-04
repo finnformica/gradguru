@@ -10,7 +10,7 @@ const NavLinks = () => {
       sx={{
         display: { xs: "none", md: "flex" },
         flexDirection: "row",
-        gap: 4,
+        gap: { xs: 2, lg: 6 },
         pl: 4,
       }}
     >
