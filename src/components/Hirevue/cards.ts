@@ -15,7 +15,7 @@ const cards = [
       "Practice with over 100+ example questions.",
       "Reflect on your responses against our model answers.",
     ],
-    src: "/imgs/learn-more/typing.jpeg",
+    src: "/imgs/learn-more/high-five.jpeg",
   },
   {
     title: "Job specific questions",
@@ -24,7 +24,7 @@ const cards = [
       "Practice with over 100+ example questions.",
       "Compare responses with our model answers.",
     ],
-    src: "/imgs/learn-more/typing.jpeg",
+    src: "/imgs/learn-more/interview.jpeg",
   },
 ];
 
