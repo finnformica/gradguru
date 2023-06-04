@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Box, Menu, MenuItem, Typography, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { pages } from "../../constants";
+import { pages } from "./pages";
 
 const NavMenu = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);

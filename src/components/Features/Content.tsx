@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 import Item from "./Item";
 
-import { features } from "@/constants";
+import features from "./features";
 
 const Content = () => {
   return (

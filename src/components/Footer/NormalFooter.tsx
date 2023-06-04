@@ -4,7 +4,7 @@ import FooterLinks from "./FooterLinks";
 import CompanyInfo from "./CompanyInfo";
 import BackgroundLogo from "./BackgroundLogo";
 
-import { companyLinks, productLinks } from "@/constants";
+import { companyLinks, productLinks } from "./links";
 
 const NormalFooter = () => {
   return (

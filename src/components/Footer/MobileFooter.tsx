@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 import FooterLinks from "./FooterLinks";
 
-import { companyLinks, productLinks } from "@/constants";
+import { companyLinks, productLinks } from "./links";
 import CompanyInfo from "./CompanyInfo";
 
 const MobileFooter = () => {

@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 import NavLink from "./NavLink";
 
-import { pages } from "../../constants";
+import { pages } from "./pages";
 
 const NavLinks = () => {
   return (
