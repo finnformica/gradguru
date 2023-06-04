@@ -3,8 +3,9 @@ import { Container } from "@mui/material";
 import ColouredContainer from "@/components/Containers/ColouredContainer";
 
 import ContainerTitle from "../Titles/ContainerTitle";
-import Content from "./Content";
 import Footer from "./Footer";
+import FeaturesList from "../FeaturesList";
+import features from "./features";
 
 const Features = () => {
   return (
@@ -14,7 +15,7 @@ const Features = () => {
           All the online resources you need for success in your job
           applications.
         </ContainerTitle>
-        <Content />
+        <FeaturesList features={features} />
         <Footer />
       </ColouredContainer>
     </Container>

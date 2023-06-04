@@ -2,9 +2,15 @@ import { Box } from "@mui/material";
 
 import Item from "./Item";
 
-import features from "./features";
+type FeaturesListProps = {
+  features: {
+    title: string;
+    description: string;
+    src: string;
+  }[];
+};
 
-const Content = () => {
+const FeaturesList = ({ features }: FeaturesListProps) => {
   return (
     <Box
       sx={{
@@ -27,4 +33,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default FeaturesList;
