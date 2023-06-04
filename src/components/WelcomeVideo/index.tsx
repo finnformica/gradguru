@@ -36,13 +36,17 @@ const WelcomeVideo = () => {
           }}
         />
       </Box>
-      <BigTitle
+      <BigTitle sx={{ pt: 4 }}>Welcome to your Free Resume Course</BigTitle>
+      <Typography
+        variant="body1"
         sx={{
-          py: 4,
+          textAlign: "center",
+          mb: 4,
         }}
       >
-        Welcome to your Free Resume Course
-      </BigTitle>
+        The only toolkit you need to secure interviews at McKinsey, Bain, and
+        BCG.
+      </Typography>
     </Container>
   );
 };
