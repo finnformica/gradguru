@@ -49,8 +49,8 @@ const WelcomeVideo = () => {
           <Image
             src="/imgs/learn-more/welcome-video.png"
             alt="gradguru welcome video"
-            width={350}
-            height={200}
+            width={450}
+            height={250}
             style={{
               objectFit: "cover",
               borderRadius: "8px",
