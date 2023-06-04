@@ -7,7 +7,6 @@ const BackgroundLogo = () => {
     <Box
       sx={{
         position: "absolute",
-        overflow: "hidden",
         height: "100%",
         top: 0,
         right: -80,

@@ -16,6 +16,7 @@ const NormalFooter = () => {
         alignItems: "center",
         py: 12,
         position: "relative",
+        overflow: "hidden",
       }}
     >
       <CompanyInfo />
