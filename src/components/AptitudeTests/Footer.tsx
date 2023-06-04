@@ -2,7 +2,7 @@ import React from "react";
 import SmallTitle from "../Titles/SmallTitle";
 
 import accordionItems from "./accordionItems";
-import AccordionItem from "./AccordionItem";
+import AccordionItem from "../Global/AccordionItem";
 import { Container } from "@mui/material";
 
 const Footer = () => {
