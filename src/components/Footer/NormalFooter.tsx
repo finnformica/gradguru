@@ -23,7 +23,7 @@ const NormalFooter = () => {
       <FooterLinks title="Company" links={companyLinks} />
       <FooterLinks title="Products" links={productLinks} />
 
-      <BackgroundLogo />
+      {/* <BackgroundLogo /> */}
     </Container>
   );
 };
