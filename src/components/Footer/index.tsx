@@ -1,4 +1,6 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+"use client";
+
+import { useMediaQuery, useTheme } from "@mui/material";
 
 import MobileFooter from "./MobileFooter";
 import NormalFooter from "./NormalFooter";
@@ -8,13 +10,13 @@ const Footer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box
-      sx={{
+    <footer
+      style={{
         backgroundColor: theme.palette.secondary.dark,
       }}
     >
       {!isMobile ? <NormalFooter /> : <MobileFooter />}
-    </Box>
+    </footer>
   );
 };
 
