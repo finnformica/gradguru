@@ -9,13 +9,13 @@ const practice = [
     title: "Hirevue",
     description:
       "Pick a case practice partner from our diverse community of top candidates, then get practicing.",
-    src: "/imgs/practice/aptitude.jpeg",
+    src: "/imgs/practice/hirevue.jpeg",
   },
   {
     title: "Assessment centre",
     description:
       "Book one-to-one mock interview sessions with one of our former consulting interviewers.",
-    src: "/imgs/practice/aptitude.jpeg",
+    src: "/imgs/practice/assessment.jpeg",
   },
 ];
 
