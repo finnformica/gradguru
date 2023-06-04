@@ -8,7 +8,10 @@ type BulletPointsProps = {
 const BulletPoints = ({ points }: BulletPointsProps) => (
   <>
     {points.map((point, key) => (
-      <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }} key={key}>
+      <Box
+        sx={{ display: "flex", alignItems: "flex-start", gap: 1, my: 0.5 }}
+        key={key}
+      >
         <CheckCircleIcon
           sx={{
             color: (theme) => theme.palette.primary.main,
@@ -17,7 +20,7 @@ const BulletPoints = ({ points }: BulletPointsProps) => (
           fontSize="small"
         />
 
-        <Typography variant="body1">{point}</Typography>
+        <Typography variant="body2">{point}</Typography>
       </Box>
     ))}
   </>
