@@ -8,7 +8,7 @@ const NavLinks = () => {
   return (
     <Box
       sx={{
-        display: { xs: "none", md: "flex" },
+        display: { xs: "none", sm: "flex" },
         flexDirection: "row",
         gap: { xs: 2, lg: 6 },
         pl: 4,

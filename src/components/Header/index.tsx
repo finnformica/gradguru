@@ -27,12 +27,19 @@ const Header = () => {
               alignItems: "center",
             }}
           >
-            <NavMenu />
             <NavbarLogo />
 
             <NavLinks />
           </Box>
-          <SquareButton>Sign up</SquareButton>
+          <SquareButton
+            sx={{
+              px: { xs: 2, md: 4 },
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            Sign up
+          </SquareButton>
+          <NavMenu />
         </Toolbar>
       </Container>
     </AppBar>

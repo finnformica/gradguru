@@ -11,7 +11,6 @@ const NavbarLogo = () => {
     <Link
       href="/"
       style={{
-        margin: isMediumScreen ? "0 auto" : "0",
         paddingRight: isMediumScreen ? "0" : "1rem",
       }}
     >
