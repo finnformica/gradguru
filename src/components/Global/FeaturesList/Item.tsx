@@ -20,7 +20,7 @@ const Item = ({ title, description, src }: ItemProps) => {
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "flex-start",
           transform: { xs: "none", md: "translateX(-8px)" },
         }}
       >

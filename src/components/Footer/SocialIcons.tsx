@@ -26,7 +26,15 @@ const SocialIcon = ({ social }: SocialIconProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+      <IconButton
+        size="large"
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        sx={{
+          p: { xs: 1, sm: "auto" },
+        }}
+      >
         {social.icon}
       </IconButton>
     </a>
@@ -37,7 +45,12 @@ const SocialIcons = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ display: "flex", gap: 1 }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: { xs: 0, sm: 2 },
+      }}
+    >
       {socials.map((social, key) => (
         <SocialIcon key={key} social={social} />
       ))}

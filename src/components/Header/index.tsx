@@ -40,12 +40,15 @@ const Header = () => {
               alignItems: "center",
             }}
           >
-            <NavMenu />
             <NavbarLogo />
 
             <NavLinks />
           </Box>
           <SquareButton
+            sx={{
+              px: { xs: 2, md: 4 },
+              display: { xs: "none", sm: "block" },
+            }}
             onClick={() =>
               subscribe("finnformica@gmail.com", setAlertState, alertState)
             }
