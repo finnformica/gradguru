@@ -8,7 +8,7 @@ const CompanyLogos = () => {
     <Container maxWidth="lg" sx={{ py: 6 }}>
       <Grid container spacing={0}>
         {companies.map((item, key) => (
-          <Grid key={key} item xs={4} md={2}>
+          <Grid key={key} item xs={6} sm={4} md={2}>
             <Image
               width={100}
               height={100}
