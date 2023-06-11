@@ -4,19 +4,26 @@ import { useTheme } from "@mui/material";
 type TextInputProps = {
   placeholder: string;
   style?: object;
+  state: string;
+  setState: (state: string) => void;
+  autoComplete?: string;
 };
 
 const TextInput = ({ placeholder, ...props }: TextInputProps) => {
   const [hasFocus, setFocus] = useState(false);
+  const { state, setState } = props;
 
   const theme = useTheme();
 
   return (
     <input
       type="text"
+      autoComplete={props.autoComplete || "off"}
       placeholder={placeholder}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
+      value={state}
+      onChange={(e) => setState(e.target.value)}
       style={{
         borderRadius: "8px 2px 2px 8px",
         border: "none",
