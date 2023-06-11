@@ -10,7 +10,7 @@ import NavMenu from "./NavMenu";
 import UserAlert from "../Global/UserAlert";
 
 import { subscribe } from "../../utils/subscribe";
-import { AlertState } from "../../types";
+import { AlertState } from "../../components/globalTypes";
 
 const Header = () => {
   const [alertState, setAlertState] = useState<AlertState>({

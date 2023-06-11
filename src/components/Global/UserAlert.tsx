@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Alert, AlertTitle } from "@mui/material";
-import { AlertState } from "@/types";
+import { AlertState } from "@/components/globalTypes";
 
 type UserAlertProps = {
   state: AlertState;

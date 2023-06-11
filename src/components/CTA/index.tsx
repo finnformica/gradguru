@@ -8,7 +8,7 @@ import SmallerTitle from "../Titles/SmallerTitle";
 
 import { subscribe } from "@/utils";
 import UserAlert from "../Global/UserAlert";
-import { AlertState } from "@/types";
+import { AlertState } from "@/components/globalTypes";
 
 const CTA = () => {
   const [email, setEmail] = useState("");
