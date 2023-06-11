@@ -1,11 +1,12 @@
 "use client";
-
 import { AppBar, Toolbar, Box, Container } from "@mui/material";
 
 import SquareButton from "../Buttons/SquareButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
 import NavMenu from "./NavMenu";
+
+import { subscribe } from "../../utils/subscribe";
 
 const Header = () => {
   return (
@@ -32,7 +33,9 @@ const Header = () => {
 
             <NavLinks />
           </Box>
-          <SquareButton>Sign up</SquareButton>
+          <SquareButton onClick={() => subscribe("finnformica@gmail.com")}>
+            Sign up
+          </SquareButton>
         </Toolbar>
       </Container>
     </AppBar>
