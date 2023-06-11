@@ -1,3 +1,4 @@
+import { useState } from "react";
 import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Global/TextInput";
 import { Box, Container } from "@mui/material";
@@ -5,9 +6,29 @@ import { Box, Container } from "@mui/material";
 import SmallTitle from "../Titles/SmallTitle";
 import SmallerTitle from "../Titles/SmallerTitle";
 
+import { subscribe } from "@/utils";
+import UserAlert from "../Global/UserAlert";
+import { AlertState } from "@/types";
+
 const CTA = () => {
+  const [email, setEmail] = useState("");
+  const [alertState, setAlertState] = useState<AlertState>({
+    open: false,
+    severity: "success",
+    title: "",
+    message: "",
+  });
+
+  const handleSubscribe = () => {
+    console.log(email);
+    subscribe(email, setAlertState, alertState);
+
+    setEmail("");
+  };
+
   return (
     <Container maxWidth="xl">
+      <UserAlert state={alertState} setState={setAlertState} />
       <Box
         sx={{
           display: "flex",
@@ -34,10 +55,17 @@ const CTA = () => {
           }}
         >
           <TextInput
+            state={email}
+            setState={setEmail}
             placeholder="Email address"
             style={{ paddingLeft: "16px", height: "34px", width: "275px" }}
           />
-          <SquareButton borderRadius="2px 8px 8px 2px">Subscribe</SquareButton>
+          <SquareButton
+            onClick={handleSubscribe}
+            borderRadius="2px 8px 8px 2px"
+          >
+            Subscribe
+          </SquareButton>
         </Box>
       </Box>
     </Container>
