@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { AppBar, Toolbar, Box, Container } from "@mui/material";
 
 import SquareButton from "../Buttons/SquareButton";
@@ -6,9 +7,19 @@ import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
 import NavMenu from "./NavMenu";
 
+import UserAlert from "../Global/UserAlert";
+
 import { subscribe } from "../../utils/subscribe";
+import { AlertState } from "../../types";
 
 const Header = () => {
+  const [alertState, setAlertState] = useState<AlertState>({
+    open: false,
+    severity: "success",
+    title: "",
+    message: "",
+  });
+
   return (
     <AppBar
       position="static"
@@ -20,6 +31,7 @@ const Header = () => {
       }}
     >
       <Container maxWidth="xl">
+        <UserAlert state={alertState} setState={setAlertState} />
         <Toolbar sx={{ backgroundColor: "#FFF" }} disableGutters>
           <Box
             sx={{
@@ -33,7 +45,11 @@ const Header = () => {
 
             <NavLinks />
           </Box>
-          <SquareButton onClick={() => subscribe("finnformica@gmail.com")}>
+          <SquareButton
+            onClick={() =>
+              subscribe("finnformica@gmail.com", setAlertState, alertState)
+            }
+          >
             Sign up
           </SquareButton>
         </Toolbar>

@@ -1,6 +1,11 @@
 import { addData } from "../../firebase/utils";
+import { AlertState } from "../types";
 
-const subscribe = async (email: string) => {
+const subscribe = async (
+  email: string,
+  setState: (state: AlertState) => void,
+  state: AlertState
+) => {
   const { result, error } = await addData(
     { email, subscribed: true },
     email,
@@ -8,7 +13,21 @@ const subscribe = async (email: string) => {
   );
 
   if (error) {
-    console.log("error", error);
+    setState({
+      ...state,
+      open: true,
+      severity: "error",
+      message: "Something went wrong. Please try again later.",
+      title: "Error!",
+    });
+  } else {
+    setState({
+      ...state,
+      open: true,
+      severity: "success",
+      message: "Subscription successful!",
+      title: "Success!",
+    });
   }
 
   await addData(
