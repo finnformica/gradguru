@@ -49,9 +49,7 @@ const Header = () => {
               px: { xs: 2, md: 4 },
               display: { xs: "none", sm: "block" },
             }}
-            onClick={() =>
-              subscribe("finnformica@gmail.com", setAlertState, alertState)
-            }
+            href="#subscribe"
           >
             Sign up
           </SquareButton>
