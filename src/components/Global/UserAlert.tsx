@@ -24,7 +24,7 @@ const UserAlert = ({ setState, state }: UserAlertProps) => {
         right: 0,
         m: "auto",
         width: "50%",
-        maxWidth: 500,
+        maxWidth: 300,
       }}
     >
       <AlertTitle>{state.title}</AlertTitle>
