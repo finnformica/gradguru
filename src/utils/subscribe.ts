@@ -1,5 +1,5 @@
 import { addData } from "../../firebase/utils";
-import { AlertState } from "../types";
+import { AlertState } from "../components/globalTypes";
 
 const subscribe = async (
   email: string,

@@ -24,7 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <GradguruThemeProvider>
-      <html lang="en">
+      <html
+        lang="en"
+        style={{ scrollBehavior: "smooth", scrollPadding: "75px" }}
+      >
         <body style={{ margin: 0 }} suppressHydrationWarning={true}>
           <Header />
           <main>{children}</main>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Alert, AlertTitle } from "@mui/material";
-import { AlertState } from "@/types";
+import { AlertState } from "@/components/globalTypes";
 
 type UserAlertProps = {
   state: AlertState;
@@ -24,7 +24,7 @@ const UserAlert = ({ setState, state }: UserAlertProps) => {
         right: 0,
         m: "auto",
         width: "50%",
-        maxWidth: 500,
+        maxWidth: 300,
       }}
     >
       <AlertTitle>{state.title}</AlertTitle>

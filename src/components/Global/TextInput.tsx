@@ -5,13 +5,13 @@ type TextInputProps = {
   placeholder: string;
   style?: object;
   state: string;
-  setState: (state: string) => void;
+  onChange: (state: string) => void;
   autoComplete?: string;
 };
 
 const TextInput = ({ placeholder, ...props }: TextInputProps) => {
   const [hasFocus, setFocus] = useState(false);
-  const { state, setState } = props;
+  const { state, onChange } = props;
 
   const theme = useTheme();
 
@@ -23,7 +23,7 @@ const TextInput = ({ placeholder, ...props }: TextInputProps) => {
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
       value={state}
-      onChange={(e) => setState(e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       style={{
         borderRadius: "8px 2px 2px 8px",
         border: "none",

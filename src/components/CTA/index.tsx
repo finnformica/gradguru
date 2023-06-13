@@ -2,16 +2,20 @@ import { useState } from "react";
 import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Global/TextInput";
 import { Box, Container } from "@mui/material";
+import isEmail from "validator/lib/isEmail";
 
 import SmallTitle from "../Titles/SmallTitle";
 import SmallerTitle from "../Titles/SmallerTitle";
 
 import { subscribe } from "@/utils";
 import UserAlert from "../Global/UserAlert";
-import { AlertState } from "@/types";
+import { AlertState } from "@/components/globalTypes";
 
 const CTA = () => {
-  const [email, setEmail] = useState("");
+  const [emailState, setEmailState] = useState({
+    email: "",
+    isValid: false,
+  });
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
     severity: "success",
@@ -19,15 +23,33 @@ const CTA = () => {
     message: "",
   });
 
-  const handleSubscribe = () => {
-    console.log(email);
-    subscribe(email, setAlertState, alertState);
+  const handleChange = (input: string) => {
+    if (isEmail(input)) {
+      setEmailState({ email: input, isValid: true });
+    } else {
+      setEmailState({ email: input, isValid: false });
+    }
+  };
 
-    setEmail("");
+  const handleSubscribe = () => {
+    if (!emailState.isValid) {
+      setAlertState({
+        open: true,
+        severity: "error",
+        title: "Invalid email",
+        message: "Please enter a valid email address.",
+      });
+
+      return;
+    }
+
+    subscribe(emailState.email, setAlertState, alertState);
+
+    setEmailState({ email: "", isValid: false });
   };
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" id="subscribe">
       <UserAlert state={alertState} setState={setAlertState} />
       <Box
         sx={{
@@ -55,8 +77,8 @@ const CTA = () => {
           }}
         >
           <TextInput
-            state={email}
-            setState={setEmail}
+            state={emailState.email}
+            onChange={handleChange}
             placeholder="Email address"
             style={{ paddingLeft: "16px", height: "34px", width: "275px" }}
           />
