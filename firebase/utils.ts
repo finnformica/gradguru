@@ -17,16 +17,12 @@ const addData = async (
   let error,
     result = null;
   try {
-    console.log("writing to db...");
-
     result = id
       ? await setDoc(doc(db, collectionName, id), data, { merge: true })
       : await addDoc(collection(db, collectionName), data);
-
-    console.log("write successful");
   } catch (e) {
     error = e;
-    console.log("error writing to db", e);
+    console.log("An error occured", e);
   }
 
   return { result, error };
