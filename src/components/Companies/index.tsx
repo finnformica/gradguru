@@ -7,7 +7,8 @@ import FullWidthContainer from "../Containers/FullWidthContainer";
 const Companies = () => {
   return (
     <FullWidthContainer sx={{ mt: 12 }}>
-      <SmallTitle>Companies we're familiar with</SmallTitle>
+      <SmallTitle>Companies We Are Familiar With</SmallTitle>
+      {/* <SmallTitle>Companies Schemes We Coach</SmallTitle> */}
       <CompanyLogos />
       <Footer />
     </FullWidthContainer>

@@ -14,7 +14,7 @@ const AssessmentCentre = () => {
 
   return (
     <FullWidthContainer sx={{ mt: 12 }}>
-      <SmallTitle>Assessment centre</SmallTitle>
+      <SmallTitle>Assessment Centre</SmallTitle>
       <Container
         maxWidth="lg"
         sx={{

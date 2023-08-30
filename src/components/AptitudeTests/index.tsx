@@ -13,7 +13,7 @@ const AptitudeTests = () => {
   return (
     <Container maxWidth="xl">
       <ColouredContainer sx={{ mb: 8 }}>
-        <ContainerTitle title="Aptitude tests" maxWidth="450px">
+        <ContainerTitle title="Aptitude Tests" maxWidth="450px">
           Discover what influences application screening decisions. Understand
           the role of networking. And supercharge your odds of earning an
           interview, whether you're a student, MBA candidate, or experienced

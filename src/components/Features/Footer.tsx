@@ -28,7 +28,7 @@ const Footer = () => {
           }}
         >
           <Typography variant="h5" fontWeight={500}>
-            Explore the courses
+            Explore The Courses
           </Typography>
           <Typography variant="body2" fontWeight={300}>
             Learn more about the different courses, course curriculum and our

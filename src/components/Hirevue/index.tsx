@@ -21,7 +21,7 @@ const Hirevue = () => {
         }}
       >
         <SmallTitle sx={{ textAlign: "center", pb: 4 }}>
-          Hirevue coaching
+          HireVue Coaching
         </SmallTitle>
         <Box
           sx={{

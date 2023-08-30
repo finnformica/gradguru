@@ -1,6 +1,6 @@
 const cards = [
   {
-    title: "Email questions",
+    title: "Email Questions",
     content: [
       "See example Hireve email questions.",
       "Practice with example questions.",
@@ -9,7 +9,7 @@ const cards = [
     src: "/imgs/learn-more/typing.jpeg",
   },
   {
-    title: "Situational questions",
+    title: "Situational Questions",
     content: [
       "Learn how to effectively use the STAR framework for situational questions.",
       "Practice with over 100+ example questions.",
@@ -18,7 +18,7 @@ const cards = [
     src: "/imgs/learn-more/high-five.jpeg",
   },
   {
-    title: "Job specific questions",
+    title: "Job Specific Questions",
     content: [
       "Understand what recruiters are looking for from your responses.",
       "Practice with over 100+ example questions.",

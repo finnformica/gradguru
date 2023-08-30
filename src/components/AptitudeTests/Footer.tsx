@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <>
       <SmallTitle sx={{ textAlign: "center", pt: 4 }}>
-        What's included?
+        What's Included?
       </SmallTitle>
       <CustomAccordion items={accordionItems} />
     </>

@@ -21,7 +21,7 @@ const QuestionsAccordion = () => {
     >
       <ColouredContainer sx={{ backgroundColor: "#FFF", p: "2.5rem 0 4rem" }}>
         <SmallTitle sx={{ textAlign: "center", pb: 2 }}>
-          Frequently asked questions
+          Frequently Asked Questions
         </SmallTitle>
         <CustomAccordion items={questions} />
       </ColouredContainer>

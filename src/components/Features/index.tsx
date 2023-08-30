@@ -11,7 +11,7 @@ const Features = () => {
   return (
     <Container maxWidth="xl">
       <ColouredContainer sx={{ mb: 8 }}>
-        <ContainerTitle title="What we do" maxWidth="350px">
+        <ContainerTitle title="What We Do" maxWidth="350px">
           All the online resources you need for success in your job
           applications.
         </ContainerTitle>
