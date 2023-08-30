@@ -2,6 +2,8 @@ import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 
 import { HeroSubtitle } from "./HeroTitles";
+import SquareButton from "../Buttons/SquareButton";
+import ArrowButton from "../Buttons/ArrowButton";
 import BigTitle from "../Titles/BigTitle";
 
 const Hero = () => {
@@ -28,6 +30,15 @@ const Hero = () => {
             Unleash your potential with comprehensive coaching and resources to
             secure the perfect graduate job after university.
           </HeroSubtitle>
+          <Box sx={{ display: "flex", gap: 2, pt: 4 }}>
+            <SquareButton href="/courses">Explore courses</SquareButton>
+            <ArrowButton
+              href="/learn-more"
+              style={{ textTransform: "uppercase" }}
+            >
+              Learn more
+            </ArrowButton>
+          </Box>
         </Box>
         <Box
           sx={{
