@@ -65,15 +65,16 @@ const CTA = () => {
         <SmallTitle>
           Sign up to the gradguru email list to get notified when we launch!
         </SmallTitle>
-        <SmallerTitle sx={{ textTransform: "uppercase" }}>
+        {/* <SmallerTitle sx={{ textTransform: "uppercase" }}>
           What's included?
-        </SmallerTitle>
+        </SmallerTitle> */}
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             gap: 0.5,
+            pt: 1,
           }}
         >
           <TextInput
