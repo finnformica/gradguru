@@ -7,18 +7,18 @@ const companyLinks = [
     name: "Contact Us",
     href: "/",
   },
-  {
-    name: "Terms & Conditons",
-    href: "/",
-  },
-  {
-    name: "Privacy Information",
-    href: "/",
-  },
-  {
-    name: "Accessibility",
-    href: "/",
-  },
+  // {
+  //   name: "Terms & Conditons",
+  //   href: "/",
+  // },
+  // {
+  //   name: "Privacy Information",
+  //   href: "/",
+  // },
+  // {
+  //   name: "Accessibility",
+  //   href: "/",
+  // },
 ];
 
 const productLinks = [
@@ -30,18 +30,18 @@ const productLinks = [
     name: "Courses",
     href: "/",
   },
-  {
-    name: "Drills",
-    href: "/",
-  },
-  {
-    name: "Resources",
-    href: "/",
-  },
-  {
-    name: "Forum",
-    href: "/",
-  },
+  // {
+  //   name: "Drills",
+  //   href: "/",
+  // },
+  // {
+  //   name: "Resources",
+  //   href: "/",
+  // },
+  // {
+  //   name: "Forum",
+  //   href: "/",
+  // },
 ];
 
 export { companyLinks, productLinks };

@@ -15,7 +15,7 @@ const CompanyInfo = () => {
       }}
     >
       <Image
-        src="/small-logo.png"
+        src="/small-logo-no-bg.png"
         alt="gradguru logo"
         width={100}
         height={100}
@@ -25,9 +25,10 @@ const CompanyInfo = () => {
 
         <Typography
           variant="body2"
-          fontSize={14}
+          fontSize={12}
           fontWeight={300}
-          sx={{ color: "#FFF", opacity: "60%" }}
+          pt={2}
+          sx={{ color: "#FFF", opacity: "40%" }}
         >
           © 2023 gradguru. All rights reserved.
         </Typography>
