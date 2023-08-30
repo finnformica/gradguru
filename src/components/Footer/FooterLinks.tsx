@@ -36,23 +36,47 @@ const FooterLinks = ({ title, links }: FooterLinksProps) => {
           pt: { xs: 2, sm: 4 },
         }}
       >
-        {links.map((link, key) => (
-          <Link key={key} href={link.href} style={{ textDecoration: "none" }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "#FFF",
-                opacity: "60%",
-                "&:hover": {
-                  opacity: "100%",
-                  color: theme.palette.secondary.light,
-                },
-              }}
+        {links.map((link, key) =>
+          link.name === "Contact" ? (
+            <a
+              key={key}
+              // target="_blank"
+              // rel="nofollow"
+              href={link.href}
+              style={{ textDecoration: "none" }}
             >
-              {link.name}
-            </Typography>
-          </Link>
-        ))}
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#FFF",
+                  opacity: "60%",
+                  "&:hover": {
+                    opacity: "100%",
+                    color: theme.palette.secondary.light,
+                  },
+                }}
+              >
+                {link.name}
+              </Typography>
+            </a>
+          ) : (
+            <Link key={key} href={link.href} style={{ textDecoration: "none" }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#FFF",
+                  opacity: "60%",
+                  "&:hover": {
+                    opacity: "100%",
+                    color: theme.palette.secondary.light,
+                  },
+                }}
+              >
+                {link.name}
+              </Typography>
+            </Link>
+          )
+        )}
       </Box>
     </Box>
   );

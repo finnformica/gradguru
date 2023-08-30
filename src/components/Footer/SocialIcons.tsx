@@ -48,7 +48,7 @@ const SocialIcons = () => {
     <Box
       sx={{
         display: "flex",
-        gap: { xs: 0, sm: 2 },
+        gap: { xs: 1, sm: 2 },
       }}
     >
       {socials.map((social, key) => (

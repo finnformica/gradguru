@@ -1,11 +1,11 @@
 const companyLinks = [
+  // {
+  //   name: "About",
+  //   href: "/",
+  // },
   {
-    name: "About Us",
-    href: "/",
-  },
-  {
-    name: "Contact Us",
-    href: "/",
+    name: "Contact",
+    href: "/contact",
   },
   // {
   //   name: "Terms & Conditons",
@@ -22,13 +22,13 @@ const companyLinks = [
 ];
 
 const productLinks = [
-  {
-    name: "Sign up to courses",
-    href: "/",
-  },
+  // {
+  //   name: "Sign up to courses",
+  //   href: "/",
+  // },
   {
     name: "Courses",
-    href: "/",
+    href: "/courses",
   },
   // {
   //   name: "Drills",
