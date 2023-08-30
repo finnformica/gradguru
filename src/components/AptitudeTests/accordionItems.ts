@@ -1,16 +1,18 @@
 const accordionItems = [
   {
     title: "30+ Practice Tests",
-    description: "Some description of the 30+ practice tests and their content",
-  },
-  {
-    title: "10+ hours of Aptitude Test Practice Videos",
     description:
-      "Some description of the 10+ hours of videos and their content",
+      "Over 30 SJT, Logical reasoning and mathematical tests in preparation for the aptitude stage of the application process.",
   },
   {
-    title: "Aptitude Test 1",
-    description: "This is the first aptitude test",
+    title: "20+ Practice Videos",
+    description:
+      "20+ videos of aptitude test explanation and practice question walkthrough videos.",
+  },
+  {
+    title: "PWC Game-Based Assessment",
+    description:
+      "A 10 part document and video resource analysing how to complete the first stage of the PWC application process.",
   },
 ];
 

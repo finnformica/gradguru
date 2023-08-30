@@ -1,16 +1,13 @@
 const questions = [
   {
-    title: "What courses can I get access to?",
-    description: "Some description of the 30+ practice tests and their content",
-  },
-  {
-    title: "How long do I have access to the course?",
+    title: "What Courses Can I Get Access To?",
     description:
-      "Some description of the 10+ hours of videos and their content",
+      "At the moment we are operating solely for big four recruitment, however, we intend to expand to other major grad intake industries such as investment banking, legal and many others. Sign up to the gradguru newsletter to be informed of when these new courses will be available.",
   },
   {
-    title: "Aptitude Test 1",
-    description: "This is the first aptitude test",
+    title: "How Long Do I Have Access to the Course?",
+    description:
+      "Once you pay for the course, you will receive access to all of the courses resources for 12 months.",
   },
 ];
 
