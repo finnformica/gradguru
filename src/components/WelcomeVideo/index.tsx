@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 import {
   Container,
@@ -15,6 +16,7 @@ const WelcomeVideo = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [videoLoading, setVideoLoading] = useState(true);
 
   return (
     <Container
@@ -34,31 +36,19 @@ const WelcomeVideo = () => {
           mx: "auto",
         }}
       >
-        {!isMediumScreen ? (
-          <Image
-            src="/imgs/learn-more/welcome-video.png"
-            alt="gradguru welcome video"
-            width={700}
-            height={400}
-            style={{
-              objectFit: "cover",
-              borderRadius: "8px",
-              transform: "translateY(-10px) translateX(16px) scale(1.015)",
-            }}
-          />
-        ) : (
-          <Image
-            src="/imgs/learn-more/welcome-video.png"
-            alt="gradguru welcome video"
-            width={!isMobile ? 450 : 300}
-            height={!isMobile ? 250 : 170}
-            style={{
-              objectFit: "cover",
-              borderRadius: "8px",
-              transform: "translateY(-10px) translateX(16px) scale(1.015)",
-            }}
-          />
-        )}
+        <iframe
+          src="welcome-vid.mp4"
+          title="Welcome Video"
+          width="600"
+          height="340"
+          style={{
+            objectFit: "cover",
+            borderRadius: "8px",
+            border: "none",
+            transform: "translateY(-10px) translateX(16px) scale(1.015)",
+          }}
+          onLoadedData={() => setVideoLoading(false)}
+        />
       </Box>
       <BigTitle sx={{ pt: 4 }}>Welcome to your Free Resume Course</BigTitle>
       <Typography
