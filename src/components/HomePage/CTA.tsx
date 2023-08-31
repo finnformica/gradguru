@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Global/TextInput";
 import { Box, Container } from "@mui/material";
@@ -30,7 +30,9 @@ const CTA = () => {
     }
   };
 
-  const handleSubscribe = () => {
+  const handleSubscribe = (e: FormEvent) => {
+    e.preventDefault();
+
     if (!emailState.isValid) {
       setAlertState({
         open: true,
@@ -64,28 +66,27 @@ const CTA = () => {
         <SmallTitle>
           Sign up to the gradguru email list to get notified when we launch!
         </SmallTitle>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 0.5,
-            pt: 1,
-          }}
-        >
-          <TextInput
-            state={emailState.email}
-            onChange={handleChange}
-            placeholder="Email address"
-            style={{ paddingLeft: "16px", height: "34px", width: "275px" }}
-          />
-          <SquareButton
-            onClick={handleSubscribe}
-            borderRadius="2px 8px 8px 2px"
+        <form onSubmit={handleSubscribe}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 0.5,
+              pt: 1,
+            }}
           >
-            Subscribe
-          </SquareButton>
-        </Box>
+            <TextInput
+              state={emailState.email}
+              onChange={handleChange}
+              placeholder="Email address"
+              style={{ paddingLeft: "16px", height: "34px", width: "275px" }}
+            />
+            <SquareButton type="submit" borderRadius="2px 8px 8px 2px">
+              Subscribe
+            </SquareButton>
+          </Box>
+        </form>
       </Box>
     </Container>
   );
