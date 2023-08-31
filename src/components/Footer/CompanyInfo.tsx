@@ -19,6 +19,7 @@ const CompanyInfo = () => {
         alt="gradguru logo"
         width={100}
         height={100}
+        style={{ position: "relative", left: -20 }}
       />
       <Box>
         <SocialIcons />
