@@ -1,6 +1,9 @@
 import { Typography } from "@mui/material";
 
-import { TitleProps } from "../globalTypes";
+interface TitleProps {
+  children: React.ReactNode;
+  sx?: object;
+}
 
 const BigTitle = ({ children, ...props }: TitleProps) => {
   return (
