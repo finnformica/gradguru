@@ -1,8 +1,15 @@
 "use client";
 import { useState } from "react";
-import { AppBar, Toolbar, Box, Container } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Container,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
-import SquareButton from "../Buttons/SquareButton";
+import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
 
@@ -11,6 +18,9 @@ import UserAlert from "../Global/UserAlert";
 import { AlertState } from "../../components/globalTypes";
 
 const Header = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
     severity: "success",
@@ -42,13 +52,7 @@ const Header = () => {
 
             <NavLinks />
           </Box>
-          <SquareButton
-            sx={{
-              px: { xs: 2, md: 4 },
-            }}
-          >
-            Sign up
-          </SquareButton>
+          {isMobile && <MenuButton />}
         </Toolbar>
       </Container>
     </AppBar>
