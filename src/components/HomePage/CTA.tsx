@@ -64,7 +64,7 @@ const CTA = () => {
         }}
       >
         <SmallTitle>
-          Sign up to the gradguru email list to get notified when we launch!
+          Sign Up to the Gradguru Email List to Get Notified When We Launch!
         </SmallTitle>
         <form onSubmit={handleSubscribe}>
           <Box

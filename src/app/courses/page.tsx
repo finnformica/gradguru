@@ -26,8 +26,9 @@ const CoursePage = () => {
       <Box sx={style}>
         <SmallTitle>gradguru is in beta!</SmallTitle>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          We are currently working on the courses and will be launching them
-          soon. For now, you can get a taste of what we offer on Udemy.
+          We are currently working on expanding the courses and will be
+          launching them soon. For now, you can access our Big 4 video course on
+          Udemy.
         </Typography>
         <SquareButton
           href="https://www.udemy.com/course/the-complete-guide-to-securing-a-big-4-offer"

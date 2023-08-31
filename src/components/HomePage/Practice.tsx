@@ -67,7 +67,7 @@ const Practice = () => {
         }}
       >
         <SmallTitle sx={{ textAlign: "center", pb: 4 }}>
-          Practice drills for every stage of the process
+          Practice Drills for Every Stage of the Process
         </SmallTitle>
         <Box
           sx={{
