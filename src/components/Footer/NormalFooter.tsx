@@ -2,8 +2,6 @@ import { Container } from "@mui/material";
 
 import FooterLinks from "./FooterLinks";
 import CompanyInfo from "./CompanyInfo";
-import BackgroundLogo from "./BackgroundLogo";
-
 import { companyLinks, productLinks } from "./links";
 
 const NormalFooter = () => {
@@ -22,8 +20,6 @@ const NormalFooter = () => {
       <CompanyInfo />
       <FooterLinks title="Company" links={companyLinks} />
       <FooterLinks title="Products" links={productLinks} />
-
-      {/* <BackgroundLogo /> */}
     </Container>
   );
 };

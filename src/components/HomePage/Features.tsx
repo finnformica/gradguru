@@ -43,7 +43,7 @@ const Footer = () => {
       >
         <Box
           sx={{
-            width: { xs: "90%", md: "90%" },
+            width: { xs: "90%", md: "60%" },
             textAlign: { xs: "center", md: "left" },
             mx: "auto",
           }}
