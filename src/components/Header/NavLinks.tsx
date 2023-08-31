@@ -1,10 +1,34 @@
-import { Box, Typography } from "@mui/material";
+"use client";
 
-import NavLink from "./NavLink";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Box, Typography } from "@mui/material";
 
 import { pages } from "./pages";
 
+type NavLinkProps = {
+  children: React.ReactNode;
+  href: string;
+  active: boolean;
+};
+
+const NavLink = ({ children, href, active }: NavLinkProps) => {
+  return (
+    <Link
+      href={href}
+      style={{
+        textDecoration: "none",
+        color: active ? "black" : "grey",
+      }}
+    >
+      {children}
+    </Link>
+  );
+};
+
 const NavLinks = () => {
+  const pathname = usePathname();
+
   return (
     <Box
       sx={{
@@ -15,7 +39,7 @@ const NavLinks = () => {
       }}
     >
       {pages.map((page, key: number) => (
-        <NavLink href={page.route} key={key}>
+        <NavLink href={page.route} key={key} active={pathname === page.route}>
           <Typography variant="body1" fontWeight={500}>
             {page.name}
           </Typography>
