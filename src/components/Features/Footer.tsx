@@ -1,15 +1,10 @@
-import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 
 import SquareButton from "@/components/Buttons/SquareButton";
-import MUIModal from "../Global/UdemyModal";
 
 const Footer = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <>
-      <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
       <Box
         sx={{
           display: "flex",
@@ -35,9 +30,7 @@ const Footer = () => {
             practice drills before you enroll.
           </Typography>
         </Box>
-        <SquareButton onClick={() => setIsModalOpen(true)}>
-          Explore courses
-        </SquareButton>
+        <SquareButton href="/courses">Explore courses</SquareButton>
       </Box>
     </>
   );
