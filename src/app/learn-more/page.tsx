@@ -1,10 +1,12 @@
 "use client";
 
-import AptitudeTests from "@/components/AptitudeTests";
-import AssessmentCentre from "@/components/AssessmentCentre";
-import FAQs from "@/components/FAQs";
-import Hirevue from "@/components/Hirevue";
-import WelcomeVideo from "@/components/WelcomeVideo";
+import {
+  WelcomeVideo,
+  AptitudeTests,
+  Hirevue,
+  AssessmentCentre,
+  FAQs,
+} from "@/components/LearnMorePage";
 
 const LearnMore = () => {
   return (

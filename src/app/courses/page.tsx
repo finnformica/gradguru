@@ -30,7 +30,7 @@ const CoursePage = () => {
           soon. For now, you can get a taste of what we offer on Udemy.
         </Typography>
         <SquareButton
-          href="https://www.udemy.com/course/the-complete-guide-to-securing-a-big-4-offer/?instructorPreviewMode=guest"
+          href="https://www.udemy.com/course/the-complete-guide-to-securing-a-big-4-offer"
           sx={{ mt: 4 }}
         >
           Go to Udemy

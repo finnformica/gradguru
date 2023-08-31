@@ -1,10 +1,15 @@
-import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
-import { HeroSubtitle } from "./HeroTitles";
-import SquareButton from "../Buttons/SquareButton";
-import ArrowButton from "../Buttons/ArrowButton";
-import BigTitle from "../Titles/BigTitle";
+import SquareButton from "@/components/Buttons/SquareButton";
+import ArrowButton from "@/components/Buttons/ArrowButton";
+import BigTitle from "@/components/Titles/BigTitle";
 
 const Hero = () => {
   const theme = useTheme();
@@ -26,10 +31,10 @@ const Hero = () => {
           <BigTitle>
             Empower Your Graduate Journey and Land Your Dream Job
           </BigTitle>
-          <HeroSubtitle>
+          <Typography variant="body1">
             Unleash your potential with comprehensive coaching and resources to
             secure the perfect graduate job after university.
-          </HeroSubtitle>
+          </Typography>
           <Box sx={{ display: "flex", gap: 2, pt: 4 }}>
             <SquareButton href="/courses">Explore courses</SquareButton>
             <ArrowButton

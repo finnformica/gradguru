@@ -1,10 +1,12 @@
 "use client";
 
-import Hero from "../components/Hero";
-import CTA from "../components/CTA";
-import Features from "../components/Features";
-import Practice from "../components/Practice";
-import Companies from "../components/Companies";
+import {
+  Hero,
+  CTA,
+  Features,
+  Practice,
+  Companies,
+} from "@/components/HomePage";
 
 export default function Home() {
   return (

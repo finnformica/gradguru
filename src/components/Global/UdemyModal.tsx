@@ -34,7 +34,10 @@ const UdemyModal = ({ open, setOpen }: UdemyModalProps) => {
           We are currently working on the courses and will be launching them
           soon. For now, you can get a taste of what we offer on Udemy.
         </Typography>
-        <SquareButton href="https://www.udemy.com/" sx={{ mt: 4 }}>
+        <SquareButton
+          href="https://www.udemy.com/course/the-complete-guide-to-securing-a-big-4-offer"
+          sx={{ mt: 4 }}
+        >
           Go to Udemy
         </SquareButton>
       </Box>

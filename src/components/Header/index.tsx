@@ -5,11 +5,9 @@ import { AppBar, Toolbar, Box, Container } from "@mui/material";
 import SquareButton from "../Buttons/SquareButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
-import NavMenu from "./NavMenu";
 
 import UserAlert from "../Global/UserAlert";
 
-import { subscribe } from "../../utils/subscribe";
 import { AlertState } from "../../components/globalTypes";
 
 const Header = () => {
@@ -47,9 +45,7 @@ const Header = () => {
           <SquareButton
             sx={{
               px: { xs: 2, md: 4 },
-              display: { xs: "none", sm: "block" },
             }}
-            href="#subscribe"
           >
             Sign up
           </SquareButton>

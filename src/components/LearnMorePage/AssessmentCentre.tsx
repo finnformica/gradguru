@@ -1,12 +1,15 @@
-import { Container, useTheme, useMediaQuery } from "@mui/material";
-import React from "react";
-
-import FullWidthContainer from "../Containers/FullWidthContainer";
-import SmallTitle from "../Titles/SmallTitle";
 import Image from "next/image";
-import BulletPoints from "../Global/BulletPoints";
+import { Container, useTheme, useMediaQuery } from "@mui/material";
 
-import points from "./points";
+import FullWidthContainer from "@/components/Containers/FullWidthContainer";
+import SmallTitle from "@/components/Titles/SmallTitle";
+import BulletPoints from "@/components/Global/BulletPoints";
+
+const points = [
+  "Learn what your specific assessment centre process will likely entail.",
+  "Use our independent study drills to practice for each stage of your assessment centre.",
+  "Discover what successful candidates do in their assessment centres that sets them apart.",
+];
 
 const AssessmentCentre = () => {
   const theme = useTheme();

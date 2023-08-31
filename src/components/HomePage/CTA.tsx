@@ -5,7 +5,6 @@ import { Box, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
 
 import SmallTitle from "../Titles/SmallTitle";
-import SmallerTitle from "../Titles/SmallerTitle";
 
 import { subscribe } from "@/utils";
 import UserAlert from "../Global/UserAlert";
@@ -65,9 +64,6 @@ const CTA = () => {
         <SmallTitle>
           Sign up to the gradguru email list to get notified when we launch!
         </SmallTitle>
-        {/* <SmallerTitle sx={{ textTransform: "uppercase" }}>
-          What's included?
-        </SmallerTitle> */}
         <Box
           sx={{
             display: "flex",
