@@ -8,16 +8,20 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { UserAuth } from "../../../context/auth";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
+import AuthButton from "./AuthButton";
 
 import UserAlert from "../Global/UserAlert";
 
 import { AlertState } from "../../components/globalTypes";
+import SquareButton from "../Buttons/SquareButton";
 
 const Header = () => {
+  const { user, handleGoogleLogin } = UserAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -49,10 +53,16 @@ const Header = () => {
             }}
           >
             <NavbarLogo />
-
             <NavLinks />
           </Box>
+
           {isMobile && <MenuButton />}
+          {!isMobile &&
+            (!!user ? (
+              <AuthButton />
+            ) : (
+              <SquareButton onClick={handleGoogleLogin}>Login</SquareButton>
+            ))}
         </Toolbar>
       </Container>
     </AppBar>
