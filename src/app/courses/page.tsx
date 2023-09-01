@@ -1,41 +1,59 @@
 "use client";
+import { useState } from "react";
 import { Typography, Box, Container } from "@mui/material";
-import SmallTitle from "@/components/Titles/SmallTitle";
-import SquareButton from "@/components/Buttons/SquareButton";
 
-const style = {
-  position: "relative",
-  width: { xs: "80%", md: "60%", lg: "50%" },
-  bgcolor: "background.paper",
-  border: "1px solid #000",
-  borderRadius: "8px",
-  boxShadow: 24,
-  p: 4,
+import MUIModal from "@/components/Global/UdemyModal";
+
+const courses = [
+  {
+    title: "Big 4 Consulting",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/consulting-icon.png",
+  },
+  {
+    title: "Accounting & Financial Services",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/finance-icon.png",
+  },
+  {
+    title: "Investment Banking",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/investment-icon.png",
+  },
+  {
+    title: "Software Engineering",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/software-icon.png",
+  },
+  {
+    title: "Law",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/law-icon.png",
+  },
+];
+
+type CardProps = {
+  title: string;
 };
 
+const Card = ({ title }: CardProps) => (
+  <Box sx={{ width: "100px", height: "100px", borderRadius: "8px" }}>
+    <Typography variant="h5" fontWeight={500}>
+      {title}
+    </Typography>
+  </Box>
+);
+
 const CoursePage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
   return (
-    <Container
-      sx={{
-        height: "45vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Box sx={style}>
-        <SmallTitle>gradguru is in beta!</SmallTitle>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          We are currently working on expanding the courses and will be
-          launching them soon. For now, you can access our Big 4 video course on
-          Udemy.
+    <Container>
+      <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
+      <Box>
+        <Typography variant="h5" fontWeight={500}>
+          Course Page
         </Typography>
-        <SquareButton
-          href="https://www.udemy.com/course/the-complete-guide-to-securing-a-big-4-offer"
-          sx={{ mt: 4 }}
-        >
-          Go to Udemy
-        </SquareButton>
       </Box>
     </Container>
   );
