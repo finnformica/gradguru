@@ -39,8 +39,8 @@ const WelcomeVideo = () => {
         <iframe
           src="welcome-vid.mp4"
           title="Welcome Video"
-          width="600"
-          height="340"
+          width={!isMediumScreen ? "600" : "450"}
+          height={!isMediumScreen ? "340" : "255"}
           style={{
             objectFit: "cover",
             borderRadius: "8px",

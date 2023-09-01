@@ -20,8 +20,8 @@ const NavbarLogo = () => {
         style={{
           objectFit: "cover",
         }}
-        width={!isMobile ? 310 : 150}
-        height={!isMobile ? 70 : 32}
+        width={!isMediumScreen ? 310 : 150}
+        height={!isMediumScreen ? 70 : 32}
         priority
       />
     </Link>
