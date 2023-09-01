@@ -10,7 +10,7 @@ export async function POST(res: NextResponse) {
       to: "hello@gradguru.app",
       message: {
         subject: "Important: New Support Request",
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+        text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`,
       },
     },
     null,
