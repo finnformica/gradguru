@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 
 import SquareButton from "@/components/Buttons/SquareButton";
 import ColouredContainer from "@/components/Containers/ColouredContainer";
@@ -23,6 +23,7 @@ const initFormState: FormState = {
 
 const ContactPage = () => {
   const [form, setForm] = useState<FormState>(initFormState);
+  const [loading, setLoading] = useState(false);
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
     severity: "success",
@@ -32,7 +33,7 @@ const ContactPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(form);
+    setLoading(true);
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/firebase/support`,
@@ -59,12 +60,13 @@ const ContactPage = () => {
         ...alertState,
         open: true,
         severity: "success",
-        message: "Please check your email for a confirmation link.",
+        message: "Thank you for reaching out, we'll get back to you shortly.",
         title: "Success!",
       });
     }
 
     setForm(initFormState);
+    setLoading(false);
   };
 
   return (
@@ -125,7 +127,11 @@ const ContactPage = () => {
             width: "77%",
           }}
         />
-        <SquareButton type="submit">Submit</SquareButton>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <SquareButton type="submit">Submit</SquareButton>
+        )}
       </form>
     </ColouredContainer>
   );
