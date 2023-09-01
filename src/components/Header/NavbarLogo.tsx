@@ -15,7 +15,7 @@ const NavbarLogo = () => {
       }}
     >
       <Image
-        src="/big-logo.png"
+        src="/logos/big-logo.png"
         alt="Graduate coaching logo"
         style={{
           objectFit: "cover",
