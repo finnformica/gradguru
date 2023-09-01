@@ -7,13 +7,8 @@ type EmailMessageType = {
   to: string;
   message: {
     subject: string;
-    text?: string;
-    html: string;
-    attachments?: {
-      filename: string;
-      path: string;
-      cid: string;
-    }[];
+    text: string;
+    html?: string;
   };
 };
 
