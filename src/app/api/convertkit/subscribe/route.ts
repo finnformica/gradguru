@@ -21,14 +21,8 @@ export async function POST(request: NextRequest) {
   });
 
   if (response.ok) {
-    return NextResponse.json({
-      message: "Success",
-      status: 200,
-    });
+    return NextResponse.json({ message: "Success" }, { status: 200 });
   } else {
-    return NextResponse.json({
-      message: "Error",
-      status: 400,
-    });
+    return NextResponse.json({ message: "Error" }, { status: 400 });
   }
 }
