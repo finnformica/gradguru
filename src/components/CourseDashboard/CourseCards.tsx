@@ -2,22 +2,22 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import { Typography, Box, Container } from "@mui/material";
 
 import MUIModal from "@/components/Global/UdemyModal";
 import { courses } from "./courses";
+import Link from "next/link";
 
 type CardProps = {
   title: string;
   description: string;
   src: string;
   active: boolean;
+  href: string;
 };
 
 const Card = ({ ...course }: CardProps) => {
-  const router = useRouter();
   return (
     <Box
       sx={{
@@ -69,7 +69,7 @@ const CourseCards = () => {
     <Container>
       <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
       <Typography variant="h5" fontWeight={500}>
-        Course Page
+        Course Dashboard
       </Typography>
       <Box
         sx={{
@@ -81,9 +81,15 @@ const CourseCards = () => {
           my: 4,
         }}
       >
-        {courses.map((course, key) => (
-          <Card key={key} {...course} />
-        ))}
+        {courses.map((course, key) =>
+          course.active ? (
+            <Link href={course.href} key={key}>
+              <Card {...course} />
+            </Link>
+          ) : (
+            <Card key={key} {...course} />
+          )
+        )}
       </Box>
     </Container>
   );
