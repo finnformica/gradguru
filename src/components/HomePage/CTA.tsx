@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import SquareButton from "@/components/Buttons/SquareButton";
 import TextInput from "@/components/Global/TextInput";
-import { Box, Container } from "@mui/material";
+import { Box, CircularProgress, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
 
 import SmallTitle from "../Titles/SmallTitle";
@@ -11,6 +11,7 @@ import UserAlert from "../Global/UserAlert";
 import { AlertState } from "@/components/globalTypes";
 
 const CTA = () => {
+  const [loading, setLoading] = useState(false);
   const [emailState, setEmailState] = useState({
     email: "",
     isValid: false,
@@ -22,16 +23,9 @@ const CTA = () => {
     message: "",
   });
 
-  const handleChange = (input: string) => {
-    if (isEmail(input)) {
-      setEmailState({ email: input, isValid: true });
-    } else {
-      setEmailState({ email: input, isValid: false });
-    }
-  };
-
   const handleSubscribe = (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!emailState.isValid) {
       setAlertState({
@@ -40,13 +34,14 @@ const CTA = () => {
         title: "Invalid email",
         message: "Please enter a valid email address.",
       });
-
+      setLoading(false);
       return;
     }
 
     subscribe(emailState.email, setAlertState, alertState);
 
     setEmailState({ email: "", isValid: false });
+    setLoading(false);
   };
 
   return (
@@ -78,7 +73,9 @@ const CTA = () => {
           >
             <TextInput
               state={emailState.email}
-              onChange={handleChange}
+              onChange={(input: string) =>
+                setEmailState({ email: input, isValid: isEmail(input) })
+              }
               placeholder="Email address"
               style={{
                 paddingLeft: "16px",
@@ -88,8 +85,16 @@ const CTA = () => {
                 borderRadius: "8px 2px 2px 8px",
               }}
             />
+
             <SquareButton type="submit" borderRadius="2px 8px 8px 2px">
-              Subscribe
+              {loading ? (
+                <CircularProgress
+                  size={24}
+                  sx={{ color: "white", margin: "auto" }}
+                />
+              ) : (
+                "Subscribe"
+              )}
             </SquareButton>
           </Box>
         </form>

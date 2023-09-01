@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
 import SquareButton from "@/components/Buttons/SquareButton";
@@ -31,7 +31,7 @@ const ContactPage = () => {
     message: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
