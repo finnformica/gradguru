@@ -29,7 +29,7 @@ const Card = ({ ...course }: CardProps) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 1,
+        gap: 2,
         textAlign: "center",
         transition: "all 0.2s ease-in-out",
         "&:hover": course.active
@@ -44,8 +44,8 @@ const Card = ({ ...course }: CardProps) => {
       <Image
         alt={`${course.title} icon`}
         src={course.src}
-        width={50}
-        height={50}
+        width={65}
+        height={65}
       />
       <Typography
         variant="h5"
@@ -54,7 +54,7 @@ const Card = ({ ...course }: CardProps) => {
         sx={{
           color: course.active
             ? "rgba(71, 86, 119, 1)"
-            : "rgba(71, 86, 119, 0.6)",
+            : "rgba(71, 86, 119, 0.4)",
         }}
       >
         {course.title}
