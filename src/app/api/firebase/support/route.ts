@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { addData } from "../../../../../firebase/utils";
 
-export async function POST(res: NextResponse) {
-  const { name, email, message } = await res.json();
+export async function POST(request: NextRequest) {
+  const { name, email, message } = await request.json();
 
   const { result, error } = await addData(
     {
       to: "hello@gradguru.app",
       message: {
         subject: "Important: New Support Request",
-        text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`,
+        text: `Name: ${name}\n\nEmail: ${email}\n\nMessage:\n${message}`,
       },
     },
     null,
