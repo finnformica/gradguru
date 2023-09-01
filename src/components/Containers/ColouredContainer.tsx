@@ -17,7 +17,9 @@ const ColouredContainer = ({ children, ...props }: ColouredContainerProps) => {
         ...props.sx,
       }}
     >
-      <Container maxWidth="md">{children}</Container>
+      <Container sx={{ height: "100%" }} maxWidth="md">
+        {children}
+      </Container>
     </Box>
   );
 };

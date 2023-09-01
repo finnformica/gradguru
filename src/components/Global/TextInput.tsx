@@ -1,36 +1,56 @@
 import React, { useState } from "react";
 import { useTheme } from "@mui/material";
 
+type MultilineProps = {
+  rows: number;
+  cols: number;
+  show: boolean;
+};
+
 type TextInputProps = {
   placeholder: string;
   style?: object;
   state: string;
+  multiline?: MultilineProps;
   onChange: (state: string) => void;
   autoComplete?: string;
 };
 
-const TextInput = ({ placeholder, ...props }: TextInputProps) => {
+const TextInput = ({ ...props }: TextInputProps) => {
   const [hasFocus, setFocus] = useState(false);
   const { state, onChange } = props;
 
   const theme = useTheme();
 
-  return (
-    <input
-      type="text"
+  const style = (props: TextInputProps) => ({
+    borderRadius: "8px",
+    border: "none",
+    outline: hasFocus ? `2px solid ${theme.palette.primary.main}` : "none",
+    ...props.style,
+  });
+
+  return props.multiline?.show ? (
+    <textarea
       autoComplete={props.autoComplete || "off"}
-      placeholder={placeholder}
+      placeholder={props.placeholder}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
       value={state}
       onChange={(e) => onChange(e.target.value)}
-      style={{
-        borderRadius: "8px 2px 2px 8px",
-        border: "none",
-        backgroundColor: "#EEF2F2",
-        outline: hasFocus ? `2px solid ${theme.palette.primary.main}` : "none",
-        ...props.style,
-      }}
+      style={style(props)}
+      rows={props.multiline.rows}
+      cols={props.multiline.cols}
+    ></textarea>
+  ) : (
+    <input
+      type="text"
+      autoComplete={props.autoComplete || "off"}
+      placeholder={props.placeholder}
+      onFocus={() => setFocus(true)}
+      onBlur={() => setFocus(false)}
+      value={state}
+      onChange={(e) => onChange(e.target.value)}
+      style={style(props)}
     />
   );
 };

@@ -80,7 +80,13 @@ const CTA = () => {
               state={emailState.email}
               onChange={handleChange}
               placeholder="Email address"
-              style={{ paddingLeft: "16px", height: "34px", width: "275px" }}
+              style={{
+                paddingLeft: "16px",
+                backgroundColor: "#EEF2F2",
+                height: "34px",
+                width: "275px",
+                borderRadius: "8px 2px 2px 8px",
+              }}
             />
             <SquareButton type="submit" borderRadius="2px 8px 8px 2px">
               Subscribe
