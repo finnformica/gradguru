@@ -5,8 +5,14 @@ import { useAuth } from "../../context/auth";
 import { useEffect } from "react";
 
 const ProfilePage = () => {
-  const { user, protectedPage } = useAuth();
-  protectedPage();
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user && !loading) {
+      router.push("/login");
+    }
+  }, [user, loading]);
 
   if (!user) {
     return null;

@@ -18,20 +18,6 @@ export const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const protectedPage = () => {
-    const router = useRouter();
-
-    useEffect(() => {
-      const protect = () => {
-        if (!user && !loading) {
-          router.push("/login");
-        }
-      };
-
-      return () => protect();
-    }, [user, loading, router]);
-  };
-
   const handleLogout = () => {
     signOut(auth);
   };
@@ -48,7 +34,6 @@ export const AuthContextProvider = ({ children }: any) => {
   const value = {
     user,
     loading,
-    protectedPage,
     handleLogout,
   };
 
