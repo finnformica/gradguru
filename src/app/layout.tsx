@@ -28,11 +28,8 @@ export default function RootLayout({
   return (
     <GradguruThemeProvider>
       <AuthContextProvider>
-        <html
-          lang="en"
-          style={{ scrollBehavior: "smooth", scrollPadding: "75px" }}
-        >
-          <body style={{ margin: 0 }} suppressHydrationWarning={true}>
+        <html lang="en">
+          <body suppressHydrationWarning={true}>
             <Header />
             <main>{children}</main>
             <Footer />

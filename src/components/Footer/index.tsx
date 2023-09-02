@@ -13,6 +13,7 @@ const Footer = () => {
     <footer
       style={{
         backgroundColor: theme.palette.secondary.dark,
+        marginTop: "auto",
       }}
     >
       {!isMobile ? <NormalFooter /> : <MobileFooter />}
