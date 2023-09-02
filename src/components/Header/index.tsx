@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { UserAuth } from "../../../context/auth";
+import { useAuth } from "../../../context/auth";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
@@ -21,7 +21,7 @@ import { AlertState } from "../../components/globalTypes";
 import SquareButton from "../Buttons/SquareButton";
 
 const Header = () => {
-  const { user, handleGoogleLogin } = UserAuth();
+  const { user, handleGoogleLogin } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 

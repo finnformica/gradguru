@@ -15,7 +15,6 @@ export const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>(null);
 
   const handleGoogleLogin = () => {
-    console.log("google login");
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider);
   };
@@ -39,6 +38,6 @@ export const AuthContextProvider = ({ children }: any) => {
   );
 };
 
-export const UserAuth = () => {
+export const useAuth = () => {
   return useContext(AuthContext);
 };
