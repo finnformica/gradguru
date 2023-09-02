@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+
 import {
   Box,
   Tooltip,
@@ -8,11 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useAuth } from "../../context/auth";
 
-import pages from "./pages";
-import Link from "next/link";
+import { pages } from "./pages";
 
 const MenuButton = () => {
+  const { user, handleLogout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -53,6 +56,28 @@ const MenuButton = () => {
             </Link>
           </MenuItem>
         ))}
+        {!!user ? (
+          <MenuItem
+            key="Logout"
+            onClick={() => {
+              handleCloseUserMenu();
+              handleLogout();
+            }}
+          >
+            <Typography textAlign="center">Logout</Typography>
+          </MenuItem>
+        ) : (
+          <MenuItem
+            key="Login"
+            onClick={() => {
+              handleCloseUserMenu();
+            }}
+          >
+            <Link href="/login">
+              <Typography textAlign="center">Login</Typography>
+            </Link>
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );
