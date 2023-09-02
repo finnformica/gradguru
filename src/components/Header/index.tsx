@@ -8,6 +8,7 @@ import {
   Container,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import { useAuth } from "../../context/auth";
 
@@ -22,7 +23,7 @@ import { AlertState } from "../../components/globalTypes";
 import SquareButton from "../Buttons/SquareButton";
 
 const Header = () => {
-  const { user, handleGoogleLogin } = useAuth();
+  const { user, loading } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -63,7 +64,13 @@ const Header = () => {
               <AuthButton />
             ) : (
               <Link href="/login">
-                <SquareButton>Login</SquareButton>
+                <SquareButton>
+                  {loading ? (
+                    <CircularProgress size="1.5rem" sx={{ color: "#FFF" }} />
+                  ) : (
+                    "Login"
+                  )}
+                </SquareButton>
               </Link>
             ))}
         </Toolbar>
