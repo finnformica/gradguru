@@ -9,8 +9,8 @@ import "@/styles/global.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-import GradguruThemeProvider from "@/theme";
-import { AuthContextProvider } from "../../context/auth";
+import GradguruThemeProvider from "@/context/theme";
+import { AuthContextProvider } from "@/context/auth";
 
 import favicons from "./favicons";
 

@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../context/auth";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";

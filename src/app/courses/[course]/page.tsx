@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Typography } from "@mui/material";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../context/auth";
 
 type CoursePageProps = {
   params: { course: string };

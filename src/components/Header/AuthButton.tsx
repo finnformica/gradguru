@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../context/auth";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
