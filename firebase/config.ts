@@ -1,8 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-import { getAuth } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, EmailAuthProvider, getAuth } from "firebase/auth";
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,11 +13,20 @@ const config = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+export const uiConfig = {
+  signInFlow: "popup",
+  signInSuccessUrl: "/",
+  tosUrl: "/terms-of-service",
+  privacyPolicyUrl: "/privacy-policy",
+  signInOptions: [
+    GoogleAuthProvider.PROVIDER_ID,
+    EmailAuthProvider.PROVIDER_ID,
+  ],
+};
+
 const app = initializeApp(config);
 const db = getFirestore(app);
 
 const auth = getAuth(app);
 
-const googleProvider = new GoogleAuthProvider();
-
-export { app, db, config, auth, googleProvider };
+export { app, db, config, auth };
