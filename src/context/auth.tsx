@@ -22,27 +22,14 @@ export const AuthContextProvider = ({ children }: any) => {
     const router = useRouter();
 
     useEffect(() => {
-      if (user && !loading) {
-        return;
-      }
+      const protect = () => {
+        if (!user && !loading) {
+          router.push("/login");
+        }
+      };
 
-      if (!user && !loading) {
-        router.push("/login");
-      }
-    }, [user, loading]);
-  };
-
-  const signUpWithEmail = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
-
-  const handleEmailLogin = (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password);
-  };
-
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+      return () => protect();
+    }, [user, loading, router]);
   };
 
   const handleLogout = () => {
@@ -62,9 +49,6 @@ export const AuthContextProvider = ({ children }: any) => {
     user,
     loading,
     protectedPage,
-    signUpWithEmail,
-    handleGoogleLogin,
-    handleEmailLogin,
     handleLogout,
   };
 

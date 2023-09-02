@@ -9,8 +9,12 @@ type CoursePageProps = {
 };
 
 const CoursePage = ({ params }: CoursePageProps) => {
-  const { protectedPage } = useAuth();
+  const { user, protectedPage } = useAuth();
   protectedPage();
+
+  if (!user) {
+    return null;
+  }
 
   return <div>{params.course}</div>;
 };
