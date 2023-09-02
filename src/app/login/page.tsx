@@ -23,16 +23,7 @@ export default function Login() {
         alignItems: "center",
       }}
     >
-      <Box
-        sx={{
-          // border: "1px rgba(71, 86, 119, 0.2) solid",
-          // borderRadius: 8,
-          padding: 4,
-          mb: 4,
-        }}
-      >
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-      </Box>
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
     </Box>
   );
 }
