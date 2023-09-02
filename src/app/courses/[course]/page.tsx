@@ -9,11 +9,8 @@ type CoursePageProps = {
 };
 
 const CoursePage = ({ params }: CoursePageProps) => {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <Typography>Please login to view this page</Typography>;
-  }
+  const { protectedPage } = useAuth();
+  protectedPage();
 
   return <div>{params.course}</div>;
 };

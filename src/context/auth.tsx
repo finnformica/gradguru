@@ -1,5 +1,6 @@
 "use client";
 import { useContext, createContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   signInWithPopup,
   signOut,
@@ -16,6 +17,20 @@ const AuthContext = createContext({} as any);
 export const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const protectedPage = () => {
+    const router = useRouter();
+
+    useEffect(() => {
+      if (user && !loading) {
+        return;
+      }
+
+      if (!user && !loading) {
+        router.push("/login");
+      }
+    }, [user, loading]);
+  };
 
   const signUpWithEmail = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -46,6 +61,7 @@ export const AuthContextProvider = ({ children }: any) => {
   const value = {
     user,
     loading,
+    protectedPage,
     signUpWithEmail,
     handleGoogleLogin,
     handleEmailLogin,

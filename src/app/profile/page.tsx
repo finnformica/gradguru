@@ -1,14 +1,12 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { useAuth } from "../../context/auth";
+import { useEffect } from "react";
 
 const ProfilePage = () => {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <Typography>Please login to view this page</Typography>;
-  }
+  const { protectedPage } = useAuth();
+  protectedPage();
 
   return <Typography>Profile Page</Typography>;
 };
