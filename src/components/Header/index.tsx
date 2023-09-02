@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import {
   AppBar,
   Toolbar,
@@ -61,7 +62,9 @@ const Header = () => {
             (!!user ? (
               <AuthButton />
             ) : (
-              <SquareButton onClick={handleGoogleLogin}>Login</SquareButton>
+              <Link href="/login">
+                <SquareButton>Login</SquareButton>
+              </Link>
             ))}
         </Toolbar>
       </Container>

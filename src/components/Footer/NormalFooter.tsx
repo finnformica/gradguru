@@ -12,7 +12,7 @@ const NormalFooter = () => {
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
-        py: 12,
+        py: 6,
         position: "relative",
         overflow: "hidden",
       }}
