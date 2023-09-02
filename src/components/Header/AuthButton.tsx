@@ -1,12 +1,13 @@
 import React from "react";
+import Image from "next/image";
 
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { UserAuth } from "../../../context/auth";
+import { useAuth } from "../../../context/auth";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
 const AuthButton = () => {
-  const { handleLogout } = UserAuth();
+  const { user, handleLogout } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -27,7 +28,17 @@ const AuthButton = () => {
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircle />
+        {!!user.photoURL ? (
+          <Image
+            alt="user profile image"
+            src={user.photoURL}
+            width={30}
+            height={30}
+            style={{ borderRadius: "50%" }}
+          />
+        ) : (
+          <AccountCircle />
+        )}
       </IconButton>
       <Menu
         id="menu-appbar"
