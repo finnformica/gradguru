@@ -1,7 +1,7 @@
 import React from "react";
 
-const page = () => {
+const ToSPage = () => {
   return <div>Terms of Service</div>;
 };
 
-export default page;
+export default ToSPage;

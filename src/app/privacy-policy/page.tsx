@@ -1,7 +1,7 @@
 import React from "react";
 
-const page = () => {
+const PrivacyPolicyPage = () => {
   return <div>Privacy Policy</div>;
 };
 
-export default page;
+export default PrivacyPolicyPage;
