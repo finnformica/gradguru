@@ -19,12 +19,11 @@ import { useAuth } from "@/context/auth";
 
 type CoursePageProps = {
   params: { course: string };
-  window?: () => Window;
 };
 
 const drawerWidth = 200;
 
-const CoursePage = ({ params: { course }, window }: CoursePageProps) => {
+const CoursePage = ({ params: { course } }: CoursePageProps) => {
   const { user, loading } = useAuth();
   const router = useRouter();
 
@@ -32,7 +31,7 @@ const CoursePage = ({ params: { course }, window }: CoursePageProps) => {
   //   if (!user && !loading) {
   //     router.push("/login");
   //   }
-  // }, [user, loading]);
+  // }, [user, loading, router]);
 
   // if (!user) {
   //   return null;
@@ -76,13 +75,9 @@ const CoursePage = ({ params: { course }, window }: CoursePageProps) => {
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <>
       <Drawer
-        container={container}
         variant="temporary"
         anchor={"right"}
         open={mobileOpen}
