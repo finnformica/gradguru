@@ -14,6 +14,7 @@ const Footer = () => {
       style={{
         backgroundColor: theme.palette.secondary.dark,
         marginTop: "auto",
+        zIndex: theme.zIndex.drawer + 1,
       }}
     >
       {!isMobile ? <NormalFooter /> : <MobileFooter />}
