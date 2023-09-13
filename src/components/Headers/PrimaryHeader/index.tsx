@@ -10,17 +10,17 @@ import {
   useTheme,
   CircularProgress,
 } from "@mui/material";
-import { useAuth } from "../../context/auth";
+import { useAuth } from "@/context/auth";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
 import AuthButton from "./AuthButton";
 
-import UserAlert from "../Global/UserAlert";
+import UserAlert from "@/components/Global/UserAlert";
 
-import { AlertState } from "../../components/globalTypes";
-import SquareButton from "../Buttons/SquareButton";
+import { AlertState } from "@/components/globalTypes";
+import SquareButton from "@/components/Buttons/SquareButton";
 
 const Header = () => {
   const { user, loading } = useAuth();

@@ -6,9 +6,6 @@ import "@fontsource/roboto/700.css";
 
 import "@/styles/global.css";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
 import GradguruThemeProvider from "@/context/theme";
 import { AuthContextProvider } from "@/context/auth";
 
@@ -29,11 +26,7 @@ export default function RootLayout({
     <GradguruThemeProvider>
       <AuthContextProvider>
         <html lang="en">
-          <body suppressHydrationWarning={true}>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </body>
+          <body suppressHydrationWarning={true}>{children}</body>
         </html>
       </AuthContextProvider>
     </GradguruThemeProvider>

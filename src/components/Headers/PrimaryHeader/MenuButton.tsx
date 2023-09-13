@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAuth } from "../../context/auth";
+import { useAuth } from "@/context/auth";
 
 import { pages } from "./pages";
 
