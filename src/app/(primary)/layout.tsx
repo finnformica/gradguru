@@ -1,4 +1,4 @@
-import Header from "@/components/Headers/PrimaryHeader";
+import { PrimaryHeader } from "@/components/Headers";
 import Footer from "@/components/Footer";
 
 export default function PrimaryLayout({
@@ -8,7 +8,7 @@ export default function PrimaryLayout({
 }) {
   return (
     <>
-      <Header />
+      <PrimaryHeader />
       <main>{children}</main>
       <Footer />
     </>

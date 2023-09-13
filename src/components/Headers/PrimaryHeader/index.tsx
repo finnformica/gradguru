@@ -22,7 +22,7 @@ import UserAlert from "@/components/Global/UserAlert";
 import { AlertState } from "@/components/globalTypes";
 import SquareButton from "@/components/Buttons/SquareButton";
 
-const Header = () => {
+const PrimaryHeader = () => {
   const { user, loading } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -80,4 +80,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default PrimaryHeader;
