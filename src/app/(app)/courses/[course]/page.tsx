@@ -15,7 +15,7 @@ import {
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "@/context/auth";
 
 type CoursePageProps = {
   params: { course: string };

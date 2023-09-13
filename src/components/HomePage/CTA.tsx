@@ -4,10 +4,10 @@ import TextInput from "@/components/Global/TextInput";
 import { Box, CircularProgress, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
 
-import SmallTitle from "../Titles/SmallTitle";
+import SmallTitle from "@/components/Titles/SmallTitle";
 
 import { subscribe } from "@/utils";
-import UserAlert from "../Global/UserAlert";
+import UserAlert from "@/components/Global/UserAlert";
 import { AlertState } from "@/components/globalTypes";
 
 const CTA = () => {

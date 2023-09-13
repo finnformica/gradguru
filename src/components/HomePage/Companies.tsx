@@ -3,7 +3,7 @@ import { Container, Typography, Grid } from "@mui/material";
 
 import SmallTitle from "@/components/Titles/SmallTitle";
 import SmallerTitle from "@/components/Titles/SmallerTitle";
-import FullWidthContainer from "../Containers/FullWidthContainer";
+import FullWidthContainer from "@/components/Containers/FullWidthContainer";
 
 const companies = [
   {

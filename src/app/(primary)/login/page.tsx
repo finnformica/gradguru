@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 import { Box } from "@mui/material";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
-import { uiConfig, auth } from "../../../firebase/config";
-import { useAuth } from "../../context/auth";
+import { uiConfig, auth } from "@/firebase/config";
+import { useAuth } from "@/context/auth";
 
 export default function Login() {
   const { user } = useAuth();

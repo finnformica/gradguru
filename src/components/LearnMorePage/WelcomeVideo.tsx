@@ -8,14 +8,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Image from "next/image";
 import React from "react";
-import BigTitle from "../Titles/BigTitle";
+import BigTitle from "@/components/Titles/BigTitle";
 
 const WelcomeVideo = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [videoLoading, setVideoLoading] = useState(true);
 
   return (
