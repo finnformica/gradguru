@@ -57,8 +57,8 @@ const WelcomeVideo = () => {
           mb: 4,
         }}
       >
-        The only toolkit you need to secure interviews at McKinsey, Bain, and
-        BCG.
+        The only toolkit you need to secure interviews at PWC, KPMG, EY &
+        Deloitte.
       </Typography>
     </Container>
   );
