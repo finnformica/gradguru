@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Container, Box, Typography, Divider } from "@mui/material";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+
+import { Container, Box, Typography, Divider, IconButton } from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { useAuth } from "@/context/auth";
 
-import { consultingCourse } from "@/mock/courses";
+import { consultingCourse as course } from "@/mock/courses";
 
 type BulletType = {
   title: string;
@@ -29,31 +32,38 @@ const bullets: BulletType[] = [
 ];
 
 type CoursePageProps = {
-  params: { course: string };
+  params: { slug: string };
 };
 
-const CoursePage = ({ params: { course } }: CoursePageProps) => {
+const CoursePage = ({ params: { slug } }: CoursePageProps) => {
   const { user, loading } = useAuth();
-  const [videoState, setVideoState] = useState({
-    section: 0,
-    lesson: 0,
-  });
+  const params = useSearchParams();
+  const pathname = usePathname();
   const router = useRouter();
+
+  const lesson: number = Number(params.get("lesson")) || 0;
+  const section: number = Number(params.get("section")) || 0;
 
   const handleVideoIncrement = () => {
     if (
-      videoState.lesson ===
-      consultingCourse.sections[videoState.lesson].lessons.length
+      lesson >= course.sections[section].lessons.length - 1 &&
+      section >= course.sections.length - 1
     ) {
-      setVideoState({
-        section: videoState.section + 1,
-        lesson: 0,
-      });
+      return;
+    } else if (lesson >= course.sections[section].lessons.length - 1) {
+      router.push(`${pathname}?section=${section + 1}&lesson=0`);
     } else {
-      setVideoState({
-        ...videoState,
-        lesson: videoState.lesson + 1,
-      });
+      router.push(`${pathname}?section=${section}&lesson=${lesson + 1}`);
+    }
+  };
+
+  const handleVideoDecrement = () => {
+    if (lesson <= 0 && section <= 0) {
+      return;
+    } else if (lesson <= 0) {
+      router.push(`${pathname}?section=${section - 1}&lesson=0`);
+    } else {
+      router.push(`${pathname}?section=${section}&lesson=${lesson - 1}`);
     }
   };
 
@@ -69,28 +79,45 @@ const CoursePage = ({ params: { course } }: CoursePageProps) => {
 
   return (
     <Container maxWidth="lg" disableGutters>
-      <video
-        controls
-        width="100%"
-        title={`${
-          consultingCourse.sections[videoState.section].lessons[
-            videoState.lesson
-          ].name
-        } - ${consultingCourse.sections[0].name} - ${consultingCourse.name}`}
-        style={{
-          aspectRatio: "16/9",
-          border: "none",
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        <source src="/welcome-vid.mp4" type="video/mp4" />
-      </video>
+      <Box>
+        <video
+          controls
+          width="100%"
+          title={`${course.sections[0].lessons[0].name} - ${course.sections[0].name} - ${course.name}`}
+          style={{
+            aspectRatio: "16/9",
+            border: "none",
+            maxWidth: "1200px",
+            margin: "0 auto",
+          }}
+        >
+          <source src="/welcome-vid.mp4" type="video/mp4" />
+        </video>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          pt={1}
+        >
+          <IconButton onClick={handleVideoDecrement}>
+            <ChevronLeftIcon />
+          </IconButton>
+          <Typography variant="h4" fontSize={16}>
+            <span style={{ fontWeight: 700 }}>
+              {course.sections[section].name}:{" "}
+            </span>
+            {course.sections[section].lessons[lesson].name}
+          </Typography>
+          <IconButton onClick={handleVideoIncrement}>
+            <ChevronRightIcon />
+          </IconButton>
+        </Box>
+      </Box>
       <Box px={4} py={8}>
         <Typography variant="h4" fontWeight={500} pb={1}>
           About this course
         </Typography>
-        <Typography variant="body1">{consultingCourse.tag}</Typography>
+        <Typography variant="body1">{course.tag}</Typography>
       </Box>
       <Divider />
       <Box px={4} py={4}>
@@ -105,7 +132,7 @@ const CoursePage = ({ params: { course } }: CoursePageProps) => {
             whiteSpace: "pre-wrap",
           }}
         >
-          {consultingCourse.description.main}
+          {course.description.main}
         </Typography>
       </Box>
       {bullets.map((item: BulletType, key1) => (
@@ -114,7 +141,7 @@ const CoursePage = ({ params: { course } }: CoursePageProps) => {
             {item.title}
           </Typography>
           <ul>
-            {(consultingCourse.description as any)[item.item].map(
+            {(course.description as any)[item.item].map(
               (bullet: string, key2: number) => (
                 <li key={key2}>
                   <Typography>{bullet}</Typography>
