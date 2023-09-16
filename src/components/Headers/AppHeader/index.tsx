@@ -46,8 +46,10 @@ const AppHeader = ({
     <AppBar
       position="fixed"
       open={open}
+      elevation={0}
       sx={{
         backgroundColor: "#fff",
+        borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
       }}
     >
       <CssBaseline />
