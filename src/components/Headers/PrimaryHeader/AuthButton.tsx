@@ -18,6 +18,10 @@ const AuthButton = () => {
     setAnchorEl(null);
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <div>
       <IconButton
