@@ -38,9 +38,8 @@ const WelcomeVideo = () => {
           src="welcome-vid.mp4"
           title="Welcome Video"
           width={!isMediumScreen ? "600" : "450"}
-          height={!isMediumScreen ? "340" : "255"}
           style={{
-            objectFit: "cover",
+            aspectRatio: "16/9",
             borderRadius: "8px",
             border: "none",
             transform: "translateY(-10px) translateX(16px) scale(1.015)",
@@ -56,8 +55,8 @@ const WelcomeVideo = () => {
           mb: 4,
         }}
       >
-        The only toolkit you need to secure interviews at McKinsey, Bain, and
-        BCG.
+        The only toolkit you need to secure interviews at PWC, KPMG, EY &
+        Deloitte.
       </Typography>
     </Container>
   );
