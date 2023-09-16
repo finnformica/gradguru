@@ -10,7 +10,13 @@ export type SectionType = {
 
 export type CourseType = {
   name: string;
-  description: string;
+  description: {
+    main: string;
+    learn: string[];
+    prerequisites: string[];
+    who: string[];
+  };
+  tag: string;
   price: number;
   image: string;
   sections: SectionType[];
@@ -18,8 +24,31 @@ export type CourseType = {
 
 export const consultingCourse: CourseType = {
   name: "The Complete Guide to Securing a Big 4 Offer",
-  description:
-    "Teaching students and graduates how to pass the application process at PWC, KPMG, EY and Deloitte.",
+  tag: "Teaching students and graduates how to pass the application process at PWC, KPMG, EY and Deloitte.",
+  description: {
+    main: `The Complete Guide to Securing a Big 4 Offer has been carefully crafted to support you as you embark on the challenging path of securing a graduate job at one of the illustrious Big Four accounting firms, encompassing apprenticeships, spring weeks, summer internships, and full-time positions. Throughout this course, we will break down the application process for each of these firms and their specific roles, making sure to cater to all potential applicants.
+
+These stages include comprehensive breakdowns of the:
+
+- Job Application Form
+- Aptitude Tests (Numerical Reasoning & Situational Judgement tests + PWC's Game-Based assessment)
+- The Job Simulation (including HireVue)
+- Assessment Centre
+
+Our content includes engaging lectures, practice questions, and handy cheat sheets, all tailored to empower you to feel fully prepared and confident in your quest to secure an offer from your desired firm and role.
+
+Moreover, we provide you with a clear roadmap of further drills and practice that must be completed to successfully navigate each stage of the application process at these prestigious firms.
+
+With Gradguru's expert guidance and dedication to your success, you'll be better equipped to stand out and seize the opportunity to join the ranks of the Big Four. Let's embark on this transformative journey together`,
+    learn: [
+      "Understand what skills Big Four firms are looking for from new recruits",
+      "Understand the process of receiving an offer from a Big Four firm",
+      "Learn how to successfully complete each stage of the Big Four application processes",
+      "Learn how to independently practice the skills needed to successfully complete the application process",
+    ],
+    prerequisites: ["No prior skills needed, just a desire to learn!"],
+    who: ["School Leavers and University Students", "Job Seekers"],
+  },
   price: 100,
   image: "/imgs/courses/consulting/consulting-thumbnail.png",
   sections: [
