@@ -32,7 +32,7 @@ const NestedListItem = ({ section }: { section: SectionType }) => {
       <ListItemButton
         onClick={handleClick}
         divider
-        sx={{ backgroundColor: "#F6F9FA" }}
+        sx={{ backgroundColor: (theme) => theme.palette.grey[50] }}
       >
         <ListItemText
           primary={section.name}
@@ -92,11 +92,11 @@ const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
     >
       <DrawerHeader>
         <Box sx={{ flexGrow: 1 }}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronRightIcon />
-          </IconButton>
+          <AuthButton />
         </Box>
-        <AuthButton />
+        <IconButton onClick={handleDrawerClose}>
+          <ChevronRightIcon />
+        </IconButton>
       </DrawerHeader>
       <Divider />
       {drawer}
