@@ -35,7 +35,7 @@ const WelcomeVideo = () => {
         }}
       >
         <iframe
-          src="welcome-vid.mp4"
+          src="/welcome-vid.mp4"
           title="Welcome Video"
           width={!isMediumScreen ? "600" : "450"}
           style={{
