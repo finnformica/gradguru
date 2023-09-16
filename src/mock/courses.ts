@@ -1,20 +1,22 @@
-type Lesson = {
+export type LessonType = {
   name: string;
   video: string;
 };
 
-type Course = {
+export type SectionType = {
+  name: string;
+  lessons: LessonType[];
+};
+
+export type CourseType = {
   name: string;
   description: string;
   price: number;
   image: string;
-  sections: {
-    name: string;
-    lessons: Lesson[];
-  }[];
+  sections: SectionType[];
 };
 
-export const consultingCourse: Course = {
+export const consultingCourse: CourseType = {
   name: "The Complete Guide to Securing a Big 4 Offer",
   description:
     "Teaching students and graduates how to pass the application process at PWC, KPMG, EY and Deloitte.",
@@ -43,7 +45,7 @@ export const consultingCourse: Course = {
       name: "Stage 2 - Aptitude Tests (EY, KPMG & Deloitte)",
       lessons: [
         {
-          name: "Aptitudde Tests - What to Expect",
+          name: "Aptitude Tests - What to Expect",
           video: "",
         },
         {
