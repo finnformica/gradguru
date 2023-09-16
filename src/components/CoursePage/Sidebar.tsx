@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Divider,
+  Box,
   List,
   ListItemButton,
   ListItemText,
@@ -12,9 +13,10 @@ import {
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import ChevronRightIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { DrawerHeader } from "@/components/Headers";
+import AuthButton from "@/components/Headers/PrimaryHeader/AuthButton";
 
 import { consultingCourse, SectionType } from "@/mock/courses";
 
@@ -89,9 +91,12 @@ const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
       }}
     >
       <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
-          <ChevronRightIcon />
-        </IconButton>
+        <Box sx={{ flexGrow: 1 }}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronRightIcon />
+          </IconButton>
+        </Box>
+        <AuthButton />
       </DrawerHeader>
       <Divider />
       {drawer}
