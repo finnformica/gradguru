@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container, Box, Typography, Divider } from "@mui/material";
 
@@ -34,7 +34,28 @@ type CoursePageProps = {
 
 const CoursePage = ({ params: { course } }: CoursePageProps) => {
   const { user, loading } = useAuth();
+  const [videoState, setVideoState] = useState({
+    section: 0,
+    lesson: 0,
+  });
   const router = useRouter();
+
+  const handleVideoIncrement = () => {
+    if (
+      videoState.lesson ===
+      consultingCourse.sections[videoState.lesson].lessons.length
+    ) {
+      setVideoState({
+        section: videoState.section + 1,
+        lesson: 0,
+      });
+    } else {
+      setVideoState({
+        ...videoState,
+        lesson: videoState.lesson + 1,
+      });
+    }
+  };
 
   useEffect(() => {
     if (!user && !loading) {
@@ -51,7 +72,11 @@ const CoursePage = ({ params: { course } }: CoursePageProps) => {
       <video
         controls
         width="100%"
-        title={`${consultingCourse.sections[0].lessons[0].name} - ${consultingCourse.sections[0].name} - ${consultingCourse.name}`}
+        title={`${
+          consultingCourse.sections[videoState.section].lessons[
+            videoState.lesson
+          ].name
+        } - ${consultingCourse.sections[0].name} - ${consultingCourse.name}`}
         style={{
           aspectRatio: "16/9",
           border: "none",
@@ -91,8 +116,8 @@ const CoursePage = ({ params: { course } }: CoursePageProps) => {
           <ul>
             {(consultingCourse.description as any)[item.item].map(
               (bullet: string, key2: number) => (
-                <li>
-                  <Typography key={key2}>{bullet}</Typography>
+                <li key={key2}>
+                  <Typography>{bullet}</Typography>
                 </li>
               )
             )}
