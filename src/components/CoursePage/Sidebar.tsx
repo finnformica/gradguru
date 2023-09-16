@@ -1,22 +1,22 @@
 import { useState } from "react";
 import {
-  Toolbar,
   Divider,
   List,
   ListItemButton,
   ListItemText,
   Collapse,
   Drawer,
-  ListSubheader,
+  IconButton,
   Typography,
 } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import ChevronRightIcon from "@mui/icons-material/ChevronLeft";
+
+import { DrawerHeader } from "@/components/Headers";
 
 import { consultingCourse, SectionType } from "@/mock/courses";
-
-const drawerWidth = 250;
 
 const NestedListItem = ({ section }: { section: SectionType }) => {
   const [open, setOpen] = useState(false);
@@ -65,16 +65,9 @@ const NestedListItem = ({ section }: { section: SectionType }) => {
   );
 };
 
-const Sidebar = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
+const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
   const drawer = (
-    <List subheader={<ListSubheader>Course content</ListSubheader>}>
-      <Divider />
+    <List sx={{ pt: 0 }}>
       {consultingCourse.sections.map((section, key) => (
         <NestedListItem section={section} key={key} />
       ))}
@@ -82,42 +75,27 @@ const Sidebar = () => {
   );
 
   return (
-    <>
-      <Drawer
-        variant="temporary"
-        anchor={"right"}
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          flexShrink: 0,
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
-      >
-        {drawer}
-      </Drawer>
-      <Drawer
-        variant="permanent"
-        anchor={"right"}
-        sx={{
-          display: { xs: "none", sm: "block" },
-          position: "relative",
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
-        }}
-        open
-      >
-        {drawer}
-      </Drawer>
-    </>
+    <Drawer
+      variant="persistent"
+      anchor="right"
+      open={open}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          boxSizing: "border-box",
+          width: drawerWidth,
+        },
+      }}
+    >
+      <DrawerHeader>
+        <IconButton onClick={handleDrawerClose}>
+          <ChevronRightIcon />
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      {drawer}
+    </Drawer>
   );
 };
 

@@ -26,7 +26,7 @@ const CoursePage = ({ params: { course } }: CoursePageProps) => {
 
   return (
     <>
-      <Sidebar />
+      <div>Course: {course}</div>
     </>
   );
 };
