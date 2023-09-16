@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useAuth } from "@/context/auth";
-import { Sidebar } from "@/components/CoursePage";
 
 type CoursePageProps = {
   params: { course: string };
