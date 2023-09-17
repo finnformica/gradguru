@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { use, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import {
   Divider,
   Box,
@@ -27,10 +28,19 @@ const NestedListItem = ({
   lessons: LessonType[];
   section: string;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleLessonClick = (lesson: LessonType) => {
+    const idx = consultingCourse.lessons.findIndex(
+      (l) => l.name === lesson.name
+    );
+    router.push(`${pathname}?lesson=${idx}`);
   };
 
   return (
@@ -49,14 +59,19 @@ const NestedListItem = ({
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {lessons.map((lesson, key) => (
-            <ListItemButton key={key}>
+            <ListItemButton
+              key={key}
+              onClick={() => {
+                handleLessonClick(lesson);
+              }}
+            >
               <ListItemText
                 primary={`${key + 1}. ${lesson.name}`}
                 primaryTypographyProps={{ fontSize: "14px" }}
                 secondary={
                   <>
                     <OndemandVideoIcon sx={{ fontSize: "1.2rem" }} />
-                    <Typography variant="caption">10 min</Typography>
+                    <Typography variant="caption">{lesson.duration}</Typography>
                   </>
                 }
                 secondaryTypographyProps={{
