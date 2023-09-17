@@ -30,12 +30,17 @@ const CoursePage = ({ params: { slug } }: CoursePageProps) => {
     }
   }, [user, loading, router]);
 
-  if (!user) {
+  useEffect(() => {
+    if (!course) {
+      setCourse(consultingCourse);
+    }
+  }, []);
+
+  if (!course) {
     return null;
   }
 
-  if (!course) {
-    setCourse(consultingCourse);
+  if (!user) {
     return null;
   }
 
