@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 
 import { Container, Box } from "@mui/material";
 
-import { VideoControls, CourseDescription } from "@/components/CoursePage";
+import {
+  VideoControls,
+  CourseDescription,
+  VideoPlayer,
+} from "@/components/CoursePage";
 import { useAuth } from "@/context/auth";
-
-import { consultingCourse as course } from "@/mock/courses";
 
 type CoursePageProps = {
   params: { slug: string };
@@ -31,19 +33,7 @@ const CoursePage = ({ params: { slug } }: CoursePageProps) => {
   return (
     <Container maxWidth="lg" disableGutters>
       <Box>
-        <video
-          controls
-          width="100%"
-          title={`${course.lessons[0].name} - ${course.sections[0]} - ${course.name}`}
-          style={{
-            aspectRatio: "16/9",
-            border: "none",
-            maxWidth: "1200px",
-            margin: "0 auto",
-          }}
-        >
-          <source src="/welcome-vid.mp4" type="video/mp4" />
-        </video>
+        <VideoPlayer />
         <VideoControls />
       </Box>
       <CourseDescription />

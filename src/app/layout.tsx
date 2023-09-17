@@ -6,6 +6,8 @@ import "@fontsource/roboto/700.css";
 
 import "@/styles/global.css";
 
+import "next-cloudinary/dist/cld-video-player.css";
+
 import GradguruThemeProvider from "@/context/theme";
 import { AuthContextProvider } from "@/context/auth";
 
