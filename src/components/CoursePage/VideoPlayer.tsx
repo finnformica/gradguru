@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
-import { CldVideoPlayer } from "next-cloudinary";
+// import { CldVideoPlayer } from "next-cloudinary";
 
 import { consultingCourse as course } from "@/mock/courses";
 
@@ -21,14 +21,27 @@ const VideoPlayer = () => {
   }, [lesson]);
 
   return (
-    <CldVideoPlayer
-      id={`${course.lessons[lesson].name} - ${course.sections[section]} - ${course.name}`}
-      width="800px"
-      height="400px"
-      src={source}
+    // <CldVideoPlayer
+    //   id={`${course.lessons[lesson].name} - ${course.sections[section]} - ${course.name}`}
+    //   width="800px"
+    //   height="400px"
+    //   src={source}
+    //   controls
+    //   logo={false}
+    // />
+
+    <video
+      width="100%"
+      title={`${course.lessons[lesson].name} - ${course.sections[section]} - ${course.name}`}
+      src={`${process.env.NEXT_PUBLIC_CLOUDINARY_API_URL}/${source}`}
       controls
-      logo={false}
-    />
+      autoPlay
+      style={{
+        aspectRatio: "16/9",
+      }}
+    >
+      Error loading video.
+    </video>
   );
 };
 
