@@ -3,12 +3,16 @@
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
-// import { CldVideoPlayer } from "next-cloudinary";
 
-import { consultingCourse as course } from "@/mock/courses";
+import { useCourse } from "@/context/course";
 
 const VideoPlayer = () => {
   const params = useSearchParams();
+  const { course } = useCourse();
+
+  if (!course) {
+    return null;
+  }
 
   const lesson: number = Number(params.get("lesson")) || 0;
   const section: number = course.lessons[lesson].section;
@@ -21,15 +25,6 @@ const VideoPlayer = () => {
   }, [lesson]);
 
   return (
-    // <CldVideoPlayer
-    //   id={`${course.lessons[lesson].name} - ${course.sections[section]} - ${course.name}`}
-    //   width="800px"
-    //   height="400px"
-    //   src={source}
-    //   controls
-    //   logo={false}
-    // />
-
     <video
       width="100%"
       title={`${course.lessons[lesson].name} - ${course.sections[section]} - ${course.name}`}

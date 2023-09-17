@@ -5,9 +5,15 @@ import { Box, IconButton, Typography } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { consultingCourse as course } from "@/mock/courses";
+import { useCourse } from "@/context/course";
 
 const VideoControls = () => {
+  const { course } = useCourse();
+
+  if (!course) {
+    return null;
+  }
+
   const params = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   Divider,
@@ -16,10 +16,12 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
+import { useCourse } from "@/context/course";
+
 import { DrawerHeader } from "@/components/Headers";
 import AuthButton from "@/components/Headers/PrimaryHeader/AuthButton";
 
-import { consultingCourse, LessonType } from "@/mock/courses";
+import { LessonType } from "@/mock/courses";
 
 const NestedListItem = ({
   lessons,
@@ -28,6 +30,12 @@ const NestedListItem = ({
   lessons: LessonType[];
   section: string;
 }) => {
+  const { course } = useCourse();
+
+  if (!course) {
+    return null;
+  }
+
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -37,8 +45,8 @@ const NestedListItem = ({
   };
 
   const handleLessonClick = (lesson: LessonType) => {
-    const idx = consultingCourse.lessons.findIndex(
-      (l) => l.name === lesson.name
+    const idx = course.lessons.findIndex(
+      (l: LessonType) => l.name === lesson.name
     );
     router.push(`${pathname}?lesson=${idx}`);
   };
@@ -89,13 +97,19 @@ const NestedListItem = ({
 };
 
 const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
+  const { course } = useCourse();
+
+  if (!course) {
+    return null;
+  }
+
   const drawer = (
     <List sx={{ pt: 0 }}>
-      {consultingCourse.sections.map((section, key) => (
+      {course.sections.map((section, key: number) => (
         <NestedListItem
           section={section}
-          lessons={consultingCourse.lessons.filter(
-            (lesson) => lesson.section === key
+          lessons={course.lessons.filter(
+            (lesson: LessonType) => lesson.section === key
           )}
           key={key}
         />

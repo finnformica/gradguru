@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 
-import { consultingCourse as course } from "@/mock/courses";
+import { useCourse } from "@/context/course";
 
 type BulletType = {
   title: string;
@@ -24,6 +24,12 @@ const bullets: BulletType[] = [
 ];
 
 const CourseDescription = () => {
+  const { course } = useCourse();
+
+  if (!course) {
+    return null;
+  }
+
   return (
     <>
       <Divider />
