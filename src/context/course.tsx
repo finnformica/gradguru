@@ -2,7 +2,7 @@
 
 import { useContext, createContext, useState } from "react";
 
-import { CourseType, consultingCourse } from "@/mock/courses";
+import { CourseType } from "@/mock/courses";
 
 export interface CourseContextType {
   course: CourseType | null;
