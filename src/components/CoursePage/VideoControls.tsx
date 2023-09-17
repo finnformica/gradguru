@@ -9,14 +9,13 @@ import { useCourse } from "@/context/course";
 
 const VideoControls = () => {
   const { course } = useCourse();
+  const params = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
   if (!course) {
     return null;
   }
-
-  const params = useSearchParams();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const lesson: number = Number(params.get("lesson")) || 0;
   const section: number = course.lessons[lesson].section;

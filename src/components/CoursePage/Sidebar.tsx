@@ -31,14 +31,13 @@ const NestedListItem = ({
   section: string;
 }) => {
   const { course } = useCourse();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   if (!course) {
     return null;
   }
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -48,6 +47,7 @@ const NestedListItem = ({
     const idx = course.lessons.findIndex(
       (l: LessonType) => l.name === lesson.name
     );
+
     router.push(`${pathname}?lesson=${idx}`);
   };
 

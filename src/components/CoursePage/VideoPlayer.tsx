@@ -10,19 +10,23 @@ const VideoPlayer = () => {
   const params = useSearchParams();
   const { course } = useCourse();
 
+  const [source, setSource] = useState("");
+
+  const lesson: number = Number(params.get("lesson")) || 0;
+
+  useEffect(() => {
+    if (!course) {
+      return;
+    }
+
+    setSource(course.lessons[lesson].video);
+  }, [lesson]);
+
   if (!course) {
     return null;
   }
 
-  const lesson: number = Number(params.get("lesson")) || 0;
   const section: number = course.lessons[lesson].section;
-
-  const [source, setSource] = useState(course.lessons[lesson].video);
-
-  useEffect(() => {
-    setSource(course.lessons[lesson].video);
-    console.log(course.lessons[lesson].name, course.lessons[lesson].video);
-  }, [lesson]);
 
   return (
     <video

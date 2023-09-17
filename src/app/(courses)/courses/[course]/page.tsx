@@ -20,7 +20,7 @@ type CoursePageProps = {
 };
 
 const CoursePage = ({ params: { slug } }: CoursePageProps) => {
-  // handle auth
+  const { course, setCourse } = useCourse();
   const { user, loading } = useAuth();
   const router = useRouter();
 
@@ -33,9 +33,6 @@ const CoursePage = ({ params: { slug } }: CoursePageProps) => {
   if (!user) {
     return null;
   }
-
-  // fetch course data
-  const { course, setCourse } = useCourse();
 
   if (!course) {
     setCourse(consultingCourse);
