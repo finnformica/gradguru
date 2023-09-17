@@ -34,7 +34,7 @@ const CoursePage = ({ params: { slug } }: CoursePageProps) => {
         <video
           controls
           width="100%"
-          title={`${course.sections[0].lessons[0].name} - ${course.sections[0].name} - ${course.name}`}
+          title={`${course.lessons[0].name} - ${course.sections[0]} - ${course.name}`}
           style={{
             aspectRatio: "16/9",
             border: "none",

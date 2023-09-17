@@ -18,9 +18,15 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { DrawerHeader } from "@/components/Headers";
 import AuthButton from "@/components/Headers/PrimaryHeader/AuthButton";
 
-import { consultingCourse, SectionType } from "@/mock/courses";
+import { consultingCourse, LessonType } from "@/mock/courses";
 
-const NestedListItem = ({ section }: { section: SectionType }) => {
+const NestedListItem = ({
+  lessons,
+  section,
+}: {
+  lessons: LessonType[];
+  section: string;
+}) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -35,14 +41,14 @@ const NestedListItem = ({ section }: { section: SectionType }) => {
         sx={{ backgroundColor: (theme) => theme.palette.grey[50] }}
       >
         <ListItemText
-          primary={section.name}
+          primary={section}
           primaryTypographyProps={{ fontWeight: 500 }}
         />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {section.lessons.map((lesson, key) => (
+          {lessons.map((lesson, key) => (
             <ListItemButton key={key}>
               <ListItemText
                 primary={`${key + 1}. ${lesson.name}`}
@@ -71,7 +77,13 @@ const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
   const drawer = (
     <List sx={{ pt: 0 }}>
       {consultingCourse.sections.map((section, key) => (
-        <NestedListItem section={section} key={key} />
+        <NestedListItem
+          section={section}
+          lessons={consultingCourse.lessons.filter(
+            (lesson) => lesson.section === key
+          )}
+          key={key}
+        />
       ))}
     </List>
   );

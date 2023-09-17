@@ -1,11 +1,8 @@
 export type LessonType = {
   name: string;
   video: string;
-};
-
-export type SectionType = {
-  name: string;
-  lessons: LessonType[];
+  duration: string;
+  section: number;
 };
 
 export type CourseType = {
@@ -19,7 +16,8 @@ export type CourseType = {
   tag: string;
   price: number;
   image: string;
-  sections: SectionType[];
+  sections: string[];
+  lessons: LessonType[];
 };
 
 export const consultingCourse: CourseType = {
@@ -39,7 +37,7 @@ Our content includes engaging lectures, practice questions, and handy cheat shee
 
 Moreover, we provide you with a clear roadmap of further drills and practice that must be completed to successfully navigate each stage of the application process at these prestigious firms.
 
-With Gradguru's expert guidance and dedication to your success, you'll be better equipped to stand out and seize the opportunity to join the ranks of the Big Four. Let's embark on this transformative journey together`,
+With Gradguru's expert guidance and dedication to your success, you'll be better equipped to stand out and seize the opportunity to join the ranks of the Big Four. Let's embark on this transformative journey together.`,
     learn: [
       "Understand what skills Big Four firms are looking for from new recruits",
       "Understand the process of receiving an offer from a Big Four firm",
@@ -52,153 +50,183 @@ With Gradguru's expert guidance and dedication to your success, you'll be better
   price: 100,
   image: "/imgs/courses/consulting/consulting-thumbnail.png",
   sections: [
+    "Welcome",
+    "Stage 1 - Application Forms",
+    "Stage 2 - Aptitude Tests (EY, KPMG & Deloitte)",
+    "Stage 2 - PWC Aptitude Tests",
+    "Stage 3 - The Job Simulation",
+    "Stage 4 - Assessment Centre",
+    "Final Thoughts & Tips",
+  ],
+  lessons: [
     {
-      name: "Welcome",
-      lessons: [
-        {
-          name: "Introduction",
-          video: "",
-        },
-      ],
+      name: "Introduction",
+      video: "",
+      duration: "1:00",
+      section: 0,
     },
     {
-      name: "Stage 1 - Application Forms",
-      lessons: [
-        {
-          name: "Application Form Requirements",
-          video: "",
-        },
-      ],
+      name: "Application Form Requirements",
+      video: "",
+      duration: "1:00",
+      section: 1,
     },
     {
-      name: "Stage 2 - Aptitude Tests (EY, KPMG & Deloitte)",
-      lessons: [
-        {
-          name: "Aptitude Tests - What to Expect",
-          video: "",
-        },
-        {
-          name: "Situational Judgement Tests - What to Expect",
-          video: "",
-        },
-        {
-          name: "Situational Judgement Tests - Common Questions (Part 1)",
-          video: "",
-        },
-        {
-          name: "Situational Judgement Tests - Common Questions (Part 2)",
-          video: "",
-        },
-        {
-          name: "Numerical Reasoning & Data Analysis - What to Expect",
-          video: "",
-        },
-        {
-          name: "Numerical Reasoning & Data Analysis - Practice Questions",
-          video: "",
-        },
+      name: "Aptitude Tests - What to Expect",
+      video: "",
+      duration: "1:00",
+      section: 2,
+    },
+    {
+      name: "Situational Judgement Tests - What to Expect",
+      video: "",
+      duration: "1:00",
+      section: 2,
+    },
+    {
+      name: "Situational Judgement Tests - Common Questions (Part 1)",
+      video: "",
+      duration: "1:00",
+      section: 2,
+    },
+    {
+      name: "Situational Judgement Tests - Common Questions (Part 2)",
+      video: "",
+      duration: "1:00",
+      section: 2,
+    },
+    {
+      name: "Numerical Reasoning & Data Analysis - What to Expect",
+      video: "",
+      duration: "1:00",
+      section: 2,
+    },
+    {
+      name: "Numerical Reasoning & Data Analysis - Practice Questions",
+      video: "",
+      duration: "1:00",
+      section: 2,
+    },
 
-        {
-          name: "EY, KPMG & Deloitte Aptitude Test Review",
-          video: "",
-        },
-      ],
+    {
+      name: "EY, KPMG & Deloitte Aptitude Test Review",
+      video: "",
+      duration: "1:00",
+      section: 2,
     },
     {
-      name: "Stage 2 - PWC Aptitude Tests",
-      lessons: [
-        {
-          name: "PWC Aptitude Stage Overview",
-          video: "",
-        },
-        {
-          name: "Career Unlocked - Games 1-3",
-          video: "",
-        },
-        {
-          name: "Career Unlocked - Games 4-6",
-          video: "",
-        },
-        {
-          name: "Career Unlocked - Games 7-8",
-          video: "",
-        },
-        {
-          name: "Career Unlocked - Game 9",
-          video: "",
-        },
-        {
-          name: "Numerical Reasoning Test",
-          video: "",
-        },
-        {
-          name: "PWC Aptitude Test Review",
-          video: "",
-        },
-      ],
+      name: "PWC Aptitude Stage Overview",
+      video: "",
+      duration: "1:00",
+      section: 3,
     },
     {
-      name: "Stage 3 - The Job Simulation",
-      lessons: [
-        {
-          name: "Job Simulation Overview",
-          video: "",
-        },
-        {
-          name: "Job Simulation Part 1 - HireVue Motivational Questions",
-          video: "",
-        },
-        {
-          name: "Job Simulation Part 1 - HireVue Professional Questions",
-          video: "",
-        },
-        {
-          name: "Job Simulation Part 1 - HireVue Review",
-          video: "",
-        },
-        {
-          name: "Job Simulation Part 2 - Email Questions",
-          video: "",
-        },
-        {
-          name: "Job Simulation Review",
-          video: "",
-        },
-      ],
+      name: "Career Unlocked - Games 1-3",
+      video: "",
+      duration: "1:00",
+      section: 3,
     },
     {
-      name: "Stage 4 - Assessment Centre",
-      lessons: [
-        {
-          name: "Assessment Centre Overview",
-          video: "",
-        },
-        {
-          name: "Group Exercise",
-          video: "",
-        },
-        {
-          name: "Individual Exercise",
-          video: "",
-        },
-        {
-          name: "Individual Interview",
-          video: "",
-        },
-        {
-          name: "Assessment Centre Review",
-          video: "",
-        },
-      ],
+      name: "Career Unlocked - Games 4-6",
+      video: "",
+      duration: "1:00",
+      section: 3,
     },
     {
-      name: "Final Thoughts & Tips",
-      lessons: [
-        {
-          name: "Course Review",
-          video: "",
-        },
-      ],
+      name: "Career Unlocked - Games 7-8",
+      video: "",
+      duration: "1:00",
+      section: 3,
+    },
+    {
+      name: "Career Unlocked - Game 9",
+      video: "",
+      duration: "1:00",
+      section: 3,
+    },
+    {
+      name: "Numerical Reasoning Test",
+      video: "",
+      duration: "1:00",
+      section: 3,
+    },
+    {
+      name: "PWC Aptitude Test Review",
+      video: "",
+      duration: "1:00",
+      section: 3,
+    },
+    {
+      name: "Job Simulation Overview",
+      video: "",
+      duration: "1:00",
+      section: 4,
+    },
+    {
+      name: "Job Simulation Part 1 - HireVue Motivational Questions",
+      video: "",
+      duration: "1:00",
+      section: 4,
+    },
+    {
+      name: "Job Simulation Part 1 - HireVue Professional Questions",
+      video: "",
+      duration: "1:00",
+      section: 4,
+    },
+    {
+      name: "Job Simulation Part 1 - HireVue Review",
+      video: "",
+      duration: "1:00",
+      section: 4,
+    },
+    {
+      name: "Job Simulation Part 2 - Email Questions",
+      video: "",
+      duration: "1:00",
+      section: 4,
+    },
+    {
+      name: "Job Simulation Review",
+      video: "",
+      duration: "1:00",
+      section: 4,
+    },
+    {
+      name: "Assessment Centre Overview",
+      video: "",
+      duration: "1:00",
+      section: 5,
+    },
+    {
+      name: "Group Exercise",
+      video: "",
+      duration: "1:00",
+      section: 5,
+    },
+    {
+      name: "Individual Exercise",
+      video: "",
+      duration: "1:00",
+      section: 5,
+    },
+    {
+      name: "Individual Interview",
+      video: "",
+      duration: "1:00",
+      section: 5,
+    },
+    {
+      name: "Assessment Centre Review",
+      video: "",
+      duration: "1:00",
+      section: 5,
+    },
+    {
+      name: "Course Review",
+      video: "",
+      duration: "1:00",
+      section: 6,
     },
   ],
 };

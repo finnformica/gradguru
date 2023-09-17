@@ -13,28 +13,21 @@ const VideoControls = () => {
   const router = useRouter();
 
   const lesson: number = Number(params.get("lesson")) || 0;
-  const section: number = Number(params.get("section")) || 0;
+  const section: number = course.lessons[lesson].section;
 
   const handleVideoIncrement = () => {
-    if (
-      lesson >= course.sections[section].lessons.length - 1 &&
-      section >= course.sections.length - 1
-    ) {
+    if (lesson >= course.lessons.length - 1) {
       return;
-    } else if (lesson >= course.sections[section].lessons.length - 1) {
-      router.push(`${pathname}?section=${section + 1}&lesson=0`);
     } else {
-      router.push(`${pathname}?section=${section}&lesson=${lesson + 1}`);
+      router.push(`${pathname}?lesson=${lesson + 1}`);
     }
   };
 
   const handleVideoDecrement = () => {
-    if (lesson <= 0 && section <= 0) {
+    if (lesson <= 0) {
       return;
-    } else if (lesson <= 0) {
-      router.push(`${pathname}?section=${section - 1}&lesson=0`);
     } else {
-      router.push(`${pathname}?section=${section}&lesson=${lesson - 1}`);
+      router.push(`${pathname}?lesson=${lesson - 1}`);
     }
   };
 
@@ -46,24 +39,16 @@ const VideoControls = () => {
       py={1}
       textAlign={"center"}
     >
-      <IconButton
-        onClick={handleVideoDecrement}
-        disabled={lesson <= 0 && section <= 0}
-      >
+      <IconButton onClick={handleVideoDecrement} disabled={lesson <= 0}>
         <ChevronLeftIcon />
       </IconButton>
       <Typography variant="h4" fontSize={16}>
-        <span style={{ fontWeight: 700 }}>
-          {course.sections[section].name}:{" "}
-        </span>
-        {course.sections[section].lessons[lesson].name}
+        <span style={{ fontWeight: 700 }}>{course.sections[section]}: </span>
+        {course.lessons[lesson].name}
       </Typography>
       <IconButton
         onClick={handleVideoIncrement}
-        disabled={
-          lesson >= course.sections[section].lessons.length - 1 &&
-          section >= course.sections.length - 1
-        }
+        disabled={lesson >= course.lessons.length - 1}
       >
         <ChevronRightIcon />
       </IconButton>
