@@ -24,5 +24,3 @@ export const pages = [
   //   route: "/resources",
   // },
 ];
-
-export default pages;

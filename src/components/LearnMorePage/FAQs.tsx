@@ -62,9 +62,8 @@ const BackgroundColours = () => {
 };
 
 const FAQs = () => {
-  const height = "300px";
   return (
-    <Box sx={{ position: "relative", height }}>
+    <Box sx={{ position: "relative", height: "300px", mb: 4 }}>
       <QuestionsAccordion />
       <BackgroundColours />
     </Box>

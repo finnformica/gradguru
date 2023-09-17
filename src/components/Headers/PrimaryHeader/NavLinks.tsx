@@ -40,7 +40,7 @@ const NavLinks = () => {
     >
       {pages.map((page, key: number) => (
         <NavLink href={page.route} key={key} active={pathname === page.route}>
-          <Typography variant="body1" fontWeight={500}>
+          <Typography variant="body2" fontWeight={500}>
             {page.name}
           </Typography>
         </NavLink>
