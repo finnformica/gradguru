@@ -4,6 +4,8 @@ import {
   collection,
   setDoc,
   addDoc,
+  getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { app } from "./config";
 import { FirestoreCollectionType, FirestoreDataType } from "./types";
@@ -29,4 +31,18 @@ const addData = async (
   return { result, error };
 };
 
-export { addData };
+const retrieveDocumentIds = async (collectionName: FirestoreCollectionType) => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  return querySnapshot.docs.map((doc) => doc.id);
+};
+
+const retrieveDocument = async (
+  collectionName: FirestoreCollectionType,
+  documentId: string
+) => {
+  const docRef = doc(db, collectionName, documentId);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists() ? docSnap.data() : null;
+};
+
+export { addData, retrieveDocumentIds, retrieveDocument };
