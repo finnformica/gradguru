@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import { useCourse } from "@/context/course";
+
 import NavbarLogo from "./NavbarLogo";
 
 const drawerWidth = 240;
@@ -42,6 +44,8 @@ const AppHeader = ({
   open: boolean;
   handleDrawerOpen: () => void;
 }) => {
+  const { course } = useCourse();
+
   return (
     <AppBar
       position="fixed"
@@ -55,15 +59,17 @@ const AppHeader = ({
       <CssBaseline />
       <Toolbar>
         <NavbarLogo sx={{ flexGrow: 1 }} />
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="end"
-          onClick={handleDrawerOpen}
-          sx={{ ...(open && { display: "none" }) }}
-        >
-          <MenuIcon />
-        </IconButton>
+        {course && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="end"
+            onClick={handleDrawerOpen}
+            sx={{ ...(open && { display: "none" }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
       </Toolbar>
     </AppBar>
   );
