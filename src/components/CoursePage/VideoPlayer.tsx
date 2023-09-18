@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { useCourse } from "@/context/course";
+import { Box, CircularProgress } from "@mui/material";
 
 const VideoPlayer = () => {
   const params = useSearchParams();
   const { course } = useCourse();
 
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
   const lesson: number = Number(params.get("lesson")) || 0;
 
@@ -20,15 +22,15 @@ const VideoPlayer = () => {
     }
 
     setSource(course.lessons[lesson].video);
-  }, [lesson]);
+    setLoading(false);
+  }, [lesson, course]);
 
   if (!course) {
     return null;
   }
-
   const section: number = course.lessons[lesson].section;
 
-  return (
+  return !loading ? (
     <video
       width="100%"
       title={`${course.lessons[lesson].name} - ${course.sections[section]} - ${course.name}`}
@@ -41,6 +43,18 @@ const VideoPlayer = () => {
     >
       Error loading video.
     </video>
+  ) : (
+    <Box
+      sx={{
+        width: "100%",
+        aspectRatio: "16/9",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress />
+    </Box>
   );
 };
 
