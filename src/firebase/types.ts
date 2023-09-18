@@ -1,3 +1,5 @@
+import { CourseType } from "@/mock/courses";
+
 type MailListType = {
   email: string;
   subscribed: boolean;
@@ -12,6 +14,6 @@ type EmailMessageType = {
   };
 };
 
-type FirestoreDataType = MailListType | EmailMessageType;
+export type FirestoreDataType = MailListType | EmailMessageType | CourseType;
 
-type FirestoreCollectionType = "mail-list" | "mail";
+export type FirestoreCollectionType = "mail-list" | "mail" | "courses";

@@ -6,6 +6,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { app } from "./config";
+import { FirestoreCollectionType, FirestoreDataType } from "./types";
 
 const db = getFirestore(app);
 
