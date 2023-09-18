@@ -18,7 +18,7 @@ const UserAlert = ({ setState, state }: UserAlertProps) => {
         opacity: state.open ? 1 : 0,
         transition: "all 0.5s ease-in-out",
         position: "fixed",
-        zIndex: state.open ? 1000 : -1,
+        zIndex: (theme) => (state.open ? theme.zIndex.appBar + 10 : -1),
         top: 20,
         left: 0,
         right: 0,

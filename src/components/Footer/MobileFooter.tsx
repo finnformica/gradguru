@@ -7,7 +7,7 @@ import CompanyInfo from "./CompanyInfo";
 
 const MobileFooter = () => {
   return (
-    <Box sx={{ p: 4, display: "flex", flexDirection: "column", gap: 6, mt: 4 }}>
+    <Box sx={{ p: 4, display: "flex", flexDirection: "column", gap: 6 }}>
       <FooterLinks title="Company" links={companyLinks} />
       <FooterLinks title="Products" links={productLinks} />
       <CompanyInfo />

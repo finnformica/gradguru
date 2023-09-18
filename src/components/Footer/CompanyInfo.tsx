@@ -15,7 +15,7 @@ const CompanyInfo = () => {
       }}
     >
       <Image
-        src="/small-logo-no-bg.png"
+        src="/logos/small-logo.png"
         alt="gradguru logo"
         width={100}
         height={100}

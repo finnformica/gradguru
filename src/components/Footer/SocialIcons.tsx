@@ -4,13 +4,11 @@ import { Box, IconButton, useTheme } from "@mui/material";
 import socials from "./socials";
 
 type SocialIconProps = {
-  social: {
-    link: string;
-    icon: React.ReactNode;
-  };
+  link: string;
+  icon: React.ReactNode;
 };
 
-const SocialIcon = ({ social }: SocialIconProps) => {
+const SocialIcon = ({ ...social }: SocialIconProps) => {
   const theme = useTheme();
   const [isHover, setIsHover] = useState(false);
 
@@ -18,10 +16,10 @@ const SocialIcon = ({ social }: SocialIconProps) => {
     <a
       href={social.link}
       style={{
-        textDecoration: "none",
         color: isHover
           ? theme.palette.secondary.light
           : theme.palette.secondary.main,
+        transition: "color 0.2s ease-in-out",
       }}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -52,7 +50,7 @@ const SocialIcons = () => {
       }}
     >
       {socials.map((social, key) => (
-        <SocialIcon key={key} social={social} />
+        <SocialIcon key={key} {...social} />
       ))}
     </Box>
   );

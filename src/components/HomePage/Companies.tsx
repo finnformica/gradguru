@@ -3,32 +3,32 @@ import { Container, Typography, Grid } from "@mui/material";
 
 import SmallTitle from "@/components/Titles/SmallTitle";
 import SmallerTitle from "@/components/Titles/SmallerTitle";
-import FullWidthContainer from "../Containers/FullWidthContainer";
+import FullWidthContainer from "@/components/Containers/FullWidthContainer";
 
 const companies = [
   {
     name: "Deloitte",
-    src: "/imgs/logos/logo1.png",
+    src: "/imgs/company-logos/logo1.png",
   },
   {
     name: "PwC",
-    src: "/imgs/logos/logo2.png",
+    src: "/imgs/company-logos/logo2.png",
   },
   {
     name: "KPMG",
-    src: "/imgs/logos/logo3.png",
+    src: "/imgs/company-logos/logo3.png",
   },
   {
     name: "EY",
-    src: "/imgs/logos/logo4.png",
+    src: "/imgs/company-logos/logo4.png",
   },
   {
     name: "JP Morgan",
-    src: "/imgs/logos/logo5.png",
+    src: "/imgs/company-logos/logo5.png",
   },
   {
     name: "BAE Systems",
-    src: "/imgs/logos/logo6.png",
+    src: "/imgs/company-logos/logo6.png",
   },
 ];
 
