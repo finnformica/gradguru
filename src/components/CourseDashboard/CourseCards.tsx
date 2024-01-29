@@ -1,80 +1,76 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
-import { Typography, Box, Container } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
-import { courses } from "./courses";
 
 import { useAuth } from "@/context/auth";
+import { CourseType } from "../globalTypes";
 
-type CardProps = {
-  title: string;
-  id: string;
-  description: string;
-  src: string;
-  active: boolean;
-  href: string;
-};
-
-const Card = ({ ...course }: CardProps) => {
+const CourseAccordion = ({ ...course }: CourseType) => {
+  console.log(course);
   return (
-    <Box
-      sx={{
-        width: "200px",
-        height: "200px",
-        borderRadius: "8px",
-        border: "1px rgba(71, 86, 119, 0.2) solid",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 2,
-        textAlign: "center",
-        transition: "all 0.2s ease-in-out",
-        "&:hover": course.active
-          ? {
-              cursor: "pointer",
-              border: "1px rgba(71, 86, 119, 0.6) solid",
-              transform: "scale(1.02)",
-            }
-          : {},
-      }}
-    >
-      <Image
-        alt={`${course.title} icon`}
-        src={course.src}
-        width={65}
-        height={65}
-      />
-      <Typography
-        variant="h5"
-        fontWeight={400}
-        fontSize={16}
-        sx={{
-          color: course.active
-            ? "rgba(71, 86, 119, 1)"
-            : "rgba(71, 86, 119, 0.4)",
-        }}
+    <Accordion disabled={!course.active} elevation={2}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1-content"
+        id="panel1-header"
       >
-        {course.title}
-      </Typography>
-    </Box>
+        <Typography variant="h4">{course.title}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
+          <Link href={`/dashboard/courses/${course.id}`}>
+            <Box
+              sx={{
+                ":hover": {
+                  transition: "all 0.2s ease-in-out",
+                  color: "grey.600",
+                },
+              }}
+            >
+              <Typography variant="h5">Videos</Typography>
+            </Box>
+          </Link>
+          <Box>
+            <Typography variant="h5">Tests</Typography>
+          </Box>
+          <Box>
+            <Typography variant="h5">Drills</Typography>
+          </Box>
+          <Box>
+            <Typography variant="h5">Resources</Typography>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </Typography>
+          </Box>
+        </Box>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 
 const CourseCards = () => {
   const [userCourses, setUserCourses] = useState<string[]>([]);
+  const [courses, setCourses] = useState<CourseType[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(user.uid);
-
+    const fetchUserData = async () => {
       // retrieve user courses from database
       const data = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user.uid}`
@@ -92,9 +88,29 @@ const CourseCards = () => {
     };
 
     if (user) {
-      fetchData();
+      fetchUserData();
     }
   }, [user]);
+
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      // retrieve all courses from database
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=courses`
+      ).then((res) => res.json());
+
+      // filter courses based on user subscription
+      const filteredCourses = data.documents.filter((course: CourseType) =>
+        userCourses.includes(course.id)
+      );
+
+      setCourses(filteredCourses);
+    };
+
+    if (userCourses.length > 0) {
+      fetchCourseData();
+    }
+  }, [userCourses]);
 
   return (
     <>
@@ -115,17 +131,9 @@ const CourseCards = () => {
           {userCourses.length === 0 ? (
             <Typography>You have no purchased courses</Typography>
           ) : (
-            courses
-              .filter((course) => userCourses.includes(course.id))
-              .map((course, key) =>
-                course.active ? (
-                  <Link href={course.href} key={key}>
-                    <Card {...course} />
-                  </Link>
-                ) : (
-                  <Card key={key} {...course} />
-                )
-              )
+            courses.map((course, key) => (
+              <CourseAccordion key={key} {...course} />
+            ))
           )}
         </LoadingWrapper>
       </Box>
