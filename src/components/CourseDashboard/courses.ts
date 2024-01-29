@@ -1,6 +1,7 @@
 export const courses = [
   {
     title: "Big 4 Consulting",
+    id: "consulting",
     description: "Learn how to ace the Big 4 Consulting interview process.",
     src: "/icons/course-icons/consulting-icon.png",
     active: true,
@@ -8,6 +9,7 @@ export const courses = [
   },
   {
     title: "Financial Services",
+    id: "finance",
     description: "Learn how to ace the Big 4 Consulting interview process.",
     src: "/icons/course-icons/finance-icon.png",
     active: false,
@@ -15,6 +17,7 @@ export const courses = [
   },
   {
     title: "Investment Banking",
+    id: "investment",
     description: "Learn how to ace the Big 4 Consulting interview process.",
     src: "/icons/course-icons/investment-icon.png",
     active: false,
@@ -22,6 +25,7 @@ export const courses = [
   },
   {
     title: "Software Engineering",
+    id: "software",
     description: "Learn how to ace the Big 4 Consulting interview process.",
     src: "/icons/course-icons/software-icon.png",
     active: false,
@@ -29,6 +33,7 @@ export const courses = [
   },
   {
     title: "Law",
+    id: "law",
     description: "Learn how to ace the Big 4 Consulting interview process.",
     src: "/icons/course-icons/law-icon.png",
     active: false,

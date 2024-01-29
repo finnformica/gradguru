@@ -19,7 +19,7 @@ type CoursePageProps = {
 
 export async function generateStaticParams() {
   const courses = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=courses`
+    `${process.env.NEXT_PUBLIC_API_URL}/firebase/document/ids?collection=courses`
   ).then((res) => res.json());
 
   return courses.map((course: string) => ({

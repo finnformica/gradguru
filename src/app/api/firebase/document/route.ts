@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import type { FirestoreCollectionType } from "@/firebase/types";
 import {
   addData,
-  retrieveDocumentIds,
+  retrieveAllDocuments,
   retrieveDocument,
 } from "@/firebase/utils";
 
@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
       { status: 400 }
     );
   } else if (!document) {
-    const documentIds = await retrieveDocumentIds(collection);
-    return NextResponse.json({ documentIds }, { status: 200 });
+    const documents = await retrieveAllDocuments(collection);
+    return NextResponse.json({ documents }, { status: 200 });
   } else {
     const data = await retrieveDocument(collection, document);
     return NextResponse.json({ data }, { status: 200 });
