@@ -1,15 +1,15 @@
 import React from "react";
 import { Typography, Box } from "@mui/material";
 
-const CourseTests = () => {
+const CourseResources = () => {
   return (
     <>
       <Typography variant="h2" fontWeight={500}>
-        Your Tests
+        Your Resources
       </Typography>
       <Box></Box>
     </>
   );
 };
 
-export default CourseTests;
+export default CourseResources;

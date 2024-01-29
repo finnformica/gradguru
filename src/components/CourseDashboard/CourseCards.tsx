@@ -6,7 +6,6 @@ import Link from "next/link";
 
 import { Typography, Box, Container } from "@mui/material";
 
-import MUIModal from "@/components/Global/UdemyModal";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { courses } from "./courses";
 
@@ -68,7 +67,6 @@ const Card = ({ ...course }: CardProps) => {
 };
 
 const CourseCards = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userCourses, setUserCourses] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -99,8 +97,7 @@ const CourseCards = () => {
   }, [user]);
 
   return (
-    <Container sx={{ pt: 4 }}>
-      <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
+    <>
       <Typography variant="h2" fontWeight={500}>
         Your Courses
       </Typography>
@@ -132,7 +129,7 @@ const CourseCards = () => {
           )}
         </LoadingWrapper>
       </Box>
-    </Container>
+    </>
   );
 };
 
