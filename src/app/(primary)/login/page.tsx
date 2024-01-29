@@ -11,8 +11,8 @@ export default function Login() {
   const router = useRouter();
 
   if (user) {
-    // user is already logged in, redirect to home page
-    router.push("/");
+    // user is already logged in, redirect to dashboard
+    router.push("/dashboard");
   }
 
   return (

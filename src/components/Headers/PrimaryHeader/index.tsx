@@ -15,7 +15,6 @@ import { useAuth } from "@/context/auth";
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
-import AuthButton from "./AuthButton";
 
 import UserAlert from "@/components/Global/UserAlert";
 
@@ -60,20 +59,11 @@ const PrimaryHeader = () => {
           </Box>
 
           {isMobile && <MenuButton />}
-          {!isMobile &&
-            (!!user ? (
-              <AuthButton />
-            ) : (
-              <Link href="/login">
-                <SquareButton>
-                  {loading ? (
-                    <CircularProgress size="1.5rem" sx={{ color: "#FFF" }} />
-                  ) : (
-                    "Login"
-                  )}
-                </SquareButton>
-              </Link>
-            ))}
+          {!isMobile && (
+            <Link href="/login">
+              <SquareButton>Login</SquareButton>
+            </Link>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
