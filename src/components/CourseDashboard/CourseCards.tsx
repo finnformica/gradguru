@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import {
@@ -12,16 +12,71 @@ import {
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
+import QuizIcon from "@mui/icons-material/Quiz";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
 
 import { useAuth } from "@/context/auth";
 import { CourseType } from "../globalTypes";
 
+const Title = ({
+  children,
+  icon,
+}: {
+  children: React.ReactNode;
+  icon?: React.ReactElement;
+}) => (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 1,
+      mb: 1,
+    }}
+  >
+    {icon && icon}
+    <Typography variant="h5">{children}</Typography>
+  </Box>
+);
+
+const AccordionCard = ({ title }: { title: string }) => (
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+      gap: 1,
+      p: 2,
+      border: (theme) => `1px solid ${theme.palette.grey[300]}`,
+      backgroundColor: "grey.50",
+      borderRadius: "10px",
+      "&:hover": {
+        cursor: "pointer",
+        borderColor: "primary.main",
+        backgroundColor: "#f1f8e9",
+        transition: "all 0.2s ease-in-out",
+      },
+    }}
+  >
+    <Link href={"#"}>
+      <Typography>{title}</Typography>
+    </Link>
+  </Box>
+);
+
 const CourseAccordion = ({ ...course }: CourseType) => {
-  console.log(course);
   return (
-    <Accordion disabled={!course.active} elevation={2}>
+    <Accordion
+      disabled={!course.active}
+      elevation={2}
+      sx={{ width: { xs: "100%", md: "80%" } }}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1-content"
@@ -30,32 +85,38 @@ const CourseAccordion = ({ ...course }: CourseType) => {
         <Typography variant="h4">{course.title}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
-          <Link href={`/dashboard/courses/${course.id}`}>
-            <Box
-              sx={{
-                ":hover": {
-                  transition: "all 0.2s ease-in-out",
-                  color: "grey.600",
-                },
-              }}
-            >
-              <Typography variant="h5">Videos</Typography>
+        <Box sx={{ display: "flex", gap: 4, flexDirection: "column", m: 2 }}>
+          <Box>
+            <Title icon={<SmartDisplayIcon />}>Videos</Title>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {course.lessons.slice(0, 3).map((lesson, key) => (
+                <AccordionCard title={lesson.name} />
+              ))}
             </Box>
-          </Link>
-          <Box>
-            <Typography variant="h5">Tests</Typography>
           </Box>
           <Box>
-            <Typography variant="h5">Drills</Typography>
+            <Title icon={<QuizIcon />}>Tests</Title>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {course.tests.map((test, key) => (
+                <AccordionCard key={key} title={test.title} />
+              ))}
+            </Box>
           </Box>
           <Box>
-            <Typography variant="h5">Resources</Typography>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <Title icon={<FactCheckIcon />}>Drills</Title>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {course.drills.map((drill, key) => (
+                <AccordionCard key={key} title={drill.title} />
+              ))}
+            </Box>
+          </Box>
+          <Box>
+            <Title icon={<FolderCopyIcon />}>Resources</Title>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {course.resources.map((resource, key) => (
+                <AccordionCard key={key} title={resource.title} />
+              ))}
+            </Box>
           </Box>
         </Box>
       </AccordionDetails>
