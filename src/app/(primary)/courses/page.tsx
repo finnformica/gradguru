@@ -1,7 +1,5 @@
-import CourseCards from "@/components/CourseDashboard/CourseCards";
-
 const CourseDashboard = () => {
-  return <CourseCards />;
+  return <div>Course sale page</div>;
 };
 
 export default CourseDashboard;

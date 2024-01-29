@@ -66,10 +66,10 @@ const Card = ({ ...course }: CardProps) => {
 const CourseCards = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <Container>
+    <Container sx={{ pt: 4 }}>
       <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
-      <Typography variant="h5" fontWeight={500}>
-        Course Dashboard
+      <Typography variant="h2" fontWeight={500}>
+        Your Courses
       </Typography>
       <Box
         sx={{
