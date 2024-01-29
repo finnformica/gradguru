@@ -36,6 +36,13 @@ const retrieveDocumentIds = async (collectionName: FirestoreCollectionType) => {
   return querySnapshot.docs.map((doc) => doc.id);
 };
 
+const retrieveAllDocuments = async (
+  collectionName: FirestoreCollectionType
+) => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  return querySnapshot.docs.map((doc) => doc.data());
+};
+
 const retrieveDocument = async (
   collectionName: FirestoreCollectionType,
   documentId: string
@@ -45,4 +52,4 @@ const retrieveDocument = async (
   return docSnap.exists() ? docSnap.data() : null;
 };
 
-export { addData, retrieveDocumentIds, retrieveDocument };
+export { addData, retrieveDocumentIds, retrieveDocument, retrieveAllDocuments };
