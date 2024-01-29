@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Typography, Box, Container } from "@mui/material";
 
 import MUIModal from "@/components/Global/UdemyModal";
+import LoadingWrapper from "@/components/LoadingWrapper";
 import { courses } from "./courses";
-import Link from "next/link";
+
+import { useAuth } from "@/context/auth";
 
 type CardProps = {
   title: string;
+  id: string;
   description: string;
   src: string;
   active: boolean;
@@ -65,6 +69,35 @@ const Card = ({ ...course }: CardProps) => {
 
 const CourseCards = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userCourses, setUserCourses] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(user.uid);
+
+      // retrieve user courses from database
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user.uid}`
+      )
+        .then((res) => res.json())
+        .then((res) => res.data);
+
+      // if course is not found
+      if (!data) {
+        console.log("Course not found");
+      } else {
+        setUserCourses(data.courses);
+      }
+      setLoading(false);
+    };
+
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
+
   return (
     <Container sx={{ pt: 4 }}>
       <MUIModal open={isModalOpen} setOpen={setIsModalOpen} />
@@ -81,15 +114,23 @@ const CourseCards = () => {
           my: 4,
         }}
       >
-        {courses.map((course, key) =>
-          course.active ? (
-            <Link href={course.href} key={key}>
-              <Card {...course} />
-            </Link>
+        <LoadingWrapper loading={loading} size={40}>
+          {userCourses.length === 0 ? (
+            <Typography>You have no purchased courses</Typography>
           ) : (
-            <Card key={key} {...course} />
-          )
-        )}
+            courses
+              .filter((course) => userCourses.includes(course.id))
+              .map((course, key) =>
+                course.active ? (
+                  <Link href={course.href} key={key}>
+                    <Card {...course} />
+                  </Link>
+                ) : (
+                  <Card key={key} {...course} />
+                )
+              )
+          )}
+        </LoadingWrapper>
       </Box>
     </Container>
   );
