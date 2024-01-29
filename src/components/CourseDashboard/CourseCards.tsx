@@ -90,7 +90,7 @@ const CourseAccordion = ({ ...course }: CourseType) => {
             <Title icon={<SmartDisplayIcon />}>Videos</Title>
             <Box sx={{ display: "flex", gap: 1 }}>
               {course.lessons.slice(0, 3).map((lesson, key) => (
-                <AccordionCard title={lesson.name} />
+                <AccordionCard title={lesson.name} key={key} />
               ))}
             </Box>
           </Box>
