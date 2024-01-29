@@ -56,16 +56,28 @@ const MenuButton = () => {
             </Link>
           </MenuItem>
         ))}
-        <MenuItem
-          key="Login"
-          onClick={() => {
-            handleCloseUserMenu();
-          }}
-        >
-          <Link href="/login">
-            <Typography textAlign="center">Login</Typography>
-          </Link>
-        </MenuItem>
+        {!!user ? (
+          <MenuItem
+            key="Logout"
+            onClick={() => {
+              handleCloseUserMenu();
+              handleLogout();
+            }}
+          >
+            <Typography textAlign="center">Logout</Typography>
+          </MenuItem>
+        ) : (
+          <MenuItem
+            key="Login"
+            onClick={() => {
+              handleCloseUserMenu();
+            }}
+          >
+            <Link href="/login">
+              <Typography textAlign="center">Login</Typography>
+            </Link>
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );

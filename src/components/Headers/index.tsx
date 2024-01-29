@@ -1,5 +1,6 @@
-import AppHeader from "./AppHeader";
+import AppHeader from "./VideoPlayerHeader";
 import PrimaryHeader from "./PrimaryHeader";
 import DrawerHeader from "./DrawerHeader";
+import DashboardHeader from "./DashboardHeader";
 
-export { AppHeader, PrimaryHeader, DrawerHeader };
+export { AppHeader, PrimaryHeader, DrawerHeader, DashboardHeader };

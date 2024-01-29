@@ -19,7 +19,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useCourse } from "@/context/course";
 
 import { DrawerHeader } from "@/components/Headers";
-import AuthButton from "@/components/Headers/PrimaryHeader/AuthButton";
+import AuthButton from "@/components/Headers/DashboardHeader/AuthButton";
 
 import { LessonType } from "@/mock/courses";
 
