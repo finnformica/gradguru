@@ -38,7 +38,6 @@ const DashboardHeader = () => {
     <AppBar
       position="static"
       sx={{
-        zIndex: (theme) => theme.zIndex.drawer + 1,
         background: "#FFF",
         boxShadow: "none",
         py: 2,
