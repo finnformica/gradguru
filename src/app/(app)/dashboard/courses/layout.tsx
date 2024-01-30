@@ -1,59 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { styled, Box } from "@mui/material";
+import { Fab } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import { CourseContextProvider } from "@/context/course";
 
-import { AppHeader, DrawerHeader } from "@/components/Headers";
 import { Sidebar } from "@/components/CoursePage";
 
-const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-  open?: boolean;
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  transition: theme.transitions.create("margin", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginRight: -drawerWidth,
-  ...(open && {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: 0,
-  }),
-}));
+const drawerWidth = 340;
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   // handle drawer
   const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <CourseContextProvider>
-      <Box sx={{ display: "flex" }}>
-        <AppHeader open={open} handleDrawerOpen={handleDrawerOpen} />
-        <Main open={open}>
-          <DrawerHeader />
-          {children}
-        </Main>
-        <Sidebar
-          open={open}
-          handleDrawerClose={handleDrawerClose}
-          drawerWidth={drawerWidth}
-        />
-      </Box>
+      <Sidebar open={open} drawerWidth={drawerWidth} />
+      {children}
+      <Fab
+        sx={{ position: "fixed", bottom: 40, right: 40, zIndex: 1301 }}
+        color="primary"
+        aria-label="sidemenu"
+        onClick={() => setOpen(!open)}
+      >
+        <MenuIcon sx={{ color: "white" }} />
+      </Fab>
     </CourseContextProvider>
   );
 }
