@@ -27,9 +27,13 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const { data, documentId, collection } = await request.json();
+  const { searchParams } = new URL(request.nextUrl);
+  const collection = searchParams.get("collection") as FirestoreCollectionType;
+  const document = searchParams.get("document");
 
-  const { result, error } = await addData(data, documentId, collection);
+  const data = await request.json();
+
+  const { result, error } = await addData(data, document, collection);
 
   if (error) {
     console.log("An error occured", error);
