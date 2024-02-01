@@ -129,7 +129,7 @@ const ListCollapse = ({ section }: any) => {
       </ListItem>
       <Divider />
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List>
+        <List sx={{ p: 0 }}>
           {section.children.map((item: any) => (
             <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
               <Link href={item.route} passHref>
@@ -207,7 +207,7 @@ export default function MiniDrawer({
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{ p: 0 }}>
           {sidebarSections.map((section, key) => (
             <ListCollapse key={key} section={section} />
           ))}
