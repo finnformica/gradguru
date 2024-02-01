@@ -8,6 +8,8 @@ import QuestionElement from "./QuestionElement";
 
 import { FormState } from "./types";
 
+import { useAlert } from "@/context/adminAlert";
+
 const initialQuestion = {
   type: "multiple" as "rank" | "multiple",
   question: "",
@@ -22,13 +24,35 @@ const initialForm = {
 };
 
 const AdminSJT = () => {
+  const { setAlertState } = useAlert();
   const [form, setForm] = useState<FormState>({ ...initialForm });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("form submitted");
-    console.log(form);
-    // setForm(initialForm);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      }
+    );
+
+    if (response.status !== 200) {
+      setAlertState({
+        message: "Uh oh! Error occurred :(",
+        open: true,
+        severity: "error",
+      });
+    } else {
+      setAlertState({
+        message: "SJT question added",
+        open: true,
+        severity: "success",
+      });
+      setForm({ ...initialForm });
+    }
   };
 
   return (
