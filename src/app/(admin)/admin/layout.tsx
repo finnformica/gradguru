@@ -130,8 +130,8 @@ const ListCollapse = ({ section }: any) => {
       <Divider />
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List sx={{ p: 0 }}>
-          {section.children.map((item: any) => (
-            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
+          {section.children.map((item: any, key: number) => (
+            <ListItem key={key} disablePadding sx={{ display: "block" }}>
               <Link href={item.route} passHref>
                 <ListItemButton
                   sx={{
