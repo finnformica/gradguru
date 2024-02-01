@@ -101,6 +101,7 @@ const QuestionElement = ({
           size="small"
           sx={{ mt: 2 }}
           required
+          value={form.questions[index].question}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setForm({
               ...form,
@@ -125,6 +126,7 @@ const QuestionElement = ({
                 fullWidth
                 label={`Option ${num}`}
                 size="small"
+                value={form.questions[index].options[idx]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setForm({
                     ...form,
@@ -151,6 +153,7 @@ const QuestionElement = ({
           label="Explanation"
           size="small"
           required
+          value={form.questions[index].explanation}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setForm({
               ...form,
