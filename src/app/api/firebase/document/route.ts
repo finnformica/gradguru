@@ -7,7 +7,7 @@ import {
   retrieveDocument,
 } from "@/firebase/utils";
 
-// READ
+// READ, retrieve all documents or a single document
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.nextUrl);
   const collection = searchParams.get("collection") as FirestoreCollectionType;
