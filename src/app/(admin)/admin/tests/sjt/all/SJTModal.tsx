@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, Box, Typography, IconButton } from "@mui/material";
+import {
+  Modal,
+  Box,
+  Typography,
+  IconButton,
+  Button,
+  Stack,
+  Popper,
+  Paper,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { useAlert } from "@/context/adminAlert";
@@ -33,6 +42,43 @@ const SJTModal = ({
 } & SJTScenarioState) => {
   const { setAlertState } = useAlert();
   const [form, setForm] = useState<SJTScenarioState>(question);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const openPopper = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const handleDelete = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (response.status !== 200) {
+      setAlertState({
+        message: "Uh oh! Error occurred :(",
+        open: true,
+        severity: "error",
+      });
+    } else {
+      setAlertState({
+        message: "SJT question deleted",
+        open: true,
+        severity: "success",
+      });
+      handleClose();
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,8 +121,46 @@ const SJTModal = ({
             pb: 3,
           }}
         >
-          <Typography variant="h4">Edit SJT question</Typography>
-          <IconButton onClick={() => setOpen(false)}>
+          <Stack direction="row" spacing={4}>
+            <Typography variant="h4">Edit SJT question</Typography>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              onClick={handleClick}
+            >
+              Delete
+            </Button>
+            <Popper
+              id={id}
+              open={openPopper}
+              anchorEl={anchorEl}
+              sx={{ zIndex: (theme) => theme.zIndex.modal + 1 }}
+            >
+              <Paper sx={{ p: 1, borderRadius: 1 }}>
+                <Typography pb={2} variant="h6">
+                  Are you sure?
+                </Typography>
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    variant="contained"
+                    color={"error"}
+                    onClick={handleDelete}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    onClick={handleClick}
+                    variant="outlined"
+                    color={"error"}
+                  >
+                    Cancel
+                  </Button>
+                </Stack>
+              </Paper>
+            </Popper>
+          </Stack>
+          <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </Box>
