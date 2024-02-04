@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button, TextField, Divider, Typography, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import QuestionElement from "./QuestionElement";
 
 import { FormState } from "./types";
@@ -23,7 +24,7 @@ const initialForm = {
   questions: [initialQuestion],
 };
 
-const AdminSJT = () => {
+const AddSJT = () => {
   const { setAlertState } = useAlert();
   const [form, setForm] = useState<FormState>({ ...initialForm });
 
@@ -67,6 +68,7 @@ const AdminSJT = () => {
           multiline
           minRows={4}
           onChange={(e) => setForm({ ...form, scenario: e.target.value })}
+          value={form.scenario}
         />
         <Stack spacing={2} my={2}>
           <Divider />
@@ -81,19 +83,34 @@ const AdminSJT = () => {
           <Divider />
         </Stack>
         <Stack spacing={2} direction={"row"} justifyContent={"space-between"}>
-          <Button
-            variant="outlined"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={() =>
-              setForm({
-                ...form,
-                questions: [...form.questions, initialQuestion],
-              })
-            }
-          >
-            Add question
-          </Button>
+          <Stack spacing={2} direction={"row"}>
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={() =>
+                setForm({
+                  ...form,
+                  questions: [...form.questions, initialQuestion],
+                })
+              }
+            >
+              Add question
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<RemoveIcon />}
+              onClick={() =>
+                setForm({
+                  ...form,
+                  questions: form.questions.slice(0, -1),
+                })
+              }
+            >
+              Remove question
+            </Button>
+          </Stack>
           <Button
             variant="contained"
             color="primary"
@@ -108,4 +125,4 @@ const AdminSJT = () => {
   );
 };
 
-export default AdminSJT;
+export default AddSJT;
