@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Modal, Box, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+import { useAlert } from "@/context/adminAlert";
+
 import { SJTScenarioState } from "../types";
 import SJTForm from "../SJTForm";
 
@@ -29,12 +31,37 @@ const SJTModal = ({
   open: boolean;
   setOpen: (newOpen: boolean) => void;
 } & SJTScenarioState) => {
-  const [form, setForm] = useState(question);
+  const { setAlertState } = useAlert();
+  const [form, setForm] = useState<SJTScenarioState>(question);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(form);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      }
+    );
+
+    if (response.status !== 200) {
+      setAlertState({
+        message: "Uh oh! Error occurred :(",
+        open: true,
+        severity: "error",
+      });
+    } else {
+      setAlertState({
+        message: "SJT question updated",
+        open: true,
+        severity: "success",
+      });
+      setOpen(false);
+    }
   };
 
   return (
