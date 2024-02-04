@@ -40,7 +40,7 @@ const retrieveAllDocuments = async (
   collectionName: FirestoreCollectionType
 ) => {
   const querySnapshot = await getDocs(collection(db, collectionName));
-  return querySnapshot.docs.map((doc) => doc.data());
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
 const retrieveDocument = async (
