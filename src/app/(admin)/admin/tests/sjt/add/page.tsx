@@ -94,6 +94,7 @@ const AddSJT = () => {
                   questions: [...form.questions, initialQuestion],
                 })
               }
+              disabled={form.questions.length >= 3}
             >
               Add question
             </Button>
@@ -101,6 +102,7 @@ const AddSJT = () => {
               variant="outlined"
               color="error"
               startIcon={<RemoveIcon />}
+              disabled={form.questions.length <= 1}
               onClick={() =>
                 setForm({
                   ...form,
