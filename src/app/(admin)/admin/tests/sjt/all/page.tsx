@@ -7,21 +7,69 @@ import {
   ListItem,
   ListItemButton,
   Divider,
-  Stack,
   Box,
 } from "@mui/material";
 
-import { ScenarioState } from "../types";
+import SJTModal from "./SJTModal";
+import { SJTScenarioState } from "../types";
+
+const SJTListItem = ({ ...question }: SJTScenarioState) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <SJTModal open={open} setOpen={setOpen} {...question} />
+      <ListItem disablePadding>
+        <ListItemButton onClick={() => setOpen(true)}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography
+              sx={{
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                width: "60vw",
+              }}
+            >
+              {question.scenario.length === 0
+                ? "No scenario provided"
+                : question.scenario}
+            </Typography>
+            <Typography>
+              {new Date(
+                question.created ? question.created : Date.now()
+              ).toLocaleDateString()}
+            </Typography>
+          </Box>
+        </ListItemButton>
+      </ListItem>
+      <Divider />
+    </>
+  );
+};
 
 const AllSJT = () => {
-  const [questions, setQuestions] = useState<ScenarioState[]>([]);
+  const [questions, setQuestions] = useState<SJTScenarioState[]>([]);
 
   const sortDesc = () => {
-    setQuestions(questions.sort((a, b) => b.created - a.created));
+    setQuestions(
+      questions.sort((a, b) =>
+        b.created && a.created ? b.created - a.created : 0
+      )
+    );
   };
 
   const sortAsc = () => {
-    setQuestions(questions.sort((a, b) => a.created - b.created));
+    setQuestions(
+      questions.sort((a, b) =>
+        a.created && b.created ? a.created - b.created : 0
+      )
+    );
   };
 
   useEffect(() => {
@@ -32,8 +80,8 @@ const AllSJT = () => {
       const data = await response.json();
 
       setQuestions(
-        data.documents.sort(
-          (a: ScenarioState, b: ScenarioState) => b.created - a.created
+        data.documents.sort((a: SJTScenarioState, b: SJTScenarioState) =>
+          a.created && b.created ? b.created - a.created : 0
         )
       );
     };
@@ -47,36 +95,7 @@ const AllSJT = () => {
       </Typography>
       <List>
         {questions.map((question, key) => (
-          <>
-            <ListItem key={key} disablePadding>
-              <ListItemButton>
-                <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      overflow: "hidden",
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
-                      width: "60vw",
-                    }}
-                  >
-                    {question.scenario.length === 0
-                      ? "No scenario provided"
-                      : question.scenario}
-                  </Typography>
-                  <Typography>
-                    {new Date(question.created).toLocaleDateString()}
-                  </Typography>
-                </Box>
-              </ListItemButton>
-            </ListItem>
-            <Divider />
-          </>
+          <SJTListItem key={key} {...question} />
         ))}
       </List>
     </>
