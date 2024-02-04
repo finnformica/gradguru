@@ -13,6 +13,7 @@ import {
 
 import SJTModal from "./SJTModal";
 import { SJTScenarioState } from "../types";
+import LoadingWrapper from "@/components/LoadingWrapper";
 
 const SJTListItem = ({ ...question }: SJTScenarioState) => {
   const [open, setOpen] = useState(false);
@@ -56,6 +57,7 @@ const SJTListItem = ({ ...question }: SJTScenarioState) => {
 
 const AllSJT = () => {
   const [questions, setQuestions] = useState<SJTScenarioState[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const sortDesc = () => {
     setQuestions(
@@ -85,6 +87,7 @@ const AllSJT = () => {
           a.created && b.created ? b.created - a.created : 0
         )
       );
+      setLoading(false);
     };
     fetchSJT();
   }, []);
@@ -94,26 +97,28 @@ const AllSJT = () => {
       <Typography variant="h4" pb={2}>
         All SJT questions
       </Typography>
-      <List
-        subheader={
-          <ListSubheader>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Scenario</Typography>
-              <Typography>Date created</Typography>
-            </Box>
-          </ListSubheader>
-        }
-      >
-        {questions.map((question, key) => (
-          <SJTListItem key={key} {...question} />
-        ))}
-      </List>
+      <LoadingWrapper loading={loading}>
+        <List
+          subheader={
+            <ListSubheader>
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography>Scenario</Typography>
+                <Typography>Date created</Typography>
+              </Box>
+            </ListSubheader>
+          }
+        >
+          {questions.map((question, key) => (
+            <SJTListItem key={key} {...question} />
+          ))}
+        </List>
+      </LoadingWrapper>
     </>
   );
 };
