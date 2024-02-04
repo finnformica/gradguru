@@ -101,6 +101,7 @@ const QuestionElement = ({
           size="small"
           sx={{ mt: 2 }}
           required
+          multiline
           value={form.questions[index].question}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setForm({
@@ -124,6 +125,8 @@ const QuestionElement = ({
               </Typography>
               <TextField
                 fullWidth
+                required
+                multiline
                 label={`Option ${num}`}
                 size="small"
                 value={form.questions[index].options[idx]}
@@ -153,6 +156,8 @@ const QuestionElement = ({
           label="Explanation"
           size="small"
           required
+          multiline
+          minRows={2}
           value={form.questions[index].explanation}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setForm({
