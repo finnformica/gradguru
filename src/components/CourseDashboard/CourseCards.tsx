@@ -196,7 +196,7 @@ const CourseCards = () => {
           my: 4,
         }}
       >
-        <LoadingWrapper loading={loading} size={40}>
+        <LoadingWrapper loading={loading}>
           {userCourses.length === 0 ? (
             <Typography>You have no purchased courses</Typography>
           ) : (
