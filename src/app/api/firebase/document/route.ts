@@ -33,7 +33,16 @@ export async function POST(request: NextRequest) {
 
   const data = await request.json();
 
-  const { result, error } = await addData(data, document, collection);
+  if (!collection) {
+    return NextResponse.json(
+      { message: "No collection provided" },
+      { status: 400 }
+    );
+  }
+
+  const updatedData = { ...data, created: Date.now() };
+
+  const { result, error } = await addData(updatedData, document, collection);
 
   if (error) {
     console.log("An error occured", error);
