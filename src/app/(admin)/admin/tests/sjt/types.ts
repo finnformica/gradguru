@@ -9,5 +9,5 @@ export type QuestionState = {
 export type ScenarioState = {
   scenario: string;
   questions: QuestionState[];
-  timestamp?: string;
+  created: number;
 };
