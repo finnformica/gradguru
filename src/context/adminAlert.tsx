@@ -32,9 +32,8 @@ const AlertComponent = ({ alertState, setAlertState }: AlertContextType) => {
       variant="filled"
       onClose={() => setAlertState({ ...alertState, open: false })}
       sx={{
-        position: "absolute",
+        position: "fixed",
         zIndex: 9999,
-        mx: "auto",
         top: 20,
         right: 20,
         transition: "all 0.5s ease-in-out",
@@ -57,8 +56,8 @@ export const AlertContextProvider = ({ children }: any) => {
 
   return (
     <AlertContext.Provider value={value}>
-      {children}
       <AlertComponent alertState={alertState} setAlertState={setAlertState} />
+      {children}
     </AlertContext.Provider>
   );
 };
