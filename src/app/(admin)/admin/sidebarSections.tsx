@@ -6,12 +6,13 @@ import AbcIcon from "@mui/icons-material/Abc";
 import HardwareIcon from "@mui/icons-material/Hardware";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
 import GroupIcon from "@mui/icons-material/Group";
+import PinIcon from "@mui/icons-material/Pin";
+import ExtensionIcon from "@mui/icons-material/Extension";
 
 export const sidebarSections = [
   {
     name: "Courses",
     icon: <GolfCourseIcon />,
-    route: "/admin/courses",
     active: true,
     children: [
       {
@@ -31,35 +32,82 @@ export const sidebarSections = [
   {
     name: "Tests",
     icon: <QuizIcon />,
-    route: "/admin/tests",
     active: true,
     children: [
       {
         name: "SJT",
         icon: <AbcIcon />,
-        route: "/admin/tests/sjt",
         active: true,
+        children: [
+          {
+            name: "All SJT",
+            icon: <AllInclusiveIcon />,
+            route: "/admin/tests/sjt/all",
+            active: true,
+          },
+          {
+            name: "Add SJT",
+            icon: <AddIcon />,
+            route: "/admin/tests/sjt/add",
+            active: true,
+          },
+        ],
+      },
+      {
+        name: "NR",
+        icon: <PinIcon />,
+        active: false,
+        children: [
+          {
+            name: "All NR",
+            icon: <AllInclusiveIcon />,
+            route: "/admin/tests/numerical-reasoning/all",
+            active: true,
+          },
+          {
+            name: "Add NR",
+            icon: <AddIcon />,
+            route: "/admin/tests/numerical-reasoning/add",
+            active: true,
+          },
+        ],
+      },
+      {
+        name: "LR",
+        icon: <ExtensionIcon />,
+        active: false,
+        children: [
+          {
+            name: "All LR",
+            icon: <AllInclusiveIcon />,
+            route: "/admin/tests/logical-reasoning/all",
+            active: true,
+          },
+          {
+            name: "Add LR",
+            icon: <AddIcon />,
+            route: "/admin/tests/logical-reasoning/add",
+            active: true,
+          },
+        ],
       },
     ],
   },
   {
     name: "Drills",
     icon: <HardwareIcon />,
-    route: "/admin/drills",
     active: false,
     children: [],
   },
   {
     name: "Resources",
     icon: <ViewInArIcon />,
-    route: "/admin/resources",
     active: false,
     children: [],
   },
   {
     name: "Users",
     icon: <GroupIcon />,
-    route: "/admin/users",
     active: false,
     children: [],
   },

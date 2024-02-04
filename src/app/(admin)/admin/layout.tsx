@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import { styled, Theme, CSSObject } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
@@ -18,15 +18,12 @@ import {
   ListItemIcon,
   ListItemText,
   Collapse,
-  Alert,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import CheckIcon from "@mui/icons-material/Check";
 
 import { sidebarSections } from "./sidebarSections";
 import Link from "next/link";
@@ -103,8 +100,38 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+const ListCollapseItem = ({ item }: any) => {
+  return item.children ? (
+    <ListCollapse section={item} />
+  ) : (
+    <ListItem disablePadding sx={{ display: "block" }}>
+      <Link href={item.route} passHref>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: "initial",
+            pl: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: 3,
+              justifyContent: "center",
+            }}
+          >
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText primary={item.name} />
+        </ListItemButton>
+      </Link>
+    </ListItem>
+  );
+};
+
 const ListCollapse = ({ section }: any) => {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <ListItem disablePadding sx={{ display: "block" }}>
@@ -131,35 +158,15 @@ const ListCollapse = ({ section }: any) => {
         </ListItemButton>
       </ListItem>
       <Divider />
+
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List sx={{ p: 0 }}>
           {section.children.map((item: any, key: number) => (
-            <ListItem key={key} disablePadding sx={{ display: "block" }}>
-              <Link href={item.route} passHref>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: "initial",
-                    pl: 2.5,
-                  }}
-                  href={item.route}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: 3,
-                      justifyContent: "center",
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
+            <ListCollapseItem item={item} key={key} />
           ))}
         </List>
       </Collapse>
+
       {open && <Divider />}
     </>
   );
@@ -170,8 +177,7 @@ export default function MiniDrawer({
 }: {
   children: React.ReactNode;
 }) {
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -212,9 +218,13 @@ export default function MiniDrawer({
           </DrawerHeader>
           <Divider />
           <List sx={{ p: 0 }}>
-            {sidebarSections.map((section, key) => (
-              <ListCollapse key={key} section={section} />
-            ))}
+            {sidebarSections.map((section, key) =>
+              section.children ? (
+                <ListCollapse key={key} section={section} />
+              ) : (
+                <ListCollapseItem key={key} section={section} />
+              )
+            )}
           </List>
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
