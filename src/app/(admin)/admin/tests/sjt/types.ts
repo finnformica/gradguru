@@ -10,6 +10,7 @@ export interface SJTScenarioState {
   scenario: string;
   questions: SJTQuestionState[];
   created?: number;
+  id?: string;
 }
 
 export const initialQuestion = {
