@@ -5,6 +5,7 @@ import {
   addData,
   retrieveAllDocuments,
   retrieveDocument,
+  deleteDocument,
 } from "@/firebase/utils";
 
 // READ, retrieve all documents or a single document
@@ -55,6 +56,24 @@ export async function POST(request: NextRequest) {
     console.log("An error occured", error);
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });
   }
+
+  return NextResponse.json({ message: "Success" }, { status: 200 });
+}
+
+// DELETE, provide collection and document id
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.nextUrl);
+  const collection = searchParams.get("collection") as FirestoreCollectionType;
+  const document = searchParams.get("document");
+
+  if (!collection || !document) {
+    return NextResponse.json(
+      { message: "No collection or document provided" },
+      { status: 400 }
+    );
+  }
+
+  await deleteDocument(collection, document);
 
   return NextResponse.json({ message: "Success" }, { status: 200 });
 }
