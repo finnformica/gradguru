@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 
-import { FormState } from "./types";
+import { ScenarioState } from "../types";
 
 const QuestionElement = ({
   index,
@@ -22,8 +22,8 @@ const QuestionElement = ({
   setForm,
 }: {
   index: number;
-  form: FormState;
-  setForm: (newState: FormState) => void;
+  form: ScenarioState;
+  setForm: (newState: ScenarioState) => void;
 }) => {
   const [options, setOptions] = useState([1, 2, 3, 4, 5]);
 

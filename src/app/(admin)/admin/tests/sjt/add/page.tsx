@@ -7,7 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import QuestionElement from "./QuestionElement";
 
-import { FormState } from "./types";
+import { ScenarioState } from "../types";
 
 import { useAlert } from "@/context/adminAlert";
 
@@ -26,7 +26,7 @@ const initialForm = {
 
 const AddSJT = () => {
   const { setAlertState } = useAlert();
-  const [form, setForm] = useState<FormState>({ ...initialForm });
+  const [form, setForm] = useState<ScenarioState>({ ...initialForm });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

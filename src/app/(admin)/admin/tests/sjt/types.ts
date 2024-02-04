@@ -6,7 +6,8 @@ export type QuestionState = {
   answer: string;
 };
 
-export type FormState = {
+export type ScenarioState = {
   scenario: string;
   questions: QuestionState[];
+  timestamp?: string;
 };
