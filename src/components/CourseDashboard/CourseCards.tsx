@@ -43,7 +43,7 @@ const Title = ({
   </Box>
 );
 
-const AccordionCard = ({ title }: { title: string }) => (
+const AccordionCard = ({ title, href }: { title: string; href: string }) => (
   <Box
     sx={{
       display: "flex",
@@ -64,7 +64,7 @@ const AccordionCard = ({ title }: { title: string }) => (
       },
     }}
   >
-    <Link href={"#"}>
+    <Link href={href}>
       <Typography>{title}</Typography>
     </Link>
   </Box>
@@ -90,7 +90,11 @@ const CourseAccordion = ({ ...course }: CourseType) => {
             <Title icon={<SmartDisplayIcon />}>Videos</Title>
             <Box sx={{ display: "flex", gap: 1 }}>
               {course.lessons.slice(0, 3).map((lesson, key) => (
-                <AccordionCard title={lesson.name} key={key} />
+                <AccordionCard
+                  title={lesson.name}
+                  key={key}
+                  href={`/dashboard/courses/${course.id}`}
+                />
               ))}
             </Box>
           </Box>
@@ -98,7 +102,11 @@ const CourseAccordion = ({ ...course }: CourseType) => {
             <Title icon={<QuizIcon />}>Tests</Title>
             <Box sx={{ display: "flex", gap: 1 }}>
               {course.tests.map((test, key) => (
-                <AccordionCard key={key} title={test.title} />
+                <AccordionCard
+                  key={key}
+                  title={test.title}
+                  href={`/dashboard/tests/${test.id}`}
+                />
               ))}
             </Box>
           </Box>
@@ -106,7 +114,7 @@ const CourseAccordion = ({ ...course }: CourseType) => {
             <Title icon={<FactCheckIcon />}>Drills</Title>
             <Box sx={{ display: "flex", gap: 1 }}>
               {course.drills.map((drill, key) => (
-                <AccordionCard key={key} title={drill.title} />
+                <AccordionCard key={key} title={drill.title} href={""} />
               ))}
             </Box>
           </Box>
@@ -114,7 +122,7 @@ const CourseAccordion = ({ ...course }: CourseType) => {
             <Title icon={<FolderCopyIcon />}>Resources</Title>
             <Box sx={{ display: "flex", gap: 1 }}>
               {course.resources.map((resource, key) => (
-                <AccordionCard key={key} title={resource.title} />
+                <AccordionCard key={key} title={resource.title} href={""} />
               ))}
             </Box>
           </Box>
@@ -188,7 +196,7 @@ const CourseCards = () => {
           my: 4,
         }}
       >
-        <LoadingWrapper loading={loading} size={40}>
+        <LoadingWrapper loading={loading}>
           {userCourses.length === 0 ? (
             <Typography>You have no purchased courses</Typography>
           ) : (

@@ -1,25 +1,18 @@
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
-  Divider,
-  Box,
   List,
   ListItemButton,
   ListItemText,
   Collapse,
   Drawer,
-  IconButton,
   Typography,
 } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { useCourse } from "@/context/course";
-
-import { DrawerHeader } from "@/components/Headers";
-import AuthButton from "@/components/Headers/DashboardHeader/AuthButton";
 
 import { LessonType } from "@/mock/courses";
 
@@ -96,7 +89,7 @@ const NestedListItem = ({
   );
 };
 
-const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
+const Sidebar = ({ open, drawerWidth }: any) => {
   const { course } = useCourse();
 
   if (!course) {
@@ -104,7 +97,7 @@ const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
   }
 
   const drawer = (
-    <List sx={{ pt: 0 }}>
+    <List>
       {course.sections.map((section, key: number) => (
         <NestedListItem
           section={section}
@@ -131,15 +124,6 @@ const Sidebar = ({ open, handleDrawerClose, drawerWidth }: any) => {
         },
       }}
     >
-      <DrawerHeader>
-        <Box sx={{ flexGrow: 1 }}>
-          <AuthButton />
-        </Box>
-        <IconButton onClick={handleDrawerClose}>
-          <ChevronRightIcon />
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
       {drawer}
     </Drawer>
   );
