@@ -16,6 +16,7 @@ import {
   IGmatForm,
   IGraphForm,
   ITableForm,
+  ITableQuestion,
   gmatForm,
   graphForm,
   tableForm,
@@ -25,6 +26,44 @@ type NRFormProps = {
   form: ITableForm | IGraphForm | IGmatForm;
   setForm: any;
   handleSubmit: any;
+};
+
+const QuestionElement = ({ form, setForm, index, question }: any) => {
+  return (
+    <>
+      <Typography variant="h6" pt={3} pb={1}>
+        Question {index + 1}
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        {Object.keys(question).map((key, i) => (
+          <TextField
+            label={`${key.charAt(0).toUpperCase() + key.slice(1)} ${index + 1}`}
+            value={form.questions[index][key]}
+            key={i}
+            onChange={(e) => {
+              setForm({
+                ...form,
+                questions: form.questions.map(
+                  (q: ITableQuestion, k: number) => {
+                    if (k === index) {
+                      return { ...q, [key]: e.target.value };
+                    }
+                    return q;
+                  }
+                ),
+              });
+            }}
+          />
+        ))}
+      </Box>
+    </>
+  );
 };
 
 const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
@@ -60,7 +99,7 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
 
       {form.type === "table" && (
         <>
-          <Typography variant="h6" pt={3}>
+          <Typography variant="h5" pt={3}>
             Column names
           </Typography>
           <Box
@@ -103,7 +142,7 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
               Delete
             </Button>
           </Stack>
-          <Typography variant="h6" pt={3}>
+          <Typography variant="h5" pt={3}>
             Data input
           </Typography>
           <FullFeaturedCrudGrid
@@ -111,6 +150,60 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
             form={form}
             setForm={setForm}
           />
+          <Typography variant="h5" pt={3}>
+            Questions
+          </Typography>
+          {form.questions.map((question, index) => (
+            <QuestionElement
+              form={form}
+              setForm={setForm}
+              index={index}
+              question={question}
+            />
+          ))}
+          <Button
+            variant="outlined"
+            disabled={form.questions.length >= 4}
+            onClick={() =>
+              setForm({
+                ...form,
+                questions: [
+                  ...form.questions,
+                  {
+                    question: "",
+                    explanation: "",
+                    answer: "",
+                  },
+                ],
+              })
+            }
+          >
+            Add question
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            disabled={form.questions.length <= 0}
+            onClick={() =>
+              setForm({
+                ...form,
+                questions: [
+                  ...form.questions.slice(0, form.questions.length - 1),
+                ],
+              })
+            }
+          >
+            Remove question
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ color: "white" }}
+            onClick={() => {
+              console.log(form);
+            }}
+          >
+            Log form
+          </Button>
         </>
       )}
     </form>
