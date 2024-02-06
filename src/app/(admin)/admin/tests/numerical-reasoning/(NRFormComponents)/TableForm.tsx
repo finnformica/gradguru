@@ -72,6 +72,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
           form={form}
           setForm={setForm}
           index={index}
+          key={index}
           question={question}
         />
       ))}
