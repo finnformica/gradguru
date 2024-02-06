@@ -31,6 +31,26 @@ const camelise = (str: string) => {
     .replace(/[^a-zA-Z ]/g, "");
 };
 
+const sanitiseRows = (rows: GridRowsProp) => {
+  return rows.map((row) => {
+    const newRow = { ...row };
+    delete newRow.id;
+    delete newRow.isNew;
+    return newRow;
+  });
+};
+
+const sanitiseColumns = (columns: any) => {
+  return columns.splice(0, columns.length - 1).map((column: any) => {
+    const newColumn = { ...column };
+    delete newColumn.width;
+    delete newColumn.editable;
+    delete newColumn.cellClassName;
+    delete newColumn.getActions;
+    return newColumn;
+  });
+};
+
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
   setRowModesModel: (
@@ -116,8 +136,8 @@ export default function FullFeaturedCrudGrid({
       ...form,
       data: {
         ...form.data,
-        rows: updatedRows,
-        columns: columns,
+        rows: sanitiseRows(updatedRows),
+        columns: sanitiseColumns(columns),
       },
     });
     setRows(updatedRows);
@@ -218,15 +238,6 @@ export default function FullFeaturedCrudGrid({
           },
         }}
       />
-      <Button
-        variant="contained"
-        sx={{ color: "white" }}
-        onClick={() => {
-          console.log(rows);
-        }}
-      >
-        Log rows
-      </Button>
     </Box>
   );
 }
