@@ -79,7 +79,7 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-export default function FullFeaturedCrudGrid({
+export default function EditableTable({
   columnNames,
   form,
   setForm,
