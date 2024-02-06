@@ -169,6 +169,7 @@ export default function EditableTable({
         if (isInEditMode) {
           return [
             <GridActionsCellItem
+              key="save"
               icon={<SaveIcon />}
               label="Save"
               sx={{
@@ -177,6 +178,7 @@ export default function EditableTable({
               onClick={handleSaveClick(id)}
             />,
             <GridActionsCellItem
+              key="cancel"
               icon={<CancelIcon />}
               label="Cancel"
               className="textPrimary"
@@ -190,6 +192,7 @@ export default function EditableTable({
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
+            key="edit"
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
@@ -197,6 +200,7 @@ export default function EditableTable({
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
+            key="delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
