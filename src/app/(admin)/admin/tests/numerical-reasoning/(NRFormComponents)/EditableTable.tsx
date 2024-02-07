@@ -135,11 +135,11 @@ export default function EditableTable({
     setForm({
       ...form,
       data: {
-        ...form.data,
+        ...(form as ITableForm).data,
         rows: sanitiseRows(updatedRows),
         columns: sanitiseColumns(columns),
       },
-    });
+    } as IGmatForm | IGraphForm | ITableForm);
     setRows(updatedRows);
     return updatedRow;
   };
