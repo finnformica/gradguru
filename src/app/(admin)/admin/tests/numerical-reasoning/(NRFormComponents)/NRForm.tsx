@@ -30,7 +30,7 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <InputLabel>Type of question</InputLabel>
+      <InputLabel sx={{ pb: 0.5 }}>Type of question</InputLabel>
       <Select
         value={form.type}
         label="Type"

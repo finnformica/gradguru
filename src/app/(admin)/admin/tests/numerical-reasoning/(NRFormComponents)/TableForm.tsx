@@ -5,7 +5,7 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { EditableTable } from ".";
 import { TableQuestionElement } from ".";
 
-import { ITableForm } from "./types";
+import { ITableForm, tableQuestion } from "./types";
 
 interface TableFormProps {
   form: ITableForm;
@@ -92,17 +92,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
             onClick={() =>
               setForm({
                 ...form,
-                questions: [
-                  ...form.questions,
-                  {
-                    question: "",
-                    explanation: "",
-                    answer: {
-                      type: "",
-                      value: {},
-                    },
-                  },
-                ],
+                questions: [...form.questions, tableQuestion],
               })
             }
           >
@@ -111,7 +101,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
           <Button
             variant="outlined"
             color="error"
-            disabled={form.questions.length <= 0}
+            disabled={form.questions.length <= 1}
             onClick={() =>
               setForm({
                 ...form,

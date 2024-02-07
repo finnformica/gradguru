@@ -24,6 +24,8 @@ export const TableQuestionElement = ({
   index,
   question,
 }: TableQuestionElementProps) => {
+  const answerOptions = ["Multiple", "Ratio", "Percentage", "Number"];
+
   return (
     <>
       <Typography variant="h6" pt={3} pb={1}>
@@ -85,13 +87,11 @@ export const TableQuestionElement = ({
               });
             }}
           >
-            {["Multiple", "Ratio", "Percentage", "Number"].map(
-              (name, index) => (
-                <MenuItem value={name.toLowerCase()} key={index}>
-                  {name}
-                </MenuItem>
-              )
-            )}
+            {answerOptions.map((name, index) => (
+              <MenuItem value={name.toLowerCase()} key={index}>
+                {name}
+              </MenuItem>
+            ))}
           </Select>
           {form.questions[index].answer.type === "multiple" ? (
             <>
