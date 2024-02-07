@@ -59,8 +59,8 @@ export interface ITableQuestion {
 
 export interface ITableForm {
   data: {
-    columns: [];
-    rows: [];
+    columns: any[];
+    rows: any[];
   };
   questions: ITableQuestion[];
   type: "table";
@@ -77,8 +77,8 @@ export interface IGraphQuestion {
 
 export interface IGraphForm {
   data: {
-    columns: [];
-    rows: [];
+    columns: any[];
+    rows: any[];
   };
   questions: IGraphQuestion[];
   graph: "line" | "bar" | "pie";
