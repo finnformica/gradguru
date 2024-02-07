@@ -110,6 +110,7 @@ export const TableQuestionElement = ({
                     <TextField
                       label={row[fieldName]}
                       required
+                      key={i}
                       onChange={(e) => {
                         setForm({
                           ...form,
