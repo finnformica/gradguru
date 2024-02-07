@@ -1,11 +1,17 @@
 export const tableQuestion = {
   question: "",
   explanation: "",
-  answer: "",
+  answer: {
+    type: "ratio",
+    value: "",
+  },
 };
 
 export const tableForm = {
-  data: {},
+  data: {
+    columns: [],
+    rows: [],
+  },
   questions: [tableQuestion],
   type: "table" as "table",
 };
@@ -13,11 +19,17 @@ export const tableForm = {
 export const graphQuestion = {
   question: "",
   explanation: "",
-  answer: "",
+  answer: {
+    type: "ratio",
+    value: "",
+  },
 };
 
 export const graphForm = {
-  data: {},
+  data: {
+    columns: [],
+    rows: [],
+  },
   questions: [graphQuestion],
   graph: "" as "line" | "bar" | "pie",
   scenario: "",
@@ -39,11 +51,17 @@ export const gmatForm = {
 export interface ITableQuestion {
   question: string;
   explanation: string;
-  answer: string;
+  answer: {
+    type: string;
+    value: string | {};
+  };
 }
 
 export interface ITableForm {
-  data: {};
+  data: {
+    columns: [];
+    rows: [];
+  };
   questions: ITableQuestion[];
   type: "table";
 }
@@ -51,11 +69,17 @@ export interface ITableForm {
 export interface IGraphQuestion {
   question: string;
   explanation: string;
-  answer: string;
+  answer: {
+    type: string;
+    value: string | {};
+  };
 }
 
 export interface IGraphForm {
-  data: {};
+  data: {
+    columns: [];
+    rows: [];
+  };
   questions: IGraphQuestion[];
   graph: "line" | "bar" | "pie";
   scenario: string;

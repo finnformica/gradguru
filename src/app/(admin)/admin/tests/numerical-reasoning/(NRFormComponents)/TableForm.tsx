@@ -5,11 +5,11 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { EditableTable } from ".";
 import { TableQuestionElement } from ".";
 
-import { ITableForm, IGmatForm, IGraphForm } from "./types";
+import { ITableForm } from "./types";
 
 interface TableFormProps {
-  form: ITableForm | IGmatForm | IGraphForm;
-  setForm: (newForm: ITableForm | IGmatForm | IGraphForm) => void;
+  form: ITableForm;
+  setForm: (newForm: ITableForm) => void;
 }
 
 const TableForm = ({ form, setForm }: TableFormProps) => {
@@ -31,6 +31,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
           <TextField
             size="small"
             label={`Column ${index + 1}`}
+            required
             key={index}
             value={name}
             onChange={(e) => {
@@ -76,47 +77,63 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
           question={question}
         />
       ))}
-      <Button
-        variant="outlined"
-        disabled={form.questions.length >= 4}
-        onClick={() =>
-          setForm({
-            ...form,
-            questions: [
-              ...form.questions,
-              {
-                question: "",
-                explanation: "",
-                answer: "",
-              },
-            ],
-          })
-        }
-      >
-        Add question
-      </Button>
-      <Button
-        variant="outlined"
-        color="error"
-        disabled={form.questions.length <= 0}
-        onClick={() =>
-          setForm({
-            ...form,
-            questions: [...form.questions.slice(0, form.questions.length - 1)],
-          })
-        }
-      >
-        Remove question
-      </Button>
-      <Button
-        variant="contained"
-        sx={{ color: "white" }}
-        onClick={() => {
-          console.log(form);
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          py: 2,
         }}
       >
-        Log form
-      </Button>
+        <Stack spacing={2} direction={"row"}>
+          <Button
+            variant="outlined"
+            disabled={form.questions.length >= 4}
+            onClick={() =>
+              setForm({
+                ...form,
+                questions: [
+                  ...form.questions,
+                  {
+                    question: "",
+                    explanation: "",
+                    answer: {
+                      type: "",
+                      value: {},
+                    },
+                  },
+                ],
+              })
+            }
+          >
+            Add question
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            disabled={form.questions.length <= 0}
+            onClick={() =>
+              setForm({
+                ...form,
+                questions: [
+                  ...form.questions.slice(0, form.questions.length - 1),
+                ],
+              })
+            }
+          >
+            Remove question
+          </Button>
+        </Stack>
+        <Button
+          variant="contained"
+          sx={{ color: "white" }}
+          onClick={() => {
+            console.log(form);
+          }}
+        >
+          Submit
+        </Button>
+      </Box>
     </>
   );
 };
