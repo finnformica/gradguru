@@ -73,3 +73,5 @@ export interface IGmatForm {
   questions: IGmatQuestion[];
   type: "gmat";
 }
+
+export type INRForm = ITableForm | IGraphForm | IGmatForm;

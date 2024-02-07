@@ -21,7 +21,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 
-import { IGmatForm, IGraphForm, ITableForm } from "./types";
+import { ITableForm, IGraphForm, INRForm } from "./types";
 
 const camelise = (str: string) => {
   // removes special characters and spaces, returns a camel case string
@@ -85,8 +85,8 @@ export default function EditableTable({
   setForm,
 }: {
   columnNames: string[];
-  form: IGmatForm | IGraphForm | ITableForm;
-  setForm: (newForm: IGmatForm | IGraphForm | ITableForm) => void;
+  form: ITableForm;
+  setForm: (newForm: ITableForm) => void;
 }) {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -135,11 +135,11 @@ export default function EditableTable({
     setForm({
       ...form,
       data: {
-        ...(form as ITableForm).data,
+        ...form.data,
         rows: sanitiseRows(updatedRows),
         columns: sanitiseColumns(columns),
       },
-    } as IGmatForm | IGraphForm | ITableForm);
+    });
     setRows(updatedRows);
     return updatedRow;
   };

@@ -1,19 +1,12 @@
 import React from "react";
-import { Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import { Select, MenuItem, SelectChangeEvent, InputLabel } from "@mui/material";
 
 import { TableForm } from ".";
 
-import {
-  IGmatForm,
-  IGraphForm,
-  ITableForm,
-  gmatForm,
-  graphForm,
-  tableForm,
-} from "./types";
+import { INRForm, gmatForm, graphForm, tableForm } from "./types";
 
 type NRFormProps = {
-  form: ITableForm | IGraphForm | IGmatForm;
+  form: INRForm;
   setForm: any;
   handleSubmit: any;
 };
@@ -37,6 +30,7 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <InputLabel>Type of question</InputLabel>
       <Select
         value={form.type}
         label="Type"

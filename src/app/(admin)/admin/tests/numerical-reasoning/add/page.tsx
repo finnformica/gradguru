@@ -4,15 +4,10 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 
 import { NRForm } from "../(NRFormComponents)";
-import {
-  IGmatForm,
-  IGraphForm,
-  ITableForm,
-  tableForm,
-} from "../(NRFormComponents)/types";
+import { INRForm, tableForm } from "../(NRFormComponents)/types";
 
 const AddNR = () => {
-  const [form, setForm] = useState<IGmatForm | IGraphForm | ITableForm>({
+  const [form, setForm] = useState<INRForm>({
     ...tableForm,
   });
 
