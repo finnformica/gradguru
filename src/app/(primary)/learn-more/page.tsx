@@ -6,7 +6,7 @@ import {
   Hirevue,
   AssessmentCentre,
   FAQs,
-} from "@/components/LearnMorePage";
+} from "@/components/LandingPage/LearnMorePage";
 
 const LearnMore = () => {
   return (

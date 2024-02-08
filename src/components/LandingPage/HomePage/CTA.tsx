@@ -1,13 +1,13 @@
 import { FormEvent, useState } from "react";
-import SquareButton from "@/components/Buttons/SquareButton";
-import TextInput from "@/components/Global/TextInput";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import TextInput from "@/components/LandingPage/TextInput";
 import { Box, CircularProgress, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
 
-import SmallTitle from "@/components/Titles/SmallTitle";
+import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
 
 import { subscribe } from "@/utils";
-import UserAlert from "@/components/Global/UserAlert";
+import UserAlert from "@/components/LandingPage/UserAlert";
 import { AlertState } from "@/components/globalTypes";
 
 const CTA = () => {

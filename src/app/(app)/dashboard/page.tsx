@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import CourseCards from "@/components/CourseDashboard/CourseCards";
+import CourseCards from "@/components/Dashboard/CourseCards";
 
 const Dashboard = () => {
   return (

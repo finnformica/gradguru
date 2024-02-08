@@ -56,7 +56,7 @@ export const sidebarSections = [
       {
         name: "NR",
         icon: <PinIcon />,
-        active: false,
+        active: true,
         children: [
           {
             name: "All NR",

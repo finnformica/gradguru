@@ -15,8 +15,8 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { useAlert } from "@/context/adminAlert";
 
-import { SJTScenarioState } from "../types";
-import SJTForm from "../SJTForm";
+import { SJTScenarioState } from "./types";
+import SJTForm from "./SJTForm";
 
 const style = {
   position: "absolute" as "absolute",

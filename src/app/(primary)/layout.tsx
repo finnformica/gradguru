@@ -1,5 +1,5 @@
-import { PrimaryHeader } from "@/components/Headers";
-import Footer from "@/components/Footer";
+import { PrimaryHeader } from "@/components/LandingPage/Headers";
+import Footer from "@/components/LandingPage/Footer";
 
 export default function PrimaryLayout({
   children,

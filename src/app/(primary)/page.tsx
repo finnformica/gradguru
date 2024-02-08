@@ -6,7 +6,7 @@ import {
   Features,
   Practice,
   Companies,
-} from "@/components/HomePage";
+} from "@/components/LandingPage/HomePage";
 
 export default function Home() {
   return (
