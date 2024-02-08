@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
 import { DataType } from "@/components/NRForm/types";
 
-Chart.register(CategoryScale);
+Chart.register(CategoryScale, ChartDataLabels);
 
 type BarChartProps = {
   data: DataType;
@@ -64,6 +66,12 @@ const BarChart = ({ data }: BarChartProps) => {
     <Bar
       data={chartData}
       options={{
+        plugins: {
+          datalabels: {
+            display: true,
+            color: "black",
+          },
+        },
         scales: {
           x: {
             title: {
