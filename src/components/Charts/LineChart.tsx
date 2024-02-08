@@ -16,15 +16,15 @@ type LineChartProps = {
 };
 
 const LineChart = ({ data }: LineChartProps) => {
-  if (data.rows.length === 0) {
-    return <>No data</>;
-  }
-
   const [chartData, setChartData] = useState(buildChartData(data));
 
   useEffect(() => {
     setChartData(buildChartData(data));
   }, [data]);
+
+  if (data.rows.length === 0) {
+    return <>No data</>;
+  }
 
   return (
     <Line

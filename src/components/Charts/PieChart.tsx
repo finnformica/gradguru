@@ -16,9 +16,6 @@ type PieChartProps = {
 
 const PieChart = ({ data }: PieChartProps) => {
   const { columns, rows } = data;
-  if (columns.length !== 2 || rows.length === 0) {
-    return <>No data</>;
-  }
   const labels = rows.map((row) => row[columns[0].field]);
   const datasets = [
     {
@@ -38,6 +35,10 @@ const PieChart = ({ data }: PieChartProps) => {
     labels,
     datasets,
   });
+
+  if (columns.length < 2 || rows.length === 0) {
+    return <>No data</>;
+  }
 
   return (
     <Pie

@@ -17,15 +17,16 @@ type BarChartProps = {
 
 const BarChart = ({ data }: BarChartProps) => {
   const { columns, rows, pivot } = data;
-  if (rows.length === 0) {
-    return <>No data</>;
-  }
 
   const [chartData, setChartData] = useState(buildChartData(data));
 
   useEffect(() => {
     setChartData(buildChartData(data));
   }, [data, columns, rows, pivot]);
+
+  if (rows.length === 0) {
+    return <>No data</>;
+  }
 
   return (
     <Bar
