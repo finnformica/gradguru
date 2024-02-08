@@ -1,13 +1,18 @@
 import React from "react";
-import { IGraphForm } from "./types";
+import { IGraphForm, ITableForm } from "./types";
+import { EditableTable } from "./EditableTable";
 
 interface GraphFormProps {
   form: IGraphForm;
-  setForm: (newForm: IGraphForm) => void;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }
 
 const GraphForm = ({ form, setForm }: GraphFormProps) => {
-  return <div>GraphForm</div>;
+  return (
+    <>
+      <EditableTable form={form} setForm={setForm} />
+    </>
+  );
 };
 
 export default GraphForm;

@@ -85,8 +85,8 @@ const FullFeaturedCRUDTable = ({
   setForm,
 }: {
   columnNames: string[];
-  form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  form: ITableForm | IGraphForm;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }) => {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -250,8 +250,8 @@ const EditableTable = ({
   form,
   setForm,
 }: {
-  form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  form: ITableForm | IGraphForm;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }) => {
   const [columnNames, setColumnNames] = useState<string[]>([""]);
 

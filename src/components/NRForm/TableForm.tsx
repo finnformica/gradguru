@@ -1,11 +1,11 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 import { EditableTable, TableQuestionElement } from ".";
-import { ITableForm, tableQuestion } from "./types";
+import { ITableForm, IGraphForm, tableQuestion } from "./types";
 
 interface TableFormProps {
   form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }
 
 const TableForm = ({ form, setForm }: TableFormProps) => {
