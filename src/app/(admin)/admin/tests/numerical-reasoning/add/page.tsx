@@ -4,11 +4,16 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 
 import { NRForm } from "@/components/NRForm";
-import { INRForm, tableForm } from "@/components/NRForm/types";
+import {
+  INRForm,
+  tableForm,
+  graphForm,
+  gmatForm,
+} from "@/components/NRForm/types";
 
 const AddNR = () => {
   const [form, setForm] = useState<INRForm>({
-    ...tableForm,
+    ...graphForm,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
