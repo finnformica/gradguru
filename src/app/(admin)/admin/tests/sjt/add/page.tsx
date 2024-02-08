@@ -4,13 +4,10 @@ import { useState } from "react";
 
 import { Typography } from "@mui/material";
 
-import {
-  SJTScenarioState,
-  initialForm,
-} from "../../../../../../components/SJTForm/types";
+import { SJTScenarioState, initialForm } from "@/components/SJTForm/types";
 
 import { useAlert } from "@/context/adminAlert";
-import SJTForm from "../../../../../../components/SJTForm/SJTForm";
+import { SJTForm } from "@/components/SJTForm";
 
 const AddSJT = () => {
   const { setAlertState } = useAlert();
