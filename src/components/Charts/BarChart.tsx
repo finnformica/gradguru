@@ -6,48 +6,13 @@ import { CategoryScale } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-import { DataType } from "@/components/NRForm/types";
+import { IGraphForm } from "@/components/NRForm/types";
+import { buildChartData } from "./utils";
 
 Chart.register(CategoryScale, ChartDataLabels);
 
 type BarChartProps = {
-  data: DataType;
-};
-
-const buildChartData = (data: BarChartProps["data"]) => {
-  const { columns, rows, pivot } = data;
-
-  if (pivot) {
-    const labels = columns
-      .slice(1, columns.length)
-      .map((column) => column.headerName);
-    const datasets = rows.map((row) => {
-      return {
-        label: row[columns[0].field],
-        data: columns
-          .slice(1, columns.length)
-          .map((column) => row[column.field]),
-      };
-    });
-
-    return {
-      labels,
-      datasets,
-    };
-  } else {
-    const labels = rows.map((row) => row[columns[0].field]);
-    const datasets = columns.slice(1, columns.length).map((column, index) => {
-      return {
-        label: column.headerName,
-        data: rows.map((row) => row[column.field]),
-      };
-    });
-
-    return {
-      labels,
-      datasets,
-    };
-  }
+  data: IGraphForm["data"];
 };
 
 const BarChart = ({ data }: BarChartProps) => {
@@ -71,12 +36,16 @@ const BarChart = ({ data }: BarChartProps) => {
             display: true,
             color: "black",
           },
+          title: {
+            display: true,
+            text: data?.labels?.title || "",
+          },
         },
         scales: {
           x: {
             title: {
               display: true,
-              text: columns[0].headerName,
+              text: data?.labels?.x || "",
             },
           },
           y: {
