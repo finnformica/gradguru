@@ -109,7 +109,16 @@ const FullFeaturedCRUDTable = ({
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+    const updatedRows = rows.filter((row) => row.id !== id);
+    setRows(updatedRows);
+    setForm({
+      ...form,
+      data: {
+        ...form.data,
+        rows: sanitiseRows(updatedRows),
+        columns: sanitiseColumns(columns),
+      },
+    });
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -212,7 +221,7 @@ const FullFeaturedCRUDTable = ({
   return (
     <Box
       sx={{
-        height: 400,
+        height: 500,
         width: "100%",
         "& .actions": {
           color: "text.secondary",
