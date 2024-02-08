@@ -1,7 +1,7 @@
 import React from "react";
 import { Select, MenuItem, SelectChangeEvent, InputLabel } from "@mui/material";
 
-import { TableForm } from ".";
+import { TableForm, GraphForm } from ".";
 
 import { INRForm, gmatForm, graphForm, tableForm } from "./types";
 
@@ -41,8 +41,8 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
         <MenuItem value="graph">Graph</MenuItem>
         <MenuItem value="gmat">Gmat</MenuItem>
       </Select>
-
       {form.type === "table" && <TableForm form={form} setForm={setForm} />}
+      {form.type === "graph" && <GraphForm form={form} setForm={setForm} />}
     </form>
   );
 };
