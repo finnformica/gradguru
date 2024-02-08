@@ -28,7 +28,7 @@ const camelise = (str: string) => {
   return str
     .toLowerCase()
     .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
-    .replace(/[^a-zA-Z ]/g, "");
+    .replace(/[^a-zA-Z0-9 ]/g, "");
 };
 
 const sanitiseRows = (rows: GridRowsProp) => {
