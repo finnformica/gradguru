@@ -3,10 +3,10 @@ import Image from "next/image";
 
 import { Box, Container, Card, Typography } from "@mui/material";
 
-import MUIModal from "@/components/Global/UdemyModal";
-import SmallTitle from "@/components/Titles/SmallTitle";
-import SquareButton from "@/components/Buttons/SquareButton";
-import BulletPoints from "@/components/Global/BulletPoints";
+import MUIModal from "@/components/LandingPage/UdemyModal";
+import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import BulletPoints from "@/components/LandingPage/BulletPoints";
 
 const cards = [
   {

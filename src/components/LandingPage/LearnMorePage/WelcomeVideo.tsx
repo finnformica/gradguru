@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import BigTitle from "@/components/Titles/BigTitle";
+import BigTitle from "@/components/LandingPage/Titles/BigTitle";
 
 const WelcomeVideo = () => {
   const theme = useTheme();

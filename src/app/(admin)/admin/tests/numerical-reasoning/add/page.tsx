@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Typography } from "@mui/material";
 
-import { NRForm } from "../(NRFormComponents)";
-import { INRForm, tableForm } from "../(NRFormComponents)/types";
+import { NRForm } from "@/components/NRForm";
+import { INRForm, tableForm } from "@/components/NRForm/types";
 
 const AddNR = () => {
   const [form, setForm] = useState<INRForm>({

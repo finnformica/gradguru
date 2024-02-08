@@ -17,7 +17,7 @@ import QuizIcon from "@mui/icons-material/Quiz";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 
-import LoadingWrapper from "@/components/LoadingWrapper";
+import LoadingWrapper from "@/components/Global/LoadingWrapper";
 
 import { useAuth } from "@/context/auth";
 import { CourseType } from "../globalTypes";

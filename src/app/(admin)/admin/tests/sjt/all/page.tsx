@@ -11,9 +11,9 @@ import {
   Box,
 } from "@mui/material";
 
-import SJTModal from "./SJTModal";
-import { SJTScenarioState } from "../types";
-import LoadingWrapper from "@/components/LoadingWrapper";
+import SJTModal from "../../../../../../components/SJTForm/SJTModal";
+import { SJTScenarioState } from "../../../../../../components/SJTForm/types";
+import LoadingWrapper from "@/components/Global/LoadingWrapper";
 
 const SJTListItem = ({ ...question }: SJTScenarioState) => {
   const [open, setOpen] = useState(false);

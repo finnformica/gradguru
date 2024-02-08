@@ -6,7 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import { CourseContextProvider } from "@/context/course";
 
-import { Sidebar } from "@/components/CoursePage";
+import { Sidebar } from "@/components/CourseVideoPage";
 
 const drawerWidth = 340;
 

@@ -9,7 +9,7 @@ import {
   VideoControls,
   CourseDescription,
   VideoPlayer,
-} from "@/components/CoursePage";
+} from "@/components/CourseVideoPage";
 import { useAuth } from "@/context/auth";
 import { useCourse } from "@/context/course";
 

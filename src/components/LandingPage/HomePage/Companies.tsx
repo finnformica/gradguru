@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Container, Typography, Grid } from "@mui/material";
 
-import SmallTitle from "@/components/Titles/SmallTitle";
-import SmallerTitle from "@/components/Titles/SmallerTitle";
-import FullWidthContainer from "@/components/Containers/FullWidthContainer";
+import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
+import SmallerTitle from "@/components/LandingPage/Titles/SmallerTitle";
+import FullWidthContainer from "@/components/LandingPage/Containers/FullWidthContainer";
 
 const companies = [
   {

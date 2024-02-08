@@ -7,9 +7,9 @@ import {
   useTheme,
 } from "@mui/material";
 
-import SquareButton from "@/components/Buttons/SquareButton";
-import ArrowButton from "@/components/Buttons/ArrowButton";
-import BigTitle from "@/components/Titles/BigTitle";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import ArrowButton from "@/components/LandingPage/Buttons/ArrowButton";
+import BigTitle from "@/components/LandingPage/Titles/BigTitle";
 
 const Hero = () => {
   const theme = useTheme();

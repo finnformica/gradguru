@@ -2,10 +2,10 @@
 import { FormEvent, useState } from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 
-import SquareButton from "@/components/Buttons/SquareButton";
-import ColouredContainer from "@/components/Containers/ColouredContainer";
-import TextInput from "@/components/Global/TextInput";
-import UserAlert from "@/components/Global/UserAlert";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
+import TextInput from "@/components/LandingPage/TextInput";
+import UserAlert from "@/components/LandingPage/UserAlert";
 
 import { AlertState } from "@/components/globalTypes";
 

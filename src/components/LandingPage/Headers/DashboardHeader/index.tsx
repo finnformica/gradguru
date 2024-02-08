@@ -15,13 +15,14 @@ import { useAuth } from "@/context/auth";
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
+import AuthButton from "./AuthButton";
 
-import UserAlert from "@/components/Global/UserAlert";
+import UserAlert from "@/components/LandingPage/UserAlert";
 
 import { AlertState } from "@/components/globalTypes";
-import SquareButton from "@/components/Buttons/SquareButton";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
 
-const PrimaryHeader = () => {
+const DashboardHeader = () => {
   const { user, loading } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -37,7 +38,6 @@ const PrimaryHeader = () => {
     <AppBar
       position="static"
       sx={{
-        zIndex: (theme) => theme.zIndex.drawer + 1,
         background: "#FFF",
         boxShadow: "none",
         py: 2,
@@ -59,15 +59,24 @@ const PrimaryHeader = () => {
           </Box>
 
           {isMobile && <MenuButton />}
-          {!isMobile && (
-            <Link href="/login">
-              <SquareButton>Login</SquareButton>
-            </Link>
-          )}
+          {!isMobile &&
+            (!!user ? (
+              <AuthButton />
+            ) : (
+              <Link href="/login">
+                <SquareButton>
+                  {loading ? (
+                    <CircularProgress size="1.5rem" sx={{ color: "#FFF" }} />
+                  ) : (
+                    "Login"
+                  )}
+                </SquareButton>
+              </Link>
+            ))}
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
 
-export default PrimaryHeader;
+export default DashboardHeader;

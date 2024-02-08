@@ -1,11 +1,11 @@
 import React from "react";
 import { Container, Box, Typography } from "@mui/material";
 
-import ColouredContainer from "@/components/Containers/ColouredContainer";
-import SquareButton from "@/components/Buttons/SquareButton";
+import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
 
-import ContainerTitle from "@/components/Titles/ContainerTitle";
-import FeaturesList from "@/components/Global/FeaturesList";
+import ContainerTitle from "@/components/LandingPage/Titles/ContainerTitle";
+import FeaturesList from "@/components/LandingPage/FeaturesList";
 
 const features = [
   {

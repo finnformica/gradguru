@@ -1,4 +1,4 @@
-import { DashboardHeader } from "@/components/Headers";
+import { DashboardHeader } from "@/components/LandingPage/Headers";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
