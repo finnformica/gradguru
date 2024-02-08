@@ -24,49 +24,54 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
     <>
       <EditableTable form={form} setForm={setForm} />
       <InputLabel sx={{ pb: 0.5 }}>Chart type</InputLabel>
-      <Select
-        value={form.graph}
-        label="Chart type"
-        onChange={(e: SelectChangeEvent) =>
-          setForm({ ...form, graph: e.target.value as IGraphForm["graph"] })
-        }
-        size="small"
-      >
-        <MenuItem value="bar">Bar chart</MenuItem>
-        <MenuItem value="line">Line graph</MenuItem>
-        <MenuItem value="pie">Pie chart</MenuItem>
-      </Select>
-      {form.graph === "bar" && (
-        <>
-          <Button
-            variant="outlined"
-            size="large"
-            sx={{ mx: 2 }}
-            onClick={() =>
-              setForm({
-                ...form,
-                data: { ...form.data, pivot: !form.data.pivot },
-              })
-            }
-          >
-            Pivot data
-          </Button>
-          <TextField
-            label="Y-axis label"
-            size="small"
-            value={form.data.labels?.y}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                data: {
-                  ...form.data,
-                  labels: { ...form.data.labels, y: e.target.value },
-                },
-              })
-            }
-          />
-        </>
-      )}
+      <Box>
+        <Select
+          value={form.graph}
+          label="Chart type"
+          required
+          onChange={(e: SelectChangeEvent) =>
+            setForm({ ...form, graph: e.target.value as IGraphForm["graph"] })
+          }
+          size="small"
+        >
+          <MenuItem value="bar">Bar chart</MenuItem>
+          <MenuItem value="line">Line graph</MenuItem>
+          <MenuItem value="pie">Pie chart</MenuItem>
+        </Select>
+        {form.graph === "bar" && (
+          <>
+            <Button
+              variant="outlined"
+              size="large"
+              sx={{ mx: 2 }}
+              onClick={() =>
+                setForm({
+                  ...form,
+                  data: { ...form.data, pivot: !form.data.pivot },
+                })
+              }
+            >
+              Pivot data
+            </Button>
+            <TextField
+              label="Y-axis label"
+              size="small"
+              sx={{ width: "50%" }}
+              required
+              value={form.data.labels?.y}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  data: {
+                    ...form.data,
+                    labels: { ...form.data.labels, y: e.target.value },
+                  },
+                })
+              }
+            />
+          </>
+        )}
+      </Box>
       <Box
         sx={{
           width: "100%",
