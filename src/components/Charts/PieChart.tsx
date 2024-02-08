@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-Chart.register(CategoryScale);
+import { IGraphForm } from "@/components/NRForm/types";
+
+Chart.register(CategoryScale, ChartDataLabels);
 
 type PieChartProps = {
-  data: {
-    rows: any[];
-    columns: any[];
-  };
+  data: IGraphForm["data"];
 };
 
 const PieChart = ({ data }: PieChartProps) => {
@@ -39,7 +39,23 @@ const PieChart = ({ data }: PieChartProps) => {
     datasets,
   });
 
-  return <Pie data={chartData} />;
+  return (
+    <Pie
+      data={chartData}
+      options={{
+        plugins: {
+          datalabels: {
+            display: true,
+            color: "black",
+          },
+          title: {
+            display: true,
+            text: data?.labels?.title || "",
+          },
+        },
+      }}
+    />
+  );
 };
 
 export default PieChart;
