@@ -15,6 +15,7 @@ export type DataType = {
   labels?: {
     x?: string;
     y?: string;
+    title?: string;
   };
 };
 
@@ -44,7 +45,7 @@ export const graphQuestion = {
 export const graphForm = {
   data: initialData,
   questions: [graphQuestion],
-  graph: "bar" as "line" | "bar" | "pie",
+  graph: "line" as "line" | "bar" | "pie",
   scenario: "",
   type: "graph" as "graph",
 };

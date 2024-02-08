@@ -7,9 +7,10 @@ import {
   SelectChangeEvent,
   Box,
   TextField,
+  Stack,
 } from "@mui/material";
 
-import { BarChart, PieChart } from "@/components/Charts";
+import { BarChart, PieChart, LineChart } from "@/components/Charts";
 
 import { IGraphForm, ITableForm } from "./types";
 import { EditableTable } from "./EditableTable";
@@ -24,7 +25,7 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
     <>
       <EditableTable form={form} setForm={setForm} />
       <InputLabel sx={{ pb: 0.5 }}>Chart type</InputLabel>
-      <Box>
+      <Stack direction="row" spacing={2} pb={2}>
         <Select
           value={form.graph}
           label="Chart type"
@@ -38,12 +39,29 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
           <MenuItem value="line">Line graph</MenuItem>
           <MenuItem value="pie">Pie chart</MenuItem>
         </Select>
-        {form.graph === "bar" && (
+        <TextField
+          required
+          size="small"
+          label="Chart title"
+          value={form.data.labels?.title}
+          sx={{ width: "30%" }}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              data: {
+                ...form.data,
+                labels: { ...form.data.labels, title: e.target.value },
+              },
+            })
+          }
+        />
+      </Stack>
+      <Stack direction="row" spacing={2}>
+        {(form.graph === "bar" || form.graph === "line") && (
           <>
             <Button
               variant="outlined"
               size="large"
-              sx={{ mx: 2 }}
               onClick={() =>
                 setForm({
                   ...form,
@@ -53,25 +71,30 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
             >
               Pivot data
             </Button>
-            <TextField
-              label="Y-axis label"
-              size="small"
-              sx={{ width: "50%" }}
-              required
-              value={form.data.labels?.y}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  data: {
-                    ...form.data,
-                    labels: { ...form.data.labels, y: e.target.value },
-                  },
-                })
-              }
-            />
+            {["x", "y"].map((axis) => (
+              <TextField
+                required
+                size="small"
+                key={axis}
+                label={`${axis.toUpperCase()}-axis label`}
+                value={
+                  form.data.labels?.[axis as keyof typeof form.data.labels]
+                }
+                sx={{ width: "30%" }}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    data: {
+                      ...form.data,
+                      labels: { ...form.data.labels, [axis]: e.target.value },
+                    },
+                  })
+                }
+              />
+            ))}
           </>
         )}
-      </Box>
+      </Stack>
       <Box
         sx={{
           width: "100%",
@@ -88,6 +111,7 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
             data={{ ...form.data, pivot: form.data.pivot as boolean }}
           />
         )}
+        {form.graph === "line" && <LineChart data={form.data} />}
       </Box>
       <Button variant="outlined" onClick={() => console.log(form)}>
         Log form
