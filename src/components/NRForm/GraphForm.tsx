@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mui/material";
 
-import { PieChart } from "@/components/Charts";
+import { BarChart, PieChart } from "@/components/Charts";
 
 import { IGraphForm, ITableForm } from "./types";
 import { EditableTable } from "./EditableTable";
@@ -46,6 +46,7 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
         }}
       >
         {form.graph === "pie" && <PieChart data={form.data} />}
+        {form.graph === "bar" && <BarChart data={form.data} />}
       </Box>
       <Button variant="outlined" onClick={() => console.log(form)}>
         Log form
