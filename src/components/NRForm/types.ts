@@ -11,6 +11,11 @@ export const initialAnswer = {
 export type DataType = {
   columns: any[];
   rows: any[];
+  pivot?: boolean;
+  labels?: {
+    x?: string;
+    y?: string;
+  };
 };
 
 export type AnswerType = {

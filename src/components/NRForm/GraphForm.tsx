@@ -6,6 +6,7 @@ import {
   Select,
   SelectChangeEvent,
   Box,
+  TextField,
 } from "@mui/material";
 
 import { BarChart, PieChart } from "@/components/Charts";
@@ -35,6 +36,37 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
         <MenuItem value="line">Line graph</MenuItem>
         <MenuItem value="pie">Pie chart</MenuItem>
       </Select>
+      {form.graph === "bar" && (
+        <>
+          <Button
+            variant="outlined"
+            size="large"
+            sx={{ mx: 2 }}
+            onClick={() =>
+              setForm({
+                ...form,
+                data: { ...form.data, pivot: !form.data.pivot },
+              })
+            }
+          >
+            Pivot data
+          </Button>
+          <TextField
+            label="Y-axis label"
+            size="small"
+            value={form.data.labels?.y}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                data: {
+                  ...form.data,
+                  labels: { ...form.data.labels, y: e.target.value },
+                },
+              })
+            }
+          />
+        </>
+      )}
       <Box
         sx={{
           width: "100%",
@@ -46,7 +78,11 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
         }}
       >
         {form.graph === "pie" && <PieChart data={form.data} />}
-        {form.graph === "bar" && <BarChart data={form.data} />}
+        {form.graph === "bar" && (
+          <BarChart
+            data={{ ...form.data, pivot: form.data.pivot as boolean }}
+          />
+        )}
       </Box>
       <Button variant="outlined" onClick={() => console.log(form)}>
         Log form

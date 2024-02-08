@@ -4,42 +4,61 @@ import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { Bar } from "react-chartjs-2";
-
-import { Data } from "./data";
+import { DataType } from "@/components/NRForm/types";
 
 Chart.register(CategoryScale);
 
 type BarChartProps = {
-  data: {
-    rows: any[];
-    columns: any[];
-  };
+  data: DataType;
+};
+
+const buildChartData = (data: BarChartProps["data"]) => {
+  const { columns, rows, pivot } = data;
+
+  if (pivot) {
+    const labels = columns
+      .slice(1, columns.length)
+      .map((column) => column.headerName);
+    const datasets = rows.map((row) => {
+      return {
+        label: row[columns[0].field],
+        data: columns
+          .slice(1, columns.length)
+          .map((column) => row[column.field]),
+      };
+    });
+
+    return {
+      labels,
+      datasets,
+    };
+  } else {
+    const labels = rows.map((row) => row[columns[0].field]);
+    const datasets = columns.slice(1, columns.length).map((column, index) => {
+      return {
+        label: column.headerName,
+        data: rows.map((row) => row[column.field]),
+      };
+    });
+
+    return {
+      labels,
+      datasets,
+    };
+  }
 };
 
 const BarChart = ({ data }: BarChartProps) => {
-  const { columns, rows } = data;
+  const { columns, rows, pivot } = data;
   if (rows.length === 0) {
     return <>No data</>;
   }
-  const labels = rows.map((row) => row[columns[0].field]);
-  const datasets = [
-    {
-      label: columns[1].headerName,
-      data: rows.map((row) => row[columns[1].field]),
-    },
-  ];
+
+  const [chartData, setChartData] = useState(buildChartData(data));
 
   useEffect(() => {
-    setChartData({
-      labels,
-      datasets,
-    });
-  }, [data, columns, rows]);
-
-  const [chartData, setChartData] = useState({
-    labels,
-    datasets,
-  });
+    setChartData(buildChartData(data));
+  }, [data, columns, rows, pivot]);
 
   return (
     <Bar
@@ -55,7 +74,7 @@ const BarChart = ({ data }: BarChartProps) => {
           y: {
             title: {
               display: true,
-              text: columns[1].headerName,
+              text: data?.labels?.y || "",
             },
           },
         },
