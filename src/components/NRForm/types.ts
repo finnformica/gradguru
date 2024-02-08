@@ -39,7 +39,7 @@ export const graphQuestion = {
 export const graphForm = {
   data: initialData,
   questions: [graphQuestion],
-  graph: "" as "line" | "bar" | "pie",
+  graph: "bar" as "line" | "bar" | "pie",
   scenario: "",
   type: "graph" as "graph",
 };
