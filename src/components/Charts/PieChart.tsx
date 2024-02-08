@@ -22,6 +22,7 @@ const PieChart = ({ data }: PieChartProps) => {
   const labels = rows.map((row) => row[columns[0].field]);
   const datasets = [
     {
+      label: columns[1].headerName,
       data: rows.map((row) => row[columns[1].field]),
     },
   ];
