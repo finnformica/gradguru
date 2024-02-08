@@ -1,10 +1,6 @@
-"use client";
+import { Box, Button, Stack, Typography } from "@mui/material";
 
-import { useState } from "react";
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { EditableTable } from ".";
-import { TableQuestionElement } from ".";
-
+import { EditableTable, TableQuestionElement } from ".";
 import { ITableForm, tableQuestion } from "./types";
 
 interface TableFormProps {
@@ -13,58 +9,9 @@ interface TableFormProps {
 }
 
 const TableForm = ({ form, setForm }: TableFormProps) => {
-  const [columnNames, setColumnNames] = useState<string[]>([""]);
-
   return (
     <>
-      <Typography variant="h5" pt={3}>
-        Column names
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          py: 2,
-        }}
-      >
-        {columnNames.map((name, index) => (
-          <TextField
-            size="small"
-            label={`Column ${index + 1}`}
-            required
-            key={index}
-            value={name}
-            onChange={(e) => {
-              const newColumnNames = [...columnNames];
-              newColumnNames[index] = e.target.value;
-              setColumnNames(newColumnNames);
-            }}
-          />
-        ))}
-      </Box>
-      <Stack spacing={2} direction={"row"}>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            setColumnNames([...columnNames, ""]);
-          }}
-        >
-          Add
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() =>
-            setColumnNames(columnNames.splice(0, columnNames.length - 1))
-          }
-        >
-          Delete
-        </Button>
-      </Stack>
-      <Typography variant="h5" pt={3}>
-        Data input
-      </Typography>
-      <EditableTable columnNames={columnNames} form={form} setForm={setForm} />
+      <EditableTable form={form} setForm={setForm} />
       <Typography variant="h5" pt={3}>
         Questions
       </Typography>

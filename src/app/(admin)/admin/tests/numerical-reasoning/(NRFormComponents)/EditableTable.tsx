@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography, Stack, TextField } from "@mui/material";
 
 import {
   GridRowsProp,
@@ -79,7 +79,7 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-export default function EditableTable({
+const FullFeaturedCRUDTable = ({
   columnNames,
   form,
   setForm,
@@ -87,7 +87,7 @@ export default function EditableTable({
   columnNames: string[];
   form: ITableForm;
   setForm: (newForm: ITableForm) => void;
-}) {
+}) => {
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
@@ -244,4 +244,73 @@ export default function EditableTable({
       />
     </Box>
   );
-}
+};
+
+const EditableTable = ({
+  form,
+  setForm,
+}: {
+  form: ITableForm;
+  setForm: (newForm: ITableForm) => void;
+}) => {
+  const [columnNames, setColumnNames] = useState<string[]>([""]);
+
+  return (
+    <>
+      <Typography variant="h5" pt={3}>
+        Column names
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          py: 2,
+        }}
+      >
+        {columnNames.map((name, index) => (
+          <TextField
+            size="small"
+            label={`Column ${index + 1}`}
+            required
+            key={index}
+            value={name}
+            onChange={(e) => {
+              const newColumnNames = [...columnNames];
+              newColumnNames[index] = e.target.value;
+              setColumnNames(newColumnNames);
+            }}
+          />
+        ))}
+      </Box>
+      <Stack spacing={2} direction={"row"}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setColumnNames([...columnNames, ""]);
+          }}
+        >
+          Add
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() =>
+            setColumnNames(columnNames.splice(0, columnNames.length - 1))
+          }
+        >
+          Delete
+        </Button>
+      </Stack>
+      <Typography variant="h5" pt={3}>
+        Data input
+      </Typography>
+      <FullFeaturedCRUDTable
+        columnNames={columnNames}
+        form={form}
+        setForm={setForm}
+      />
+    </>
+  );
+};
+
+export { FullFeaturedCRUDTable, EditableTable };
