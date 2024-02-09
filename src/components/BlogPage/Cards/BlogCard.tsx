@@ -21,6 +21,9 @@ const BlogCard = ({ borderColor }: BlogCard) => {
         py: "50px",
         justifyContent: "space-between",
         borderBottom: `1px solid ${borderColor}`,
+        "&:hover": {
+          cursor: "pointer",
+        },
       }}
     >
       <Box>
