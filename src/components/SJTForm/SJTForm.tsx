@@ -65,12 +65,7 @@ const SJTForm = ({ form, setForm, handleSubmit }: SJTFormProps) => {
             Remove question
           </Button>
         </Stack>
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          sx={{ color: "white" }}
-        >
+        <Button variant="contained" color="primary" type="submit">
           Submit
         </Button>
       </Stack>

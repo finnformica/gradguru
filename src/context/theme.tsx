@@ -21,6 +21,15 @@ const theme = createTheme({
   shape: {
     borderRadius: 3,
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          color: "white",
+        },
+      },
+    },
+  },
 });
 
 type GradguruThemeProviderProps = {

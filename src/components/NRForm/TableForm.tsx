@@ -63,7 +63,6 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
         </Stack>
         <Button
           variant="contained"
-          sx={{ color: "white" }}
           onClick={() => {
             console.log(form);
           }}
