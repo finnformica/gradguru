@@ -272,6 +272,8 @@ const EditableTable = ({
       <Box
         sx={{
           display: "flex",
+          width: "80%",
+          flexWrap: "wrap",
           gap: 2,
           py: 2,
         }}
