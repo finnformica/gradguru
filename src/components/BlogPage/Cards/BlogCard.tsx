@@ -9,9 +9,16 @@ import Image from "next/image";
 
 type BlogCard = {
   borderColor: string;
+  Author: string;
+  Body: string;
+  Date: string;
+  Tags: string;
+  Title: string;
+  "Read Time": number;
+  id: string;
 };
 
-const BlogCard = ({ borderColor }: BlogCard) => {
+const BlogCard = ({ borderColor, ...props }: BlogCard) => {
   return (
     <Box
       sx={{
