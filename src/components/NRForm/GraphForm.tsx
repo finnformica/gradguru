@@ -10,6 +10,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 import { BarChart, PieChart, LineChart } from "@/components/Charts";
 
@@ -146,6 +148,7 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
           <Button
             variant="outlined"
             disabled={form.questions.length >= 4}
+            startIcon={<AddIcon />}
             onClick={() =>
               setForm({
                 ...form,
@@ -158,6 +161,7 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
           <Button
             variant="outlined"
             color="error"
+            startIcon={<RemoveIcon />}
             disabled={form.questions.length <= 1}
             onClick={() =>
               setForm({

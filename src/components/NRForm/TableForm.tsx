@@ -1,4 +1,6 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 import { EditableTable, TableQuestionElement } from ".";
 import { ITableForm, IGraphForm, tableQuestion } from "./types";
@@ -35,6 +37,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
         <Stack spacing={2} direction={"row"}>
           <Button
             variant="outlined"
+            startIcon={<AddIcon />}
             disabled={form.questions.length >= 4}
             onClick={() =>
               setForm({
@@ -48,6 +51,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
           <Button
             variant="outlined"
             color="error"
+            startIcon={<RemoveIcon />}
             disabled={form.questions.length <= 1}
             onClick={() =>
               setForm({
