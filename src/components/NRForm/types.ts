@@ -1,13 +1,3 @@
-export const initialData = {
-  columns: [],
-  rows: [],
-};
-
-export const initialAnswer = {
-  type: "ratio",
-  value: "",
-};
-
 export type DataType = {
   columns: any[];
   rows: any[];
@@ -22,44 +12,6 @@ export type DataType = {
 export type AnswerType = {
   type: string;
   value: string | {};
-};
-
-export const tableQuestion = {
-  question: "",
-  explanation: "",
-  answer: initialAnswer,
-};
-
-export const tableForm = {
-  data: initialData,
-  questions: [tableQuestion],
-  type: "table" as "table",
-};
-
-export const graphQuestion = {
-  question: "",
-  explanation: "",
-  answer: initialAnswer,
-};
-
-export const graphForm = {
-  data: initialData,
-  questions: [graphQuestion],
-  graph: "line" as "line" | "bar" | "pie",
-  scenario: "",
-  type: "graph" as "graph",
-};
-
-export const gmatQuestion = {
-  question: "",
-  explanation: "",
-  answer: "",
-};
-
-export const gmatForm = {
-  scenario: "",
-  questions: [gmatQuestion],
-  type: "gmat" as "gmat",
 };
 
 export interface ITableQuestion {
@@ -88,16 +40,60 @@ export interface IGraphForm {
   type: "graph";
 }
 
-export interface IGmatQuestion {
-  question: string;
-  explanation: string;
-  answer: string;
-}
-
 export interface IGmatForm {
-  scenario: string;
-  questions: IGmatQuestion[];
+  explanation: string;
+  question: string;
+  answer: {
+    value: string;
+    units?: string;
+  };
   type: "gmat";
 }
 
 export type INRForm = ITableForm | IGraphForm | IGmatForm;
+
+export const initialData = {
+  columns: [],
+  rows: [],
+} as DataType;
+
+export const initialAnswer = {
+  type: "ratio",
+  value: "",
+} as AnswerType;
+
+export const tableQuestion = {
+  question: "",
+  explanation: "",
+  answer: initialAnswer,
+} as ITableQuestion;
+
+export const tableForm = {
+  data: initialData,
+  questions: [tableQuestion],
+  type: "table" as "table",
+} as ITableForm;
+
+export const graphQuestion = {
+  question: "",
+  explanation: "",
+  answer: initialAnswer,
+} as IGraphQuestion;
+
+export const graphForm = {
+  data: initialData,
+  questions: [graphQuestion],
+  graph: "line" as "line" | "bar" | "pie",
+  scenario: "",
+  type: "graph" as "graph",
+} as IGraphForm;
+
+export const gmatForm = {
+  type: "gmat" as "gmat",
+  question: "",
+  answer: {
+    value: "",
+    units: "",
+  },
+  explanation: "",
+} as IGmatForm;
