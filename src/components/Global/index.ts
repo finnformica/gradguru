@@ -1,3 +1,4 @@
 import LoadingWrapper from "./LoadingWrapper";
+import ClientWrapper from "./ClientWrapper";
 
-export { LoadingWrapper };
+export { LoadingWrapper, ClientWrapper };
