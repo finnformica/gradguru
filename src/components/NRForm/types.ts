@@ -43,10 +43,7 @@ export interface IGraphForm {
 export interface IGmatForm {
   explanation: string;
   question: string;
-  answer: {
-    value: string;
-    units?: string;
-  };
+  answer: string;
   type: "gmat";
 }
 
@@ -91,9 +88,6 @@ export const graphForm = {
 export const gmatForm = {
   type: "gmat" as "gmat",
   question: "",
-  answer: {
-    value: "",
-    units: "",
-  },
+  answer: "",
   explanation: "",
 } as IGmatForm;

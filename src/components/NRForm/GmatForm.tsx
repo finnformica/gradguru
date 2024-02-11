@@ -58,33 +58,18 @@ const GmatForm = ({ form, setForm }: GmatFormProps) => {
 
       <InputContainer>
         <Typography variant="h5">Answer</Typography>
-        <Stack direction="row" spacing={2}>
-          <TextField
-            label="Answer"
-            fullWidth
-            multiline
-            required
-            value={form.answer.value}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setForm({
-                ...form,
-                answer: { ...form.answer, value: event.target.value },
-              })
-            }
-          />
-          <TextField
-            label="Units (if applicable)"
-            fullWidth
-            multiline
-            value={form.answer.units}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setForm({
-                ...form,
-                answer: { ...form.answer, units: event.target.value },
-              })
-            }
-          />
-        </Stack>
+        <InputLabel>Numerical or ratio value only</InputLabel>
+        <TextField
+          label="Answer"
+          fullWidth
+          multiline
+          required
+          sx={{ width: "100px" }}
+          value={form.answer}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setForm({ ...form, answer: event.target.value })
+          }
+        />
       </InputContainer>
       <Box>
         <Button
