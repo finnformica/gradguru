@@ -8,13 +8,17 @@ import { SJTScenarioState, initialForm } from "@/components/SJTForm/types";
 
 import { useAlert } from "@/context/adminAlert";
 import { SJTForm } from "@/components/SJTForm";
+import { LoadingWrapper } from "@/components/Global";
 
 const AddSJT = () => {
   const { setAlertState } = useAlert();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<SJTScenarioState>({ ...initialForm });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`,
@@ -39,6 +43,8 @@ const AddSJT = () => {
       });
       setForm({ ...initialForm });
     }
+
+    setLoading(false);
   };
 
   return (
@@ -46,7 +52,9 @@ const AddSJT = () => {
       <Typography variant="h4" pb={2}>
         Add SJT question
       </Typography>
-      <SJTForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
+      <LoadingWrapper loading={loading}>
+        <SJTForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
+      </LoadingWrapper>
     </>
   );
 };
