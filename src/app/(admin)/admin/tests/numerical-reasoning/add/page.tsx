@@ -6,10 +6,17 @@ import { Typography } from "@mui/material";
 import { useAlert } from "@/context/adminAlert";
 
 import { NRForm } from "@/components/NRForm";
-import { INRForm, tableForm } from "@/components/NRForm/types";
+import {
+  INRForm,
+  tableForm,
+  graphForm,
+  gmatForm,
+} from "@/components/NRForm/types";
+import { LoadingWrapper } from "@/components/Global";
 
 const AddNR = () => {
   const { setAlertState } = useAlert();
+  const [loading, setLoading] = useState<boolean>(false);
   const [form, setForm] = useState<INRForm>({
     ...tableForm,
   });
@@ -17,7 +24,7 @@ const AddNR = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("form submitted", form);
+    setLoading(true);
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting`,
@@ -36,7 +43,13 @@ const AddNR = () => {
         severity: "success",
         open: true,
       });
-      setForm({ ...tableForm });
+      setForm(
+        form.type === "table"
+          ? tableForm
+          : form.type === "graph"
+          ? graphForm
+          : gmatForm
+      );
     } else {
       setAlertState({
         message: "Uh oh! Error occurred :(",
@@ -44,6 +57,8 @@ const AddNR = () => {
         open: true,
       });
     }
+
+    setLoading(false);
   };
 
   return (
@@ -51,7 +66,9 @@ const AddNR = () => {
       <Typography variant="h4" pb={2}>
         Add Numerical Reasoning question
       </Typography>
-      <NRForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
+      <LoadingWrapper loading={loading}>
+        <NRForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
+      </LoadingWrapper>
     </>
   );
 };
