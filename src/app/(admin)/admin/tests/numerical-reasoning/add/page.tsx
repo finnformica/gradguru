@@ -13,7 +13,7 @@ import {
 
 const AddNR = () => {
   const [form, setForm] = useState<INRForm>({
-    ...graphForm,
+    ...gmatForm,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
