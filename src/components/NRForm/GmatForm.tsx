@@ -72,12 +72,7 @@ const GmatForm = ({ form, setForm }: GmatFormProps) => {
         />
       </InputContainer>
       <Box>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          sx={{ float: "right" }}
-        >
+        <Button type="submit" variant="contained" sx={{ float: "right" }}>
           Submit
         </Button>
       </Box>

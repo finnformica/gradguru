@@ -175,7 +175,7 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
             Remove question
           </Button>
         </Stack>
-        <Button variant="contained" onClick={() => console.log(form)}>
+        <Button variant="contained" type="submit">
           Submit
         </Button>
       </Box>
