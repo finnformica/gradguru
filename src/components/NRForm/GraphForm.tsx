@@ -8,12 +8,14 @@ import {
   Box,
   TextField,
   Stack,
+  Typography,
 } from "@mui/material";
 
 import { BarChart, PieChart, LineChart } from "@/components/Charts";
 
-import { IGraphForm, ITableForm } from "./types";
+import { IGraphForm, ITableForm, graphQuestion } from "./types";
 import { EditableTable } from "./EditableTable";
+import { TableQuestionElement } from "./QuestionElement";
 
 interface GraphFormProps {
   form: IGraphForm;
@@ -106,16 +108,73 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
         }}
       >
         {form.graph === "pie" && <PieChart data={form.data} />}
-        {form.graph === "bar" && (
-          <BarChart
-            data={{ ...form.data, pivot: form.data.pivot as boolean }}
-          />
-        )}
+        {form.graph === "bar" && <BarChart data={form.data} />}
         {form.graph === "line" && <LineChart data={form.data} />}
       </Box>
-      <Button variant="outlined" onClick={() => console.log(form)}>
-        Log form
-      </Button>
+      <Typography variant="h5" pb={2}>
+        Scenario
+      </Typography>
+      <TextField
+        required
+        multiline
+        label="Scenario"
+        fullWidth
+        value={form.scenario}
+        onChange={(e) => setForm({ ...form, scenario: e.target.value })}
+        sx={{ pb: 3 }}
+      />
+
+      <Typography variant="h5">Questions</Typography>
+      {form.questions.map((question, index) => (
+        <TableQuestionElement
+          form={form}
+          setForm={setForm}
+          index={index}
+          key={index}
+          question={question}
+        />
+      ))}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          py: 2,
+        }}
+      >
+        <Stack spacing={2} direction={"row"}>
+          <Button
+            variant="outlined"
+            disabled={form.questions.length >= 4}
+            onClick={() =>
+              setForm({
+                ...form,
+                questions: [...form.questions, graphQuestion],
+              })
+            }
+          >
+            Add question
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            disabled={form.questions.length <= 1}
+            onClick={() =>
+              setForm({
+                ...form,
+                questions: [
+                  ...form.questions.slice(0, form.questions.length - 1),
+                ],
+              })
+            }
+          >
+            Remove question
+          </Button>
+        </Stack>
+        <Button variant="contained" onClick={() => console.log(form)}>
+          Submit
+        </Button>
+      </Box>
     </>
   );
 };
