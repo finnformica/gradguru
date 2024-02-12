@@ -77,6 +77,7 @@ const AllSJT = () => {
 
   useEffect(() => {
     const fetchSJT = async () => {
+      setLoading(true);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`
       );
