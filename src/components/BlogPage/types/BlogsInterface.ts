@@ -1,9 +1,9 @@
 export interface BlogsInterface {
-  Author: string;
-  Body: string;
-  Date: string;
-  Tags: string;
-  Title: string;
-  "Read Time": number;
+  author: string;
+  body: string;
+  date: string;
+  tags: string;
+  title: string;
+  read_time: number;
   id: string;
 }

@@ -9,16 +9,25 @@ import Image from "next/image";
 
 type BlogCard = {
   borderColor: string;
-  Author: string;
-  Body: string;
-  Date: string;
-  Tags: string;
-  Title: string;
-  "Read Time": number;
+  author: string;
+  body: string;
+  date: string;
+  tags: string;
+  title: string;
+  read_time: number;
   id: string;
 };
 
-const BlogCard = ({ borderColor, ...props }: BlogCard) => {
+const BlogCard = ({
+  borderColor,
+  author,
+  body,
+  date,
+  tags,
+  title,
+  read_time,
+  id,
+}: BlogCard) => {
   return (
     <Box
       sx={{
@@ -35,20 +44,16 @@ const BlogCard = ({ borderColor, ...props }: BlogCard) => {
     >
       <Box>
         <Box sx={{ display: "flex", gap: 1 }}>
-          <AuthorTitle>Ken Dixon</AuthorTitle>
+          <AuthorTitle>{author}</AuthorTitle>
           <Typography fontSize={14}>|</Typography>
-          <DateTitle>Feb 02, 2024</DateTitle>
+          <DateTitle>{date}</DateTitle>
         </Box>
-        <CardTitle>Title</CardTitle>
-        <Typography>
-          Under the moon's gentle glow, whispers rustle through the silent
-          woods. Shadows dance, painting the earth in mystic hues. Night's
-          creatures stir, and the world holds its breath in anticipation.
-        </Typography>
+        <CardTitle>{title}</CardTitle>
+        <Typography>{body}</Typography>
         <Box sx={{ display: "flex", mt: "20px", gap: 1 }}>
-          <TagPill>Tags</TagPill>
+          <TagPill>{tags}</TagPill>
           <Typography fontSize={14}>|</Typography>
-          <ReadTimeText>5</ReadTimeText>
+          <ReadTimeText>{read_time}</ReadTimeText>
         </Box>
       </Box>
       <Image
