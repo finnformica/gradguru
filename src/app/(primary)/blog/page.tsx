@@ -16,25 +16,6 @@ const app = initializeApp(config);
 // init services
 const db = getFirestore(app);
 
-// Function to fetch data from the "blogs" collection
-export async function fetchBlogs(): Promise<BlogsInterface[]> {
-  try {
-    const blogsCollection = collection(db, "blogs");
-    const snapshot = await getDocs(blogsCollection);
-    const blogsData: BlogsInterface[] = [];
-
-    snapshot.forEach((doc) => {
-      const blogData = doc.data() as BlogsInterface; // Type assertion to BlogsInterface
-      blogsData.push({ ...blogData, id: doc.id });
-    });
-
-    return blogsData;
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    throw error;
-  }
-}
-
 const BlogPage = () => {
   const [blogsArray, setBlogsArray] = useState<BlogsInterface[]>([]);
 
@@ -61,10 +42,29 @@ const BlogPage = () => {
       }}
     >
       {blogsArray.map((blog) => (
-        <BlogCard borderColor={borderColor} {...blog} />
+        <BlogCard borderColor={borderColor} {...blog} id={blog.id} />
       ))}
     </Container>
   );
 };
 
 export default BlogPage;
+
+// Function to fetch data from the "blogs" collection
+export async function fetchBlogs(): Promise<BlogsInterface[]> {
+  try {
+    const blogsCollection = collection(db, "blogs");
+    const snapshot = await getDocs(blogsCollection);
+    const blogsData: BlogsInterface[] = [];
+
+    snapshot.forEach((doc) => {
+      const blogData = doc.data() as BlogsInterface; // Type assertion to BlogsInterface
+      blogsData.push({ ...blogData, id: doc.id });
+    });
+
+    return blogsData;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    throw error;
+  }
+}
