@@ -8,6 +8,9 @@ import ViewInArIcon from "@mui/icons-material/ViewInAr";
 import GroupIcon from "@mui/icons-material/Group";
 import PinIcon from "@mui/icons-material/Pin";
 import ExtensionIcon from "@mui/icons-material/Extension";
+import BookIcon from "@mui/icons-material/Book";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 
 export const sidebarSections = [
   {
@@ -53,6 +56,7 @@ export const sidebarSections = [
           },
         ],
       },
+
       {
         name: "NR",
         icon: <PinIcon />,
@@ -90,6 +94,25 @@ export const sidebarSections = [
             active: true,
           },
         ],
+      },
+    ],
+  },
+  {
+    name: "Blog",
+    icon: <BookIcon />,
+    active: true,
+    children: [
+      {
+        name: "All Post",
+        icon: <CollectionsBookmarkIcon />,
+        route: "/admin/blog/all",
+        active: true,
+      },
+      {
+        name: "Add Post",
+        icon: <BookmarkAddIcon />,
+        route: "/admin/blog/add",
+        active: true,
       },
     ],
   },
