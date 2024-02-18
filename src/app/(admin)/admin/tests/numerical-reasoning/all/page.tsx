@@ -1,8 +1,64 @@
 "use client";
+import {
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListSubheader,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
 
 import { LoadingWrapper } from "@/components/Global";
+import { capitalise } from "@/utils";
+
+import { NRQuestion } from "@/components/NRForm/types";
+
+const NRListItem = ({ ...question }: NRQuestion) => {
+  const [open, setOpen] = useState(false);
+
+  console.log("question", question);
+
+  return (
+    <>
+      <ListItem disablePadding>
+        <ListItemButton onClick={() => setOpen(true)}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Stack direction="row" spacing={2}>
+              <Typography>{capitalise(question.type)}</Typography>
+              <Typography
+                sx={{
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  width: "60vw",
+                }}
+              >
+                {question.type === "table" && question.questions[0].question}
+                {question.type === "gmat" && question.question}
+                {question.type === "graph" && question.scenario}
+              </Typography>
+            </Stack>
+            <Typography>
+              {new Date(
+                question.created ? question.created : Date.now()
+              ).toLocaleDateString()}
+            </Typography>
+          </Box>
+        </ListItemButton>
+      </ListItem>
+      <Divider />
+    </>
+  );
+};
 
 const AllNR = () => {
   const [loading, setLoading] = useState(false);
@@ -27,14 +83,32 @@ const AllNR = () => {
       <Typography variant="h4" pb={2}>
         All NR questions
       </Typography>
-      <LoadingWrapper loading={loading}>
-        {questions.map((question: any) => (
-          <div key={question.id}>
-            <h2>{question.question}</h2>
-            <p>{question.explanation}</p>
-          </div>
-        ))}
-      </LoadingWrapper>
+
+      <List
+        subheader={
+          <ListSubheader>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Stack direction="row" spacing={2}>
+                <Typography>Type</Typography>
+                <Typography>Scenario</Typography>
+              </Stack>
+              <Typography>Date created</Typography>
+            </Box>
+          </ListSubheader>
+        }
+      >
+        <LoadingWrapper loading={loading}>
+          {questions.map((question: NRQuestion, key) => (
+            <NRListItem key={key} {...question} />
+          ))}
+        </LoadingWrapper>
+      </List>
     </>
   );
 };

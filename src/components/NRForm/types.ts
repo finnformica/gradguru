@@ -1,3 +1,5 @@
+import { IFirestoreData } from "@/components/globalTypes";
+
 export type DataType = {
   columns: any[];
   rows: any[];
@@ -48,6 +50,8 @@ export interface IGmatForm {
 }
 
 export type INRForm = ITableForm | IGraphForm | IGmatForm;
+
+export type NRQuestion = INRForm & IFirestoreData;
 
 export const initialData = {
   columns: [],
