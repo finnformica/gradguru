@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 
-import { SJTScenarioState } from "./types";
+import { SJTQuestion, SJTScenarioForm } from "./types";
 
 const QuestionElement = ({
   index,
@@ -22,8 +22,8 @@ const QuestionElement = ({
   setForm,
 }: {
   index: number;
-  form: SJTScenarioState;
-  setForm: (newState: SJTScenarioState) => void;
+  form: SJTQuestion | SJTScenarioForm;
+  setForm: (newState: SJTQuestion | SJTScenarioForm) => void;
 }) => {
   const [options, setOptions] = useState([1, 2, 3, 4, 5]);
 

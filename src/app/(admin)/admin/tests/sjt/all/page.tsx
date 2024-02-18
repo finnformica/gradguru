@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 
 import { SJTModal } from "@/components/SJTForm";
-import { SJTScenarioState } from "@/components/SJTForm/types";
+import { SJTQuestion } from "@/components/SJTForm/types";
 import { LoadingWrapper } from "@/components/Global";
 
-const SJTListItem = ({ ...question }: SJTScenarioState) => {
+const SJTListItem = ({ ...question }: SJTQuestion) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -56,7 +56,7 @@ const SJTListItem = ({ ...question }: SJTScenarioState) => {
 };
 
 const AllSJT = () => {
-  const [questions, setQuestions] = useState<SJTScenarioState[]>([]);
+  const [questions, setQuestions] = useState<SJTQuestion[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const sortDesc = () => {
@@ -84,7 +84,7 @@ const AllSJT = () => {
       const data = await response.json();
 
       setQuestions(
-        data.documents.sort((a: SJTScenarioState, b: SJTScenarioState) =>
+        data.documents.sort((a: SJTQuestion, b: SJTQuestion) =>
           a.created && b.created ? b.created - a.created : 0
         )
       );

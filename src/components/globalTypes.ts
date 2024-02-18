@@ -55,3 +55,8 @@ type TestType = {
   id: string;
   title: string;
 };
+
+export interface IFirestoreData {
+  created: number;
+  id: string;
+}

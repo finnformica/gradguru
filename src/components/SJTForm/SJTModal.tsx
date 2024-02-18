@@ -1,22 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Modal,
-  Box,
-  Typography,
-  IconButton,
-  Button,
-  Stack,
-  Popper,
-  Paper,
-} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  Paper,
+  Popper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 
 import { useAlert } from "@/context/adminAlert";
 
-import { SJTScenarioState } from "./types";
 import SJTForm from "./SJTForm";
+import { SJTQuestion } from "./types";
 
 const style = {
   position: "absolute" as "absolute",
@@ -39,9 +39,9 @@ const SJTModal = ({
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
-} & SJTScenarioState) => {
+} & SJTQuestion) => {
   const { setAlertState } = useAlert();
-  const [form, setForm] = useState<SJTScenarioState>(question);
+  const [form, setForm] = useState<SJTQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

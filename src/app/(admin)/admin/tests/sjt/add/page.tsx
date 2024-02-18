@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Typography } from "@mui/material";
 
-import { SJTScenarioState, initialForm } from "@/components/SJTForm/types";
+import { SJTScenarioForm, initialForm } from "@/components/SJTForm/types";
 
 import { useAlert } from "@/context/adminAlert";
 import { SJTForm } from "@/components/SJTForm";
@@ -13,7 +13,7 @@ import { LoadingWrapper } from "@/components/Global";
 const AddSJT = () => {
   const { setAlertState } = useAlert();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<SJTScenarioState>({ ...initialForm });
+  const [form, setForm] = useState<SJTScenarioForm>({ ...initialForm });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
