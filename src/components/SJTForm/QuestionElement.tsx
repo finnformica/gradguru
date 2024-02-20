@@ -4,17 +4,17 @@ import { useState } from "react";
 
 import {
   Box,
-  Select,
-  TextField,
-  MenuItem,
-  SelectChangeEvent,
   List,
   ListItem,
-  Typography,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
-import { SJTQuestion, SJTScenarioForm } from "./types";
+import { SJTQuestion } from "./types";
 
 const QuestionElement = ({
   index,
@@ -22,8 +22,8 @@ const QuestionElement = ({
   setForm,
 }: {
   index: number;
-  form: SJTQuestion | SJTScenarioForm;
-  setForm: (newState: SJTQuestion | SJTScenarioForm) => void;
+  form: SJTQuestion;
+  setForm: (newState: SJTQuestion) => void;
 }) => {
   const [options, setOptions] = useState([1, 2, 3, 4, 5]);
 
