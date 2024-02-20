@@ -148,11 +148,17 @@ export const TableQuestionElement = ({
 
                   const fieldName =
                     (columns[0] as { field?: string })?.field || "";
+
+                  const rowValues = form.questions[index].answer.value as {
+                    [key: string]: any;
+                  };
+
                   return (
                     <TextField
                       label={row[fieldName]}
                       required
                       key={i}
+                      value={rowValues[row[fieldName]]}
                       onChange={(e) => {
                         setForm({
                           ...form,
