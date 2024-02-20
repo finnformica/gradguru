@@ -15,6 +15,7 @@ import { LoadingWrapper } from "@/components/Global";
 import { capitalise } from "@/utils";
 
 import { NRQuestion } from "@/components/NRForm/types";
+import NRModal from "@/components/NRForm/NRModal";
 
 const NRListItem = ({ ...question }: NRQuestion) => {
   const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ const NRListItem = ({ ...question }: NRQuestion) => {
 
   return (
     <>
+      <NRModal open={open} setOpen={setOpen} {...question} />
       <ListItem disablePadding>
         <ListItemButton onClick={() => setOpen(true)}>
           <Box
