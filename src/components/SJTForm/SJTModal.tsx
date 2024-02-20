@@ -11,10 +11,12 @@ import { SJTQuestion } from "./types";
 const SJTModal = ({
   open,
   setOpen,
+  fetchSJT,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
+  fetchSJT: () => void;
 } & SJTQuestion) => {
   const { setAlertState } = useAlert();
   const [form, setForm] = useState<SJTQuestion>(question);
@@ -49,6 +51,7 @@ const SJTModal = ({
         open: true,
         severity: "success",
       });
+      fetchSJT();
       handleClose();
     }
   };

@@ -7,10 +7,12 @@ import { NRQuestion } from "./types";
 const NRModal = ({
   open,
   setOpen,
+  fetchNR,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
+  fetchNR: () => void;
 } & NRQuestion) => {
   const { setAlertState } = useAlert();
   const [form, setForm] = useState<NRQuestion>(question);
@@ -45,17 +47,18 @@ const NRModal = ({
         open: true,
         severity: "success",
       });
+      fetchNR();
       handleClose();
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(form);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
       {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -81,6 +84,7 @@ const NRModal = ({
 
   return (
     <FormModalWrapper
+      title="Edit NR question"
       open={open}
       anchorEl={anchorEl}
       onClose={handleClose}

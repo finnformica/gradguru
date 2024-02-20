@@ -15,12 +15,20 @@ import { SJTModal } from "@/components/SJTForm";
 import { SJTQuestion } from "@/components/SJTForm/types";
 import { LoadingWrapper } from "@/components/Global";
 
-const SJTListItem = ({ ...question }: SJTQuestion) => {
+const SJTListItem = ({
+  fetchSJT,
+  ...question
+}: { fetchSJT: () => void } & SJTQuestion) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <SJTModal open={open} setOpen={setOpen} {...question} />
+      <SJTModal
+        open={open}
+        setOpen={setOpen}
+        fetchSJT={fetchSJT}
+        {...question}
+      />
       <ListItem disablePadding>
         <ListItemButton onClick={() => setOpen(true)}>
           <Box
@@ -75,21 +83,22 @@ const AllSJT = () => {
     );
   };
 
-  useEffect(() => {
-    const fetchSJT = async () => {
-      setLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`
-      );
-      const data = await response.json();
+  const fetchSJT = async () => {
+    setLoading(true);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`
+    );
+    const data = await response.json();
 
-      setQuestions(
-        data.documents.sort((a: SJTQuestion, b: SJTQuestion) =>
-          a.created && b.created ? b.created - a.created : 0
-        )
-      );
-      setLoading(false);
-    };
+    setQuestions(
+      data.documents.sort((a: SJTQuestion, b: SJTQuestion) =>
+        a.created && b.created ? b.created - a.created : 0
+      )
+    );
+    setLoading(false);
+  };
+
+  useEffect(() => {
     fetchSJT();
   }, []);
 
@@ -116,7 +125,7 @@ const AllSJT = () => {
           }
         >
           {questions.map((question, key) => (
-            <SJTListItem key={key} {...question} />
+            <SJTListItem key={key} fetchSJT={fetchSJT} {...question} />
           ))}
         </List>
       </LoadingWrapper>
