@@ -3,11 +3,11 @@ import { Select, MenuItem, SelectChangeEvent, InputLabel } from "@mui/material";
 
 import { TableForm, GraphForm, GmatForm } from ".";
 
-import { INRForm, gmatForm, graphForm, tableForm } from "./types";
+import { NRQuestion, gmatForm, graphForm, tableForm } from "./types";
 
 type NRFormProps = {
-  form: INRForm;
-  setForm: (form: INRForm) => void;
+  form: NRQuestion;
+  setForm: (form: NRQuestion) => void;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
