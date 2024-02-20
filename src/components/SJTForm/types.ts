@@ -1,3 +1,5 @@
+import { IFirestoreData } from "@/components/globalTypes";
+
 export interface SJTQuestionState {
   type: "rank" | "multiple";
   question: string;
@@ -6,11 +8,9 @@ export interface SJTQuestionState {
   answer: string;
 }
 
-export interface SJTScenarioState {
+export interface SJTScenarioForm {
   scenario: string;
   questions: SJTQuestionState[];
-  created?: number;
-  id?: string;
 }
 
 export const initialQuestion = {
@@ -25,3 +25,5 @@ export const initialForm = {
   scenario: "",
   questions: [initialQuestion],
 };
+
+export type SJTQuestion = SJTScenarioForm & IFirestoreData;

@@ -11,22 +11,19 @@ const LoadingWrapper = ({
   loading,
   size = 40,
 }: LoadingWrapperProps) => {
-  return (
-    <>
-      {!loading && children}
-      {loading && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <CircularProgress size={size} />
-        </Box>
-      )}
-    </>
+  return loading ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+      }}
+    >
+      <CircularProgress size={size} />
+    </Box>
+  ) : (
+    children
   );
 };
 

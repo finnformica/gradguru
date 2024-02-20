@@ -28,7 +28,7 @@ const camelise = (str: string) => {
   return str
     .toLowerCase()
     .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
-    .replace(/[^a-zA-Z ]/g, "");
+    .replace(/[^a-zA-Z0-9 ]/g, "");
 };
 
 const sanitiseRows = (rows: GridRowsProp) => {
@@ -85,10 +85,12 @@ const FullFeaturedCRUDTable = ({
   setForm,
 }: {
   columnNames: string[];
-  form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  form: ITableForm | IGraphForm;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }) => {
-  const [rows, setRows] = useState<GridRowsProp>([]);
+  const [rows, setRows] = useState<GridRowsProp>(
+    form.data.rows.map((row, id) => ({ ...row, id: id })) || []
+  );
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
@@ -109,7 +111,16 @@ const FullFeaturedCRUDTable = ({
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+    const updatedRows = rows.filter((row) => row.id !== id);
+    setRows(updatedRows);
+    setForm({
+      ...form,
+      data: {
+        ...form.data,
+        rows: sanitiseRows(updatedRows),
+        columns: sanitiseColumns(columns),
+      },
+    });
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -212,7 +223,7 @@ const FullFeaturedCRUDTable = ({
   return (
     <Box
       sx={{
-        height: 400,
+        height: 500,
         width: "100%",
         "& .actions": {
           color: "text.secondary",
@@ -250,10 +261,12 @@ const EditableTable = ({
   form,
   setForm,
 }: {
-  form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  form: ITableForm | IGraphForm;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }) => {
-  const [columnNames, setColumnNames] = useState<string[]>([""]);
+  const [columnNames, setColumnNames] = useState<string[]>(
+    form.data.columns.map((col) => col.headerName) || [""]
+  );
 
   return (
     <>
@@ -263,6 +276,8 @@ const EditableTable = ({
       <Box
         sx={{
           display: "flex",
+          width: "80%",
+          flexWrap: "wrap",
           gap: 2,
           py: 2,
         }}

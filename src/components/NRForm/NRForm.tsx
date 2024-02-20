@@ -1,14 +1,14 @@
 import React from "react";
 import { Select, MenuItem, SelectChangeEvent, InputLabel } from "@mui/material";
 
-import { TableForm, GraphForm } from ".";
+import { TableForm, GraphForm, GmatForm } from ".";
 
-import { INRForm, gmatForm, graphForm, tableForm } from "./types";
+import { NRQuestion, gmatForm, graphForm, tableForm } from "./types";
 
 type NRFormProps = {
-  form: INRForm;
-  setForm: any;
-  handleSubmit: any;
+  form: NRQuestion;
+  setForm: (form: NRQuestion) => void;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
 const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
@@ -43,6 +43,7 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
       </Select>
       {form.type === "table" && <TableForm form={form} setForm={setForm} />}
       {form.type === "graph" && <GraphForm form={form} setForm={setForm} />}
+      {form.type === "gmat" && <GmatForm form={form} setForm={setForm} />}
     </form>
   );
 };

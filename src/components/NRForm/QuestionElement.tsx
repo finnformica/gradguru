@@ -9,13 +9,18 @@ import {
   Stack,
 } from "@mui/material";
 
-import { ITableForm, ITableQuestion } from "./types";
+import {
+  IGraphForm,
+  IGraphQuestion,
+  ITableForm,
+  ITableQuestion,
+} from "./types";
 
 type TableQuestionElementProps = {
-  form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  form: ITableForm | IGraphForm;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
   index: number;
-  question: ITableQuestion;
+  question: ITableQuestion | IGraphQuestion;
 };
 
 export const TableQuestionElement = ({
@@ -24,7 +29,13 @@ export const TableQuestionElement = ({
   index,
   question,
 }: TableQuestionElementProps) => {
-  const answerOptions = ["Multiple", "Ratio", "Percentage", "Number"];
+  const answerOptions = [
+    "Multiple",
+    "Ratio",
+    "Percentage",
+    "Number",
+    "Currency",
+  ];
 
   return (
     <>
@@ -45,21 +56,23 @@ export const TableQuestionElement = ({
               label={`${key.charAt(0).toUpperCase() + key.slice(1)} ${
                 index + 1
               }`}
-              value={form.questions[index][key as keyof ITableQuestion]}
+              value={
+                form.questions[index][
+                  key as keyof (ITableQuestion | IGraphQuestion)
+                ]
+              }
               key={i}
               required
               multiline
               onChange={(e) => {
                 setForm({
                   ...form,
-                  questions: form.questions.map(
-                    (q: ITableQuestion, k: number) => {
-                      if (k === index) {
-                        return { ...q, [key]: e.target.value };
-                      }
-                      return q;
+                  questions: form.questions.map((q, k) => {
+                    if (k === index) {
+                      return { ...q, [key]: e.target.value };
                     }
-                  ),
+                    return q;
+                  }),
                 });
               }}
             />
@@ -74,16 +87,14 @@ export const TableQuestionElement = ({
             onChange={(e: SelectChangeEvent) => {
               setForm({
                 ...form,
-                questions: form.questions.map(
-                  (q: ITableQuestion, k: number) => {
-                    return k === index
-                      ? {
-                          ...q,
-                          answer: { ...question.answer, type: e.target.value },
-                        }
-                      : q;
-                  }
-                ),
+                questions: form.questions.map((q, k) => {
+                  return k === index
+                    ? {
+                        ...q,
+                        answer: { ...question.answer, type: e.target.value },
+                      }
+                    : q;
+                }),
               });
             }}
           >
@@ -95,6 +106,37 @@ export const TableQuestionElement = ({
           </Select>
           {form.questions[index].answer.type === "multiple" ? (
             <>
+              <Select
+                value={
+                  (form.questions[index].answer.value as { type: string }).type
+                }
+                size="small"
+                sx={{ ml: 1 }}
+                onChange={(e: SelectChangeEvent) => {
+                  setForm({
+                    ...form,
+                    questions: form.questions.map((q, k) => {
+                      return k === index
+                        ? {
+                            ...q,
+                            answer: {
+                              ...question.answer,
+                              value: { type: e.target.value },
+                            },
+                          }
+                        : q;
+                    }),
+                  });
+                }}
+              >
+                {answerOptions
+                  .filter((a) => a !== "Multiple")
+                  .map((name, index) => (
+                    <MenuItem value={name.toLowerCase()} key={index}>
+                      {name}
+                    </MenuItem>
+                  ))}
+              </Select>
               <InputLabel sx={{ pb: 0.5 }}>
                 Provide ratio answer in form 1:3 or numeric answer only for
                 other types
@@ -106,30 +148,34 @@ export const TableQuestionElement = ({
 
                   const fieldName =
                     (columns[0] as { field?: string })?.field || "";
+
+                  const rowValues = form.questions[index].answer.value as {
+                    [key: string]: any;
+                  };
+
                   return (
                     <TextField
                       label={row[fieldName]}
                       required
                       key={i}
+                      value={rowValues[row[fieldName]]}
                       onChange={(e) => {
                         setForm({
                           ...form,
-                          questions: form.questions.map(
-                            (q: ITableQuestion, k: number) => {
-                              return k === index
-                                ? {
-                                    ...q,
-                                    answer: {
-                                      ...q.answer,
-                                      value: {
-                                        ...(q.answer.value as {}),
-                                        [row[fieldName]]: e.target.value,
-                                      },
+                          questions: form.questions.map((q, k) => {
+                            return k === index
+                              ? {
+                                  ...q,
+                                  answer: {
+                                    ...q.answer,
+                                    value: {
+                                      ...(q.answer.value as {}),
+                                      [row[fieldName]]: e.target.value,
                                     },
-                                  }
-                                : q;
-                            }
-                          ),
+                                  },
+                                }
+                              : q;
+                          }),
                         });
                       }}
                     />
@@ -151,16 +197,14 @@ export const TableQuestionElement = ({
                 onChange={(e) => {
                   setForm({
                     ...form,
-                    questions: form.questions.map(
-                      (q: ITableQuestion, k: number) => {
-                        return k === index
-                          ? {
-                              ...q,
-                              answer: { ...q.answer, value: e.target.value },
-                            }
-                          : q;
-                      }
-                    ),
+                    questions: form.questions.map((q, k) => {
+                      return k === index
+                        ? {
+                            ...q,
+                            answer: { ...q.answer, value: e.target.value },
+                          }
+                        : q;
+                    }),
                   });
                 }}
               />

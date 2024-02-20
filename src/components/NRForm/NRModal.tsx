@@ -1,25 +1,21 @@
-"use client";
-
-import { useState } from "react";
-
-import { useAlert } from "@/context/adminAlert";
-
+import React, { useState } from "react";
 import FormModalWrapper from "../Global/FormModalWrapper";
-import SJTForm from "./SJTForm";
-import { SJTQuestion } from "./types";
+import NRForm from "./NRForm";
+import { useAlert } from "@/context/adminAlert";
+import { NRQuestion } from "./types";
 
-const SJTModal = ({
+const NRModal = ({
   open,
   setOpen,
-  fetchSJT,
+  fetchNR,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
-  fetchSJT: () => void;
-} & SJTQuestion) => {
+  fetchNR: () => void;
+} & NRQuestion) => {
   const { setAlertState } = useAlert();
-  const [form, setForm] = useState<SJTQuestion>(question);
+  const [form, setForm] = useState<NRQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,7 +29,7 @@ const SJTModal = ({
 
   const handleDelete = async () => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
       {
         method: "DELETE",
       }
@@ -47,20 +43,20 @@ const SJTModal = ({
       });
     } else {
       setAlertState({
-        message: "SJT question deleted",
+        message: "NR question deleted",
         open: true,
         severity: "success",
       });
-      fetchSJT();
+      fetchNR();
       handleClose();
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(form);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
       {
         method: "POST",
         headers: {
@@ -78,17 +74,17 @@ const SJTModal = ({
       });
     } else {
       setAlertState({
-        message: "SJT question updated",
+        message: "NR question updated",
         open: true,
         severity: "success",
       });
-      setOpen(false);
+      handleClose();
     }
   };
 
   return (
     <FormModalWrapper
-      title="Edit SJT question"
+      title="Edit NR question"
       open={open}
       anchorEl={anchorEl}
       onClose={handleClose}
@@ -96,9 +92,9 @@ const SJTModal = ({
       handleClick={handleClick}
       handleClose={handleClose}
     >
-      <SJTForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
+      <NRForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
     </FormModalWrapper>
   );
 };
 
-export default SJTModal;
+export default NRModal;

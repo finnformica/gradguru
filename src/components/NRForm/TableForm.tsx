@@ -1,11 +1,13 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 import { EditableTable, TableQuestionElement } from ".";
-import { ITableForm, tableQuestion } from "./types";
+import { ITableForm, IGraphForm, tableQuestion } from "./types";
 
 interface TableFormProps {
   form: ITableForm;
-  setForm: (newForm: ITableForm) => void;
+  setForm: (newForm: ITableForm | IGraphForm) => void;
 }
 
 const TableForm = ({ form, setForm }: TableFormProps) => {
@@ -35,6 +37,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
         <Stack spacing={2} direction={"row"}>
           <Button
             variant="outlined"
+            startIcon={<AddIcon />}
             disabled={form.questions.length >= 4}
             onClick={() =>
               setForm({
@@ -48,6 +51,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
           <Button
             variant="outlined"
             color="error"
+            startIcon={<RemoveIcon />}
             disabled={form.questions.length <= 1}
             onClick={() =>
               setForm({
@@ -61,13 +65,7 @@ const TableForm = ({ form, setForm }: TableFormProps) => {
             Remove question
           </Button>
         </Stack>
-        <Button
-          variant="contained"
-          sx={{ color: "white" }}
-          onClick={() => {
-            console.log(form);
-          }}
-        >
+        <Button variant="contained" type="submit">
           Submit
         </Button>
       </Box>
