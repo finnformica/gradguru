@@ -85,6 +85,7 @@ const SJTModal = ({
 
   return (
     <FormModalWrapper
+      title="Edit SJT question"
       open={open}
       anchorEl={anchorEl}
       onClose={handleClose}

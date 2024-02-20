@@ -28,6 +28,7 @@ const style = {
 };
 
 const FormModalWrapper = ({
+  title,
   open,
   anchorEl,
   onClose,
@@ -36,6 +37,7 @@ const FormModalWrapper = ({
   handleClose,
   children,
 }: {
+  title: string;
   open: boolean;
   anchorEl: null | HTMLElement;
   onClose: () => void;
@@ -59,7 +61,7 @@ const FormModalWrapper = ({
           }}
         >
           <Stack direction="row" spacing={4}>
-            <Typography variant="h4">Edit SJT question</Typography>
+            <Typography variant="h4">{title}</Typography>
             <Button
               variant="contained"
               color="error"
