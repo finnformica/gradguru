@@ -18,13 +18,13 @@ export const sidebarSections = [
       {
         name: "All Courses",
         icon: <AllInclusiveIcon />,
-        route: "/admin/courses",
+        route: "/admin/courses/all",
         active: true,
       },
       {
         name: "Add Course",
         icon: <AddIcon />,
-        route: "/admin/courses",
+        route: "/admin/courses/add",
         active: true,
       },
     ],
