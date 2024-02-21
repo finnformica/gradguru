@@ -1,0 +1,42 @@
+export const courses = [
+  {
+    title: "Big 4 Consulting",
+    id: "consulting",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/consulting-icon.png",
+    active: true,
+    href: "/dashboard/courses/consulting",
+  },
+  {
+    title: "Financial Services",
+    id: "finance",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/finance-icon.png",
+    active: false,
+    href: "/dashboard/courses/finance",
+  },
+  {
+    title: "Investment Banking",
+    id: "investment",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/investment-icon.png",
+    active: false,
+    href: "/dashboard/courses/investment",
+  },
+  {
+    title: "Software Engineering",
+    id: "software",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/software-icon.png",
+    active: false,
+    href: "/dashboard/courses/software",
+  },
+  {
+    title: "Law",
+    id: "law",
+    description: "Learn how to ace the Big 4 Consulting interview process.",
+    src: "/icons/course-icons/law-icon.png",
+    active: false,
+    href: "/dashboard/courses/law",
+  },
+];

@@ -1,3 +1,7 @@
 import { subscribe } from "./subscribe";
 
-export { subscribe };
+function capitalise(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export { subscribe, capitalise };

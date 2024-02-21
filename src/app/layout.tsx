@@ -6,10 +6,10 @@ import "@fontsource/roboto/700.css";
 
 import "@/styles/global.css";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import "next-cloudinary/dist/cld-video-player.css";
 
-import GradguruThemeProvider from "@/theme";
+import GradguruThemeProvider from "@/context/theme";
+import { AuthContextProvider } from "@/context/auth";
 
 import favicons from "./favicons";
 
@@ -26,16 +26,11 @@ export default function RootLayout({
 }) {
   return (
     <GradguruThemeProvider>
-      <html
-        lang="en"
-        style={{ scrollBehavior: "smooth", scrollPadding: "75px" }}
-      >
-        <body style={{ margin: 0 }} suppressHydrationWarning={true}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </body>
-      </html>
+      <AuthContextProvider>
+        <html lang="en">
+          <body suppressHydrationWarning={true}>{children}</body>
+        </html>
+      </AuthContextProvider>
     </GradguruThemeProvider>
   );
 }
