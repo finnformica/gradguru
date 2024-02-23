@@ -60,7 +60,7 @@ const PrimaryHeader = () => {
 
           {isMobile && <MenuButton />}
           {!isMobile && (
-            <Link href="/login">
+            <Link href="/sign-in">
               <SquareButton>Login</SquareButton>
             </Link>
           )}
