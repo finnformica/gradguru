@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-gradguru-firebase-adminsdk-tgd6v-a5f43b5dd2.json
+gradguru-firebase-adminsdk.json
 
 # dependencies
 /node_modules
