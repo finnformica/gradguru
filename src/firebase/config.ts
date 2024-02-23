@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 import { GoogleAuthProvider, EmailAuthProvider, getAuth } from "firebase/auth";
 
@@ -13,20 +14,10 @@ const config = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-export const uiConfig = {
-  signInFlow: "popup",
-  signInSuccessUrl: "/",
-  tosUrl: "/terms-of-service",
-  privacyPolicyUrl: "/privacy-policy",
-  signInOptions: [
-    GoogleAuthProvider.PROVIDER_ID,
-    EmailAuthProvider.PROVIDER_ID,
-  ],
-};
-
 const app = !getApps().length ? initializeApp(config) : getApp();
-const db = getFirestore(app);
 
+const db = getFirestore(app);
+const storage = getStorage(app);
 const auth = getAuth(app);
 
-export { app, db, config, auth };
+export { app, db, storage, auth, config };
