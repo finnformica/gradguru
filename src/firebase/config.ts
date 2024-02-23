@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 import { GoogleAuthProvider, EmailAuthProvider, getAuth } from "firebase/auth";
@@ -24,7 +24,7 @@ export const uiConfig = {
   ],
 };
 
-const app = initializeApp(config);
+const app = !getApps().length ? initializeApp(config) : getApp();
 const db = getFirestore(app);
 
 const auth = getAuth(app);

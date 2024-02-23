@@ -1,5 +1,4 @@
 import { PrimaryHeader } from "@/components/LandingPage/Headers";
-import Footer from "@/components/LandingPage/Footer";
 
 export default function PrimaryLayout({
   children,
@@ -10,7 +9,6 @@ export default function PrimaryLayout({
     <>
       <PrimaryHeader />
       <main>{children}</main>
-      <Footer />
     </>
   );
 }

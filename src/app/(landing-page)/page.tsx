@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Hero,
   CTA,
@@ -7,6 +5,7 @@ import {
   Practice,
   Companies,
 } from "@/components/LandingPage/HomePage";
+import Footer from "@/components/LandingPage/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +15,7 @@ export default function Home() {
       <Features />
       <Practice />
       <Companies />
+      <Footer />
     </>
   );
 }

@@ -7,6 +7,7 @@ import {
   AssessmentCentre,
   FAQs,
 } from "@/components/LandingPage/LearnMorePage";
+import Footer from "@/components/LandingPage/Footer";
 
 const LearnMore = () => {
   return (
@@ -16,6 +17,7 @@ const LearnMore = () => {
       <Hirevue />
       <AssessmentCentre />
       <FAQs />
+      <Footer />
     </>
   );
 };
