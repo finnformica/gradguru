@@ -9,8 +9,7 @@ import "@/styles/global.css";
 import "next-cloudinary/dist/cld-video-player.css";
 
 import GradguruThemeProvider from "@/context/theme";
-import { AuthContextProvider } from "@/context/auth";
-
+import NextAuthProvider from "@/context/next-auth";
 import favicons from "./favicons";
 
 export const metadata = {
@@ -26,11 +25,11 @@ export default function RootLayout({
 }) {
   return (
     <GradguruThemeProvider>
-      <AuthContextProvider>
+      <NextAuthProvider>
         <html lang="en">
           <body suppressHydrationWarning={true}>{children}</body>
         </html>
-      </AuthContextProvider>
+      </NextAuthProvider>
     </GradguruThemeProvider>
   );
 }
