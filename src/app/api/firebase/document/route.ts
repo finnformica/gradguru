@@ -53,7 +53,6 @@ export async function POST(request: NextRequest) {
   const { result, error } = await addData(updatedData, document, collection);
 
   if (error) {
-    console.log("An error occured", error);
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });
   }
 

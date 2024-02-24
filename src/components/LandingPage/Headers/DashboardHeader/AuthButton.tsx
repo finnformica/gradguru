@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { useAuth } from "@/context/auth";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { signOut, useSession } from "next-auth/react";
 
 const AuthButton = () => {
-  const { user, handleLogout } = useAuth();
+  const { data, status } = useSession();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -18,7 +18,7 @@ const AuthButton = () => {
     setAnchorEl(null);
   };
 
-  if (!user) {
+  if (status !== "authenticated") {
     return null;
   }
 
@@ -31,10 +31,10 @@ const AuthButton = () => {
         onClick={handleMenu}
         color="inherit"
       >
-        {!!user.photoURL ? (
+        {data.user?.image ? (
           <Image
             alt="user profile image"
-            src={user.photoURL}
+            src={data.user.image}
             width={30}
             height={30}
             style={{ borderRadius: "50%" }}
@@ -58,7 +58,7 @@ const AuthButton = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleLogout}>
+        <MenuItem onClick={() => signOut()}>
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>

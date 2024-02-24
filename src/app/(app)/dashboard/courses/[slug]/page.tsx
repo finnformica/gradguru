@@ -1,16 +1,15 @@
 "use client";
 
+import { notFound } from "next/navigation";
 import { useEffect } from "react";
-import { useRouter, notFound } from "next/navigation";
 
-import { Container, Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import {
-  VideoControls,
   CourseDescription,
+  VideoControls,
   VideoPlayer,
 } from "@/components/CourseVideoPage";
-import { useAuth } from "@/context/auth";
 import { useCourse } from "@/context/course";
 
 type CoursePageProps = {
@@ -32,14 +31,6 @@ export async function generateStaticParams() {
 const CoursePage = ({ params }: CoursePageProps) => {
   const { slug } = params;
   const { setCourse } = useCourse();
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user && !loading) {
-      router.push("/login");
-    }
-  }, [user, loading, router]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +43,6 @@ const CoursePage = ({ params }: CoursePageProps) => {
 
       // if course is not found, redirect to 404
       if (!data) {
-        console.log("Course not found");
         notFound();
       }
 
@@ -64,10 +54,6 @@ const CoursePage = ({ params }: CoursePageProps) => {
       console.log(err);
     });
   }, []);
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <Container maxWidth="lg" disableGutters>

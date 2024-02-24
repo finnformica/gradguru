@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
   );
 
   if (error) {
-    console.log("An error occured", error);
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });
   }
 
