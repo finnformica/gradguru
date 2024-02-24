@@ -23,7 +23,6 @@ export const authOptions: NextAuthOptions = {
   }) as Adapter,
   callbacks: {
     async jwt({ token, user }) {
-      console.log("jwt", user);
       // if (user?.id) {
       //   token.id = user.id;
       // }
