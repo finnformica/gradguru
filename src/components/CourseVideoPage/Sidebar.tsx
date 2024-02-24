@@ -13,8 +13,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
 import { useCourse } from "@/context/course";
-
-import { LessonType } from "@/mock/courses";
+import { LessonType } from "@/components/globalTypes";
 
 const NestedListItem = ({
   lessons,
@@ -98,7 +97,7 @@ const Sidebar = ({ open, drawerWidth }: any) => {
 
   const drawer = (
     <List>
-      {course.sections.map((section, key: number) => (
+      {course.sections.map((section: string, key: number) => (
         <NestedListItem
           section={section}
           lessons={course.lessons.filter(
