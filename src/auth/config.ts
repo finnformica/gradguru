@@ -12,6 +12,16 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: 1,
+          courses: [],
+        };
+      },
     }),
   ],
   adapter: FirestoreAdapter({
@@ -25,6 +35,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, user }) {
       session.user.id = user.id;
       session.user.role = user.role;
+      session.user.courses = user.courses;
       return session;
     },
   },

@@ -7,11 +7,13 @@ declare module "next-auth" {
     user: {
       id: string;
       role: string;
+      courses: string[];
     } & DefaultSession["user"];
   }
 
   interface User {
     id: string;
     role: number;
+    courses: string[];
   }
 }
