@@ -1,25 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import React from "react";
 
 import {
-  Typography,
-  Box,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography,
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
-import QuizIcon from "@mui/icons-material/Quiz";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import QuizIcon from "@mui/icons-material/Quiz";
+import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 
-import LoadingWrapper from "@/components/Global/LoadingWrapper";
-import { CourseType } from "../globalTypes";
-import { useSession } from "next-auth/react";
+import { CourseType } from "@/components/globalTypes";
 
 const Title = ({
   children,
@@ -69,7 +67,7 @@ const AccordionCard = ({ title, href }: { title: string; href: string }) => (
   </Box>
 );
 
-const CourseAccordion = ({ ...course }: CourseType) => {
+export const CourseAccordion = ({ ...course }: CourseType) => {
   return (
     <Accordion
       disabled={!course.active}
@@ -130,85 +128,3 @@ const CourseAccordion = ({ ...course }: CourseType) => {
     </Accordion>
   );
 };
-
-const CourseCards = () => {
-  const [userCourses, setUserCourses] = useState<string[]>([]);
-  const [courses, setCourses] = useState<CourseType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
-
-  const user = session?.user;
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      // retrieve user courses from database
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user.id}`
-      )
-        .then((res) => res.json())
-        .then((res) => res.data);
-
-      // if course is not found
-      if (!data) {
-        console.log("Course not found");
-      } else {
-        setUserCourses(data.courses);
-      }
-      setLoading(false);
-    };
-
-    if (status === "authenticated") {
-      fetchUserData();
-    }
-  }, [status, user]);
-
-  useEffect(() => {
-    const fetchCourseData = async () => {
-      // retrieve all courses from database
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=courses`
-      ).then((res) => res.json());
-
-      // filter courses based on user subscription
-      const filteredCourses = data.documents.filter((course: CourseType) =>
-        userCourses.includes(course.id)
-      );
-
-      setCourses(filteredCourses);
-    };
-
-    if (userCourses.length > 0) {
-      fetchCourseData();
-    }
-  }, [userCourses]);
-
-  return (
-    <>
-      <Typography variant="h2" fontWeight={500}>
-        Your Courses
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-          my: 4,
-        }}
-      >
-        <LoadingWrapper loading={loading}>
-          {userCourses.length === 0 ? (
-            <Typography>You have no purchased courses</Typography>
-          ) : (
-            courses.map((course, key) => (
-              <CourseAccordion key={key} {...course} />
-            ))
-          )}
-        </LoadingWrapper>
-      </Box>
-    </>
-  );
-};
-
-export default CourseCards;
