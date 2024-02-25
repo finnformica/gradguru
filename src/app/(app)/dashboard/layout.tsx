@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/auth/config";
 
-import { DashboardHeader } from "@/components/LandingPage/Headers";
+import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 
 export default async function DashboardLayout({
   children,
