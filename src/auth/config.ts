@@ -3,6 +3,10 @@ import { cert } from "firebase-admin/app";
 import { NextAuthOptions } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+import bcrypt from "bcrypt";
 
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import type { Adapter } from "next-auth/adapters";
@@ -23,6 +27,16 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+    // CredentialsProvider({
+    //   name: "credentials",
+    //   credentials: {
+    //     username: { label: "Username", type: "text", placeholder: "jsmith" },
+    //     password: { label: "Password", type: "password" },
+    //   },
+    //   async authorize(credentials) {
+    //     return null;
+    //   },
+    // }),
   ],
   adapter: FirestoreAdapter({
     credential: cert({
@@ -39,4 +53,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  // session: {
+  //   strategy: "jwt",
+  // },
+  secret: process.env.SECRET,
+  debug: process.env.NODE_ENV === "development",
 };
