@@ -22,18 +22,8 @@ export const authOptions: NextAuthOptions = {
     }),
   }) as Adapter,
   callbacks: {
-    async jwt({ token, user }) {
-      // if (user?.id) {
-      //   token.id = user.id;
-      // }
-      // if (user?.userName) {
-      //   token.userName = user.userName;
-      // }
-      return token;
-    },
-    async session({ session, token }) {
-      // session.id = token.id;
-      // session.userName = token.userName;
+    async session({ session, user }) {
+      session.user.id = user.id;
       return session;
     },
   },
