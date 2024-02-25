@@ -1,12 +1,25 @@
-import LatexContext from "@/context/latex";
+import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/auth/config";
+
 import { AlertContextProvider } from "@/context/adminAlert";
+import LatexContext from "@/context/latex";
+
 import MiniDrawer from "@/components/AdminLayout/MiniDrawer";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const data = await getServerSession(authOptions);
+
+  // if user is not authenticated,
+  // or does not have update, delete, or create permissions
+  if (!data || data.user.role < 2) {
+    notFound();
+  }
   return (
     <LatexContext>
       <AlertContextProvider>
