@@ -32,12 +32,13 @@ const SignIn = () => {
   return (
     <Box
       sx={{
-        width: "400px",
+        width: { xs: "300px", sm: "400px" },
         display: "flex",
         flexDirection: "column",
-        gap: 4,
+        justifyContent: "center",
         mx: "auto",
-        p: 4,
+        gap: 4,
+        backgroundColor: "red",
       }}
     >
       <Box>
@@ -82,7 +83,7 @@ const SignIn = () => {
           variant="outlined"
           startIcon={<GoogleIcon />}
           onClick={() => signIn("google")}
-          sx={{ width: "50%" }}
+          sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
         >
           Google
         </Button>
@@ -92,7 +93,7 @@ const SignIn = () => {
           variant="outlined"
           startIcon={<FacebookIcon />}
           onClick={() => signIn("facebook")}
-          sx={{ width: "50%" }}
+          sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
         >
           Facebook
         </Button>

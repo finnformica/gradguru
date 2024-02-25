@@ -8,7 +8,14 @@ export default function PrimaryLayout({
   return (
     <>
       <PrimaryHeader />
-      <main>{children}</main>
+      <main
+        style={{
+          display: "flex",
+          flex: 1,
+        }}
+      >
+        {children}
+      </main>
     </>
   );
 }

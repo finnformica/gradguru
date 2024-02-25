@@ -1,3 +1,5 @@
+import { Box } from "@mui/material";
+
 import {
   Hero,
   CTA,
@@ -9,13 +11,13 @@ import Footer from "@/components/LandingPage/Footer";
 
 export default function Home() {
   return (
-    <>
+    <Box>
       <Hero />
       <CTA />
       <Features />
       <Practice />
       <Companies />
       <Footer />
-    </>
+    </Box>
   );
 }
