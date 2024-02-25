@@ -18,9 +18,8 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 
 import LoadingWrapper from "@/components/Global/LoadingWrapper";
-
-import { useAuth } from "@/context/auth";
 import { CourseType } from "../globalTypes";
+import { useSession } from "next-auth/react";
 
 const Title = ({
   children,
@@ -136,13 +135,15 @@ const CourseCards = () => {
   const [userCourses, setUserCourses] = useState<string[]>([]);
   const [courses, setCourses] = useState<CourseType[]>([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { data: session, status } = useSession();
+
+  const user = session?.user;
 
   useEffect(() => {
     const fetchUserData = async () => {
       // retrieve user courses from database
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user.uid}`
+        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user.id}`
       )
         .then((res) => res.json())
         .then((res) => res.data);
@@ -156,10 +157,10 @@ const CourseCards = () => {
       setLoading(false);
     };
 
-    if (user) {
+    if (status === "authenticated") {
       fetchUserData();
     }
-  }, [user]);
+  }, [status, user]);
 
   useEffect(() => {
     const fetchCourseData = async () => {
