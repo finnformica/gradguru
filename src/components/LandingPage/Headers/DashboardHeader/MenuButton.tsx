@@ -10,12 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAuth } from "@/context/auth";
 
 import { pages } from "./pages";
+import { signOut, useSession } from "next-auth/react";
 
 const MenuButton = () => {
-  const { user, handleLogout } = useAuth();
+  const { status } = useSession();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -56,12 +56,12 @@ const MenuButton = () => {
             </Link>
           </MenuItem>
         ))}
-        {!!user ? (
+        {status === "authenticated" ? (
           <MenuItem
             key="Logout"
             onClick={() => {
+              signOut();
               handleCloseUserMenu();
-              handleLogout();
             }}
           >
             <Typography textAlign="center">Logout</Typography>
@@ -73,7 +73,7 @@ const MenuButton = () => {
               handleCloseUserMenu();
             }}
           >
-            <Link href="/login">
+            <Link href="/sign-in">
               <Typography textAlign="center">Login</Typography>
             </Link>
           </MenuItem>

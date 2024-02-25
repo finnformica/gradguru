@@ -10,12 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAuth } from "@/context/auth";
 
 import { pages } from "./pages";
 
 const MenuButton = () => {
-  const { user, handleLogout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -62,7 +60,7 @@ const MenuButton = () => {
             handleCloseUserMenu();
           }}
         >
-          <Link href="/login">
+          <Link href="/sign-in">
             <Typography textAlign="center">Login</Typography>
           </Link>
         </MenuItem>

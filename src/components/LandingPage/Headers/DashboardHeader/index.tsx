@@ -1,29 +1,24 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
 import {
   AppBar,
-  Toolbar,
   Box,
   Container,
+  Toolbar,
   useMediaQuery,
   useTheme,
-  CircularProgress,
 } from "@mui/material";
-import { useAuth } from "@/context/auth";
+import { useState } from "react";
 
-import MenuButton from "./MenuButton";
-import NavLinks from "./NavLinks";
-import NavbarLogo from "./NavbarLogo";
 import AuthButton from "./AuthButton";
+import MenuButton from "./MenuButton";
+import NavbarLogo from "./NavbarLogo";
+import NavLinks from "./NavLinks";
 
 import UserAlert from "@/components/LandingPage/UserAlert";
 
 import { AlertState } from "@/components/globalTypes";
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
 
 const DashboardHeader = () => {
-  const { user, loading } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -59,20 +54,7 @@ const DashboardHeader = () => {
           </Box>
 
           {isMobile && <MenuButton />}
-          {!isMobile &&
-            (!!user ? (
-              <AuthButton />
-            ) : (
-              <Link href="/login">
-                <SquareButton>
-                  {loading ? (
-                    <CircularProgress size="1.5rem" sx={{ color: "#FFF" }} />
-                  ) : (
-                    "Login"
-                  )}
-                </SquareButton>
-              </Link>
-            ))}
+          {!isMobile && <AuthButton />}
         </Toolbar>
       </Container>
     </AppBar>

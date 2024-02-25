@@ -1,3 +1,5 @@
+"use client";
+
 import { FormEvent, useState } from "react";
 import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
 import TextInput from "@/components/LandingPage/TextInput";

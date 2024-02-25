@@ -54,7 +54,6 @@ const NRModal = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(form);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
       {

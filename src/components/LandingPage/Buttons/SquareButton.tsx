@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, useTheme } from "@mui/material";
 
 type SquareButtonProps = {

@@ -28,7 +28,7 @@ export type CourseType = {
   }[];
   id: string;
   image: string;
-  lessons: VideoType[];
+  lessons: LessonType[];
   name: string;
   price: number;
   resources: ResourceType[];
@@ -44,9 +44,9 @@ type ResourceType = {
   id: string;
 };
 
-type VideoType = {
-  video: string;
+export type LessonType = {
   name: string;
+  video: string;
   duration: string;
   section: number;
 };

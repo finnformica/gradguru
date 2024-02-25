@@ -1,16 +1,14 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
 import {
   AppBar,
-  Toolbar,
   Box,
   Container,
+  Toolbar,
   useMediaQuery,
   useTheme,
-  CircularProgress,
 } from "@mui/material";
-import { useAuth } from "@/context/auth";
+import Link from "next/link";
+import { useState } from "react";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
@@ -18,11 +16,10 @@ import NavbarLogo from "./NavbarLogo";
 
 import UserAlert from "@/components/LandingPage/UserAlert";
 
-import { AlertState } from "@/components/globalTypes";
 import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import { AlertState } from "@/components/globalTypes";
 
 const PrimaryHeader = () => {
-  const { user, loading } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -60,7 +57,7 @@ const PrimaryHeader = () => {
 
           {isMobile && <MenuButton />}
           {!isMobile && (
-            <Link href="/login">
+            <Link href="/sign-in">
               <SquareButton>Login</SquareButton>
             </Link>
           )}
