@@ -53,7 +53,7 @@ const Dashboard = () => {
       setCourses(filteredCourses);
     };
 
-    if (userCourses.length > 0) {
+    if (userCourses?.length) {
       fetchCourseData();
     }
   }, [userCourses]);
@@ -74,8 +74,8 @@ const Dashboard = () => {
         }}
       >
         <LoadingWrapper loading={loading}>
-          {userCourses.length === 0 ? (
-            <Typography>You have no purchased courses</Typography>
+          {!userCourses?.length ? (
+            <Typography pt={4}>You have no purchased courses</Typography>
           ) : (
             courses.map((course, key) => (
               <CourseAccordion key={key} {...course} />
