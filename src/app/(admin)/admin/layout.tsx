@@ -17,7 +17,8 @@ export default async function AdminLayout({
 
   // if user is not authenticated,
   // or does not have update, delete, or create permissions
-  if (!data || data.user.role < 2) {
+  const notAdmin = !data || data.user.role < 2 || data.user.role === undefined;
+  if (notAdmin) {
     notFound();
   }
   return (
