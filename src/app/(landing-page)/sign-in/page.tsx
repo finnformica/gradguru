@@ -1,27 +1,16 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GoogleIcon from "@mui/icons-material/Google";
-import {
-  Box,
-  Button,
-  Divider,
-  InputLabel,
-  Stack,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import AuthForm from "@/components/LandingPage/AuthForm/AuthForm";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const session = useSession();
   const router = useRouter();
-  const theme = useTheme();
 
   useEffect(() => {
     if (session.status === "authenticated") {
@@ -30,75 +19,16 @@ const SignIn = () => {
   });
 
   return (
-    <Box
-      sx={{
-        width: { xs: "300px", sm: "400px" },
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        mx: "auto",
-        gap: 4,
-        transform: "translate(0, -8%)",
-      }}
-    >
-      <Box>
-        <Typography variant="h5" pb={1}>
-          Sign in to your account
-        </Typography>
-        <Typography color="text.secondary">
-          Don't have an account?{" "}
-          <Link href="/sign-up" style={{ color: theme.palette.primary.main }}>
-            Sign up
-          </Link>
-        </Typography>
-      </Box>
-      <Box width="100%">
-        <InputLabel sx={{ pb: 1 }}>Email address</InputLabel>
-        <TextField fullWidth size="small" />
-      </Box>
-      <Box width="100%">
-        <InputLabel sx={{ pb: 1 }}>Password</InputLabel>
-        <TextField fullWidth size="small" />
-      </Box>
-      <Button
-        fullWidth
-        variant="contained"
-        onClick={() => signIn("credentials")}
-      >
-        Sign in
-      </Button>
-      <Divider sx={{ py: 2 }}>
-        <Typography color="text.secondary" px={1}>
-          Or continue with
-        </Typography>
-      </Divider>
-      <Stack
-        width={"100%"}
-        direction="row"
-        spacing={2}
-        justifyContent={"space-between"}
-      >
-        <Button
-          size="large"
-          variant="outlined"
-          startIcon={<GoogleIcon />}
-          onClick={() => signIn("google")}
-          sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
-        >
-          Google
-        </Button>
-
-        <Button
-          size="large"
-          variant="outlined"
-          startIcon={<FacebookIcon />}
-          onClick={() => signIn("facebook")}
-          sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
-        >
-          Facebook
-        </Button>
-      </Stack>
-    </Box>
+    <AuthForm
+      title="Sign in to your account"
+      subtitle="Don't have an account?"
+      method="sign-up"
+      email={email}
+      password={password}
+      setEmail={(e) => setEmail(e.target.value)}
+      setPassword={(e) => setPassword(e.target.value)}
+      handleSubmit={() => console.log("submit")}
+    />
   );
 };
 
