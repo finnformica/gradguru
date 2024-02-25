@@ -47,7 +47,7 @@ const ListCollapse = ({ section }: any) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List sx={{ p: 0 }}>
           {section.children.map((item: any, key: number) => (
-            <ListCollapseItem item={item} key={key} />
+            <ListCollapseItem section={item} key={key} />
           ))}
         </List>
       </Collapse>
