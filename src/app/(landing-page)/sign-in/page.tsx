@@ -38,7 +38,7 @@ const SignIn = () => {
         justifyContent: "center",
         mx: "auto",
         gap: 4,
-        backgroundColor: "red",
+        transform: "translate(0, -8%)",
       }}
     >
       <Box>
