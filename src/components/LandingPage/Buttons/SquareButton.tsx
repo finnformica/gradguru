@@ -23,7 +23,6 @@ const SquareButton = ({
       {...props}
       sx={{
         backgroundColor: theme.palette.primary.main,
-        borderRadius: borderRadius ? borderRadius : theme.shape.borderRadius,
         color: "#FFF",
         px: 4,
         transition: "all 0.3s ease-in-out",

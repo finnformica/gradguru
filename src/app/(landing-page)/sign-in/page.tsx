@@ -1,13 +1,14 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-import { Box, Button } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
+import AuthForm from "@/components/LandingPage/AuthForm/AuthForm";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const session = useSession();
   const router = useRouter();
 
@@ -18,19 +19,16 @@ const SignIn = () => {
   });
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Button startIcon={<GoogleIcon />} onClick={() => signIn("google")}>
-        Login with Google
-      </Button>
-    </Box>
+    <AuthForm
+      title="Sign in to your account"
+      subtitle="Don't have an account?"
+      method="sign-up"
+      email={email}
+      password={password}
+      setEmail={(e) => setEmail(e.target.value)}
+      setPassword={(e) => setPassword(e.target.value)}
+      handleSubmit={() => console.log("submit")}
+    />
   );
 };
 
