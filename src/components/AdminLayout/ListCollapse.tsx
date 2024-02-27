@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import {
   Collapse,
   Divider,
@@ -10,8 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import { useState } from "react";
 import ListCollapseItem from "./ListCollapseItem";
 
 const ListCollapse = ({ section }: any) => {

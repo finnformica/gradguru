@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
   const updatedData = { ...data, created: Date.now() }; // add created timestamp
   delete updatedData.id; // remove id if it exists
 
-  const { result, error } = await addData(updatedData, document, collection);
+  const { error } = await addData(updatedData, document, collection);
 
   if (error) {
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });

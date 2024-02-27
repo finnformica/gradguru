@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import {
   Box,
   List,
@@ -25,7 +23,7 @@ const QuestionElement = ({
   form: SJTQuestion;
   setForm: (newState: SJTQuestion) => void;
 }) => {
-  const [options, setOptions] = useState([1, 2, 3, 4, 5]);
+  const options = [1, 2, 3, 4, 5];
 
   return (
     <>

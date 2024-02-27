@@ -24,7 +24,7 @@ const AlertComponent = ({ alertState, setAlertState }: AlertContextType) => {
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [alertState?.open]);
+  }, [alertState, setAlertState]);
 
   return (
     <Alert

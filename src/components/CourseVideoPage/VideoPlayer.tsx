@@ -28,7 +28,7 @@ const VideoPlayer = () => {
   if (!course) {
     return null;
   }
-  const {section} = course.lessons[lesson];
+  const { section } = course.lessons[lesson];
 
   return !loading ? (
     <video
@@ -41,6 +41,7 @@ const VideoPlayer = () => {
         aspectRatio: "16/9",
       }}
     >
+      <track kind="captions" srcLang="en" label="English" />
       Error loading video.
     </video>
   ) : (

@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
+import { useState } from "react";
 
 import socials from "./socials";
 
@@ -40,8 +40,6 @@ const SocialIcon = ({ ...social }: SocialIconProps) => {
 };
 
 const SocialIcons = () => {
-  const theme = useTheme();
-
   return (
     <Box
       sx={{

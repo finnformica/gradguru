@@ -1,11 +1,10 @@
-import React from "react";
-import { Container, Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 
-import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
 import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
 
-import ContainerTitle from "@/components/LandingPage/Titles/ContainerTitle";
 import FeaturesList from "@/components/LandingPage/FeaturesList";
+import ContainerTitle from "@/components/LandingPage/Titles/ContainerTitle";
 
 const features = [
   {
@@ -31,32 +30,32 @@ const features = [
 const Footer = () => {
   return (
     <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        justifyContent: "space-around",
+        pt: 6,
+        pb: 2,
+        gap: 4,
+      }}
+    >
+      <Box
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          justifyContent: "space-around",
-          pt: 6,
-          pb: 2,
-          gap: 4,
+          width: { xs: "90%", md: "60%" },
+          textAlign: { xs: "center", md: "left" },
+          mx: "auto",
         }}
       >
-        <Box
-          sx={{
-            width: { xs: "90%", md: "60%" },
-            textAlign: { xs: "center", md: "left" },
-            mx: "auto",
-          }}
-        >
-          <Typography variant="h5" fontWeight={500}>
-            Explore the Courses
-          </Typography>
-          <Typography variant="body2" fontWeight={300}>
-            Learn more about the different courses, course curriculum and our
-            practice drills before you enroll.
-          </Typography>
-        </Box>
-        <SquareButton href="/courses">Explore courses</SquareButton>
+        <Typography variant="h5" fontWeight={500}>
+          Explore the Courses
+        </Typography>
+        <Typography variant="body2" fontWeight={300}>
+          Learn more about the different courses, course curriculum and our
+          practice drills before you enroll.
+        </Typography>
       </Box>
+      <SquareButton href="/courses">Explore courses</SquareButton>
+    </Box>
   );
 };
 

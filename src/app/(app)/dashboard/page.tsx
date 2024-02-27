@@ -19,7 +19,7 @@ const Dashboard = () => {
     const fetchUserData = async () => {
       // retrieve user courses from database
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user!.id}`
       )
         .then((res) => res.json())
         .then((res) => res.data);
@@ -33,7 +33,7 @@ const Dashboard = () => {
       setLoading(false);
     };
 
-    if (status === "authenticated") {
+    if (status === "authenticated" && user) {
       fetchUserData();
     }
   }, [status, user]);
