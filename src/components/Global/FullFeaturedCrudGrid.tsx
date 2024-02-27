@@ -28,7 +28,6 @@ export default function FullFeaturedCrudGrid({
   loading,
   setIdToEdit,
 }: FullFeaturedCrudGridProps) {
-  console.log(initialRows);
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 

@@ -1,18 +1,57 @@
 "use client";
 import { LoadingWrapper } from "@/components/Global";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+import { Typography } from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
 
 import { User } from "next-auth";
+import FullFeaturedCrudGrid from "@/components/Global/FullFeaturedCrudGrid";
+import { GridColDef, GridRowId } from "@mui/x-data-grid";
+import MultipleSelectChip from "@/components/Global/MultipleSelectChip";
 
 const indexToRoleMapping: { [index: number]: string } = {
-  1: "User",
-  2: "Admin - Create",
-  3: "Admin - Update",
-  4: "Admin - Delete",
+  1: "Read Only (User)",
+  2: "Read, Create",
+  3: "Read, Create, Update",
+  4: "Full CRUD",
 };
 
-const Users = () => {
+const columns: GridColDef[] = [
+  { field: "id", headerName: "ID", width: 250 },
+  { field: "email", headerName: "Email", width: 250 },
+  { field: "name", headerName: "Name", width: 200 },
+  {
+    field: "courses",
+    headerName: "Courses",
+    width: 200,
+    renderCell: (params) => params.value.join(", "),
+  },
+  { field: "roleIndex", headerName: "Role Index", width: 100 },
+  { field: "role", headerName: "Role", width: 200 },
+  {
+    field: "image",
+    headerName: "Image",
+    renderCell: (params) =>
+      params.value ? (
+        <Image
+          alt="user profile image"
+          src={params.value}
+          width={30}
+          height={30}
+          style={{ borderRadius: "50%" }}
+        />
+      ) : (
+        <AccountCircle />
+      ),
+    width: 100,
+  },
+];
+
+const UsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [idToEdit, setIdToEdit] = useState<GridRowId>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,17 +66,33 @@ const Users = () => {
     };
 
     fetchUsers();
-  });
+  }, []);
+
   return (
-    <LoadingWrapper loading={loading}>
-      {users.map((user) => (
-        <div key={user.id}>
-          <h2>{user.email}</h2>
-          <p>{indexToRoleMapping[user.role]}</p>
-        </div>
-      ))}
-    </LoadingWrapper>
+    <>
+      <Typography variant="h4" pb={2}>
+        All users
+      </Typography>
+      {users && users.length > 0 && (
+        <FullFeaturedCrudGrid
+          rows={users.map((user) => {
+            return {
+              id: user.id as string,
+              email: user.email as string,
+              name: user.name as string,
+              courses: user.courses as string[],
+              roleIndex: user.role as number,
+              role: indexToRoleMapping[user.role] as string,
+              image: user.image as string,
+            };
+          })}
+          columns={columns}
+          loading={loading}
+          setIdToEdit={setIdToEdit}
+        />
+      )}
+    </>
   );
 };
 
-export default Users;
+export default UsersPage;
