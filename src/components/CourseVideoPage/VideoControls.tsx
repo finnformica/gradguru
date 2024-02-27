@@ -18,7 +18,7 @@ const VideoControls = () => {
   }
 
   const lesson: number = Number(params.get("lesson")) || 0;
-  const section: number = course.lessons[lesson].section;
+  const {section} = course.lessons[lesson];
 
   const handleVideoIncrement = () => {
     if (lesson >= course.lessons.length - 1) {

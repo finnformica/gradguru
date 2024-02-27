@@ -30,8 +30,7 @@ const features = [
 
 const Footer = () => {
   return (
-    <>
-      <Box
+    <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
@@ -58,7 +57,6 @@ const Footer = () => {
         </Box>
         <SquareButton href="/courses">Explore courses</SquareButton>
       </Box>
-    </>
   );
 };
 

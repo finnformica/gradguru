@@ -1,15 +1,14 @@
 "use client";
-import { LoadingWrapper } from "@/components/Global";
-import { useEffect, useState } from "react";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-import { Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 
-import { User } from "next-auth";
 import FullFeaturedCrudGrid from "@/components/Global/FullFeaturedCrudGrid";
 import { GridColDef, GridRowId } from "@mui/x-data-grid";
-import MultipleSelectChip from "@/components/Global/MultipleSelectChip";
+import { User } from "next-auth";
 
 const indexToRoleMapping: { [index: number]: string } = {
   1: "Read Only (User)",

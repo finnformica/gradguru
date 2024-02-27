@@ -28,7 +28,7 @@ const VideoPlayer = () => {
   if (!course) {
     return null;
   }
-  const section: number = course.lessons[lesson].section;
+  const {section} = course.lessons[lesson];
 
   return !loading ? (
     <video

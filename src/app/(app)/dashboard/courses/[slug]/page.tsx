@@ -53,7 +53,7 @@ const CoursePage = ({ params }: CoursePageProps) => {
     fetchData().catch((err) => {
       console.log(err);
     });
-  }, []);
+  }, [setCourse, slug]);
 
   return (
     <Container maxWidth="lg" disableGutters>
