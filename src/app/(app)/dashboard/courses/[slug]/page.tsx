@@ -1,13 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
-import {
-  CourseDescription,
-  VideoControls,
-  VideoPlayer,
-} from "@/components/CourseVideoPage";
-import { useCourse } from "@/context/course";
+import VideoPlayerWithControls from "@/components/CourseVideoPage";
+import { CourseType } from "@/components/globalTypes";
 
 type CoursePageProps = {
   params: { slug: string };
@@ -25,9 +21,8 @@ export async function generateStaticParams() {
   }));
 }
 
-const CoursePage = ({ params }: CoursePageProps) => {
+const CoursePage = async ({ params }: CoursePageProps) => {
   const { slug } = params;
-  const { setCourse } = useCourse();
 
   const fetchData = async () => {
     // retrieve course from database
@@ -43,20 +38,20 @@ const CoursePage = ({ params }: CoursePageProps) => {
     }
 
     // if course is found, set course in context
-    setCourse(data);
+    return data as CourseType;
   };
 
-  fetchData().catch((err) => {
+  const course = await fetchData().catch((err) => {
     console.log(err);
   });
 
+  if (!course) {
+    return null;
+  }
+
   return (
     <Container maxWidth="lg" disableGutters>
-      <Box>
-        <VideoPlayer />
-        <VideoControls />
-      </Box>
-      <CourseDescription />
+      <VideoPlayerWithControls course={course} />
     </Container>
   );
 };
