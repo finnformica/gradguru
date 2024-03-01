@@ -7,18 +7,27 @@ type AlertState = {
   message: string;
   open: boolean;
   severity: "success" | "info" | "warning" | "error";
+  persist?: boolean;
 };
 
-export interface AlertContextType {
+interface AlertComponentType {
   alertState: AlertState;
   setAlertState: (alert: AlertState) => void;
 }
 
+interface AlertContextType extends AlertComponentType {
+  showAlert: (
+    message: string,
+    severity: "success" | "info" | "warning" | "error",
+    persist?: boolean
+  ) => void;
+}
+
 const AlertContext = createContext<AlertContextType | null>(null);
 
-const AlertComponent = ({ alertState, setAlertState }: AlertContextType) => {
+const AlertComponent = ({ alertState, setAlertState }: AlertComponentType) => {
   useEffect(() => {
-    if (alertState?.open) {
+    if (!alertState.persist) {
       const timer = setTimeout(() => {
         setAlertState({ ...alertState, open: false });
       }, 2500);
@@ -52,11 +61,24 @@ export const AlertContextProvider = ({ children }: any) => {
     open: false,
     severity: "success",
   });
-  const value = { alertState, setAlertState };
+
+  const showAlert = (
+    message: string,
+    severity: "success" | "info" | "warning" | "error",
+    persist?: boolean
+  ) => {
+    setAlertState({
+      message,
+      open: true,
+      severity,
+      persist: persist ? persist : severity === "error",
+    });
+  };
+  const value = { alertState, setAlertState, showAlert };
 
   return (
     <AlertContext.Provider value={value}>
-      <AlertComponent alertState={alertState} setAlertState={setAlertState} />
+      <AlertComponent setAlertState={setAlertState} alertState={alertState} />
       {children}
     </AlertContext.Provider>
   );

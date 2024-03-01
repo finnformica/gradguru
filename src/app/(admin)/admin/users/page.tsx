@@ -15,6 +15,7 @@ import { indexToRoleMapping } from "@/utils/permissions";
 import UserEditModal from "@/components/admin/users/user-edit-modal";
 import { IUserFormInput } from "@/components/globalTypes";
 import { useAlert } from "@/context/adminAlert";
+import { postUser, useUsers } from "@/api/user";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 250 },
@@ -48,11 +49,11 @@ const columns: GridColDef[] = [
 ];
 
 const UsersPage = () => {
-  const { setAlertState } = useAlert();
-  const [users, setUsers] = useState<User[]>([]);
+  const { showAlert } = useAlert();
   const [idToEdit, setIdToEdit] = useState<GridRowId | null>(""); // clean up use of ID and user
   const [userToEdit, setUserToEdit] = useState<User>();
-  const [loading, setLoading] = useState(true);
+
+  const { users, loading, refresh } = useUsers();
 
   const onSubmit: SubmitHandler<IUserFormInput> = async (
     form: IUserFormInput
@@ -63,28 +64,14 @@ const UsersPage = () => {
       role: form.role.value,
       courses: form.courses,
     };
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${userToEdit!.id}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    );
 
-    if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
+    postUser(userToEdit!.id as string, data)
+      .then(() => showAlert("User updated", "success"))
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => {
+        cleanUp();
+        refresh();
       });
-    } else {
-      setAlertState({
-        message: "User updated",
-        open: true,
-        severity: "success",
-      });
-    }
   };
 
   const cleanUp = () => {
@@ -93,22 +80,8 @@ const UsersPage = () => {
   };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users`
-      );
-      const data = await response.json();
-
-      setUsers(data.documents);
-      setLoading(false);
-    };
-
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
     if (idToEdit) {
-      setUserToEdit(users.find((user) => user.id === idToEdit));
+      setUserToEdit(users?.find((user) => user.id === idToEdit));
     }
   }, [idToEdit, users]);
 
