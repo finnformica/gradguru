@@ -12,10 +12,11 @@ import {
 import { useEffect, useState } from "react";
 
 import { LoadingWrapper } from "@/components/Global";
-import { capitalise } from "@/utils";
 
 import { NRQuestion } from "@/components/NRForm/types";
 import NRModal from "@/components/NRForm/NRModal";
+
+import _ from "lodash";
 
 const NRListItem = ({
   fetchNR,
@@ -36,7 +37,7 @@ const NRListItem = ({
             }}
           >
             <Stack direction="row" spacing={2}>
-              <Typography>{capitalise(question.type)}</Typography>
+              <Typography>{_.startCase(question.type)}</Typography>
               <Typography
                 sx={{
                   overflow: "hidden",
