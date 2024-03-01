@@ -2,7 +2,7 @@
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
-import { CSSObject, Theme, styled } from "@mui/material/styles";
+import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
 import React, { useState } from "react";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -93,6 +93,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -104,7 +105,12 @@ const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+      }}
+    >
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ color: "white" }}>
         <Toolbar>
@@ -142,8 +148,8 @@ const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
           )}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        {/* <DrawerHeader /> */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
         {children}
       </Box>
     </Box>
