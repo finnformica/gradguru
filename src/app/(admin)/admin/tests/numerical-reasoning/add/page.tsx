@@ -13,6 +13,7 @@ import {
   gmatForm,
 } from "@/components/NRForm/types";
 import { LoadingScreen } from "@/components/global-components";
+import { postNRTest } from "@/api/tests";
 
 const AddNR = () => {
   const { showAlert } = useAlert();
@@ -26,31 +27,19 @@ const AddNR = () => {
 
     setLoading(true);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (response.status === 200) {
-      showAlert("Numerical reasoning question added", "success");
-      setForm(
-        form.type === "table"
-          ? tableForm
-          : form.type === "graph"
-            ? graphForm
-            : gmatForm
-      );
-    } else {
-      showAlert("Uh oh! Error occurred :(", "error");
-    }
-
-    setLoading(false);
+    postNRTest(null, form)
+      .then(() => {
+        showAlert("Numerical reasoning question added", "success");
+        setForm(
+          form.type === "table"
+            ? tableForm
+            : form.type === "graph"
+              ? graphForm
+              : gmatForm
+        );
+      })
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => setLoading(false));
   };
 
   if (!form || loading) return <LoadingScreen />;
