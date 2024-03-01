@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Typography,
+  Box,
+  Divider,
   List,
   ListItem,
   ListItemButton,
   ListSubheader,
-  Divider,
-  Box,
+  Typography,
 } from "@mui/material";
+import { useState } from "react";
 
+import { useSJTTests } from "@/api/tests";
 import { SJTModal } from "@/components/SJTForm";
 import { SJTQuestion } from "@/components/SJTForm/types";
-import { LoadingScreen, LoadingWrapper } from "@/components/global";
-import { useSJTTests } from "@/api/tests";
+import { LoadingScreen } from "@/components/global";
 
 const SJTListItem = ({
   refresh,

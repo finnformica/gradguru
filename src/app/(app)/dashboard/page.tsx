@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Box, Container, Typography } from "@mui/material";
-import { CourseType } from "@/components/globalTypes";
-import { useSession } from "next-auth/react";
 import { CourseAccordion } from "@/components/Dashboard/CourseAccordion";
-import { LoadingScreen, LoadingWrapper } from "@/components/global";
+import { LoadingScreen } from "@/components/global";
+import { CourseType } from "@/components/globalTypes";
+import { Box, Container, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [userCourses, setUserCourses] = useState<string[]>([]);
