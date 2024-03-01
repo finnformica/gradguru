@@ -77,13 +77,13 @@ export const endpoints = {
     tests: {
       nr: {
         all: `${BASE_URL}/firebase/document?collection=nr-consulting`,
-        test: (id: string) =>
-          `${BASE_URL}/firebase/document?collection=nr-consulting&document=${id}`,
+        test: (id: string | null) =>
+          `${BASE_URL}/firebase/document?collection=nr-consulting${id ? `&document=${id}` : ""}`,
       },
       sjt: {
         all: `${BASE_URL}/firebase/document?collection=sjt-consulting`,
-        test: (id: string) =>
-          `${BASE_URL}/firebase/document?collection=sjt-consulting&document=${id}`,
+        test: (id: string | null) =>
+          `${BASE_URL}/firebase/document?collection=sjt-consulting${id ? `&document=${id}` : ""}`,
       },
       lr: {},
     },
