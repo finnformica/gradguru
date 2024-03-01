@@ -3,16 +3,17 @@ import FormModalWrapper from "../Global/FormModalWrapper";
 import NRForm from "./NRForm";
 import { useAlert } from "@/context/alert";
 import { NRQuestion } from "./types";
+import { deleteNRTest, postNRTest } from "@/api/tests";
 
 const NRModal = ({
   open,
   setOpen,
-  fetchNR,
+  refresh,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
-  fetchNR: () => void;
+  refresh: () => void;
 } & NRQuestion) => {
   const { showAlert } = useAlert();
   const [form, setForm] = useState<NRQuestion>(question);
@@ -28,41 +29,34 @@ const NRModal = ({
   };
 
   const handleDelete = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (response.status !== 200) {
+    if (!form.id) {
       showAlert("Uh oh! Error occurred :(", "error");
-    } else {
-      showAlert("NR question deleted", "success");
-      fetchNR();
-      handleClose();
+      return;
     }
+    deleteNRTest(form.id)
+      .then(() => showAlert("NR question deleted", "success"))
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => {
+        refresh();
+        handleClose();
+      });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
 
-    if (response.status !== 200) {
+    if (!form.id) {
       showAlert("Uh oh! Error occurred :(", "error");
-    } else {
-      showAlert("NR question updated", "success");
-      handleClose();
+      return;
     }
+
+    postNRTest(form.id, form)
+      .then(() => showAlert("NR question updated", "success"))
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => {
+        refresh();
+        handleClose();
+      });
   };
 
   return (

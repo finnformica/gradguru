@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { LoadingWrapper } from "@/components/Global";
 
@@ -17,16 +17,17 @@ import { NRQuestion } from "@/components/NRForm/types";
 import NRModal from "@/components/NRForm/NRModal";
 
 import _ from "lodash";
+import { useNRTests } from "@/api/tests";
 
 const NRListItem = ({
-  fetchNR,
+  refresh,
   ...question
-}: { fetchNR: () => void } & NRQuestion) => {
+}: { refresh: () => void } & NRQuestion) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <NRModal open={open} setOpen={setOpen} fetchNR={fetchNR} {...question} />
+      <NRModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
       <ListItem disablePadding>
         <ListItemButton onClick={() => setOpen(true)}>
           <Box
@@ -65,23 +66,9 @@ const NRListItem = ({
 };
 
 const AllNR = () => {
-  const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  const { questions, loading, refresh } = useNRTests();
 
-  const fetchNR = async () => {
-    setLoading(true);
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting`
-    );
-    const data = await response.json();
-
-    setQuestions(data.documents);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchNR();
-  }, []);
+  if (!questions) return null; // TODO: loading page
 
   return (
     <>
@@ -110,7 +97,7 @@ const AllNR = () => {
       >
         <LoadingWrapper loading={loading}>
           {questions.map((question: NRQuestion, key) => (
-            <NRListItem key={key} fetchNR={fetchNR} {...question} />
+            <NRListItem key={key} refresh={refresh} {...question} />
           ))}
         </LoadingWrapper>
       </List>
