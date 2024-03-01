@@ -14,7 +14,7 @@ import { indexToRoleMapping } from "@/utils/permissions";
 
 import UserEditModal from "@/components/admin/users/user-edit-modal";
 import { IUserFormInput } from "@/components/globalTypes";
-import { useAlert } from "@/context/adminAlert";
+import { useAlert } from "@/context/alert";
 import { postUser, useUsers } from "@/api/user";
 
 const columns: GridColDef[] = [

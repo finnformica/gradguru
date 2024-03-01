@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormModalWrapper from "../Global/FormModalWrapper";
 import NRForm from "./NRForm";
-import { useAlert } from "@/context/adminAlert";
+import { useAlert } from "@/context/alert";
 import { NRQuestion } from "./types";
 
 const NRModal = ({
@@ -14,7 +14,7 @@ const NRModal = ({
   setOpen: (newOpen: boolean) => void;
   fetchNR: () => void;
 } & NRQuestion) => {
-  const { setAlertState } = useAlert();
+  const { showAlert } = useAlert();
   const [form, setForm] = useState<NRQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -36,17 +36,9 @@ const NRModal = ({
     );
 
     if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
-      });
+      showAlert("Uh oh! Error occurred :(", "error");
     } else {
-      setAlertState({
-        message: "NR question deleted",
-        open: true,
-        severity: "success",
-      });
+      showAlert("NR question deleted", "success");
       fetchNR();
       handleClose();
     }
@@ -66,17 +58,9 @@ const NRModal = ({
     );
 
     if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
-      });
+      showAlert("Uh oh! Error occurred :(", "error");
     } else {
-      setAlertState({
-        message: "NR question updated",
-        open: true,
-        severity: "success",
-      });
+      showAlert("NR question updated", "success");
       handleClose();
     }
   };

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useAlert } from "@/context/adminAlert";
+import { useAlert } from "@/context/alert";
 
 import FormModalWrapper from "../Global/FormModalWrapper";
 import SJTForm from "./SJTForm";
@@ -18,7 +18,7 @@ const SJTModal = ({
   setOpen: (newOpen: boolean) => void;
   fetchSJT: () => void;
 } & SJTQuestion) => {
-  const { setAlertState } = useAlert();
+  const { showAlert } = useAlert();
   const [form, setForm] = useState<SJTQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -40,17 +40,9 @@ const SJTModal = ({
     );
 
     if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
-      });
+      showAlert("Uh oh! Error occurred :(", "error");
     } else {
-      setAlertState({
-        message: "SJT question deleted",
-        open: true,
-        severity: "success",
-      });
+      showAlert("SJT question deleted", "success");
       fetchSJT();
       handleClose();
     }
@@ -71,17 +63,9 @@ const SJTModal = ({
     );
 
     if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
-      });
+      showAlert("Uh oh! Error occurred :(", "error");
     } else {
-      setAlertState({
-        message: "SJT question updated",
-        open: true,
-        severity: "success",
-      });
+      showAlert("SJT question updated", "success");
       setOpen(false);
     }
   };

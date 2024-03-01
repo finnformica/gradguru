@@ -6,12 +6,12 @@ import { Typography } from "@mui/material";
 
 import { SJTScenarioForm, initialForm } from "@/components/SJTForm/types";
 
-import { useAlert } from "@/context/adminAlert";
+import { useAlert } from "@/context/alert";
 import { SJTForm } from "@/components/SJTForm";
 import { LoadingWrapper } from "@/components/Global";
 
 const AddSJT = () => {
-  const { setAlertState } = useAlert();
+  const { showAlert } = useAlert();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<SJTScenarioForm>({ ...initialForm });
 
@@ -30,17 +30,9 @@ const AddSJT = () => {
     );
 
     if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
-      });
+      showAlert("Uh oh! Error occurred :(", "error");
     } else {
-      setAlertState({
-        message: "SJT question added",
-        open: true,
-        severity: "success",
-      });
+      showAlert("SJT question added", "success");
       setForm({ ...initialForm });
     }
 

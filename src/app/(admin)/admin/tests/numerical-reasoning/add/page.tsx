@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Typography } from "@mui/material";
 
-import { useAlert } from "@/context/adminAlert";
+import { useAlert } from "@/context/alert";
 
 import { NRForm } from "@/components/NRForm";
 import {
@@ -15,7 +15,7 @@ import {
 import { LoadingWrapper } from "@/components/Global";
 
 const AddNR = () => {
-  const { setAlertState } = useAlert();
+  const { showAlert } = useAlert();
   const [loading, setLoading] = useState<boolean>(false);
   const [form, setForm] = useState<INRForm>({
     ...tableForm,
@@ -38,24 +38,16 @@ const AddNR = () => {
     );
 
     if (response.status === 200) {
-      setAlertState({
-        message: "Numerical reasoning question added",
-        severity: "success",
-        open: true,
-      });
+      showAlert("Numerical reasoning question added", "success");
       setForm(
         form.type === "table"
           ? tableForm
           : form.type === "graph"
-          ? graphForm
-          : gmatForm
+            ? graphForm
+            : gmatForm
       );
     } else {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        severity: "error",
-        open: true,
-      });
+      showAlert("Uh oh! Error occurred :(", "error");
     }
 
     setLoading(false);

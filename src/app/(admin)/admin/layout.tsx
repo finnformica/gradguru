@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/auth/config";
 
-import { AlertContextProvider } from "@/context/adminAlert";
+import { AlertContextProvider } from "@/context/alert";
 import LatexContext from "@/context/latex";
 
 import MiniDrawer from "@/components/AdminLayout/MiniDrawer";
