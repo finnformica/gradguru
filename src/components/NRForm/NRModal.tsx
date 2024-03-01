@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormModalWrapper from "../global/FormModalWrapper";
+import FormModalWrapper from "../global-components/FormModalWrapper";
 import NRForm from "./NRForm";
 import { useAlert } from "@/context/alert";
 import { NRQuestion } from "./types";

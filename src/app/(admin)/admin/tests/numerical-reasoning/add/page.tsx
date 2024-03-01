@@ -12,7 +12,7 @@ import {
   graphForm,
   gmatForm,
 } from "@/components/NRForm/types";
-import { LoadingScreen } from "@/components/global";
+import { LoadingScreen } from "@/components/global-components";
 
 const AddNR = () => {
   const { showAlert } = useAlert();

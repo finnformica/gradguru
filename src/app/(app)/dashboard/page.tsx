@@ -1,7 +1,7 @@
 "use client";
 
 import { CourseAccordion } from "@/components/Dashboard/CourseAccordion";
-import { LoadingScreen } from "@/components/global";
+import { LoadingScreen } from "@/components/global-components";
 import { CourseType } from "@/components/globalTypes";
 import { Box, Container, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";

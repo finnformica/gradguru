@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import { LoadingScreen } from "@/components/global";
+import { LoadingScreen } from "@/components/global-components";
 
 import NRModal from "@/components/NRForm/NRModal";
 import { NRQuestion } from "@/components/NRForm/types";

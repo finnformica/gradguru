@@ -1,5 +1,5 @@
 import PrimaryHeader from "@/components/LandingPage/PrimaryHeader";
-import { NotFoundComponent } from "@/components/global";
+import { NotFoundComponent } from "@/components/global-components";
 
 export default function NotFound() {
   return (
