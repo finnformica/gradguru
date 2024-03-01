@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Cancel, Delete, Edit, Save } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { Box, LinearProgress } from "@mui/material";
 import {
   DataGrid,
@@ -38,30 +38,6 @@ export default function FullFeaturedCrudGrid({
     width: 100,
     cellClassName: "actions",
     getActions: ({ id }) => {
-      const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-      if (isInEditMode) {
-        return [
-          <GridActionsCellItem
-            key="save"
-            icon={<Save />}
-            label="Save"
-            sx={{
-              color: "primary.main",
-            }}
-            onClick={handleSaveClick(id)}
-          />,
-          <GridActionsCellItem
-            key="cancel"
-            icon={<Cancel />}
-            label="Cancel"
-            className="textPrimary"
-            onClick={handleCancelClick(id)}
-            color="inherit"
-          />,
-        ];
-      }
-
       return [
         <GridActionsCellItem
           key="edit"
@@ -98,24 +74,8 @@ export default function FullFeaturedCrudGrid({
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
-  };
-
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
