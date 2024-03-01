@@ -1,23 +1,22 @@
-import React from "react";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import {
+  Box,
   Button,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Box,
-  TextField,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
 
-import { BarChart, PieChart, LineChart } from "@/components/Charts";
+import { BarChart, LineChart, PieChart } from "@/components/Charts";
 
-import { IGraphForm, ITableForm, graphQuestion } from "./types";
 import { EditableTable } from "./EditableTable";
 import { TableQuestionElement } from "./QuestionElement";
+import { IGraphForm, ITableForm, graphQuestion } from "./types";
 
 interface GraphFormProps {
   form: IGraphForm;

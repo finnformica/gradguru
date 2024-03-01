@@ -1,9 +1,8 @@
-import React from "react";
+import { Box, Card, Container, Typography } from "@mui/material";
 import Image from "next/image";
-import { Box, Container, Card, Typography } from "@mui/material";
 
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
 import ArrowButton from "@/components/LandingPage/Buttons/ArrowButton";
+import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
 
 const practice = [
   {

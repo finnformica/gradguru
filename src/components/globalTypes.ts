@@ -60,3 +60,17 @@ export interface IFirestoreData {
   created?: number;
   id?: string;
 }
+
+// ADMIN
+
+// user panel
+
+export type IUserFormInput = {
+  name: string;
+  email: string;
+  role: {
+    value: number;
+    label: string;
+  };
+  courses: string[];
+};

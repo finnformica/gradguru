@@ -67,22 +67,6 @@ const AllSJT = () => {
   const [questions, setQuestions] = useState<SJTQuestion[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const sortDesc = () => {
-    setQuestions(
-      questions.sort((a, b) =>
-        b.created && a.created ? b.created - a.created : 0
-      )
-    );
-  };
-
-  const sortAsc = () => {
-    setQuestions(
-      questions.sort((a, b) =>
-        a.created && b.created ? a.created - b.created : 0
-      )
-    );
-  };
-
   const fetchSJT = async () => {
     setLoading(true);
     const response = await fetch(

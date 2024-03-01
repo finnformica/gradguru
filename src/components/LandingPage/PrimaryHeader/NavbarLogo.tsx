@@ -5,7 +5,6 @@ import Link from "next/link";
 const NavbarLogo = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Link

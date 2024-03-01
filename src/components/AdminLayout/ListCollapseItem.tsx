@@ -7,12 +7,12 @@ import {
 } from "@mui/material";
 import ListCollapse from "./ListCollapse";
 
-const ListCollapseItem = ({ item }: any) => {
-  return item.children ? (
-    <ListCollapse section={item} />
+const ListCollapseItem = ({ section }: any) => {
+  return section.children ? (
+    <ListCollapse section={section} />
   ) : (
     <ListItem disablePadding sx={{ display: "block" }}>
-      <Link href={item.route} passHref>
+      <Link href={section.route} passHref>
         <ListItemButton
           sx={{
             minHeight: 48,
@@ -27,9 +27,9 @@ const ListCollapseItem = ({ item }: any) => {
               justifyContent: "center",
             }}
           >
-            {item.icon}
+            {section.icon}
           </ListItemIcon>
-          <ListItemText primary={item.name} />
+          <ListItemText primary={section.name} />
         </ListItemButton>
       </Link>
     </ListItem>

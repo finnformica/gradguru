@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-type AuthForm = {
+type AuthFormProps = {
   title: string;
   method: string;
   subtitle: string;
@@ -36,7 +36,7 @@ const AuthForm = ({
   password,
   setPassword,
   handleSubmit,
-}: AuthForm) => {
+}: AuthFormProps) => {
   const theme = useTheme();
 
   const linkText =

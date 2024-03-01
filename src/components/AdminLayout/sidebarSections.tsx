@@ -108,7 +108,7 @@ export const sidebarSections = [
   {
     name: "Users",
     icon: <GroupIcon />,
-    active: false,
-    children: [],
+    route: "/admin/users",
+    active: true,
   },
 ];

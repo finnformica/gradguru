@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { Box, Button, Typography, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 
 import {
-  GridRowsProp,
-  GridRowModesModel,
-  GridRowModes,
   DataGrid,
-  GridToolbarContainer,
   GridActionsCellItem,
   GridEventListener,
+  GridRowEditStopReasons,
   GridRowId,
   GridRowModel,
-  GridRowEditStopReasons,
+  GridRowModes,
+  GridRowModesModel,
+  GridRowsProp,
+  GridToolbarContainer,
 } from "@mui/x-data-grid";
 import { randomId } from "@mui/x-data-grid-generator";
 
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
 
-import { ITableForm, IGraphForm, INRForm } from "./types";
+import { IGraphForm, ITableForm } from "./types";
 
 const camelise = (str: string) => {
   // removes special characters and spaces, returns a camel case string
@@ -328,4 +328,4 @@ const EditableTable = ({
   );
 };
 
-export { FullFeaturedCRUDTable, EditableTable };
+export { EditableTable, FullFeaturedCRUDTable };

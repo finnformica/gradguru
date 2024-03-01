@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
-import { Box, useTheme, Container } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
-import CustomAccordion from "@/components/LandingPage/CustomAccordion";
 import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
 import FullWidthContainer from "@/components/LandingPage/Containers/FullWidthContainer";
+import CustomAccordion from "@/components/LandingPage/CustomAccordion";
+import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
 
 const questions = [
   {

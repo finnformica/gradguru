@@ -1,5 +1,4 @@
-import React from "react";
-import { Typography, Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 
 const CourseTests = () => {
   return (

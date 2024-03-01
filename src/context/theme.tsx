@@ -4,8 +4,6 @@ import { ThemeProvider, createTheme } from "@mui/material";
 
 // default 8px scaling factor
 const spacing = 8;
-const pixelToNumber = (px: string) => parseInt(px.replace("px", "")) / spacing;
-const numberToPixel = (num: number) => `${num * spacing}px`;
 
 const theme = createTheme({
   palette: {
