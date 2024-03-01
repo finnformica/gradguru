@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Typography,
   List,
@@ -14,21 +14,17 @@ import {
 import { SJTModal } from "@/components/SJTForm";
 import { SJTQuestion } from "@/components/SJTForm/types";
 import { LoadingWrapper } from "@/components/Global";
+import { useSJTTests } from "@/api/tests";
 
 const SJTListItem = ({
-  fetchSJT,
+  refresh,
   ...question
-}: { fetchSJT: () => void } & SJTQuestion) => {
+}: { refresh: () => void } & SJTQuestion) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <SJTModal
-        open={open}
-        setOpen={setOpen}
-        fetchSJT={fetchSJT}
-        {...question}
-      />
+      <SJTModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
       <ListItem disablePadding>
         <ListItemButton onClick={() => setOpen(true)}>
           <Box
@@ -64,27 +60,9 @@ const SJTListItem = ({
 };
 
 const AllSJT = () => {
-  const [questions, setQuestions] = useState<SJTQuestion[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { questions, loading, refresh } = useSJTTests();
 
-  const fetchSJT = async () => {
-    setLoading(true);
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`
-    );
-    const data = await response.json();
-
-    setQuestions(
-      data.documents.sort((a: SJTQuestion, b: SJTQuestion) =>
-        a.created && b.created ? b.created - a.created : 0
-      )
-    );
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchSJT();
-  }, []);
+  if (!questions) return null; // TODO: loading page
 
   return (
     <>
@@ -109,7 +87,7 @@ const AllSJT = () => {
           }
         >
           {questions.map((question, key) => (
-            <SJTListItem key={key} fetchSJT={fetchSJT} {...question} />
+            <SJTListItem key={key} refresh={refresh} {...question} />
           ))}
         </List>
       </LoadingWrapper>

@@ -9,6 +9,7 @@ import { SJTScenarioForm, initialForm } from "@/components/SJTForm/types";
 import { useAlert } from "@/context/alert";
 import { SJTForm } from "@/components/SJTForm";
 import { LoadingWrapper } from "@/components/Global";
+import { postSJTTest } from "@/api/tests";
 
 const AddSJT = () => {
   const { showAlert } = useAlert();
@@ -20,23 +21,13 @@ const AddSJT = () => {
 
     setLoading(true);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (response.status !== 200) {
-      showAlert("Uh oh! Error occurred :(", "error");
-    } else {
-      showAlert("SJT question added", "success");
-      setForm({ ...initialForm });
-    }
-
-    setLoading(false);
+    postSJTTest(null, form)
+      .then(() => showAlert("SJT question added", "success"))
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => {
+        setForm({ ...initialForm });
+        setLoading(false);
+      });
   };
 
   return (

@@ -7,16 +7,17 @@ import { useAlert } from "@/context/alert";
 import FormModalWrapper from "../Global/FormModalWrapper";
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
+import { deleteSJTTest, postSJTTest } from "@/api/tests";
 
 const SJTModal = ({
   open,
   setOpen,
-  fetchSJT,
+  refresh,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
-  fetchSJT: () => void;
+  refresh: () => void;
 } & SJTQuestion) => {
   const { showAlert } = useAlert();
   const [form, setForm] = useState<SJTQuestion>(question);
@@ -32,42 +33,35 @@ const SJTModal = ({
   };
 
   const handleDelete = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (response.status !== 200) {
+    if (!form.id) {
       showAlert("Uh oh! Error occurred :(", "error");
-    } else {
-      showAlert("SJT question deleted", "success");
-      fetchSJT();
-      handleClose();
+      return;
     }
+
+    deleteSJTTest(form.id)
+      .then(() => showAlert("SJT question updated", "success"))
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => {
+        refresh();
+        handleClose();
+      });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (response.status !== 200) {
+    if (!form.id) {
       showAlert("Uh oh! Error occurred :(", "error");
-    } else {
-      showAlert("SJT question updated", "success");
-      setOpen(false);
+      return;
     }
+
+    postSJTTest(form.id, form)
+      .then(() => showAlert("SJT question updated", "success"))
+      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .finally(() => {
+        refresh();
+        setOpen(false);
+      });
   };
 
   return (
