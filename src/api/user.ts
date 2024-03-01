@@ -1,13 +1,12 @@
-// import { AxiosRequestConfig } from "axios";
 import { useMemo } from "react";
 import useSWR from "swr";
 import {
-  // deleteFetcher,
   endpoints,
   getFetcher,
   postFetcher,
-  // putFetcher,
-  // patchFetcher,
+  putFetcher,
+  patchFetcher,
+  deleteFetcher,
 } from "@/utils/axios";
 
 export function useUsers() {
