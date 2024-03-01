@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useAlert } from "@/context/alert";
 
-import FormModalWrapper from "../Global/FormModalWrapper";
+import FormModalWrapper from "../global/FormModalWrapper";
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
 import { deleteSJTTest, postSJTTest } from "@/api/tests";

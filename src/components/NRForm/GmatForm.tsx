@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { MathJax } from "better-react-mathjax";
 
-import { ClientWrapper } from "@/components/Global";
+import { ClientWrapper } from "@/components/global";
 import { IGmatForm } from "./types";
 
 type GmatFormProps = {

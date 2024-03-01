@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 import { GridColDef, GridRowId } from "@mui/x-data-grid";
 import { SubmitHandler } from "react-hook-form";
 
-import FullFeaturedCrudGrid from "@/components/Global/FullFeaturedCrudGrid";
+import FullFeaturedCrudGrid from "@/components/global/FullFeaturedCrudGrid";
 import { indexToRoleMapping } from "@/utils/permissions";
 
 import UserEditModal from "@/components/admin/users/user-edit-modal";
