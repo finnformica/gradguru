@@ -13,7 +13,7 @@ import {
 
 import { SJTModal } from "@/components/SJTForm";
 import { SJTQuestion } from "@/components/SJTForm/types";
-import { LoadingWrapper } from "@/components/Global";
+import { LoadingScreen, LoadingWrapper } from "@/components/global";
 import { useSJTTests } from "@/api/tests";
 
 const SJTListItem = ({
@@ -62,35 +62,33 @@ const SJTListItem = ({
 const AllSJT = () => {
   const { questions, loading, refresh } = useSJTTests();
 
-  if (!questions) return null; // TODO: loading page
+  if (!questions || loading) return <LoadingScreen />;
 
   return (
     <>
       <Typography variant="h4" pb={2}>
         All SJT questions
       </Typography>
-      <LoadingWrapper loading={loading}>
-        <List
-          subheader={
-            <ListSubheader>
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography>Scenario</Typography>
-                <Typography>Date created</Typography>
-              </Box>
-            </ListSubheader>
-          }
-        >
-          {questions.map((question, key) => (
-            <SJTListItem key={key} refresh={refresh} {...question} />
-          ))}
-        </List>
-      </LoadingWrapper>
+      <List
+        subheader={
+          <ListSubheader>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography>Scenario</Typography>
+              <Typography>Date created</Typography>
+            </Box>
+          </ListSubheader>
+        }
+      >
+        {questions.map((question, key) => (
+          <SJTListItem key={key} refresh={refresh} {...question} />
+        ))}
+      </List>
     </>
   );
 };

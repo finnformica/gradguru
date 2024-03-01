@@ -5,7 +5,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { CourseType } from "@/components/globalTypes";
 import { useSession } from "next-auth/react";
 import { CourseAccordion } from "@/components/Dashboard/CourseAccordion";
-import { LoadingWrapper } from "@/components/Global";
+import { LoadingScreen, LoadingWrapper } from "@/components/global";
 
 const Dashboard = () => {
   const [userCourses, setUserCourses] = useState<string[]>([]);
@@ -58,6 +58,8 @@ const Dashboard = () => {
     }
   }, [userCourses]);
 
+  if (!userCourses || loading) return <LoadingScreen />;
+
   return (
     <Container sx={{ pt: 4 }}>
       <Typography variant="h2" fontWeight={500}>
@@ -73,15 +75,13 @@ const Dashboard = () => {
           my: 4,
         }}
       >
-        <LoadingWrapper loading={loading}>
-          {!userCourses?.length ? (
-            <Typography pt={4}>You have no purchased courses</Typography>
-          ) : (
-            courses.map((course, key) => (
-              <CourseAccordion key={key} {...course} />
-            ))
-          )}
-        </LoadingWrapper>
+        {!userCourses?.length ? (
+          <Typography pt={4}>You have no purchased courses</Typography>
+        ) : (
+          courses.map((course, key) => (
+            <CourseAccordion key={key} {...course} />
+          ))
+        )}
       </Box>
     </Container>
   );

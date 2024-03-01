@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import { LoadingWrapper } from "@/components/Global";
+import { LoadingScreen, LoadingWrapper } from "@/components/global";
 
 import { NRQuestion } from "@/components/NRForm/types";
 import NRModal from "@/components/NRForm/NRModal";
@@ -68,7 +68,7 @@ const NRListItem = ({
 const AllNR = () => {
   const { questions, loading, refresh } = useNRTests();
 
-  if (!questions) return null; // TODO: loading page
+  if (!questions || loading) return <LoadingScreen />;
 
   return (
     <>
@@ -95,11 +95,9 @@ const AllNR = () => {
           </ListSubheader>
         }
       >
-        <LoadingWrapper loading={loading}>
-          {questions.map((question: NRQuestion, key) => (
-            <NRListItem key={key} refresh={refresh} {...question} />
-          ))}
-        </LoadingWrapper>
+        {questions.map((question: NRQuestion, key) => (
+          <NRListItem key={key} refresh={refresh} {...question} />
+        ))}
       </List>
     </>
   );

@@ -12,7 +12,7 @@ import {
   graphForm,
   gmatForm,
 } from "@/components/NRForm/types";
-import { LoadingWrapper } from "@/components/Global";
+import { LoadingScreen } from "@/components/global";
 
 const AddNR = () => {
   const { showAlert } = useAlert();
@@ -53,14 +53,14 @@ const AddNR = () => {
     setLoading(false);
   };
 
+  if (!form || loading) return <LoadingScreen />;
+
   return (
     <>
       <Typography variant="h4" pb={2}>
         Add Numerical Reasoning question
       </Typography>
-      <LoadingWrapper loading={loading}>
-        <NRForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
-      </LoadingWrapper>
+      <NRForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
     </>
   );
 };
