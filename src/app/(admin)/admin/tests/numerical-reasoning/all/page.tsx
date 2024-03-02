@@ -1,4 +1,7 @@
 "use client";
+
+import { useState } from "react";
+
 import {
   Box,
   Divider,
@@ -9,7 +12,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
+import _ from "lodash";
 
 import { LoadingScreen } from "@/components/global-components";
 
@@ -17,19 +21,22 @@ import NRModal from "@/components/NRForm/NRModal";
 import { NRQuestion } from "@/components/NRForm/types";
 
 import { useNRTests } from "@/api/tests";
-import _ from "lodash";
 
 const NRListItem = ({
   refresh,
   ...question
 }: { refresh: () => void } & NRQuestion) => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <>
       <NRModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
       <ListItem disablePadding>
-        <ListItemButton onClick={() => setOpen(true)}>
+        <ListItemButton
+          onClick={() => setOpen(true)}
+          disabled={(session?.user.role ?? 0) < 3}
+        >
           <Box
             sx={{
               width: "100%",

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { Delete, Edit } from "@mui/icons-material";
@@ -14,6 +16,7 @@ import {
   GridRowModesModel,
   GridRowsProp,
 } from "@mui/x-data-grid";
+import { useSession } from "next-auth/react";
 
 type FullFeaturedCrudGridProps = {
   columns: GridColDef[];
@@ -30,6 +33,7 @@ export default function FullFeaturedCrudGrid({
   setIdToEdit,
   setIdToDelete,
 }: FullFeaturedCrudGridProps) {
+  const { data: session } = useSession();
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
@@ -48,6 +52,7 @@ export default function FullFeaturedCrudGrid({
           className="textPrimary"
           onClick={handleEditClick(id)}
           color="inherit"
+          disabled={(session?.user.role ?? 0) < 3}
         />,
         <GridActionsCellItem
           key="delete"
@@ -55,6 +60,7 @@ export default function FullFeaturedCrudGrid({
           label="Delete"
           onClick={handleDeleteClick(id)}
           color="inherit"
+          disabled={(session?.user.role ?? 0) < 4}
         />,
       ];
     },
