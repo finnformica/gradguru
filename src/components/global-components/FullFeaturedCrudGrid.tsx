@@ -20,6 +20,7 @@ type FullFeaturedCrudGridProps = {
   rows: GridRowsProp;
   loading: boolean;
   setIdToEdit?: (id: GridRowId) => void;
+  setIdToDelete?: (id: GridRowId) => void;
 };
 
 export default function FullFeaturedCrudGrid({
@@ -27,6 +28,7 @@ export default function FullFeaturedCrudGrid({
   rows: initialRows,
   loading,
   setIdToEdit,
+  setIdToDelete,
 }: FullFeaturedCrudGridProps) {
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -75,7 +77,9 @@ export default function FullFeaturedCrudGrid({
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+    if (setIdToDelete) {
+      setIdToDelete(id);
+    }
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
