@@ -1,14 +1,15 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
-import TextInput from "@/components/LandingPage/TextInput";
+
 import { Box, CircularProgress, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
 
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
+import { postConvertkitSubscription } from "@/api/email";
 
-import { subscribe } from "@/utils";
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import TextInput from "@/components/LandingPage/TextInput";
+import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
 import UserAlert from "@/components/LandingPage/UserAlert";
 import { AlertState } from "@/components/globalTypes";
 
@@ -25,9 +26,8 @@ const CTA = () => {
     message: "",
   });
 
-  const handleSubscribe = (e: FormEvent) => {
+  const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     if (!emailState.isValid) {
       setAlertState({
@@ -36,14 +36,32 @@ const CTA = () => {
         title: "Invalid email",
         message: "Please enter a valid email address.",
       });
-      setLoading(false);
       return;
     }
 
-    subscribe(emailState.email, setAlertState, alertState);
+    setLoading(true);
 
-    setEmailState({ email: "", isValid: false });
-    setLoading(false);
+    postConvertkitSubscription({ email: emailState.email })
+      .then(() =>
+        setAlertState({
+          open: true,
+          severity: "success",
+          message: "Please check your email for a confirmation link.",
+          title: "Success!",
+        })
+      )
+      .catch((error) =>
+        setAlertState({
+          open: true,
+          severity: "error",
+          message: "Something went wrong. Please try again later.",
+          title: "Error!",
+        })
+      )
+      .finally(() => {
+        setEmailState({ email: "", isValid: false });
+        setLoading(false);
+      });
   };
 
   return (

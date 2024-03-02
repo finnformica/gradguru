@@ -92,5 +92,11 @@ export const endpoints = {
       course: (id: string | null) =>
         `${BASE_URL}/firebase/document?collection=courses${id ? `&document=${id}` : ""}`,
     },
+    subscribe: {
+      convertkit: `${BASE_URL}/convertkit/subscribe`,
+    },
+    support: {
+      firebase: `${BASE_URL}/firebase/support`,
+    },
   },
 };

@@ -8,6 +8,7 @@ import TextInput from "@/components/LandingPage/TextInput";
 import UserAlert from "@/components/LandingPage/UserAlert";
 
 import { AlertState } from "@/components/globalTypes";
+import { postFirebaseSupport } from "@/api/email";
 
 type FormState = {
   name: string;
@@ -35,38 +36,30 @@ const ContactPage = () => {
     e.preventDefault();
     setLoading(true);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/support`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (response.status !== 200) {
-      setAlertState({
-        ...alertState,
-        open: true,
-        severity: "error",
-        message: "Something went wrong. Please try again later.",
-        title: "Error!",
+    postFirebaseSupport(form)
+      .then(() => {
+        setAlertState({
+          ...alertState,
+          open: true,
+          severity: "success",
+          message: "Thank you for reaching out, we'll get back to you shortly.",
+          title: "Success!",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        setAlertState({
+          ...alertState,
+          open: true,
+          severity: "error",
+          message: "Something went wrong. Please try again later.",
+          title: "Error!",
+        });
+      })
+      .finally(() => {
+        setForm(initFormState);
+        setLoading(false);
       });
-    } else {
-      setAlertState({
-        ...alertState,
-        open: true,
-        severity: "success",
-        message: "Thank you for reaching out, we'll get back to you shortly.",
-        title: "Success!",
-      });
-    }
-
-    setForm(initFormState);
-    setLoading(false);
   };
 
   return (
