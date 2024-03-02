@@ -1,9 +1,9 @@
+import { deleteNRTest, postNRTest } from "@/api/tests";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import FormModalWrapper from "../global-components/FormModalWrapper";
 import NRForm from "./NRForm";
-import { useAlert } from "@/context/alert";
 import { NRQuestion } from "./types";
-import { deleteNRTest, postNRTest } from "@/api/tests";
 
 const NRModal = ({
   open,
@@ -15,7 +15,7 @@ const NRModal = ({
   setOpen: (newOpen: boolean) => void;
   refresh: () => void;
 } & NRQuestion) => {
-  const { showAlert } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState<NRQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -30,12 +30,14 @@ const NRModal = ({
 
   const handleDelete = async () => {
     if (!form.id) {
-      showAlert("Uh oh! Error occurred :(", "error");
+      enqueueSnackbar("Error - no form found", { variant: "error" });
       return;
     }
     deleteNRTest(form.id)
-      .then(() => showAlert("NR question deleted", "success"))
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .then(() => enqueueSnackbar("NR question deleted"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
       .finally(() => {
         refresh();
         handleClose();
@@ -46,13 +48,17 @@ const NRModal = ({
     e.preventDefault();
 
     if (!form.id) {
-      showAlert("Uh oh! Error occurred :(", "error");
+      enqueueSnackbar("Something went wrong - no form found", {
+        variant: "error",
+      });
       return;
     }
 
     postNRTest(form.id, form)
-      .then(() => showAlert("NR question updated", "success"))
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .then(() => enqueueSnackbar("NR question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
       .finally(() => {
         refresh();
         handleClose();

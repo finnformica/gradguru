@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import { useAlert } from "@/context/alert";
+import { useSnackbar } from "notistack";
 
-import FormModalWrapper from "../global-components/FormModalWrapper";
+import { deleteSJTTest, postSJTTest } from "@/api/tests";
+import FormModalWrapper from "@/components/global-components/FormModalWrapper";
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
-import { deleteSJTTest, postSJTTest } from "@/api/tests";
 
 const SJTModal = ({
   open,
@@ -19,7 +19,7 @@ const SJTModal = ({
   setOpen: (newOpen: boolean) => void;
   refresh: () => void;
 } & SJTQuestion) => {
-  const { showAlert } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState<SJTQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -34,13 +34,17 @@ const SJTModal = ({
 
   const handleDelete = async () => {
     if (!form.id) {
-      showAlert("Uh oh! Error occurred :(", "error");
+      enqueueSnackbar("Something went wrong - form not found", {
+        variant: "error",
+      });
       return;
     }
 
     deleteSJTTest(form.id)
-      .then(() => showAlert("SJT question updated", "success"))
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .then(() => enqueueSnackbar("SJT question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
       .finally(() => {
         refresh();
         handleClose();
@@ -51,13 +55,17 @@ const SJTModal = ({
     e.preventDefault();
 
     if (!form.id) {
-      showAlert("Uh oh! Error occurred :(", "error");
+      enqueueSnackbar("Something went wrong - form not found", {
+        variant: "error",
+      });
       return;
     }
 
     postSJTTest(form.id, form)
-      .then(() => showAlert("SJT question updated", "success"))
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .then(() => enqueueSnackbar("SJT question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
       .finally(() => {
         refresh();
         setOpen(false);

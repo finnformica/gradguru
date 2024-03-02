@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { GridColDef, GridRowId } from "@mui/x-data-grid";
+import { useSnackbar } from "notistack";
 import { SubmitHandler } from "react-hook-form";
 
 import FullFeaturedCrudGrid from "@/components/global-components/FullFeaturedCrudGrid";
 import { indexToRoleMapping } from "@/utils/permissions";
 
+import { postUser, useUsers } from "@/api/user";
 import UserEditModal from "@/components/admin/users/user-edit-modal";
 import { IUserFormInput } from "@/components/globalTypes";
-import { useAlert } from "@/context/alert";
-import { postUser, useUsers } from "@/api/user";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 250 },
@@ -49,7 +49,7 @@ const columns: GridColDef[] = [
 ];
 
 const UsersPage = () => {
-  const { showAlert } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [idToEdit, setIdToEdit] = useState<GridRowId | null>(""); // clean up use of ID and user
   const [userToEdit, setUserToEdit] = useState<User>();
 
@@ -66,8 +66,10 @@ const UsersPage = () => {
     };
 
     postUser(userToEdit!.id as string, data)
-      .then(() => showAlert("User updated", "success"))
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .then(() => enqueueSnackbar("User updated"))
+      .catch(() =>
+        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      )
       .finally(() => {
         cleanUp();
         refresh();

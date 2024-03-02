@@ -3,16 +3,16 @@
 import { useState } from "react";
 
 import { Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 import { SJTScenarioForm, initialForm } from "@/components/SJTForm/types";
 
 import { postSJTTest } from "@/api/tests";
 import { SJTForm } from "@/components/SJTForm";
 import { LoadingScreen } from "@/components/global-components";
-import { useAlert } from "@/context/alert";
 
 const AddSJT = () => {
-  const { showAlert } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<SJTScenarioForm>({ ...initialForm });
 
@@ -22,8 +22,10 @@ const AddSJT = () => {
     setLoading(true);
 
     postSJTTest(null, form)
-      .then(() => showAlert("SJT question added", "success"))
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .then(() => enqueueSnackbar("SJT question added"))
+      .catch(() =>
+        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      )
       .finally(() => {
         setForm({ ...initialForm });
         setLoading(false);

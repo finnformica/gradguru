@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { Typography } from "@mui/material";
-
-import { useAlert } from "@/context/alert";
+import { useSnackbar } from "notistack";
 
 import { NRForm } from "@/components/NRForm";
 import {
@@ -16,7 +15,7 @@ import { LoadingScreen } from "@/components/global-components";
 import { postNRTest } from "@/api/tests";
 
 const AddNR = () => {
-  const { showAlert } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState<boolean>(false);
   const [form, setForm] = useState<INRForm>({
     ...tableForm,
@@ -29,7 +28,7 @@ const AddNR = () => {
 
     postNRTest(null, form)
       .then(() => {
-        showAlert("Numerical reasoning question added", "success");
+        enqueueSnackbar("Numerical reasoning question added");
         setForm(
           form.type === "table"
             ? tableForm
@@ -38,7 +37,9 @@ const AddNR = () => {
               : gmatForm
         );
       })
-      .catch(() => showAlert("Uh oh! Error occurred :(", "error"))
+      .catch(() =>
+        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      )
       .finally(() => setLoading(false));
   };
 

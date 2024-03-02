@@ -10,6 +10,8 @@ import "next-cloudinary/dist/cld-video-player.css";
 
 import GradguruThemeProvider from "@/context/theme";
 import NextAuthProvider from "@/context/next-auth";
+import SnackbarContext from "@/context/snackbar";
+
 import favicons from "./favicons";
 
 export const metadata = {
@@ -27,7 +29,9 @@ export default function RootLayout({
     <GradguruThemeProvider>
       <NextAuthProvider>
         <html lang="en">
-          <body suppressHydrationWarning={true}>{children}</body>
+          <body suppressHydrationWarning={true}>
+            <SnackbarContext>{children}</SnackbarContext>
+          </body>
         </html>
       </NextAuthProvider>
     </GradguruThemeProvider>
