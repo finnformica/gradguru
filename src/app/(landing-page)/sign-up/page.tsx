@@ -23,6 +23,7 @@ const SignUp = () => {
       title="Create an account"
       subtitle="Already have an account?"
       method="sign-in"
+      button="Sign up"
       email={email}
       password={password}
       setEmail={(e) => setEmail(e.target.value)}

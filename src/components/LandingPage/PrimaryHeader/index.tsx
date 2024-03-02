@@ -1,4 +1,5 @@
 "use client";
+
 import {
   AppBar,
   Box,
@@ -8,27 +9,16 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
 
-import UserAlert from "@/components/LandingPage/UserAlert";
-
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
-import { AlertState } from "@/components/globalTypes";
-
 const PrimaryHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const [alertState, setAlertState] = useState<AlertState>({
-    open: false,
-    severity: "success",
-    title: "",
-    message: "",
-  });
 
   return (
     <AppBar
@@ -41,7 +31,6 @@ const PrimaryHeader = () => {
       }}
     >
       <Container maxWidth="xl">
-        <UserAlert state={alertState} setState={setAlertState} />
         <Toolbar sx={{ backgroundColor: "#FFF" }} disableGutters>
           <Box
             sx={{

@@ -1,25 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
-import { styled, Theme, CSSObject } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import MuiDrawer from "@mui/material/Drawer";
+import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
+import React, { useState } from "react";
 
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
   CssBaseline,
-  Toolbar,
-  IconButton,
-  Typography,
   Divider,
+  IconButton,
   List,
+  Toolbar,
+  Typography,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-import { sidebarSections } from "./sidebarSections";
 import ListCollapse from "./ListCollapse";
 import ListCollapseItem from "./ListCollapseItem";
+import { sidebarSections } from "./sidebarSections";
 
 const drawerWidth = 240;
 
@@ -93,6 +93,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -104,7 +105,12 @@ const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+      }}
+    >
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ color: "white" }}>
         <Toolbar>

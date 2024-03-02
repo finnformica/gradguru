@@ -2,10 +2,7 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/auth/config";
-
-import { AlertContextProvider } from "@/context/adminAlert";
 import LatexContext from "@/context/latex";
-
 import MiniDrawer from "@/components/AdminLayout/MiniDrawer";
 
 export default async function AdminLayout({
@@ -19,13 +16,11 @@ export default async function AdminLayout({
   // or does not have update, delete, or create permissions
   const notAdmin = !data || data.user.role < 2 || data.user.role === undefined;
   if (notAdmin) {
-    notFound();
+    notFound(); // TODO: nice not found pa
   }
   return (
     <LatexContext>
-      <AlertContextProvider>
-        <MiniDrawer>{children}</MiniDrawer>
-      </AlertContextProvider>
+      <MiniDrawer>{children}</MiniDrawer>
     </LatexContext>
   );
 }

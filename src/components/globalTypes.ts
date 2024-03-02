@@ -1,19 +1,3 @@
-export type AlertState = {
-  open: boolean;
-  severity: "success" | "info" | "warning" | "error" | undefined;
-  message: string;
-  title: string;
-};
-
-export type UserType = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  uid: string;
-  photoURL: string;
-};
-
 export type CourseType = {
   active: boolean;
   description: {

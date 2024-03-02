@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 
-import {
-  Hero,
-  CTA,
-  Features,
-  Practice,
-  Companies,
-} from "@/components/LandingPage/HomePage";
 import Footer from "@/components/LandingPage/Footer";
+import {
+  CTA,
+  Companies,
+  Features,
+  Hero,
+  Practice,
+} from "@/components/LandingPage/HomePage";
 
 export default function Home() {
   return (

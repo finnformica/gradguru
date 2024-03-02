@@ -7,27 +7,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
 
 import AuthButton from "./AuthButton";
 import MenuButton from "./MenuButton";
 import NavbarLogo from "./NavbarLogo";
 import NavLinks from "./NavLinks";
 
-import UserAlert from "@/components/LandingPage/UserAlert";
-
-import { AlertState } from "@/components/globalTypes";
-
 const DashboardHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const [alertState, setAlertState] = useState<AlertState>({
-    open: false,
-    severity: "success",
-    title: "",
-    message: "",
-  });
 
   return (
     <AppBar
@@ -40,7 +28,6 @@ const DashboardHeader = () => {
       }}
     >
       <Container maxWidth="xl">
-        <UserAlert state={alertState} setState={setAlertState} />
         <Toolbar sx={{ backgroundColor: "#FFF" }} disableGutters>
           <Box
             sx={{

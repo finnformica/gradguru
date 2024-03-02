@@ -1,40 +1,43 @@
+"use client";
+
 import { notFound } from "next/navigation";
 
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
-import VideoPlayerWithControls from "@/components/CourseVideoPage";
-import { CourseType } from "@/components/globalTypes";
+import { useCourse } from "@/api/courses";
+import {
+  CourseDescription,
+  VideoControls,
+  VideoPlayer,
+} from "@/components/CourseVideoPage";
+import { LoadingScreen } from "@/components/global-components";
+import { useCourse as useCourseContext } from "@/context/course";
 
 type CoursePageProps = {
   params: { slug: string };
 };
 
-const CoursePage = async ({ params }: CoursePageProps) => {
+const CoursePage = ({ params }: CoursePageProps) => {
+  const { setCourse } = useCourseContext();
   const { slug } = params;
 
-  const fetchData = async () => {
-    // retrieve course from database
-    const data = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=courses&document=${slug}`
-    )
-      .then((res) => res.json())
-      .then((res) => res.data);
+  const { course, loading, error } = useCourse(slug);
 
-    // if course is found, set course in context
-    return data as CourseType;
-  };
+  if (!course || loading) return <LoadingScreen />;
 
-  const course = await fetchData().catch((err) => {
-    console.log(err);
-  });
-
-  if (!course) {
+  if (error) {
     notFound();
   }
 
+  setCourse(course);
+
   return (
     <Container maxWidth="lg" disableGutters>
-      <VideoPlayerWithControls course={course} />
+      <Box>
+        <VideoPlayer />
+        <VideoControls />
+      </Box>
+      <CourseDescription />
     </Container>
   );
 };

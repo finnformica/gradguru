@@ -1,20 +1,21 @@
+import { deleteNRTest, postNRTest } from "@/api/tests";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import FormModalWrapper from "../Global/FormModalWrapper";
+import FormModalWrapper from "../global-components/FormModalWrapper";
 import NRForm from "./NRForm";
-import { useAlert } from "@/context/adminAlert";
 import { NRQuestion } from "./types";
 
 const NRModal = ({
   open,
   setOpen,
-  fetchNR,
+  refresh,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
-  fetchNR: () => void;
+  refresh: () => void;
 } & NRQuestion) => {
-  const { setAlertState } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState<NRQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -28,57 +29,40 @@ const NRModal = ({
   };
 
   const handleDelete = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
-      });
-    } else {
-      setAlertState({
-        message: "NR question deleted",
-        open: true,
-        severity: "success",
-      });
-      fetchNR();
-      handleClose();
+    if (!form.id) {
+      enqueueSnackbar("Error - no form found", { variant: "error" });
+      return;
     }
+    deleteNRTest(form.id)
+      .then(() => enqueueSnackbar("NR question deleted"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
+      .finally(() => {
+        refresh();
+        handleClose();
+      });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=nr-consulting&document=${form.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
 
-    if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
+    if (!form.id) {
+      enqueueSnackbar("Something went wrong - no form found", {
+        variant: "error",
       });
-    } else {
-      setAlertState({
-        message: "NR question updated",
-        open: true,
-        severity: "success",
-      });
-      handleClose();
+      return;
     }
+
+    postNRTest(form.id, form)
+      .then(() => enqueueSnackbar("NR question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
+      .finally(() => {
+        refresh();
+        handleClose();
+      });
   };
 
   return (

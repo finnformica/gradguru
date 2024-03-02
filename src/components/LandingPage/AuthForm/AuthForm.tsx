@@ -15,10 +15,12 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import _ from "lodash";
 
 type AuthFormProps = {
   title: string;
   method: string;
+  button: string;
   subtitle: string;
   email: string;
   setEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -30,6 +32,7 @@ type AuthFormProps = {
 const AuthForm = ({
   title,
   method,
+  button,
   subtitle,
   email,
   setEmail,
@@ -39,8 +42,7 @@ const AuthForm = ({
 }: AuthFormProps) => {
   const theme = useTheme();
 
-  const linkText =
-    method.slice(0, 1).toUpperCase() + method.replace("-", " ").slice(1);
+  const linkText = _.upperFirst(method.replace("-", " "));
 
   return (
     <Box
@@ -82,7 +84,7 @@ const AuthForm = ({
         />
       </Box>
       <Button fullWidth variant="contained" onClick={handleSubmit}>
-        {linkText}
+        {button}
       </Button>
       <Divider sx={{ py: 2 }}>
         <Typography color="text.secondary" px={1}>

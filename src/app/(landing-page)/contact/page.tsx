@@ -1,13 +1,14 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { Box, Typography, CircularProgress } from "@mui/material";
+
+import { Box, CircularProgress, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
 import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
 import TextInput from "@/components/LandingPage/TextInput";
-import UserAlert from "@/components/LandingPage/UserAlert";
 
-import { AlertState } from "@/components/globalTypes";
+import { postFirebaseSupport } from "@/api/email";
 
 type FormState = {
   name: string;
@@ -22,51 +23,27 @@ const initFormState: FormState = {
 };
 
 const ContactPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState<FormState>(initFormState);
   const [loading, setLoading] = useState(false);
-  const [alertState, setAlertState] = useState<AlertState>({
-    open: false,
-    severity: "success",
-    title: "",
-    message: "",
-  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/support`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (response.status !== 200) {
-      setAlertState({
-        ...alertState,
-        open: true,
-        severity: "error",
-        message: "Something went wrong. Please try again later.",
-        title: "Error!",
+    postFirebaseSupport(form)
+      .then(() =>
+        enqueueSnackbar(
+          "Thank you for reaching out, we'll get back to you shortly."
+        )
+      )
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
+      .finally(() => {
+        setForm(initFormState);
+        setLoading(false);
       });
-    } else {
-      setAlertState({
-        ...alertState,
-        open: true,
-        severity: "success",
-        message: "Thank you for reaching out, we'll get back to you shortly.",
-        title: "Success!",
-      });
-    }
-
-    setForm(initFormState);
-    setLoading(false);
   };
 
   return (
@@ -76,8 +53,6 @@ const ContactPage = () => {
         m: { xs: "2rem 0 5rem", sm: "2rem 3rem 5rem" },
       }}
     >
-      <UserAlert state={alertState} setState={setAlertState} />
-
       <Typography variant="h4">Contact</Typography>
 
       <form
