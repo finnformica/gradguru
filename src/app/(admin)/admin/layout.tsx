@@ -19,7 +19,7 @@ export default async function AdminLayout({
   // or does not have update, delete, or create permissions
   const notAdmin = !data || data.user.role < 2 || data.user.role === undefined;
   if (notAdmin) {
-    notFound(); // TODO: nice login page
+    notFound(); // TODO: nice not found page
   }
   return (
     <LatexContext>

@@ -87,6 +87,10 @@ export const endpoints = {
       },
       lr: {},
     },
-    courses: {},
+    courses: {
+      all: `${BASE_URL}/firebase/document?collection=courses`,
+      course: (id: string | null) =>
+        `${BASE_URL}/firebase/document?collection=courses${id ? `&document=${id}` : ""}`,
+    },
   },
 };

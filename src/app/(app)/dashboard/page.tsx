@@ -1,64 +1,22 @@
 "use client";
+import { useSession } from "next-auth/react";
+import { notFound } from "next/navigation";
 
+import { Box, Container, Typography } from "@mui/material";
+
+import { useCourses } from "@/api/courses";
 import { CourseAccordion } from "@/components/Dashboard/CourseAccordion";
 import { LoadingScreen } from "@/components/global-components";
 import { CourseType } from "@/components/globalTypes";
-import { Box, Container, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  const [userCourses, setUserCourses] = useState<string[]>([]);
-  const [courses, setCourses] = useState<CourseType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
-  const user = session?.user;
+  const { courses, loading, error } = useCourses();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      // retrieve user courses from database
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=users&document=${user!.id}`
-      )
-        .then((res) => res.json())
-        .then((res) => res.data);
+  if (error) return notFound();
 
-      // if course is not found
-      if (!data) {
-        console.log("Course not found");
-      } else {
-        setUserCourses(data.courses);
-      }
-      setLoading(false);
-    };
-
-    if (status === "authenticated" && user) {
-      fetchUserData();
-    }
-  }, [status, user]);
-
-  useEffect(() => {
-    const fetchCourseData = async () => {
-      // retrieve all courses from database
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=courses`
-      ).then((res) => res.json());
-
-      // filter courses based on user subscription
-      const filteredCourses = data.documents.filter((course: CourseType) =>
-        userCourses.includes(course.id)
-      );
-
-      setCourses(filteredCourses);
-    };
-
-    if (userCourses?.length) {
-      fetchCourseData();
-    }
-  }, [userCourses]);
-
-  if (!userCourses || loading) return <LoadingScreen />;
+  if (!session?.user.courses || loading) return <LoadingScreen />;
 
   return (
     <Container sx={{ pt: 4 }}>
@@ -75,12 +33,14 @@ const Dashboard = () => {
           my: 4,
         }}
       >
-        {!userCourses?.length ? (
+        {!courses?.length ? (
           <Typography pt={4}>You have no purchased courses</Typography>
         ) : (
-          courses.map((course, key) => (
-            <CourseAccordion key={key} {...course} />
-          ))
+          courses
+            .filter((course: CourseType) =>
+              session?.user.courses.includes(course.id)
+            )
+            .map((course, key) => <CourseAccordion key={key} {...course} />)
         )}
       </Box>
     </Container>
