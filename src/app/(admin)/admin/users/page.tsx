@@ -67,8 +67,10 @@ const UsersPage = () => {
 
     postUser(userToEdit!.id as string, data)
       .then(() => enqueueSnackbar("User updated"))
-      .catch(() =>
-        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         cleanUp();

@@ -43,7 +43,9 @@ const SJTModal = ({
     deleteSJTTest(form.id)
       .then(() => enqueueSnackbar("SJT question updated"))
       .catch((err) =>
-        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         refresh();
@@ -64,7 +66,9 @@ const SJTModal = ({
     postSJTTest(form.id, form)
       .then(() => enqueueSnackbar("SJT question updated"))
       .catch((err) =>
-        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         refresh();
