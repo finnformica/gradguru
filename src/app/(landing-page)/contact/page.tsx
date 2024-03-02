@@ -38,7 +38,9 @@ const ContactPage = () => {
         )
       )
       .catch((err) =>
-        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         setForm(initFormState);

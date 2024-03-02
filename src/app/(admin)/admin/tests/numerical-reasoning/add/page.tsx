@@ -37,8 +37,10 @@ const AddNR = () => {
               : gmatForm
         );
       })
-      .catch(() =>
-        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => setLoading(false));
   };

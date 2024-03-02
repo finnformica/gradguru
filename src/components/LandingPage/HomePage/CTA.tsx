@@ -37,8 +37,8 @@ const CTA = () => {
       .then(() =>
         enqueueSnackbar("Please check your email for a confirmation link.")
       )
-      .catch((error) =>
-        enqueueSnackbar(`Something went wrong - ${error}`, {
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
       )

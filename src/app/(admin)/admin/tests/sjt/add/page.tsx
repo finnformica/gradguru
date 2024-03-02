@@ -23,8 +23,10 @@ const AddSJT = () => {
 
     postSJTTest(null, form)
       .then(() => enqueueSnackbar("SJT question added"))
-      .catch(() =>
-        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         setForm({ ...initialForm });

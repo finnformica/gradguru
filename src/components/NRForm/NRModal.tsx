@@ -36,7 +36,9 @@ const NRModal = ({
     deleteNRTest(form.id)
       .then(() => enqueueSnackbar("NR question deleted"))
       .catch((err) =>
-        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         refresh();
@@ -57,7 +59,9 @@ const NRModal = ({
     postNRTest(form.id, form)
       .then(() => enqueueSnackbar("NR question updated"))
       .catch((err) =>
-        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         refresh();

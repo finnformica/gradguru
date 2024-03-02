@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { User } from "next-auth";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 import { AccountCircle } from "@mui/icons-material";
 import { Typography } from "@mui/material";
@@ -10,11 +11,13 @@ import { GridColDef, GridRowId } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { SubmitHandler } from "react-hook-form";
 
-import FullFeaturedCrudGrid from "@/components/global-components/FullFeaturedCrudGrid";
 import { indexToRoleMapping } from "@/utils/permissions";
+import { deleteUser, postUser, useUsers } from "@/api/user";
 
-import { postUser, useUsers } from "@/api/user";
+import FullFeaturedCrudGrid from "@/components/global-components/FullFeaturedCrudGrid";
 import UserEditModal from "@/components/admin/users/user-edit-modal";
+import { LoadingScreen } from "@/components/global-components";
+import ConfirmationDialog from "@/components/global-components/confirmation-dialog";
 import { IUserFormInput } from "@/components/globalTypes";
 
 const columns: GridColDef[] = [
@@ -51,6 +54,7 @@ const columns: GridColDef[] = [
 const UsersPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [idToEdit, setIdToEdit] = useState<GridRowId | null>(""); // clean up use of ID and user
+  const [idToDelete, setIdToDelete] = useState<GridRowId | null>("");
   const [userToEdit, setUserToEdit] = useState<User>();
 
   const { users, loading, refresh } = useUsers();
@@ -67,12 +71,14 @@ const UsersPage = () => {
 
     postUser(userToEdit!.id as string, data)
       .then(() => enqueueSnackbar("User updated"))
-      .catch(() =>
-        enqueueSnackbar("Uh oh! Error occurred :(", { variant: "error" })
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
       )
       .finally(() => {
         cleanUp();
-        refresh();
+        refresh(); // TODO: refresh not working
       });
   };
 
@@ -81,35 +87,48 @@ const UsersPage = () => {
     setUserToEdit(undefined);
   };
 
+  const handleUserDelete = () => {
+    deleteUser(idToDelete as string)
+      .then(() => enqueueSnackbar("User deleted"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        setIdToDelete(null);
+        refresh(); // TODO: refresh not working
+      });
+  };
+
   useEffect(() => {
     if (idToEdit) {
       setUserToEdit(users?.find((user) => user.id === idToEdit));
     }
   }, [idToEdit, users]);
 
+  if (!users || loading) return <LoadingScreen />;
+
   return (
     <>
       <Typography variant="h4" pb={2}>
         All users
       </Typography>
-      {users && users.length > 0 && (
-        <FullFeaturedCrudGrid
-          rows={users.map((user) => {
-            return {
-              id: user.id as string,
-              email: user.email as string,
-              name: user.name as string,
-              courses: user.courses as string[],
-              roleIndex: user.role as number,
-              role: indexToRoleMapping[user.role] as string,
-              image: user.image as string,
-            };
-          })}
-          columns={columns}
-          loading={loading}
-          setIdToEdit={setIdToEdit}
-        />
-      )}
+      <FullFeaturedCrudGrid
+        rows={users.map((user) => ({
+          id: user.id as string,
+          email: user.email as string,
+          name: user.name as string,
+          courses: user.courses as string[],
+          roleIndex: user.role as number,
+          role: indexToRoleMapping[user.role] as string,
+          image: user.image as string,
+        }))}
+        columns={columns}
+        loading={loading}
+        setIdToEdit={setIdToEdit}
+        setIdToDelete={setIdToDelete}
+      />
       {userToEdit && (
         <UserEditModal
           open={!!idToEdit}
@@ -124,6 +143,15 @@ const UsersPage = () => {
             courses: userToEdit.courses,
           }}
           onSubmit={onSubmit}
+        />
+      )}
+      {idToDelete && (
+        <ConfirmationDialog
+          title="Are you sure you want to delete this user?"
+          open={!!idToDelete}
+          onClose={() => setIdToDelete(null)}
+          onSubmit={handleUserDelete}
+          confirmText="Delete"
         />
       )}
     </>

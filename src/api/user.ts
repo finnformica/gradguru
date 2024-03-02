@@ -31,3 +31,8 @@ export function postUser(id: string, data: any) {
   const URL = endpoints.admin.users.user(id);
   return postFetcher([URL, {}, data]);
 }
+
+export function deleteUser(id: string) {
+  const URL = endpoints.admin.users.user(id);
+  return deleteFetcher(URL);
+}
