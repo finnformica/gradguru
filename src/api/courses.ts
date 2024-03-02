@@ -1,13 +1,6 @@
 import { useMemo } from "react";
 import useSWR from "swr";
-import {
-  endpoints,
-  getFetcher,
-  postFetcher,
-  putFetcher,
-  patchFetcher,
-  deleteFetcher,
-} from "@/utils/axios";
+import { endpoints, getFetcher, postFetcher } from "@/utils/axios";
 
 // list of courses
 export function useCourses() {
@@ -34,8 +27,6 @@ export function useCourse(id: string) {
     endpoints.admin.courses.course(id),
     getFetcher
   );
-
-  console.log(data);
 
   return useMemo(
     () => ({

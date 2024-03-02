@@ -2,10 +2,8 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/auth/config";
-
-import { AlertContextProvider } from "@/context/alert";
 import LatexContext from "@/context/latex";
-
+import AlertContextProvider from "@/context/alert";
 import MiniDrawer from "@/components/AdminLayout/MiniDrawer";
 
 export default async function AdminLayout({

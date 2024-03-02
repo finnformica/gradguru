@@ -55,7 +55,7 @@ const AlertComponent = ({ alertState, setAlertState }: AlertComponentType) => {
   );
 };
 
-export const AlertContextProvider = ({ children }: any) => {
+const AlertContextProvider = ({ children }: any) => {
   const [alertState, setAlertState] = useState<AlertState>({
     message: "",
     open: false,
@@ -87,3 +87,5 @@ export const AlertContextProvider = ({ children }: any) => {
 export const useAlert = () => {
   return useContext(AlertContext) as AlertContextType;
 };
+
+export default AlertContextProvider;
