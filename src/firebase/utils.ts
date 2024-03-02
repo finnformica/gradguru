@@ -25,7 +25,6 @@ const addData = async (
       ? await setDoc(doc(db, collectionName, id), data, { merge: true })
       : await addDoc(collection(db, collectionName), data);
   } catch (e) {
-    error = e;
     console.log("An error occured", e);
   }
 

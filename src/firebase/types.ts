@@ -1,4 +1,4 @@
-import { CourseType } from "@/mock/courses";
+import { CourseType } from "@/components/globalTypes";
 
 type MailListType = {
   email: string;

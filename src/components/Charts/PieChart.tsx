@@ -1,10 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Pie } from "react-chartjs-2";
 
 import { IGraphForm } from "@/components/NRForm/types";
 
@@ -17,19 +17,23 @@ type PieChartProps = {
 const PieChart = ({ data }: PieChartProps) => {
   const { columns, rows } = data;
   const labels = rows.map((row) => row[columns[0].field]);
-  const datasets = [
-    {
-      label: columns[1].headerName,
-      data: rows.map((row) => row[columns[1].field]),
-    },
-  ];
+
+  const datasets = useMemo(
+    () => [
+      {
+        label: columns[1].headerName,
+        data: rows.map((row) => row[columns[1].field]),
+      },
+    ],
+    [columns, rows]
+  );
 
   useEffect(() => {
     setChartData({
       labels,
       datasets,
     });
-  }, [data, columns, rows]);
+  }, [data, columns, rows, labels, datasets]);
 
   const [chartData, setChartData] = useState({
     labels,

@@ -1,4 +1,6 @@
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+"use client";
+
+import { MathJaxContext } from "better-react-mathjax";
 
 const config = {
   //   loader: { load: ["[tex]/html"] },

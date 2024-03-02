@@ -2,6 +2,9 @@
 
 import { ThemeProvider, createTheme } from "@mui/material";
 
+// default 8px scaling factor
+const spacing = 8;
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -18,25 +21,48 @@ const theme = createTheme({
       textTransform: "none",
     },
   },
+  spacing,
   shape: {
-    borderRadius: 3,
+    borderRadius: 2.5,
   },
   components: {
     MuiButton: {
       styleOverrides: {
+        root: {
+          borderRadius: "8px",
+        },
         contained: {
           color: "white",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          [`& fieldset`]: {
+            borderRadius: "8px",
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
         },
       },
     },
   },
 });
 
-type GradguruThemeProviderProps = {
-  children: React.ReactNode;
-};
-
-const GradguruThemeProvider = ({ children }: GradguruThemeProviderProps) => {
+const GradguruThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 

@@ -31,7 +31,7 @@ const CompanyInfo = () => {
           pt={2}
           sx={{ color: "#FFF", opacity: "40%" }}
         >
-          © 2023 gradguru. All rights reserved.
+          © {new Date().getFullYear()} gradguru. All rights reserved.
         </Typography>
       </Box>
     </Box>

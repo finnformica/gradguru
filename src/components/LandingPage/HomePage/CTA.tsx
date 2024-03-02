@@ -1,14 +1,16 @@
+"use client";
+
 import { FormEvent, useState } from "react";
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
-import TextInput from "@/components/LandingPage/TextInput";
+
 import { Box, CircularProgress, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
+import { useSnackbar } from "notistack";
 
+import { postConvertkitSubscription } from "@/api/email";
+
+import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import TextInput from "@/components/LandingPage/TextInput";
 import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
-
-import { subscribe } from "@/utils";
-import UserAlert from "@/components/LandingPage/UserAlert";
-import { AlertState } from "@/components/globalTypes";
 
 const CTA = () => {
   const [loading, setLoading] = useState(false);
@@ -16,37 +18,38 @@ const CTA = () => {
     email: "",
     isValid: false,
   });
-  const [alertState, setAlertState] = useState<AlertState>({
-    open: false,
-    severity: "success",
-    title: "",
-    message: "",
-  });
 
-  const handleSubscribe = (e: FormEvent) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     if (!emailState.isValid) {
-      setAlertState({
-        open: true,
-        severity: "error",
-        title: "Invalid email",
-        message: "Please enter a valid email address.",
+      enqueueSnackbar("Please enter a valid email address.", {
+        variant: "error",
       });
-      setLoading(false);
       return;
     }
 
-    subscribe(emailState.email, setAlertState, alertState);
+    setLoading(true);
 
-    setEmailState({ email: "", isValid: false });
-    setLoading(false);
+    postConvertkitSubscription({ email: emailState.email })
+      .then(() =>
+        enqueueSnackbar("Please check your email for a confirmation link.")
+      )
+      .catch((error) =>
+        enqueueSnackbar(`Something went wrong - ${error}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        setEmailState({ email: "", isValid: false });
+        setLoading(false);
+      });
   };
 
   return (
     <Container maxWidth="xl" id="subscribe">
-      <UserAlert state={alertState} setState={setAlertState} />
       <Box
         sx={{
           display: "flex",

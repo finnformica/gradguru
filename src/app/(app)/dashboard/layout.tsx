@@ -1,6 +1,21 @@
-import { DashboardHeader } from "@/components/LandingPage/Headers";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+import { authOptions } from "@/auth/config";
+
+import DashboardHeader from "@/components/Dashboard/DashboardHeader";
+
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const data = await getServerSession(authOptions);
+
+  if (!data) {
+    redirect("/sign-in");
+  }
+
   return (
     <>
       <DashboardHeader />

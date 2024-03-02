@@ -1,34 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
-  Typography,
+  Box,
+  Divider,
   List,
   ListItem,
   ListItemButton,
   ListSubheader,
-  Divider,
-  Box,
+  Typography,
 } from "@mui/material";
+import { useState } from "react";
 
+import { useSJTTests } from "@/api/tests";
 import { SJTModal } from "@/components/SJTForm";
 import { SJTQuestion } from "@/components/SJTForm/types";
-import { LoadingWrapper } from "@/components/Global";
+import { LoadingScreen } from "@/components/global-components";
 
 const SJTListItem = ({
-  fetchSJT,
+  refresh,
   ...question
-}: { fetchSJT: () => void } & SJTQuestion) => {
+}: { refresh: () => void } & SJTQuestion) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <SJTModal
-        open={open}
-        setOpen={setOpen}
-        fetchSJT={fetchSJT}
-        {...question}
-      />
+      <SJTModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
       <ListItem disablePadding>
         <ListItemButton onClick={() => setOpen(true)}>
           <Box
@@ -64,71 +60,35 @@ const SJTListItem = ({
 };
 
 const AllSJT = () => {
-  const [questions, setQuestions] = useState<SJTQuestion[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { questions, loading, refresh } = useSJTTests();
 
-  const sortDesc = () => {
-    setQuestions(
-      questions.sort((a, b) =>
-        b.created && a.created ? b.created - a.created : 0
-      )
-    );
-  };
-
-  const sortAsc = () => {
-    setQuestions(
-      questions.sort((a, b) =>
-        a.created && b.created ? a.created - b.created : 0
-      )
-    );
-  };
-
-  const fetchSJT = async () => {
-    setLoading(true);
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`
-    );
-    const data = await response.json();
-
-    setQuestions(
-      data.documents.sort((a: SJTQuestion, b: SJTQuestion) =>
-        a.created && b.created ? b.created - a.created : 0
-      )
-    );
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchSJT();
-  }, []);
+  if (!questions || loading) return <LoadingScreen />;
 
   return (
     <>
       <Typography variant="h4" pb={2}>
         All SJT questions
       </Typography>
-      <LoadingWrapper loading={loading}>
-        <List
-          subheader={
-            <ListSubheader>
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography>Scenario</Typography>
-                <Typography>Date created</Typography>
-              </Box>
-            </ListSubheader>
-          }
-        >
-          {questions.map((question, key) => (
-            <SJTListItem key={key} fetchSJT={fetchSJT} {...question} />
-          ))}
-        </List>
-      </LoadingWrapper>
+      <List
+        subheader={
+          <ListSubheader>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography>Scenario</Typography>
+              <Typography>Date created</Typography>
+            </Box>
+          </ListSubheader>
+        }
+      >
+        {questions.map((question, key) => (
+          <SJTListItem key={key} refresh={refresh} {...question} />
+        ))}
+      </List>
     </>
   );
 };

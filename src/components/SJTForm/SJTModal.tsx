@@ -2,23 +2,24 @@
 
 import { useState } from "react";
 
-import { useAlert } from "@/context/adminAlert";
+import { useSnackbar } from "notistack";
 
-import FormModalWrapper from "../Global/FormModalWrapper";
+import { deleteSJTTest, postSJTTest } from "@/api/tests";
+import FormModalWrapper from "@/components/global-components/FormModalWrapper";
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
 
 const SJTModal = ({
   open,
   setOpen,
-  fetchSJT,
+  refresh,
   ...question
 }: {
   open: boolean;
   setOpen: (newOpen: boolean) => void;
-  fetchSJT: () => void;
+  refresh: () => void;
 } & SJTQuestion) => {
-  const { setAlertState } = useAlert();
+  const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState<SJTQuestion>(question);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -32,58 +33,43 @@ const SJTModal = ({
   };
 
   const handleDelete = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
+    if (!form.id) {
+      enqueueSnackbar("Something went wrong - form not found", {
+        variant: "error",
       });
-    } else {
-      setAlertState({
-        message: "SJT question deleted",
-        open: true,
-        severity: "success",
-      });
-      fetchSJT();
-      handleClose();
+      return;
     }
+
+    deleteSJTTest(form.id)
+      .then(() => enqueueSnackbar("SJT question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
+      .finally(() => {
+        refresh();
+        handleClose();
+      });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting&document=${form.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
-
-    if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
+    if (!form.id) {
+      enqueueSnackbar("Something went wrong - form not found", {
+        variant: "error",
       });
-    } else {
-      setAlertState({
-        message: "SJT question updated",
-        open: true,
-        severity: "success",
-      });
-      setOpen(false);
+      return;
     }
+
+    postSJTTest(form.id, form)
+      .then(() => enqueueSnackbar("SJT question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err}`, { variant: "error" })
+      )
+      .finally(() => {
+        refresh();
+        setOpen(false);
+      });
   };
 
   return (

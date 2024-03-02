@@ -1,7 +1,8 @@
-import { initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-import { GoogleAuthProvider, EmailAuthProvider, getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,20 +14,10 @@ const config = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-export const uiConfig = {
-  signInFlow: "popup",
-  signInSuccessUrl: "/",
-  tosUrl: "/terms-of-service",
-  privacyPolicyUrl: "/privacy-policy",
-  signInOptions: [
-    GoogleAuthProvider.PROVIDER_ID,
-    EmailAuthProvider.PROVIDER_ID,
-  ],
-};
+const app = !getApps().length ? initializeApp(config, "gradguru") : getApp();
 
-const app = initializeApp(config);
 const db = getFirestore(app);
-
+const storage = getStorage(app);
 const auth = getAuth(app);
 
-export { app, db, config, auth };
+export { app, auth, config, db, storage };

@@ -1,19 +1,3 @@
-export type AlertState = {
-  open: boolean;
-  severity: "success" | "info" | "warning" | "error" | undefined;
-  message: string;
-  title: string;
-};
-
-export type UserType = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  uid: string;
-  photoURL: string;
-};
-
 export type CourseType = {
   active: boolean;
   description: {
@@ -28,7 +12,7 @@ export type CourseType = {
   }[];
   id: string;
   image: string;
-  lessons: VideoType[];
+  lessons: LessonType[];
   name: string;
   price: number;
   resources: ResourceType[];
@@ -44,9 +28,9 @@ type ResourceType = {
   id: string;
 };
 
-type VideoType = {
-  video: string;
+export type LessonType = {
   name: string;
+  video: string;
   duration: string;
   section: number;
 };
@@ -60,3 +44,17 @@ export interface IFirestoreData {
   created?: number;
   id?: string;
 }
+
+// ADMIN
+
+// user panel
+
+export type IUserFormInput = {
+  name: string;
+  email: string;
+  role: {
+    value: number;
+    label: string;
+  };
+  courses: string[];
+};

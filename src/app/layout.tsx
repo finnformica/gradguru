@@ -9,7 +9,8 @@ import "@/styles/global.css";
 import "next-cloudinary/dist/cld-video-player.css";
 
 import GradguruThemeProvider from "@/context/theme";
-import { AuthContextProvider } from "@/context/auth";
+import NextAuthProvider from "@/context/next-auth";
+import SnackbarContext from "@/context/snackbar";
 
 import favicons from "./favicons";
 
@@ -26,11 +27,13 @@ export default function RootLayout({
 }) {
   return (
     <GradguruThemeProvider>
-      <AuthContextProvider>
+      <NextAuthProvider>
         <html lang="en">
-          <body suppressHydrationWarning={true}>{children}</body>
+          <body suppressHydrationWarning={true}>
+            <SnackbarContext>{children}</SnackbarContext>
+          </body>
         </html>
-      </AuthContextProvider>
+      </NextAuthProvider>
     </GradguruThemeProvider>
   );
 }

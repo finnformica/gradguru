@@ -1,9 +1,8 @@
-import React from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { Box, IconButton, Typography } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Box, IconButton, Typography } from "@mui/material";
 
 import { useCourse } from "@/context/course";
 
@@ -18,7 +17,7 @@ const VideoControls = () => {
   }
 
   const lesson: number = Number(params.get("lesson")) || 0;
-  const section: number = course.lessons[lesson].section;
+  const { section } = course.lessons[lesson];
 
   const handleVideoIncrement = () => {
     if (lesson >= course.lessons.length - 1) {
