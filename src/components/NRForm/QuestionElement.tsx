@@ -51,6 +51,8 @@ export const TableQuestionElement = ({
       >
         {Object.keys(question)
           .filter((q) => q !== "answer")
+          .sort()
+          .reverse()
           .map((key, i) => (
             <TextField
               label={`${key.charAt(0).toUpperCase() + key.slice(1)} ${
