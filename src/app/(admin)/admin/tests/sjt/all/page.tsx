@@ -90,9 +90,11 @@ const AllSJT = () => {
           </ListSubheader>
         }
       >
-        {questions.map((question, key) => (
-          <SJTListItem key={key} refresh={refresh} {...question} />
-        ))}
+        {questions
+          .sort((a, b) => b.created - a.created)
+          .map((question, key) => (
+            <SJTListItem key={key} refresh={refresh} {...question} />
+          ))}
       </List>
     </>
   );

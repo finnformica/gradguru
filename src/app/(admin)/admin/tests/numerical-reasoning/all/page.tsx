@@ -102,9 +102,11 @@ const AllNR = () => {
           </ListSubheader>
         }
       >
-        {questions.map((question: NRQuestion, key) => (
-          <NRListItem key={key} refresh={refresh} {...question} />
-        ))}
+        {questions
+          .sort((a, b) => b.created - a.created)
+          .map((question: NRQuestion, key) => (
+            <NRListItem key={key} refresh={refresh} {...question} />
+          ))}
       </List>
     </>
   );
