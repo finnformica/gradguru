@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import BlogCard from "@/components/BlogPage/Cards/BlogCard";
-import firebase, { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import "firebase/firestore";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { config } from "@/firebase/config";

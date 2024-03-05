@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 
 import { SJTScenarioState, initialForm } from "@/components/SJTForm/types";
 
