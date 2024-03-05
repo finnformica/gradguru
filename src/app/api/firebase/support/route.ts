@@ -5,7 +5,7 @@ import { addData } from "@/firebase/utils";
 export async function POST(request: NextRequest) {
   const { name, email, message } = await request.json();
 
-  const { result, error } = await addData(
+  const { error } = await addData(
     {
       to: "hello@gradguru.app",
       message: {
@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
   );
 
   if (error) {
-    console.log("An error occured", error);
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });
   }
 

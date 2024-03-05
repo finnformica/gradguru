@@ -1,13 +1,13 @@
-import { Button, TextField, Divider, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { Button, Divider, Stack, TextField } from "@mui/material";
 
-import { SJTScenarioState, initialQuestion } from "./types";
 import QuestionElement from "./QuestionElement";
+import { SJTQuestion, initialQuestion } from "./types";
 
 type SJTFormProps = {
-  form: SJTScenarioState;
-  setForm: React.Dispatch<React.SetStateAction<SJTScenarioState>>;
+  form: SJTQuestion;
+  setForm: (value: SJTQuestion) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
@@ -65,12 +65,7 @@ const SJTForm = ({ form, setForm, handleSubmit }: SJTFormProps) => {
             Remove question
           </Button>
         </Stack>
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          sx={{ color: "white" }}
-        >
+        <Button variant="contained" color="primary" type="submit">
           Submit
         </Button>
       </Stack>

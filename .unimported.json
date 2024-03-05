@@ -1,0 +1,24 @@
+{
+    "entry": ["src/main.ts", "src/app/**/*.{js,ts,jsx,tsx}"],
+    "ignorePatterns": [
+      "**/node_modules/**",
+      "**/*.tests.{js,jsx,ts,tsx}",
+      "**/*.test.{js,jsx,ts,tsx}",
+      "**/*.spec.{js,jsx,ts,tsx}",
+      "**/tests/**",
+      "**/__tests__/**",
+      "**/*.d.ts"
+    ],
+    "ignoreUnimported": [],
+    "ignoreUnused": [
+      "next",
+      "react",
+      "react-dom",
+      "@firebase/analytics",
+      "@firebase/auth",
+      "@firebase/firestore",
+      "@lexer/generator"
+    ],
+    "ignoreUnresolved": [],
+    "respectGitignore": true
+  }

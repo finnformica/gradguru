@@ -2,44 +2,39 @@
 
 import { useState } from "react";
 
-import { TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 
-import { SJTScenarioState, initialForm } from "@/components/SJTForm/types";
+import { SJTScenarioForm, initialForm } from "@/components/SJTForm/types";
 
-import { useAlert } from "@/context/adminAlert";
+import { postSJTTest } from "@/api/tests";
 import { SJTForm } from "@/components/SJTForm";
+import { LoadingScreen } from "@/components/global-components";
 
 const AddSJT = () => {
-  const { setAlertState } = useAlert();
-  const [form, setForm] = useState<SJTScenarioState>({ ...initialForm });
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState<SJTScenarioForm>({ ...initialForm });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/firebase/document?collection=sjt-consulting`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      }
-    );
+    setLoading(true);
 
-    if (response.status !== 200) {
-      setAlertState({
-        message: "Uh oh! Error occurred :(",
-        open: true,
-        severity: "error",
+    postSJTTest(null, form)
+      .then(() => enqueueSnackbar("SJT question added"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        setForm({ ...initialForm });
+        setLoading(false);
       });
-    } else {
-      setAlertState({
-        message: "SJT question added",
-        open: true,
-        severity: "success",
-      });
-      setForm({ ...initialForm });
-    }
   };
+
+  if (!form || loading) return <LoadingScreen />;
 
   return (
     <>

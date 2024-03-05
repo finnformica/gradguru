@@ -1,20 +1,17 @@
 "use client";
-import { useState } from "react";
 
+import BigTitle from "@/components/LandingPage/Titles/BigTitle";
 import {
-  Container,
   Box,
+  Container,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
-import BigTitle from "@/components/LandingPage/Titles/BigTitle";
 
 const WelcomeVideo = () => {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [videoLoading, setVideoLoading] = useState(true);
 
   return (
     <Container
@@ -44,7 +41,8 @@ const WelcomeVideo = () => {
             border: "none",
             transform: "translateY(-10px) translateX(16px) scale(1.015)",
           }}
-          onLoadedData={() => setVideoLoading(false)}
+          // eslint-disable-next-line react/no-unknown-property
+          // onLoadedData={() => setVideoLoading(false)}
         />
       </Box>
       <BigTitle sx={{ pt: 4 }}>Welcome to your Free Resume Course</BigTitle>

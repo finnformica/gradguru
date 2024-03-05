@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 import { useCourse } from "@/context/course";
 
