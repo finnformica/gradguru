@@ -1,21 +1,7 @@
-"use client";
-import { TextField } from "@mui/material";
-import React from "react";
+import NewPost from "@/components/BlogForm/NewPost";
 
 const page = () => {
-  const consoleLog = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => console.log(e.target.value);
-
-  return (
-    <TextField
-      fullWidth
-      label="Author"
-      onChange={consoleLog}
-      multiline
-      minRows={1}
-    />
-  );
+  return <NewPost />;
 };
 
 export default page;

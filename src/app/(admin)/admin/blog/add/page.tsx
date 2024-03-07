@@ -10,7 +10,13 @@ const page = () => {
       <Typography variant="h4" pb={2}>
         Add blog post
       </Typography>
+      <Typography variant="h5" pb={2}>
+        Card Detials
+      </Typography>
       <AddBlogForm />
+      <Typography variant="h5" py={2}>
+        Blog Details
+      </Typography>
     </>
   );
 };
