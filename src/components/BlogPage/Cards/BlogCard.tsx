@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
 import AuthorTitle from "./AuthorTitle";
 import DateTitle from "./DateTitle";
 import TagPill from "./TagPill";
@@ -7,7 +6,7 @@ import ReadTimeText from "./ReadTimeText";
 import CardTitle from "./CardTitle";
 import Image from "next/image";
 
-type BlogCard = {
+type propsBlogCard = {
   borderColor: string;
   author: string;
   body: string;
@@ -27,7 +26,7 @@ const BlogCard = ({
   title,
   read_time,
   id,
-}: BlogCard) => {
+}: propsBlogCard) => {
   return (
     <Box
       sx={{

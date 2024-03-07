@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import BlogCard from "@/components/BlogPage/Cards/BlogCard";
 import { initializeApp } from "firebase/app";
@@ -42,7 +42,12 @@ const BlogPage = () => {
       }}
     >
       {blogsArray.map((blog) => (
-        <BlogCard borderColor={borderColor} {...blog} id={blog.id} />
+        <BlogCard
+          borderColor={borderColor}
+          {...blog}
+          id={blog.id}
+          key={blog.id}
+        />
       ))}
     </Container>
   );
@@ -51,7 +56,7 @@ const BlogPage = () => {
 export default BlogPage;
 
 // Function to fetch data from the "blogs" collection
-export async function fetchBlogs(): Promise<BlogsInterface[]> {
+async function fetchBlogs(): Promise<BlogsInterface[]> {
   try {
     const blogsCollection = collection(db, "blogs");
     const snapshot = await getDocs(blogsCollection);

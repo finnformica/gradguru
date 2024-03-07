@@ -1,6 +1,4 @@
 import { Typography } from "@mui/material";
-import { fontGrid } from "@mui/material/styles/cssUtils";
-import React from "react";
 
 type authorTitleProps = {
   children: React.ReactNode;

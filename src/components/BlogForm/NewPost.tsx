@@ -1,6 +1,5 @@
 "use client"; // needed for useform
 import { Button, TextField } from "@mui/material";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 const NewPost = () => {
