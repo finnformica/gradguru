@@ -3,6 +3,7 @@ import { cert } from "firebase-admin/app";
 import { NextAuthOptions } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import type { Adapter } from "next-auth/adapters";
@@ -18,6 +19,20 @@ export const authOptions: NextAuthOptions = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
+          role: 1,
+          courses: [],
+        };
+      },
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_ID!,
+      clientSecret: process.env.FACEBOOK_SECRET!,
+      profile(profile) {
+        return {
+          id: profile.id,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture.data.url,
           role: 1,
           courses: [],
         };
