@@ -9,24 +9,22 @@ import {
   Box,
   Button,
   Divider,
-  InputLabel,
   Stack,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
 import _ from "lodash";
+import { Controller, useForm } from "react-hook-form";
+
+import { CredentialInputs } from "@/components/globalTypes";
 
 type AuthFormProps = {
   title: string;
   method: string;
   button: string;
   subtitle: string;
-  email: string;
-  setEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  password: string;
-  setPassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: () => void;
+  onSubmit: (data: CredentialInputs) => void;
 };
 
 const AuthForm = ({
@@ -34,12 +32,9 @@ const AuthForm = ({
   method,
   button,
   subtitle,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  handleSubmit,
+  onSubmit,
 }: AuthFormProps) => {
+  const { handleSubmit, control } = useForm<CredentialInputs>();
   const theme = useTheme();
 
   const linkText = _.upperFirst(method.replace("-", " "));
@@ -70,22 +65,97 @@ const AuthForm = ({
           </Link>
         </Typography>
       </Box>
-      <Box width="100%">
-        <InputLabel sx={{ pb: 1 }}>Email address</InputLabel>
-        <TextField fullWidth size="small" value={email} onChange={setEmail} />
-      </Box>
-      <Box width="100%">
-        <InputLabel sx={{ pb: 1 }}>Password</InputLabel>
-        <TextField
-          fullWidth
-          size="small"
-          value={password}
-          onChange={setPassword}
-        />
-      </Box>
-      <Button fullWidth variant="contained" onClick={handleSubmit}>
-        {button}
-      </Button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          {method !== "sign-up" && (
+            <Controller
+              key="name"
+              name="name"
+              control={control as any}
+              rules={
+                {
+                  required: true,
+                } as any
+              }
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }: any) => (
+                <TextField
+                  key="name"
+                  fullWidth
+                  value={value}
+                  placeholder="Name"
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={!!error && (error.message || "Name is required")}
+                  size="small"
+                />
+              )}
+            />
+          )}
+          <Controller
+            key="email"
+            name="email"
+            control={control as any}
+            rules={
+              {
+                required: true,
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Please enter a valid email address",
+                },
+              } as any
+            }
+            render={({
+              field: { value, onChange },
+              fieldState: { error },
+            }: any) => (
+              <TextField
+                key="email"
+                fullWidth
+                value={value}
+                placeholder="Email Address"
+                onChange={onChange}
+                error={!!error}
+                helperText={!!error && (error.message || "Email is required")}
+                size="small"
+              />
+            )}
+          />
+
+          <Controller
+            key="password"
+            name="password"
+            control={control as any}
+            rules={
+              {
+                required: true,
+              } as any
+            }
+            render={({
+              field: { value, onChange },
+              fieldState: { error },
+            }: any) => (
+              <TextField
+                key="username"
+                fullWidth
+                type="password"
+                value={value}
+                placeholder="Password"
+                onChange={onChange}
+                error={!!error}
+                helperText={!!error && "Password is required"}
+                size="small"
+              />
+            )}
+          />
+
+          <Button fullWidth variant="contained" type="submit">
+            {button}
+          </Button>
+        </Stack>
+      </form>
       <Divider sx={{ py: 2 }}>
         <Typography color="text.secondary" px={1}>
           Or continue with

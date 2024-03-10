@@ -58,3 +58,11 @@ export type IUserFormInput = {
   };
   courses: string[];
 };
+
+// AUTH
+
+export type CredentialInputs = {
+  email: string;
+  password: string;
+  name?: string;
+};

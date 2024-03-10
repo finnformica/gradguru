@@ -1,16 +1,19 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 import AuthForm from "@/components/LandingPage/AuthForm/AuthForm";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+
+import { CredentialInputs } from "@/components/globalTypes";
+import { registerUser } from "@/api/user";
+import { useSnackbar } from "notistack";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const session = useSession();
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (session.status === "authenticated") {
@@ -18,17 +21,23 @@ const SignUp = () => {
     }
   });
 
+  const handleCredentialSignUp = async (data: CredentialInputs) => {
+    registerUser(data)
+      .then(() => enqueueSnackbar("You have successfully registered!"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.data}`, {
+          variant: "error",
+        })
+      );
+  };
+
   return (
     <AuthForm
       title="Create an account"
       subtitle="Already have an account?"
       method="sign-in"
       button="Sign up"
-      email={email}
-      password={password}
-      setEmail={(e) => setEmail(e.target.value)}
-      setPassword={(e) => setPassword(e.target.value)}
-      handleSubmit={() => console.log("submit")}
+      onSubmit={handleCredentialSignUp}
     />
   );
 };

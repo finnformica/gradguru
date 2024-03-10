@@ -1,13 +1,12 @@
-import { useMemo } from "react";
-import useSWR from "swr";
+import { CredentialInputs } from "@/components/globalTypes";
 import {
+  deleteFetcher,
   endpoints,
   getFetcher,
   postFetcher,
-  putFetcher,
-  patchFetcher,
-  deleteFetcher,
 } from "@/utils/axios";
+import { useMemo } from "react";
+import useSWR from "swr";
 
 export function useUsers() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
@@ -27,7 +26,7 @@ export function useUsers() {
   );
 }
 
-export function postUser(id: string, data: any) {
+export function postUser(id: string | null, data: any) {
   const URL = endpoints.admin.users.user(id);
   return postFetcher([URL, {}, data]);
 }
@@ -35,4 +34,9 @@ export function postUser(id: string, data: any) {
 export function deleteUser(id: string) {
   const URL = endpoints.admin.users.user(id);
   return deleteFetcher(URL);
+}
+
+export function registerUser(data: CredentialInputs) {
+  const URL = endpoints.admin.users.register;
+  return postFetcher([URL, {}, data]);
 }
