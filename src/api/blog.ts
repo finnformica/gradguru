@@ -1,3 +1,5 @@
+import { endpoints, postFetcher } from "@/utils/axios";
+
 export interface BlogCardState {
   author: string;
   date: string;
@@ -13,3 +15,9 @@ export const EmptyBlogCard = {
   tags: "",
   read_time: "",
 };
+
+export function postBlog(id: string | null, data: any) {
+  const URL = endpoints.admin.blogs.blog(id);
+  console.log(URL);
+  return postFetcher([URL, {}, data]);
+}

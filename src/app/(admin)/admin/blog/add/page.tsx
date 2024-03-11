@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import AddBlogForm from "@/components/BlogForm/AddBlogForm";
+import NewPost from "@/components/BlogForm/NewPost";
 
 const page = () => {
   return (
@@ -10,7 +10,7 @@ const page = () => {
       <Typography variant="h5" pb={2}>
         Card Detials
       </Typography>
-      <AddBlogForm />
+      <NewPost />
       <Typography variant="h5" py={2}>
         Blog Details
       </Typography>

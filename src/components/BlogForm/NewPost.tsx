@@ -1,6 +1,7 @@
 "use client"; // needed for useform
 import { Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { postBlog } from "../../api/blog";
 
 const NewPost = () => {
   const {
@@ -8,11 +9,12 @@ const NewPost = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: { author: "" } });
-  console.log(errors);
+  // console.log(errors);
   return (
     <form
       onSubmit={handleSubmit((data) => {
         console.log(data);
+        postBlog(null, data);
       })}
     >
       <TextField
