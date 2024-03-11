@@ -4,6 +4,10 @@ export const pages = [
     route: "/dashboard",
   },
   {
+    name: "Blog",
+    route: "/blog",
+  },
+  {
     name: "Tests",
     route: "/dashboard/tests",
   },
