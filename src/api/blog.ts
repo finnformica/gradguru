@@ -1,23 +1,28 @@
-import { endpoints, postFetcher } from "@/utils/axios";
-
-export interface BlogCardState {
-  author: string;
-  date: string;
-  body: string;
-  tags?: string;
-  read_time: string;
-}
-
-export const EmptyBlogCard = {
-  author: "",
-  date: "",
-  body: "",
-  tags: "",
-  read_time: "",
-};
+import { endpoints, getFetcher, postFetcher } from "@/utils/axios";
+import { useMemo } from "react";
+import useSWR from "swr";
 
 export function postBlog(id: string | null, data: any) {
   const URL = endpoints.admin.blogs.blog(id);
   console.log(URL);
   return postFetcher([URL, {}, data]);
+}
+
+// list of blogs
+export function useBlogs() {
+  const { data, isLoading, error, isValidating, mutate } = useSWR(
+    endpoints.admin.blogs.all,
+    getFetcher
+  );
+
+  return useMemo(
+    () => ({
+      courses: data?.documents as any[] | undefined, // return documents field for list of blogs
+      loading: isLoading,
+      error,
+      isValidating,
+      refresh: () => mutate(),
+    }),
+    [data, error, isLoading, isValidating, mutate]
+  );
 }
