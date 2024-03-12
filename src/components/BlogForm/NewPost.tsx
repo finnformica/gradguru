@@ -7,7 +7,8 @@ import { useSession } from "next-auth/react";
 const NewPost = () => {
   const { data: session } = useSession();
   const user = session?.user.name;
-  console.log(user);
+  let postDate = new Date().toDateString();
+  // console.log(date);
 
   const {
     register,
@@ -29,6 +30,7 @@ const NewPost = () => {
       onSubmit={handleSubmit((data) => {
         if (user != undefined) {
           data.author = user;
+          data.date = postDate;
           console.log(data);
           postBlog(null, data);
         } else {
@@ -60,21 +62,9 @@ const NewPost = () => {
         fullWidth
         label="Body"
         multiline
-        minRows={1}
+        minRows={5}
       />
       <p>{errors.body?.message}</p>
-
-      <TextField
-        {...register("date", {
-          required: "This is required",
-          minLength: { value: 3, message: "Min length is 3" },
-        })}
-        fullWidth
-        label="Date"
-        multiline
-        minRows={1}
-      />
-      <p>{errors.date?.message}</p>
 
       <TextField
         {...register("tags", {
@@ -88,7 +78,7 @@ const NewPost = () => {
       />
       <p>{errors.tags?.message}</p>
 
-      <Button type="submit" variant="contained" sx={{ my: 10 }}>
+      <Button type="submit" variant="contained" sx={{ mb: "20px" }}>
         Submit
       </Button>
     </form>
