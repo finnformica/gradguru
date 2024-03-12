@@ -2,12 +2,6 @@ import { endpoints, getFetcher, postFetcher } from "@/utils/axios";
 import { useMemo } from "react";
 import useSWR from "swr";
 
-export function postBlog(id: string | null, data: any) {
-  const URL = endpoints.admin.blogs.blog(id);
-  console.log(URL);
-  return postFetcher([URL, {}, data]);
-}
-
 // list of blogs
 export function useBlogs() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
@@ -17,7 +11,7 @@ export function useBlogs() {
 
   return useMemo(
     () => ({
-      courses: data?.documents as any[] | undefined, // return documents field for list of blogs
+      blogs: data?.documents as any[] | undefined, // return documents field for list of blogs
       loading: isLoading,
       error,
       isValidating,
@@ -25,4 +19,10 @@ export function useBlogs() {
     }),
     [data, error, isLoading, isValidating, mutate]
   );
+}
+
+export function postBlog(id: string | null, data: any) {
+  const URL = endpoints.admin.blogs.blog(id);
+  console.log(URL);
+  return postFetcher([URL, {}, data]);
 }

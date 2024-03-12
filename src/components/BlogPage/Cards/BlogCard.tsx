@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import AuthorTitle from "./AuthorTitle";
 import DateTitle from "./DateTitle";
 import TagPill from "./TagPill";
-import ReadTimeText from "./ReadTimeText";
 import CardTitle from "./CardTitle";
 import Image from "next/image";
 
@@ -13,7 +12,6 @@ type propsBlogCard = {
   date: string;
   tags: string;
   title: string;
-  read_time: number;
   id: string;
 };
 
@@ -24,7 +22,6 @@ const BlogCard = ({
   date,
   tags,
   title,
-  read_time,
   id,
 }: propsBlogCard) => {
   return (
@@ -42,7 +39,7 @@ const BlogCard = ({
       }}
     >
       <Box>
-        <Box sx={{ display: "flex", gap: 1 }}>
+        <Box id={id} sx={{ display: "flex", gap: 1 }}>
           <AuthorTitle>{author}</AuthorTitle>
           <Typography fontSize={14}>|</Typography>
           <DateTitle>{date}</DateTitle>
@@ -51,8 +48,6 @@ const BlogCard = ({
         <Typography>{body}</Typography>
         <Box sx={{ display: "flex", mt: "20px", gap: 1 }}>
           <TagPill>{tags}</TagPill>
-          <Typography fontSize={14}>|</Typography>
-          <ReadTimeText>{read_time}</ReadTimeText>
         </Box>
       </Box>
       <Image
