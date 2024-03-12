@@ -11,6 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useSession } from "next-auth/react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -45,6 +46,7 @@ const FormModalWrapper = ({
   handleClose: () => void;
   children: React.ReactNode;
 }) => {
+  const { data: session } = useSession();
   const openPopper = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
 
@@ -66,6 +68,7 @@ const FormModalWrapper = ({
               color="error"
               size="small"
               onClick={handleClick}
+              disabled={(session?.user.role ?? 0) < 4}
             >
               Delete
             </Button>

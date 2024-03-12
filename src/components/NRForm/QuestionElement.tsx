@@ -35,7 +35,18 @@ export const TableQuestionElement = ({
     "Percentage",
     "Number",
     "Currency",
+    "Other",
   ];
+
+  const generateUniqueKeys = (form: any) => {
+    const columns = form.data.columns.length > 0 ? form.data.columns : [];
+
+    const fieldName = (columns[0] as { field?: string })?.field || "";
+
+    return Array.from(
+      new Set(form.data.rows.map((row: any) => row[fieldName]))
+    );
+  };
 
   return (
     <>
@@ -51,6 +62,8 @@ export const TableQuestionElement = ({
       >
         {Object.keys(question)
           .filter((q) => q !== "answer")
+          .sort()
+          .reverse()
           .map((key, i) => (
             <TextField
               label={`${key.charAt(0).toUpperCase() + key.slice(1)} ${
@@ -142,23 +155,17 @@ export const TableQuestionElement = ({
                 other types
               </InputLabel>
               <Stack spacing={2} direction={"row"}>
-                {form.data.rows.map((row: any, i: number) => {
-                  const columns =
-                    form.data.columns.length > 0 ? form.data.columns : [];
-
-                  const fieldName =
-                    (columns[0] as { field?: string })?.field || "";
-
+                {generateUniqueKeys(form).map((row: any, i: number) => {
                   const rowValues = form.questions[index].answer.value as {
                     [key: string]: any;
                   };
 
                   return (
                     <TextField
-                      label={row[fieldName]}
+                      label={row}
                       required
                       key={i}
-                      value={rowValues[row[fieldName]]}
+                      value={rowValues[row]}
                       onChange={(e) => {
                         setForm({
                           ...form,
@@ -170,7 +177,7 @@ export const TableQuestionElement = ({
                                     ...q.answer,
                                     value: {
                                       ...(q.answer.value as {}),
-                                      [row[fieldName]]: e.target.value,
+                                      [row]: e.target.value,
                                     },
                                   },
                                 }
@@ -188,7 +195,7 @@ export const TableQuestionElement = ({
               <InputLabel sx={{ pb: 0.5 }}>
                 {form.questions[index].answer.type === "ratio"
                   ? "Provide answer in form 1:3"
-                  : "Provide numeric answer only"}
+                  : "Provide numeric answer only (except for other)"}
               </InputLabel>
               <TextField
                 label={`Answer ${index + 1}`}

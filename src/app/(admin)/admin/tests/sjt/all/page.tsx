@@ -15,18 +15,23 @@ import { useSJTTests } from "@/api/tests";
 import { SJTModal } from "@/components/SJTForm";
 import { SJTQuestion } from "@/components/SJTForm/types";
 import { LoadingScreen } from "@/components/global-components";
+import { useSession } from "next-auth/react";
 
 const SJTListItem = ({
   refresh,
   ...question
 }: { refresh: () => void } & SJTQuestion) => {
+  const { data: session } = useSession();
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <SJTModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
       <ListItem disablePadding>
-        <ListItemButton onClick={() => setOpen(true)}>
+        <ListItemButton
+          onClick={() => setOpen(true)}
+          disabled={(session?.user.role ?? 0) < 3}
+        >
           <Box
             sx={{
               width: "100%",
@@ -85,9 +90,11 @@ const AllSJT = () => {
           </ListSubheader>
         }
       >
-        {questions.map((question, key) => (
-          <SJTListItem key={key} refresh={refresh} {...question} />
-        ))}
+        {questions
+          .sort((a, b) => b.created - a.created)
+          .map((question, key) => (
+            <SJTListItem key={key} refresh={refresh} {...question} />
+          ))}
       </List>
     </>
   );
