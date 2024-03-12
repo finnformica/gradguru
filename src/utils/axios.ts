@@ -74,6 +74,7 @@ export const endpoints = {
       user: (id: string | null) =>
         `${BASE_URL}/firebase/document?collection=users${id ? `&document=${id}` : ""}`,
       register: `${BASE_URL}/auth/register`,
+      authorize: `${BASE_URL}/auth/authorize`,
     },
     tests: {
       nr: {

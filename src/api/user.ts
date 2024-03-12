@@ -40,3 +40,8 @@ export function registerUser(data: CredentialInputs) {
   const URL = endpoints.admin.users.register;
   return postFetcher([URL, {}, data]);
 }
+
+export function authorizeUser(data: any) {
+  const URL = endpoints.admin.users.authorize;
+  return postFetcher([URL, {}, data]);
+}

@@ -1,12 +1,17 @@
 import { cert } from "firebase-admin/app";
 
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, User } from "next-auth";
 
-import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
 
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import type { Adapter } from "next-auth/adapters";
+
+import { db } from "@/firebase/config";
+import bcrypt from "bcrypt";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -15,6 +20,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET!,
       profile(profile) {
         return {
+          token: profile.accessToken,
           id: profile.sub,
           name: profile.name,
           email: profile.email,
@@ -29,6 +35,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.FACEBOOK_SECRET!,
       profile(profile) {
         return {
+          token: profile.accessToken,
           id: profile.id,
           name: profile.name,
           email: profile.email,
@@ -38,16 +45,47 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
-    // CredentialsProvider({
-    //   name: "credentials",
-    //   credentials: {
-    //     username: { label: "Username", type: "text", placeholder: "jsmith" },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials) {
-    //     return null;
-    //   },
-    // }),
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "jsmith@example.com",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        console.log("authorizing...");
+
+        if (!credentials) {
+          throw new Error("Missing email, or password");
+        }
+
+        const { email, password } = credentials;
+
+        // check if user exists
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+
+        // throw error if user does not exist
+        if (querySnapshot.empty) {
+          throw new Error("No account is associated with the given email");
+        }
+
+        const user = querySnapshot.docs[0].data();
+
+        // authorize user
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) {
+          console.log("Invalid password");
+          throw new Error("Invalid password");
+        }
+
+        return user as User;
+      },
+    }),
   ],
   adapter: FirestoreAdapter({
     credential: cert({
@@ -57,11 +95,26 @@ export const authOptions: NextAuthOptions = {
     }),
   }) as Adapter,
   callbacks: {
-    async session({ session, user }) {
-      session.user.id = user.id;
-      session.user.role = user.role;
-      session.user.courses = user.courses;
+    async session({ session, token, user }) {
+      console.log("session", session);
+      console.log("session_user", user);
+      // session.user.id = user.id;
+      // session.user.role = user.role;
+      // session.user.courses = user.courses;
+
       return session;
+    },
+    async jwt({ token, user, account }) {
+      console.log("token", token);
+      console.log("jwt_user", user);
+
+      if (account && user && account.provider === "credentials") {
+        // Initial login for credentials
+        // attach the token to the session
+        token.accessToken = user.token;
+      }
+
+      return token;
     },
   },
   // session: {
