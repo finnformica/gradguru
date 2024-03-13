@@ -1,12 +1,12 @@
-import { Typography } from "@mui/material";
+import { Typography, SxProps } from "@mui/material";
 import React from "react";
 
-type cardTitleProps = {
+type CardTitleProps = {
   children: React.ReactNode;
   sx?: any;
 };
 
-const CardTitle = ({ children, ...props }: cardTitleProps) => {
+const CardTitle = ({ children, ...props }: CardTitleProps) => {
   return (
     <Typography {...props} variant="h5" fontWeight={700} fontSize={20}>
       {children}

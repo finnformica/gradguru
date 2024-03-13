@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, SxProps } from "@mui/material";
 
 type authorTitleProps = {
   children: React.ReactNode;

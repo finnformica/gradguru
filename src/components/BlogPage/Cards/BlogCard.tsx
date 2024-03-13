@@ -5,7 +5,7 @@ import TagPill from "./TagPill";
 import CardTitle from "./CardTitle";
 import Image from "next/image";
 
-type propsBlogCard = {
+type BlogCardProps = {
   borderColor: string;
   author: string;
   body: string;
@@ -23,7 +23,7 @@ const BlogCard = ({
   tags,
   title,
   id,
-}: propsBlogCard) => {
+}: BlogCardProps) => {
   return (
     <Box
       sx={{

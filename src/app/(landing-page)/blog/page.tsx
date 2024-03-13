@@ -1,16 +1,15 @@
 "use client";
 import { useBlogs } from "@/api/blog";
 import BlogCard from "@/components/BlogPage/Cards/BlogCard";
+import { LoadingScreen } from "@/components/global-components";
 import { Container } from "@mui/material";
-import "firebase/firestore";
 
 const borderColor = "lightgrey";
 
 const BlogPage = () => {
-  const { blogs: allPosts } = useBlogs();
-  console.log(allPosts);
+  const { blogs: posts } = useBlogs();
 
-  if (allPosts != undefined)
+  if (posts != undefined) {
     return (
       <Container
         maxWidth="md"
@@ -19,16 +18,19 @@ const BlogPage = () => {
           borderLeft: `1px solid ${borderColor}`,
         }}
       >
-        {allPosts.map((blog) => (
+        {posts.map((post) => (
           <BlogCard
             borderColor={borderColor}
-            {...blog}
-            id={blog.id}
-            key={blog.id}
+            {...post}
+            id={post.id}
+            key={post.id}
           />
         ))}
       </Container>
     );
+  } else if (!posts) {
+    return <LoadingScreen />;
+  }
 };
 
 export default BlogPage;

@@ -1,17 +1,16 @@
 "use client"; // needed for useform
-import { Button, TextField, Typography } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Button, Stack, TextField, Typography } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 import { postBlog } from "../../api/blog";
 import { useSession } from "next-auth/react";
+import { DataProps } from "./types";
 
 const NewPost = () => {
   const { data: session } = useSession();
-  const user = session?.user.name;
-  let postDate = new Date().toDateString();
-  // console.log(date);
+  const user = session?.user.name as string;
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -23,66 +22,96 @@ const NewPost = () => {
       tags: "",
     },
   });
-  // console.log(errors);
 
   return (
     <form
-      onSubmit={handleSubmit((data) => {
-        if (user != undefined) {
-          data.author = user;
-          data.date = postDate;
-          console.log(data);
-          postBlog(null, data);
-        } else {
-          console.log("No session was detected: can not submit to firebase");
-        }
+      onSubmit={handleSubmit((formdata) => {
+        AddAndSubmit(formdata, user);
       })}
     >
       <Typography variant="h6" sx={{ mb: "20px" }}>
         {user}
       </Typography>
+      <Stack direction="column" spacing={2} py={2}>
+        <Controller
+          name="title"
+          control={control}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, value },
+            fieldState: { error },
+          }: any) => (
+            <TextField
+              fullWidth
+              label="Title"
+              multiline
+              minRows={1}
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={!!error && "Title is required"}
+              size="small"
+            />
+          )}
+        />
 
-      <TextField
-        {...register("title", {
-          required: "This is required",
-          minLength: { value: 3, message: "Min length is 3" },
-        })}
-        fullWidth
-        label="Title"
-        multiline
-        minRows={1}
-      />
-      <p>{errors.title?.message}</p>
+        <Controller
+          name="body"
+          control={control}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, value },
+            fieldState: { error },
+          }: any) => (
+            <TextField
+              fullWidth
+              label="Body"
+              multiline
+              minRows={5}
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={!!error && "Body text is required"}
+              size="small"
+            />
+          )}
+        />
 
-      <TextField
-        {...register("body", {
-          required: "This is required",
-          minLength: { value: 3, message: "Min length is 3" },
-        })}
-        fullWidth
-        label="Body"
-        multiline
-        minRows={5}
-      />
-      <p>{errors.body?.message}</p>
+        <Controller
+          name="tags"
+          control={control}
+          rules={{ required: true }}
+          render={({
+            field: { onChange, value },
+            fieldState: { error },
+          }: any) => (
+            <TextField
+              fullWidth
+              label="Tags"
+              multiline
+              minRows={1}
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={!!error && "A Tag is required"}
+              size="small"
+            />
+          )}
+        />
 
-      <TextField
-        {...register("tags", {
-          required: "This is required",
-          minLength: { value: 3, message: "Min length is 3" },
-        })}
-        fullWidth
-        label="tags"
-        multiline
-        minRows={1}
-      />
-      <p>{errors.tags?.message}</p>
-
-      <Button type="submit" variant="contained" sx={{ mb: "20px" }}>
-        Submit
-      </Button>
+        <Button type="submit" variant="contained" sx={{ mb: "20px" }}>
+          Submit
+        </Button>
+      </Stack>
     </form>
   );
 };
 
 export default NewPost;
+
+const AddAndSubmit = (data: DataProps, user: string) => {
+  let postDate = new Date().toDateString();
+  data.author = user;
+  data.date = postDate;
+  postBlog(null, data);
+};
