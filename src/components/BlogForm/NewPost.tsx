@@ -4,15 +4,20 @@ import { useForm, Controller } from "react-hook-form";
 import { postBlog } from "../../api/blog";
 import { useSession } from "next-auth/react";
 import { DataProps } from "./types";
+import { enqueueSnackbar, useSnackbar } from "notistack";
+import { useEffect } from "react";
 
 const NewPost = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
   const user = session?.user.name as string;
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState,
+    formState: { errors, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
       author: "",
@@ -23,12 +28,16 @@ const NewPost = () => {
     },
   });
 
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) reset();
+  }, [formState, reset]);
+
+  const onSubmit = (data: DataProps) => {
+    AddAndSubmit(data, user);
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit((formdata) => {
-        AddAndSubmit(formdata, user);
-      })}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h6" sx={{ mb: "20px" }}>
         {user}
       </Typography>
@@ -107,11 +116,12 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
-
 const AddAndSubmit = (data: DataProps, user: string) => {
   let postDate = new Date().toDateString();
   data.author = user;
   data.date = postDate;
   postBlog(null, data);
+  enqueueSnackbar("Post has been added");
 };
+
+export default NewPost;

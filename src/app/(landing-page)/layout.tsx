@@ -10,9 +10,9 @@ export default async function PrimaryLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  if (session?.user) {
-    redirect("/dashboard");
-  }
+  // if (session?.user) {
+  //   redirect("/dashboard");
+  // }
 
   return (
     <>

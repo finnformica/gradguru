@@ -9,7 +9,9 @@ const borderColor = "lightgrey";
 const BlogPage = () => {
   const { blogs: posts } = useBlogs();
 
-  if (posts != undefined) {
+  if (posts === undefined) return <LoadingScreen />;
+
+  if (posts !== undefined) {
     return (
       <Container
         maxWidth="md"
@@ -28,8 +30,6 @@ const BlogPage = () => {
         ))}
       </Container>
     );
-  } else if (!posts) {
-    return <LoadingScreen />;
   }
 };
 
