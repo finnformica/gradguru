@@ -1,12 +1,12 @@
-import { Typography } from "@mui/material";
+import { Typography, SxProps } from "@mui/material";
 import React from "react";
 
-type dataTitleProps = {
+type DataTitleProps = {
   children: React.ReactNode;
   sx?: any;
 };
 
-const DateTitle = ({ children, ...props }: dataTitleProps) => {
+const DateTitle = ({ children, ...props }: DataTitleProps) => {
   return (
     <Typography
       fontSize={14}

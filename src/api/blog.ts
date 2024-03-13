@@ -23,6 +23,5 @@ export function useBlogs() {
 
 export function postBlog(id: string | null, data: any) {
   const URL = endpoints.admin.blogs.blog(id);
-  console.log(URL);
   return postFetcher([URL, {}, data]);
 }
