@@ -6,11 +6,11 @@ import { useSession } from "next-auth/react";
 import { DataProps } from "./types";
 import { enqueueSnackbar, useSnackbar } from "notistack";
 import { useEffect } from "react";
+import { LoadingScreen } from "../global-components";
 
 const NewPost = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
-  const user = session?.user.name as string;
 
   const {
     control,
@@ -33,8 +33,13 @@ const NewPost = () => {
   }, [formState, reset]);
 
   const onSubmit = (data: DataProps) => {
-    AddAndSubmit(data, user);
+    AddAndSubmit(data, user as string);
   };
+  const user = session?.user.name;
+
+  if (!user) {
+    return <LoadingScreen />;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
