@@ -1,13 +1,11 @@
-import { useMemo } from "react";
-import useSWR from "swr";
 import {
+  deleteFetcher,
   endpoints,
   getFetcher,
   postFetcher,
-  putFetcher,
-  patchFetcher,
-  deleteFetcher,
 } from "@/utils/axios";
+import { useMemo } from "react";
+import useSWR from "swr";
 
 export function useUsers() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(

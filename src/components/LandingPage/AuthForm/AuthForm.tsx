@@ -72,18 +72,26 @@ const AuthForm = ({
       </Box>
       <Box width="100%">
         <InputLabel sx={{ pb: 1 }}>Email address</InputLabel>
-        <TextField fullWidth size="small" value={email} onChange={setEmail} />
+        <TextField
+          placeholder="Email address login is disabled for now"
+          disabled
+          fullWidth
+          size="small"
+          value={email}
+          onChange={setEmail}
+        />
       </Box>
       <Box width="100%">
         <InputLabel sx={{ pb: 1 }}>Password</InputLabel>
         <TextField
+          disabled
           fullWidth
           size="small"
           value={password}
           onChange={setPassword}
         />
       </Box>
-      <Button fullWidth variant="contained" onClick={handleSubmit}>
+      <Button disabled fullWidth variant="contained" onClick={handleSubmit}>
         {button}
       </Button>
       <Divider sx={{ py: 2 }}>
