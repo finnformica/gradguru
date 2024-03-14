@@ -1,6 +1,15 @@
 import { useMemo } from "react";
 import useSWR from "swr";
 import { endpoints, getFetcher, postFetcher } from "@/utils/axios";
+import axios from "axios";
+
+// list of course ids
+export async function getCourses() {
+  const URL = endpoints.admin.courses.all;
+  return axios.get(URL).then((res) => {
+    return res.data.documents.map((course: any) => course.id);
+  });
+}
 
 // list of courses
 export function useCourses() {
