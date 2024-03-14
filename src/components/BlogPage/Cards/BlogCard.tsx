@@ -1,8 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import AuthorTitle from "./AuthorTitle";
-import DateTitle from "./DateTitle";
-import TagPill from "./TagPill";
-import CardTitle from "./CardTitle";
 import Image from "next/image";
 
 type BlogCardProps = {
@@ -40,14 +36,35 @@ const BlogCard = ({
     >
       <Box>
         <Box id={id} sx={{ display: "flex", gap: 1 }}>
-          <AuthorTitle>{author}</AuthorTitle>
+          <Typography fontSize={14} fontWeight={400}>
+            {author}
+          </Typography>
           <Typography fontSize={14}>|</Typography>
-          <DateTitle>{date}</DateTitle>
+          <Typography
+            fontSize={14}
+            fontWeight={400}
+            sx={{ color: "rgb(107, 107, 107)" }}
+          >
+            {date}
+          </Typography>
         </Box>
-        <CardTitle>{title}</CardTitle>
+        <Typography variant="h5" fontWeight={700} fontSize={20}>
+          {title}
+        </Typography>
         <Typography>{body}</Typography>
         <Box sx={{ display: "flex", mt: "20px", gap: 1 }}>
-          <TagPill>{tags}</TagPill>
+          <Typography
+            fontSize={13}
+            fontWeight={400}
+            sx={{
+              backgroundColor: "lightgrey",
+              py: "1px",
+              px: "6px",
+              borderRadius: "16px",
+            }}
+          >
+            {tags}
+          </Typography>
         </Box>
       </Box>
       <Image

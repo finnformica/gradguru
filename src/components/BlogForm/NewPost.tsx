@@ -1,51 +1,43 @@
 "use client"; // needed for useform
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import { postBlog } from "../../api/blog";
 import { useSession } from "next-auth/react";
-import { DataProps } from "./types";
-import { enqueueSnackbar, useSnackbar } from "notistack";
-import { useEffect } from "react";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
+import { postBlog } from "../../api/blog";
 import { LoadingScreen } from "../global-components";
+import { DataProps } from "./types";
 
 const NewPost = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState,
-    formState: { errors, isSubmitSuccessful },
-  } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      author: "",
       title: "",
       body: "",
-      date: "",
       tags: "",
     },
   });
 
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) reset();
-  }, [formState, reset]);
-
-  const onSubmit = (data: DataProps) => {
-    AddAndSubmit(data, user as string);
-  };
-  const user = session?.user.name;
-
-  if (!user) {
+  if (!session?.user) {
     return <LoadingScreen />;
   }
+  const { user } = session;
+
+  const onSubmit = (data: DataProps) => {
+    postBlog(null, {
+      ...data,
+      author: user.name,
+      date: new Date().toDateString(),
+      authorId: user.id,
+    })
+      .then(() => enqueueSnackbar("Post has been added"))
+      .catch((e) => enqueueSnackbar(`Error adding the post: ${e.message}`))
+      .finally(() => reset());
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h6" sx={{ mb: "20px" }}>
-        {user}
-      </Typography>
       <Stack direction="column" spacing={2} py={2}>
         <Controller
           name="title"
@@ -119,14 +111,6 @@ const NewPost = () => {
       </Stack>
     </form>
   );
-};
-
-const AddAndSubmit = (data: DataProps, user: string) => {
-  let postDate = new Date().toDateString();
-  data.author = user;
-  data.date = postDate;
-  postBlog(null, data);
-  enqueueSnackbar("Post has been added");
 };
 
 export default NewPost;
