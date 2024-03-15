@@ -78,6 +78,7 @@ export const endpoints = {
       all: `${BASE_URL}/firebase/document?collection=blogs`,
       blog: (id: string | null) =>
         `${BASE_URL}/firebase/document?collection=blogs${id ? `&document=${id}` : ""}`,
+      storage: "blog/",
     },
     tests: {
       nr: {

@@ -31,7 +31,8 @@ const NewPost = () => {
   const { user } = session;
 
   const onSubmit = (data: DataProps) => {
-    const imageId = storageBlog(imageUpload, "blogs/");
+    const imageId = storageBlog(imageUpload);
+    console.log(imageId);
     postBlog(null, {
       ...data,
       author: user.name,

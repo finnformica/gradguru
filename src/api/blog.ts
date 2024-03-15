@@ -30,14 +30,18 @@ export function postBlog(id: string | null, data: any) {
   return postFetcher([URL, {}, data]);
 }
 
-export function storageBlog(imageName: File | null, loc: string) {
-  if (imageName == null) {
+export function storageBlog(imageFile: File | null) {
+  if (imageFile == null) {
     return enqueueSnackbar("Image upload unsuccessful");
   }
-  const imageAddress = imageName.name + v4();
-  const imageRef = ref(storage, `blog/${imageAddress}`);
-  uploadBytes(imageRef, imageName).then(() => {
+  const imageAddress = imageFile.name + v4();
+  const imageRef = ref(
+    storage,
+    `${endpoints.admin.blogs.storage + imageAddress}`
+  );
+  uploadBytes(imageRef, imageFile).then(() => {
     enqueueSnackbar("Image has been added");
   });
+  console.log(imageAddress);
   return imageAddress;
 }
