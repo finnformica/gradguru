@@ -4,7 +4,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import { enqueueSnackbar } from "notistack";
 import { useMemo } from "react";
 import useSWR from "swr";
-import { v4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 // list of blogs
 export function useBlogs() {
@@ -30,18 +30,8 @@ export function postBlog(id: string | null, data: any) {
   return postFetcher([URL, {}, data]);
 }
 
-export function storageBlog(imageFile: File | null) {
-  if (imageFile == null) {
-    return enqueueSnackbar("Image upload unsuccessful");
-  }
-  const imageAddress = imageFile.name + v4();
-  const imageRef = ref(
-    storage,
-    `${endpoints.admin.blogs.storage + imageAddress}`
-  );
-  uploadBytes(imageRef, imageFile).then(() => {
-    enqueueSnackbar("Image has been added");
-  });
-  console.log(imageAddress);
-  return imageAddress;
+export function storageBlog(file: File, endpoint?: string) {
+  const address = file.name + uuid();
+  const _ref = ref(storage, `${endpoints.admin.storage.blogImage + address}`);
+  return uploadBytes(_ref, file).then(() => address);
 }

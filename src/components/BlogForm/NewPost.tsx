@@ -1,15 +1,12 @@
 "use client"; // needed for useform
+import { postBlog, storageBlog } from "@/api/blog";
 import { Button, Stack, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { postBlog, storageBlog } from "@/api/blog";
 import { LoadingScreen } from "../global-components";
 import { DataProps } from "./types";
-import { storage } from "@/firebase/config";
-import { ref, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
 
 const NewPost = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -31,8 +28,14 @@ const NewPost = () => {
   const { user } = session;
 
   const onSubmit = (data: DataProps) => {
-    const imageId = storageBlog(imageUpload);
-    console.log(imageId);
+    if (!imageUpload) {
+      return enqueueSnackbar("No file selected.");
+    }
+    const imageId = storageBlog(imageUpload)
+      .then(() => enqueueSnackbar("Image Uploaded"))
+      .catch(() => enqueueSnackbar("Image Upload Failed"))
+      .finally(() => setImageUpload(null));
+
     postBlog(null, {
       ...data,
       author: user.name,
@@ -49,8 +52,9 @@ const NewPost = () => {
     const { files } = event.target;
     if (files && files.length > 0) {
       setImageUpload(files[0]);
+      enqueueSnackbar("Image Selected");
     } else {
-      console.error("No file selected.");
+      enqueueSnackbar("No file selected.", { variant: "error" });
     }
   };
 
@@ -124,8 +128,6 @@ const NewPost = () => {
         />
 
         <input type="file" onChange={handleImageChange} />
-
-        {/* <button onClick={uploadImage}>Upload Image</button> */}
 
         <Button type="submit" variant="contained" sx={{ mb: "20px" }}>
           Submit
