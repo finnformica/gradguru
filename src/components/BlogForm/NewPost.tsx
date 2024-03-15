@@ -1,11 +1,15 @@
 "use client"; // needed for useform
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { postBlog } from "../../api/blog";
+import { postBlog } from "@/api/blog";
 import { LoadingScreen } from "../global-components";
 import { DataProps } from "./types";
+import { storage } from "@/firebase/config";
+import { ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 const NewPost = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -18,6 +22,24 @@ const NewPost = () => {
       tags: "",
     },
   });
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files && files.length > 0) {
+      setImageUpload(files[0]);
+    } else {
+      console.error("No file selected.");
+    }
+  };
+
+  const uploadImage = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `blog/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then(() => {
+      enqueueSnackbar("Image has been added");
+    });
+  };
 
   if (!session?.user) {
     return <LoadingScreen />;
@@ -104,6 +126,10 @@ const NewPost = () => {
             />
           )}
         />
+
+        <input type="file" onChange={handleImageChange} />
+
+        <button onClick={uploadImage}>Upload Image</button>
 
         <Button type="submit" variant="contained" sx={{ mb: "20px" }}>
           Submit
