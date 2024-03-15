@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { postBlog } from "@/api/blog";
+import { postBlog, storageBlog } from "@/api/blog";
 import { LoadingScreen } from "../global-components";
 import { DataProps } from "./types";
 import { storage } from "@/firebase/config";
@@ -22,7 +22,27 @@ const NewPost = () => {
       tags: "",
     },
   });
+
   const [imageUpload, setImageUpload] = useState<File | null>(null);
+
+  if (!session?.user) {
+    return <LoadingScreen />;
+  }
+  const { user } = session;
+
+  const onSubmit = (data: DataProps) => {
+    const imageId = storageBlog(imageUpload, "blogs/");
+    postBlog(null, {
+      ...data,
+      author: user.name,
+      date: new Date().toDateString(),
+      authorId: user.id,
+      imageId: imageId,
+    })
+      .then(() => enqueueSnackbar("Post has been added"))
+      .catch((e) => enqueueSnackbar(`Error adding the post: ${e.message}`))
+      .finally(() => reset());
+  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -31,31 +51,6 @@ const NewPost = () => {
     } else {
       console.error("No file selected.");
     }
-  };
-
-  const uploadImage = () => {
-    if (imageUpload == null) return;
-    const imageRef = ref(storage, `blog/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then(() => {
-      enqueueSnackbar("Image has been added");
-    });
-  };
-
-  if (!session?.user) {
-    return <LoadingScreen />;
-  }
-  const { user } = session;
-
-  const onSubmit = (data: DataProps) => {
-    postBlog(null, {
-      ...data,
-      author: user.name,
-      date: new Date().toDateString(),
-      authorId: user.id,
-    })
-      .then(() => enqueueSnackbar("Post has been added"))
-      .catch((e) => enqueueSnackbar(`Error adding the post: ${e.message}`))
-      .finally(() => reset());
   };
 
   return (
@@ -129,7 +124,7 @@ const NewPost = () => {
 
         <input type="file" onChange={handleImageChange} />
 
-        <button onClick={uploadImage}>Upload Image</button>
+        {/* <button onClick={uploadImage}>Upload Image</button> */}
 
         <Button type="submit" variant="contained" sx={{ mb: "20px" }}>
           Submit
