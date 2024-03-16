@@ -6,7 +6,7 @@ import { Box, Container, Typography } from "@mui/material";
 
 import { useCourses } from "api/courses";
 import { CourseAccordion } from "components/Dashboard/CourseAccordion";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
 import { CourseType } from "components/globalTypes";
 
 const Dashboard = () => {
@@ -23,10 +23,14 @@ const Dashboard = () => {
   );
 
   return (
-    <Container sx={{ pt: 4 }}>
-      <Typography variant="h2" fontWeight={500}>
-        Your Courses
-      </Typography>
+    <Container maxWidth="xl">
+      <PageBreadcrumbs
+        header="Courses"
+        links={[
+          { label: "Dashboard", href: "/dashboard" },
+          { label: "Courses" },
+        ]}
+      />
 
       {!userCourses.length ? (
         <Typography pt={4}>No courses available</Typography>

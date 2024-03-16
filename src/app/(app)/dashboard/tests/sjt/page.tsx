@@ -1,13 +1,18 @@
-import { Typography, Box } from "@mui/material";
+import { Container } from "@mui/material";
+import { PageBreadcrumbs } from "components/global-components";
 
 const SituationJudgementTest = () => {
   return (
-    <>
-      <Typography variant="h3" fontWeight={500}>
-        Situational Judgement
-      </Typography>
-      <Box></Box>
-    </>
+    <Container maxWidth="xl">
+      <PageBreadcrumbs
+        header="Situational Judgement"
+        links={[
+          { label: "Dashboard", href: "/dashboard" },
+          { label: "Tests", href: "/dashboard/tests" },
+          { label: "Situational Judgement" },
+        ]}
+      />
+    </Container>
   );
 };
 
