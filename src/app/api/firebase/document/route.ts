@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import type { FirestoreCollectionType } from "firebase/types";
+import type { FirestoreCollectionType } from "lib/firebase/types";
 import {
   addData,
   retrieveAllDocuments,
   retrieveDocument,
   deleteDocument,
-} from "firebase/utils";
+} from "lib/firebase/utils";
 
 // READ, retrieve all documents or a single document
 export async function GET(request: NextRequest) {

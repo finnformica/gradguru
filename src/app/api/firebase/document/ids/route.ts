@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import type { FirestoreCollectionType } from "firebase/types";
-import { retrieveDocumentIds } from "firebase/utils";
+import type { FirestoreCollectionType } from "lib/firebase/types";
+import { retrieveDocumentIds } from "lib/firebase/utils";
 
 // READ, retrieve all document ids
 export async function GET(request: NextRequest) {
