@@ -1,14 +1,15 @@
-import React from "react";
-import Image from "next/image";
+"use client";
 
-import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import { useState } from "react";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { signOut, useSession } from "next-auth/react";
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 
 const AuthButton = () => {
   const { data, status } = useSession();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
