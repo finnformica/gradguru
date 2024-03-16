@@ -1,29 +1,32 @@
-import GolfCourseIcon from "@mui/icons-material/GolfCourse";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import AddIcon from "@mui/icons-material/Add";
-import QuizIcon from "@mui/icons-material/Quiz";
-import AbcIcon from "@mui/icons-material/Abc";
-import HardwareIcon from "@mui/icons-material/Hardware";
-import ViewInArIcon from "@mui/icons-material/ViewInAr";
-import GroupIcon from "@mui/icons-material/Group";
-import PinIcon from "@mui/icons-material/Pin";
-import ExtensionIcon from "@mui/icons-material/Extension";
+import {
+  Abc,
+  Add,
+  AllInclusive,
+  Dashboard,
+  Extension,
+  GolfCourse,
+  Group,
+  Hardware,
+  Pin,
+  Quiz,
+  ViewInAr,
+} from "@mui/icons-material";
 
 export const sidebarSections = [
   {
     name: "Courses",
-    icon: <GolfCourseIcon />,
+    icon: <GolfCourse />,
     active: true,
     children: [
       {
         name: "All Courses",
-        icon: <AllInclusiveIcon />,
+        icon: <AllInclusive />,
         route: "/admin/courses/all",
         active: true,
       },
       {
         name: "Add Course",
-        icon: <AddIcon />,
+        icon: <Add />,
         route: "/admin/courses/add",
         active: true,
       },
@@ -31,23 +34,23 @@ export const sidebarSections = [
   },
   {
     name: "Tests",
-    icon: <QuizIcon />,
+    icon: <Quiz />,
     active: true,
     children: [
       {
         name: "SJT",
-        icon: <AbcIcon />,
+        icon: <Abc />,
         active: true,
         children: [
           {
             name: "All SJT",
-            icon: <AllInclusiveIcon />,
+            icon: <AllInclusive />,
             route: "/admin/tests/sjt/all",
             active: true,
           },
           {
             name: "Add SJT",
-            icon: <AddIcon />,
+            icon: <Add />,
             route: "/admin/tests/sjt/add",
             active: true,
           },
@@ -55,18 +58,18 @@ export const sidebarSections = [
       },
       {
         name: "NR",
-        icon: <PinIcon />,
+        icon: <Pin />,
         active: true,
         children: [
           {
             name: "All NR",
-            icon: <AllInclusiveIcon />,
+            icon: <AllInclusive />,
             route: "/admin/tests/numerical-reasoning/all",
             active: true,
           },
           {
             name: "Add NR",
-            icon: <AddIcon />,
+            icon: <Add />,
             route: "/admin/tests/numerical-reasoning/add",
             active: true,
           },
@@ -74,18 +77,18 @@ export const sidebarSections = [
       },
       {
         name: "LR",
-        icon: <ExtensionIcon />,
+        icon: <Extension />,
         active: false,
         children: [
           {
             name: "All LR",
-            icon: <AllInclusiveIcon />,
+            icon: <AllInclusive />,
             route: "/admin/tests/logical-reasoning/all",
             active: true,
           },
           {
             name: "Add LR",
-            icon: <AddIcon />,
+            icon: <Add />,
             route: "/admin/tests/logical-reasoning/add",
             active: true,
           },
@@ -95,20 +98,27 @@ export const sidebarSections = [
   },
   {
     name: "Drills",
-    icon: <HardwareIcon />,
+    icon: <Hardware />,
     active: false,
     children: [],
   },
   {
     name: "Resources",
-    icon: <ViewInArIcon />,
+    icon: <ViewInAr />,
     active: false,
     children: [],
   },
   {
     name: "Users",
-    icon: <GroupIcon />,
+    icon: <Group />,
     route: "/admin/users",
+    active: true,
+  },
+  // leave this last
+  {
+    name: "Dashboard",
+    icon: <Dashboard />,
+    route: "/dashboard",
     active: true,
   },
 ];
