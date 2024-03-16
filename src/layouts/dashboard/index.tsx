@@ -14,14 +14,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <NavMini width={drawerWidth} />
       <Box
         component="main"
-        pl={`${drawerWidth + horizontalPadding}px`}
-        pr={`${horizontalPadding}px`}
+        display="flex"
+        flexDirection="column"
+        flexGrow={1}
         pt={`${appBarHeight + 24}px`}
-        sx={{
-          display: "flex",
-          flexGrow: 1,
-          flexDirection: "column",
-        }}
+        pr={`${horizontalPadding}px`}
+        pl={`${drawerWidth + horizontalPadding}px`}
+        maxWidth={`calc(100% - ${drawerWidth + horizontalPadding * 2}px)`}
       >
         {children}
       </Box>
