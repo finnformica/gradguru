@@ -1,13 +1,14 @@
-import { Typography, Box } from "@mui/material";
+import { PageBreadcrumbs } from "components/global-components";
 
 const LogicalReasoningTest = () => {
   return (
-    <>
-      <Typography variant="h3" fontWeight={500}>
-        Logical Reasoning
-      </Typography>
-      <Box></Box>
-    </>
+    <PageBreadcrumbs
+      header="Logical Reasoning"
+      links={[
+        { label: "Tests", href: "/dashboard/tests" },
+        { label: "Logical Reasoning" },
+      ]}
+    />
   );
 };
 
