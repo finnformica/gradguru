@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 
-import AuthForm from "@/components/LandingPage/AuthForm/AuthForm";
+import AuthForm from "components/LandingPage/AuthForm/AuthForm";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

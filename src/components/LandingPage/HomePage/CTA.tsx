@@ -6,11 +6,11 @@ import { Box, CircularProgress, Container } from "@mui/material";
 import isEmail from "validator/lib/isEmail";
 import { useSnackbar } from "notistack";
 
-import { postConvertkitSubscription } from "@/api/email";
+import { postConvertkitSubscription } from "api/email";
 
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
-import TextInput from "@/components/LandingPage/TextInput";
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
+import SquareButton from "components/LandingPage/Buttons/SquareButton";
+import TextInput from "components/LandingPage/TextInput";
+import SmallTitle from "components/LandingPage/Titles/SmallTitle";
 
 const CTA = () => {
   const [loading, setLoading] = useState(false);

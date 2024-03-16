@@ -1,5 +1,5 @@
-import { authOptions } from "@/auth/config";
-import PrimaryHeader from "@/components/LandingPage/PrimaryHeader";
+import { authOptions } from "auth/config";
+import PrimaryHeader from "components/LandingPage/PrimaryHeader";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

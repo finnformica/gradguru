@@ -1,6 +1,6 @@
 "use client";
 
-import BigTitle from "@/components/LandingPage/Titles/BigTitle";
+import BigTitle from "components/LandingPage/Titles/BigTitle";
 import {
   Box,
   Container,

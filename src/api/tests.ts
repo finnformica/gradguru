@@ -7,7 +7,7 @@ import {
   putFetcher,
   patchFetcher,
   deleteFetcher,
-} from "@/utils/axios";
+} from "utils/axios";
 
 export function useSJTTests() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(

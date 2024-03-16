@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Container, useTheme, useMediaQuery } from "@mui/material";
 
-import FullWidthContainer from "@/components/LandingPage/Containers/FullWidthContainer";
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
-import BulletPoints from "@/components/LandingPage/BulletPoints";
+import FullWidthContainer from "components/LandingPage/Containers/FullWidthContainer";
+import SmallTitle from "components/LandingPage/Titles/SmallTitle";
+import BulletPoints from "components/LandingPage/BulletPoints";
 
 const points = [
   "Learn what your specific assessment centre process will likely entail.",

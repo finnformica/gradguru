@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 
-import { useCourseIds } from "@/api/courses";
-import { IUserFormInput } from "@/components/globalTypes";
-import { indexToRoleMapping } from "@/utils/permissions";
+import { useCourseIds } from "api/courses";
+import { IUserFormInput } from "components/globalTypes";
+import { indexToRoleMapping } from "utils/permissions";
 
 const style = {
   position: "absolute" as "absolute",

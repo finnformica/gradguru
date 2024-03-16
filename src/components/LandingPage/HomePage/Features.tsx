@@ -1,10 +1,10 @@
 import { Box, Container, Typography } from "@mui/material";
 
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
-import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
+import SquareButton from "components/LandingPage/Buttons/SquareButton";
+import ColouredContainer from "components/LandingPage/Containers/ColouredContainer";
 
-import FeaturesList from "@/components/LandingPage/FeaturesList";
-import ContainerTitle from "@/components/LandingPage/Titles/ContainerTitle";
+import FeaturesList from "components/LandingPage/FeaturesList";
+import ContainerTitle from "components/LandingPage/Titles/ContainerTitle";
 
 const features = [
   {

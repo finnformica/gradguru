@@ -1,4 +1,4 @@
-import { endpoints, getFetcher, postFetcher } from "@/utils/axios";
+import { endpoints, getFetcher, postFetcher } from "utils/axios";
 import { useMemo } from "react";
 import useSWR from "swr";
 

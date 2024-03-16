@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-import { SJTScenarioForm, initialForm } from "@/components/SJTForm/types";
+import { SJTScenarioForm, initialForm } from "components/SJTForm/types";
 
-import { postSJTTest } from "@/api/tests";
-import { SJTForm } from "@/components/SJTForm";
-import { LoadingScreen } from "@/components/global-components";
+import { postSJTTest } from "api/tests";
+import { SJTForm } from "components/SJTForm";
+import { LoadingScreen } from "components/global-components";
 
 const AddSJT = () => {
   const { enqueueSnackbar } = useSnackbar();

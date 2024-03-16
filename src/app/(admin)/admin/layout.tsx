@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/auth/config";
-import LatexContext from "@/context/latex";
-import MiniDrawer from "@/components/AdminLayout/MiniDrawer";
+import { authOptions } from "auth/config";
+import LatexContext from "context/latex";
+import MiniDrawer from "components/AdminLayout/MiniDrawer";
 
 export default async function AdminLayout({
   children,
