@@ -1,13 +1,14 @@
-import { Typography, Box } from "@mui/material";
+import { PageBreadcrumbs } from "components/global-components";
 
 const NumericalReasoningTest = () => {
   return (
-    <>
-      <Typography variant="h3" fontWeight={500}>
-        Numerical Reasoning
-      </Typography>
-      <Box></Box>
-    </>
+    <PageBreadcrumbs
+      header="Numerical Reasoning"
+      links={[
+        { label: "Tests", href: "/dashboard/tests" },
+        { label: "Numerical Reasoning" },
+      ]}
+    />
   );
 };
 

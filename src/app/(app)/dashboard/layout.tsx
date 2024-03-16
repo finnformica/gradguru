@@ -1,11 +1,11 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 import { authOptions } from "auth/config";
 
-import DashboardHeader from "components/Dashboard/DashboardHeader";
+import DashboardLayout from "layouts/dashboard";
 
-export default async function DashboardLayout({
+export default async function DashboardLayoutPage({
   children,
 }: {
   children: React.ReactNode;
@@ -16,10 +16,5 @@ export default async function DashboardLayout({
     redirect("/sign-in");
   }
 
-  return (
-    <>
-      <DashboardHeader />
-      <main>{children}</main>
-    </>
-  );
+  return <DashboardLayout>{children}</DashboardLayout>;
 }
