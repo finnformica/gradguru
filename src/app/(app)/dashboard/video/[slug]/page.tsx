@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
 import { useCourse } from "api/courses";
 import {
@@ -10,15 +10,15 @@ import {
   VideoControls,
   VideoPlayer,
 } from "components/CourseVideoPage";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
 import { useCourse as useCourseContext } from "context/course";
 import { useSession } from "next-auth/react";
 
-type CoursePageProps = {
+type VideoPageProps = {
   params: { slug: string };
 };
 
-const CoursePage = ({ params }: CoursePageProps) => {
+const VideoPage = ({ params }: VideoPageProps) => {
   const { data: session } = useSession();
   const { setCourse } = useCourseContext();
   const { slug } = params;
@@ -36,14 +36,21 @@ const CoursePage = ({ params }: CoursePageProps) => {
   setCourse(course);
 
   return (
-    <Container maxWidth="lg" disableGutters>
-      <Box>
+    <>
+      <PageBreadcrumbs
+        header={slug}
+        links={[
+          { label: slug, href: `/dashboard/courses/${slug}` },
+          { label: "Video" },
+        ]}
+      />
+      <Container maxWidth="lg">
         <VideoPlayer />
         <VideoControls />
-      </Box>
-      <CourseDescription />
-    </Container>
+        <CourseDescription />
+      </Container>
+    </>
   );
 };
 
-export default CoursePage;
+export default VideoPage;

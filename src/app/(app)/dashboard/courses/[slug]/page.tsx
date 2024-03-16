@@ -1,6 +1,6 @@
 import { PageBreadcrumbs } from "components/global-components";
 
-const CourseInfoPage = ({ params }: { params: { slug: string } }) => {
+const CoursePage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
 
   return (
@@ -11,4 +11,4 @@ const CourseInfoPage = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default CourseInfoPage;
+export default CoursePage;
