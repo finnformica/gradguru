@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import { useSJTTests } from "@/api/tests";
-import { SJTModal } from "@/components/SJTForm";
-import { SJTQuestion } from "@/components/SJTForm/types";
-import { LoadingScreen } from "@/components/global-components";
+import { useSJTTests } from "api/tests";
+import { SJTModal } from "components/SJTForm";
+import { SJTQuestion } from "components/SJTForm/types";
+import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
 
 const SJTListItem = ({

@@ -4,14 +4,14 @@ import { notFound } from "next/navigation";
 
 import { Box, Container } from "@mui/material";
 
-import { useCourse } from "@/api/courses";
+import { useCourse } from "api/courses";
 import {
   CourseDescription,
   VideoControls,
   VideoPlayer,
-} from "@/components/CourseVideoPage";
-import { LoadingScreen } from "@/components/global-components";
-import { useCourse as useCourseContext } from "@/context/course";
+} from "components/CourseVideoPage";
+import { LoadingScreen } from "components/global-components";
+import { useCourse as useCourseContext } from "context/course";
 import { useSession } from "next-auth/react";
 
 type CoursePageProps = {

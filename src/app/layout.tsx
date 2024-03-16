@@ -4,13 +4,13 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import "@/styles/global.css";
+import "styles/global.css";
 
 import "next-cloudinary/dist/cld-video-player.css";
 
-import GradguruThemeProvider from "@/context/theme";
-import NextAuthProvider from "@/context/next-auth";
-import SnackbarContext from "@/context/snackbar";
+import GradguruThemeProvider from "context/theme";
+import NextAuthProvider from "context/next-auth";
+import SnackbarContext from "context/snackbar";
 
 import favicons from "./favicons";
 

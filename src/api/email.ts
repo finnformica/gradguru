@@ -1,4 +1,4 @@
-import { endpoints, postFetcher } from "@/utils/axios";
+import { endpoints, postFetcher } from "utils/axios";
 
 export function postFirebaseSupport(data: any) {
   const URL = endpoints.admin.support.firebase;

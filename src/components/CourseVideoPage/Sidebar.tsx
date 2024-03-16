@@ -14,8 +14,8 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
-import { useCourse } from "@/context/course";
-import { LessonType } from "@/components/globalTypes";
+import { useCourse } from "context/course";
+import { LessonType } from "components/globalTypes";
 
 const NestedListItem = ({
   lessons,

@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Fab } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { CourseContextProvider } from "@/context/course";
+import { CourseContextProvider } from "context/course";
 
-import { Sidebar } from "@/components/CourseVideoPage";
+import { Sidebar } from "components/CourseVideoPage";
 
 const drawerWidth = 340;
 

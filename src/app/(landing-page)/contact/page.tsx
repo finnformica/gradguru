@@ -4,11 +4,11 @@ import { FormEvent, useState } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
-import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
-import TextInput from "@/components/LandingPage/TextInput";
+import SquareButton from "components/LandingPage/Buttons/SquareButton";
+import ColouredContainer from "components/LandingPage/Containers/ColouredContainer";
+import TextInput from "components/LandingPage/TextInput";
 
-import { postFirebaseSupport } from "@/api/email";
+import { postFirebaseSupport } from "api/email";
 
 type FormState = {
   name: string;

@@ -1,4 +1,4 @@
-import { CourseType } from "@/components/globalTypes";
+import { CourseType } from "components/globalTypes";
 
 type MailListType = {
   email: string;

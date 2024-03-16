@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 
 import { Box, Container, Typography } from "@mui/material";
 
-import { useCourses } from "@/api/courses";
-import { CourseAccordion } from "@/components/Dashboard/CourseAccordion";
-import { LoadingScreen } from "@/components/global-components";
-import { CourseType } from "@/components/globalTypes";
+import { useCourses } from "api/courses";
+import { CourseAccordion } from "components/Dashboard/CourseAccordion";
+import { LoadingScreen } from "components/global-components";
+import { CourseType } from "components/globalTypes";
 
 const Dashboard = () => {
   const { data: session } = useSession();

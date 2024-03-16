@@ -1,13 +1,13 @@
 "use client";
 
-import Footer from "@/components/LandingPage/Footer";
+import Footer from "components/LandingPage/Footer";
 import {
   AptitudeTests,
   AssessmentCentre,
   FAQs,
   Hirevue,
   WelcomeVideo,
-} from "@/components/LandingPage/LearnMorePage";
+} from "components/LandingPage/LearnMorePage";
 import { Box } from "@mui/material";
 
 const LearnMore = () => {
