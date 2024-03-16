@@ -21,7 +21,7 @@ const LinkItem = ({
 
   if (!href) {
     return (
-      <Typography variant="body2" color={color}>
+      <Typography variant="body2" textTransform="capitalize" color={color}>
         {label}
       </Typography>
     );
@@ -31,6 +31,7 @@ const LinkItem = ({
     <Link href={href}>
       <Typography
         variant="body2"
+        textTransform="capitalize"
         sx={{
           cursor: "pointer",
           color: color,
@@ -56,7 +57,7 @@ const PageBreadcrumbs = ({ header, links }: PageBreadcrumbsProps) => {
 
   return (
     <>
-      <Typography pb={1} variant="h4">
+      <Typography pb={1} variant="h4" textTransform="capitalize">
         {header}
       </Typography>
       <Breadcrumbs aria-label="breadcrumb" separator={<Separator />}>

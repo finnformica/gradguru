@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import { notFound } from "next/navigation";
 
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { useCourses } from "api/courses";
 import { CourseAccordion } from "components/Dashboard/CourseAccordion";
@@ -23,14 +23,8 @@ const Dashboard = () => {
   );
 
   return (
-    <Container maxWidth="xl">
-      <PageBreadcrumbs
-        header="Courses"
-        links={[
-          { label: "Dashboard", href: "/dashboard" },
-          { label: "Courses" },
-        ]}
-      />
+    <>
+      <PageBreadcrumbs header="Courses" links={[{ label: "Courses" }]} />
 
       {!userCourses.length ? (
         <Typography pt={4}>No courses available</Typography>
@@ -50,7 +44,7 @@ const Dashboard = () => {
           ))}
         </Box>
       )}
-    </Container>
+    </>
   );
 };
 
