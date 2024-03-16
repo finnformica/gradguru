@@ -1,9 +1,10 @@
 "use client";
 
+import React, { useState } from "react";
+
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
-import React, { useState } from "react";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -17,9 +18,9 @@ import {
   Typography,
 } from "@mui/material";
 
-import ListCollapse from "./ListCollapse";
-import ListCollapseItem from "./ListCollapseItem";
-import { sidebarSections } from "./sidebarSections";
+import ListCollapse from "./list-collapse";
+import ListCollapseItem from "./list-collapse-item";
+import { sidebarSections } from "./sidebar-sections";
 
 const drawerWidth = 240;
 
@@ -92,7 +93,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -156,4 +157,4 @@ const MiniDrawer = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default MiniDrawer;
+export default AdminLayout;

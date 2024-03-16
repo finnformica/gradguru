@@ -12,7 +12,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useState } from "react";
-import ListCollapseItem from "./ListCollapseItem";
+import ListCollapseItem from "./list-collapse-item";
 
 const ListCollapse = ({ section }: any) => {
   const [open, setOpen] = useState(false);

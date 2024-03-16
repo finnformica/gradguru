@@ -5,7 +5,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import ListCollapse from "./ListCollapse";
+import ListCollapse from "./list-collapse";
 
 const ListCollapseItem = ({ section }: any) => {
   return section.children ? (
