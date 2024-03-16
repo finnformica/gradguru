@@ -5,6 +5,7 @@ import NavMini from "layouts/dashboard/sidebar/nav-mini";
 
 const drawerWidth = 80;
 const appBarHeight = 72;
+const horizontalPadding = 48;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,7 +14,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <NavMini width={drawerWidth} />
       <Box
         component="main"
-        pl={`${drawerWidth + 16}px`}
+        pl={`${drawerWidth + horizontalPadding}px`}
+        pr={`${horizontalPadding}px`}
         pt={`${appBarHeight + 24}px`}
         sx={{
           display: "flex",
