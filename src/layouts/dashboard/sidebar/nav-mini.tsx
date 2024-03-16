@@ -11,11 +11,18 @@ import {
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-import { FilePresent, Home, Mail, Quiz } from "@mui/icons-material";
+import {
+  FilePresent,
+  Home,
+  Mail,
+  Quiz,
+  VideoLibrary,
+} from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 
 const NavMini = ({ width }: { width: number }) => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (!session) return null;
 
@@ -33,7 +40,16 @@ const NavMini = ({ width }: { width: number }) => {
         icon: (sx: SxProps) => <Mail sx={sx} />,
       }))
     : [];
-
+  const videos =
+    courses.length > 0
+      ? [
+          {
+            name: "Consulting videos",
+            href: "/video/consulting",
+            icon: (sx: SxProps) => <VideoLibrary sx={sx} />,
+          },
+        ]
+      : [];
   const tests =
     courses.length > 0
       ? [
@@ -53,7 +69,7 @@ const NavMini = ({ width }: { width: number }) => {
             icon: (sx: SxProps) => <Quiz sx={sx} />,
           },
         ]
-      : null;
+      : [];
   const resources =
     courses.length > 0
       ? [
@@ -68,7 +84,7 @@ const NavMini = ({ width }: { width: number }) => {
             icon: (sx: SxProps) => <FilePresent sx={sx} />,
           },
         ]
-      : null;
+      : [];
 
   return (
     <Box
@@ -89,19 +105,18 @@ const NavMini = ({ width }: { width: number }) => {
         width={55}
         height={55}
         priority
-        style={{ margin: "0 auto 2rem", display: "block" }}
+        style={{ margin: "0 auto 2rem", display: "block", cursor: "pointer" }}
+        onClick={() => router.push("/dashboard")}
       />
       <List disablePadding>
         <NavListItem item={home} key="home" />
         {courses.length > 0 &&
           courses &&
-          courses.map((course: any) => (
-            <NavListItem item={course} key={course.name} />
-          ))}
-        {tests &&
-          tests.map((test: any) => <NavListItem item={test} key={test} />)}
-        {resources &&
-          resources.map((test: any) => <NavListItem item={test} key={test} />)}
+          [courses, videos, tests, resources].map((section: any) =>
+            section.map((item: any) => (
+              <NavListItem item={item} key={item.name} />
+            ))
+          )}
       </List>
     </Box>
   );
