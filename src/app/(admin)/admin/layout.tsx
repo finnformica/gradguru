@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "auth/config";
 import LatexContext from "context/latex";
-import MiniDrawer from "components/AdminLayout/MiniDrawer";
+import MiniDrawer from "layouts/admin/MiniDrawer";
 
 export default async function AdminLayout({
   children,
