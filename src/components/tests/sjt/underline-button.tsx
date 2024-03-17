@@ -4,15 +4,18 @@ const UnderlineButton = ({
   label,
   onClick,
   sx,
+  type = "button",
 }: {
   label: string;
   onClick?: () => void;
   sx?: SxProps;
+  type?: "submit" | "button";
 }) => (
   <Box>
     <Button
       disableFocusRipple
       disableRipple
+      type={type}
       onClick={onClick}
       sx={{
         textDecoration: "underline",
