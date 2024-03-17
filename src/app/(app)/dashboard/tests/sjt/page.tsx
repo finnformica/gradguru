@@ -24,7 +24,6 @@ const SituationalJudgementTest = () => {
   if (!questions) return <LoadingScreen />;
 
   const onSubmit = (data: any) => {
-    console.log("form submitted");
     console.log("data", data);
 
     if (Object.keys(data).length !== questions.length) {

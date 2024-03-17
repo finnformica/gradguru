@@ -9,7 +9,6 @@ const ReorderItemElement = ({ item }: { item: string }) => (
       p: 2,
       borderRadius: 6,
       cursor: "pointer",
-      maxWidth: "max(50%, 700px)",
     }}
   >
     <Stack direction="row" alignItems="center" spacing={2}>
