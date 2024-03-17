@@ -5,7 +5,7 @@ import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
 
-const SituationJudgementTest = () => {
+const SituationalJudgementTest = () => {
   const { questions: allQuestions } = useSJTTests();
 
   // map questions into a flat array
@@ -19,14 +19,18 @@ const SituationJudgementTest = () => {
     )
     .flat();
 
+  const onSubmit = (data: any) => {
+    console.log("data submitted", data);
+  };
+
   if (!questions) return <LoadingScreen />;
 
   return (
     <>
       <TopPanel />
-      <SJTTestCard questions={questions} />
+      <SJTTestCard questions={questions} handleEndTest={onSubmit} />
     </>
   );
 };
 
-export default SituationJudgementTest;
+export default SituationalJudgementTest;
