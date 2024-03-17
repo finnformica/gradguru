@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
-
 import { Card, Stack, Typography } from "@mui/material";
 
 import { useStepsForm } from "hooks/useStepsForm";
@@ -19,24 +17,14 @@ type SJTTestCardProps = {
 };
 
 const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
-  //   console.log(questions);
   const { handleSubmit, currentStep, gotoStep, control, setValue } =
     useStepsForm({
       isBackValidate: false,
       initialStep: 0,
     });
 
-  const [options, setOptions] = useState([""]);
-
-  useEffect(() => {
-    if (!questions) return;
-    setOptions(questions[currentStep].options);
-  }, [questions, currentStep]);
-
-  const handleRankOrderChange = (newOptions: string[]) => {
-    setOptions(newOptions);
+  const handleRankOrderChange = (newOptions: string[]) =>
     setValue(currentStep.toString(), newOptions);
-  };
 
   return (
     <form onSubmit={handleSubmit(handleEndTest)}>
@@ -72,7 +60,7 @@ const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
                     <MultipleChoice
                       setAnswer={onChange}
                       answer={value}
-                      options={options}
+                      options={questions[currentStep].options}
                       error={!!error}
                       helperText={!!error && "Answer is required"}
                     />
@@ -86,7 +74,7 @@ const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
                   render={() => (
                     <RankOrder
                       setOptions={handleRankOrderChange}
-                      options={options}
+                      options={questions[currentStep].options}
                     />
                   )}
                 />
