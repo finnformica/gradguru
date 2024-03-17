@@ -71,7 +71,7 @@ const UsersPage = () => {
 
     postUser(userToEdit!.id as string, data)
       .then(() => enqueueSnackbar("User updated"))
-      .catch((err) =>
+      .catch((err: any) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
@@ -90,7 +90,7 @@ const UsersPage = () => {
   const handleUserDelete = () => {
     deleteUser(idToDelete as string)
       .then(() => enqueueSnackbar("User deleted"))
-      .catch((err) =>
+      .catch((err: any) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
