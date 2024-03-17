@@ -1,13 +1,6 @@
 import { useMemo } from "react";
 import useSWR from "swr";
-import {
-  endpoints,
-  getFetcher,
-  postFetcher,
-  putFetcher,
-  patchFetcher,
-  deleteFetcher,
-} from "utils/axios";
+import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
 
 export function useSJTTests() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(

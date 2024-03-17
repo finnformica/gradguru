@@ -12,7 +12,6 @@ import {
   SxProps,
   Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
 import _ from "lodash";
 
@@ -28,9 +27,6 @@ import {
 const NavMini = ({ width }: { width: number }) => {
   const { data: session } = useSession();
   const router = useRouter();
-
-  const theme = useTheme();
-  console.log(theme.zIndex.appBar);
 
   if (!session) return null;
 
