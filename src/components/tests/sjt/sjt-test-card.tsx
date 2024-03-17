@@ -1,102 +1,106 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, IconButton, Stack, Typography } from "@mui/material";
+import { Controller } from "react-hook-form";
+
+import { Card, Stack, Typography } from "@mui/material";
+
+import { useStepsForm } from "hooks/useStepsForm";
+
+import CardActions from "./card-actions";
+import CardHeader from "./card-header";
 import MultipleChoice from "./multiple-choice";
 import RankOrder from "./rank-order";
-import UnderlineButton from "./underline-button";
+import TestSolution from "./test-solution";
 
 type SJTTestCardProps = {
   questions: any[];
+  handleEndTest: (data: any) => void;
 };
 
-const SJTTestCard = ({ questions }: SJTTestCardProps) => {
+const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
+  //   console.log(questions);
+  const { handleSubmit, currentStep, gotoStep, control, setValue } =
+    useStepsForm({
+      isBackValidate: false,
+      initialStep: 0,
+    });
+
   const [options, setOptions] = useState([""]);
-  const [answer, setAnswer] = useState("");
-  const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (!questions) return;
+    setOptions(questions[currentStep].options);
+  }, [questions, currentStep]);
 
-    setOptions(questions[active].options);
-
-    console.log("setting options");
-  }, [questions, active]);
+  const handleRankOrderChange = (newOptions: string[]) => {
+    setOptions(newOptions);
+    setValue(currentStep.toString(), newOptions);
+  };
 
   return (
-    <Card sx={{ borderRadius: 6, height: "100%", position: "relative" }}>
-      <UnderlineButton
-        label="End test"
-        sx={{ position: "absolute", top: 12, left: 14 }}
-      />
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-        p={0.5}
-        borderBottom={(theme) => `1px dashed ${theme.palette.divider}`}
-      >
-        {questions.map((_, index) => (
-          <IconButton
-            key={index}
-            onClick={() => setActive(index)}
-            sx={{ width: 40, height: 40 }}
-          >
-            <Typography
-              key={index}
-              component="div"
-              variant="subtitle2"
-              sx={{
-                textDecoration: active !== index ? "none" : "underline",
-                fontWeight: active !== index ? 300 : 500,
-                color: active !== index ? "text.secondary" : "text.primary",
-              }}
-            >
-              {index + 1}
+    <form onSubmit={handleSubmit(handleEndTest)}>
+      <Card sx={{ borderRadius: 6, height: "100%", position: "relative" }}>
+        <CardHeader
+          questions={questions}
+          gotoStep={gotoStep}
+          currentStep={currentStep}
+        />
+        <Stack p={6} spacing={4}>
+          <Stack spacing={2} mb={4}>
+            <Typography variant="h5">Question {currentStep + 1}</Typography>
+            <Typography variant="body1">
+              {questions[currentStep].scenario}
             </Typography>
-          </IconButton>
-        ))}
-      </Stack>
-      <Stack p={6} spacing={4}>
-        <Stack spacing={2} mb={4}>
-          <Typography variant="h5">Question {active + 1}</Typography>
-          <Typography variant="body1">{questions[active].scenario}</Typography>
-          <Typography variant="body1">{questions[active].question}</Typography>
-        </Stack>
-        {questions[active].type === "multiple" ? (
-          <MultipleChoice
-            setAnswer={setAnswer}
-            answer={answer}
-            options={options}
+            <Typography variant="body1">
+              {questions[currentStep].question}
+            </Typography>
+          </Stack>
+          {questions.map(
+            (question, index) =>
+              index === currentStep &&
+              (question.type === "multiple" ? (
+                <Controller
+                  key={index}
+                  name={currentStep.toString()}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({
+                    field: { onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <MultipleChoice
+                      setAnswer={onChange}
+                      answer={value}
+                      options={options}
+                      error={!!error}
+                      helperText={!!error && "Answer is required"}
+                    />
+                  )}
+                />
+              ) : (
+                <Controller
+                  key={index}
+                  name={currentStep.toString()}
+                  control={control}
+                  render={() => (
+                    <RankOrder
+                      setOptions={handleRankOrderChange}
+                      options={options}
+                    />
+                  )}
+                />
+              ))
+          )}
+          <TestSolution currentStep={currentStep} questions={questions} />
+          <CardActions
+            questions={questions}
+            currentStep={currentStep}
+            gotoStep={gotoStep}
           />
-        ) : (
-          <RankOrder options={options} setOptions={setOptions} />
-        )}
-        <UnderlineButton label="Show the solution" />
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          spacing={2}
-          alignItems="center"
-        >
-          <Button
-            variant="outlined"
-            onClick={() => setActive(active - 1)}
-            disabled={active === 0}
-          >
-            Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setActive(active + 1)}
-            disabled={active === questions.length - 1}
-          >
-            Next
-          </Button>
         </Stack>
-      </Stack>
-    </Card>
+      </Card>
+    </form>
   );
 };
 
