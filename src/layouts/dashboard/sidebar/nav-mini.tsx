@@ -12,6 +12,7 @@ import {
   SxProps,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import _ from "lodash";
 
@@ -27,6 +28,9 @@ import {
 const NavMini = ({ width }: { width: number }) => {
   const { data: session } = useSession();
   const router = useRouter();
+
+  const theme = useTheme();
+  console.log(theme.zIndex.appBar);
 
   if (!session) return null;
 
@@ -103,10 +107,11 @@ const NavMini = ({ width }: { width: number }) => {
       sx={{
         height: "100vh",
         width: `${width}px`,
-        zIndex: 1100,
+        zIndex: (theme) => theme.zIndex.appBar + 1,
         pt: 1.5,
         px: 0.5,
         borderRight: (theme) => `1px dashed ${theme.palette.divider}`,
+        backdropFilter: "blur(10px)",
       }}
     >
       <Image
