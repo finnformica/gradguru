@@ -1,55 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Card,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Stack,
-  SxProps,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
 
-import { PageBreadcrumbs } from "components/global-components";
-
-const UnderlineButton = ({
-  label,
-  onClick,
-  sx,
-}: {
-  label: string;
-  onClick?: () => void;
-  sx?: SxProps;
-}) => (
-  <Box>
-    <Button
-      disableFocusRipple
-      disableRipple
-      onClick={onClick}
-      sx={{
-        textDecoration: "underline",
-        backgroundColor: "transparent",
-        "&:hover": { backgroundColor: "transparent" },
-        p: 0,
-        ...sx,
-      }}
-    >
-      {label}
-    </Button>
-  </Box>
-);
+import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
+import MultipleChoice from "components/tests/sjt/multiple-choice";
+import UnderlineButton from "components/tests/sjt/underline-button";
+import RankOrder from "components/tests/sjt/rank-order";
+import { useSJTTests } from "api/tests";
 
 const SituationJudgementTest = () => {
+  const [options, setOptions] = useState([""]);
   const [answer, setAnswer] = useState("");
-  const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const active = 1;
 
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setAnswer((event.target as HTMLInputElement).value);
+  const { questions: allQuestions } = useSJTTests();
+  const questions = allQuestions?.slice(0, 3);
+
+  useEffect(() => {
+    if (!questions) return;
+    setOptions(questions[active].questions[0].options);
+  }, [questions]);
+
+  if (!questions) return <LoadingScreen />;
 
   return (
     <>
@@ -85,7 +59,7 @@ const SituationJudgementTest = () => {
           p={2}
           borderBottom={(theme) => `1px dashed ${theme.palette.divider}`}
         >
-          {questions.map((question, index) => (
+          {questions.map((_, index) => (
             <Typography
               key={index}
               variant="subtitle2"
@@ -95,35 +69,29 @@ const SituationJudgementTest = () => {
                 color: active !== index ? "text.secondary" : "text.primary",
               }}
             >
-              {question}
+              {index + 1}
             </Typography>
           ))}
         </Stack>
         <Stack p={6} spacing={4}>
           <Stack spacing={2} mb={4}>
-            <Typography variant="h5">Question {questions[active]}</Typography>
+            <Typography variant="h5">Question {active + 1}</Typography>
             <Typography variant="body1">
-              Your firm is working with a major client who requests certain
-              financial practices that may be ethically questionable. As the
-              Account Manager, you must balance the client's demands with the
-              firm's commitment to ethical business practices. Amidst the
-              pressure to maintain the client relationship, you face challenges
-              such as potential legal implications, risks to the firm's
-              reputation, and the ethical considerations of the requested
-              practices.
+              {questions[active].scenario}
             </Typography>
             <Typography variant="body1">
-              How would you respond to the client's request while considering
-              the ethical implications?
+              {questions[active].questions[0].question}
             </Typography>
           </Stack>
-
-          <RadioGroup onChange={handleRadioChange} value={answer}>
-            <FormControlLabel value="1" control={<Radio />} label="Option 1" />
-            <FormControlLabel value="2" control={<Radio />} label="Option 2" />
-            <FormControlLabel value="3" control={<Radio />} label="Option 3" />
-            <FormControlLabel value="4" control={<Radio />} label="Option 4" />
-          </RadioGroup>
+          {questions[active].type === "multiple" ? (
+            <MultipleChoice
+              setAnswer={setAnswer}
+              answer={answer}
+              options={options}
+            />
+          ) : (
+            <RankOrder options={options} setOptions={setOptions} />
+          )}
           <UnderlineButton label="Show the solution" />
           <Stack
             direction="row"
