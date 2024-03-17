@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
 import MultipleChoice from "components/tests/sjt/multiple-choice";
@@ -13,15 +20,28 @@ import { useSJTTests } from "api/tests";
 const SituationJudgementTest = () => {
   const [options, setOptions] = useState([""]);
   const [answer, setAnswer] = useState("");
-  const active = 1;
+  const [active, setActive] = useState(0);
 
   const { questions: allQuestions } = useSJTTests();
-  const questions = allQuestions?.slice(0, 3);
+
+  // map questions into a flat array
+  const questions = allQuestions
+    ?.slice(0, 4)
+    .map((question) =>
+      question.questions.map((q: any) => ({
+        ...q,
+        scenario: question.scenario,
+      }))
+    )
+    .flat();
 
   useEffect(() => {
     if (!questions) return;
-    setOptions(questions[active].questions[0].options);
-  }, [questions]);
+
+    setOptions(questions[active].options);
+
+    console.log("setting options");
+  }, [questions, active]);
 
   if (!questions) return <LoadingScreen />;
 
@@ -49,28 +69,34 @@ const SituationJudgementTest = () => {
       <Card sx={{ borderRadius: 6, height: "100%", position: "relative" }}>
         <UnderlineButton
           label="End test"
-          sx={{ position: "absolute", top: 14, left: 14 }}
+          sx={{ position: "absolute", top: 12, left: 14 }}
         />
         <Stack
           direction="row"
           alignItems="center"
           justifyContent="center"
-          spacing={4}
-          p={2}
+          p={0.5}
           borderBottom={(theme) => `1px dashed ${theme.palette.divider}`}
         >
           {questions.map((_, index) => (
-            <Typography
+            <IconButton
               key={index}
-              variant="subtitle2"
-              sx={{
-                textDecoration: active !== index ? "none" : "underline",
-                fontWeight: active !== index ? 300 : 500,
-                color: active !== index ? "text.secondary" : "text.primary",
-              }}
+              onClick={() => setActive(index)}
+              sx={{ width: 40, height: 40 }}
             >
-              {index + 1}
-            </Typography>
+              <Typography
+                key={index}
+                component="div"
+                variant="subtitle2"
+                sx={{
+                  textDecoration: active !== index ? "none" : "underline",
+                  fontWeight: active !== index ? 300 : 500,
+                  color: active !== index ? "text.secondary" : "text.primary",
+                }}
+              >
+                {index + 1}
+              </Typography>
+            </IconButton>
           ))}
         </Stack>
         <Stack p={6} spacing={4}>
@@ -80,7 +106,7 @@ const SituationJudgementTest = () => {
               {questions[active].scenario}
             </Typography>
             <Typography variant="body1">
-              {questions[active].questions[0].question}
+              {questions[active].question}
             </Typography>
           </Stack>
           {questions[active].type === "multiple" ? (
@@ -99,8 +125,19 @@ const SituationJudgementTest = () => {
             spacing={2}
             alignItems="center"
           >
-            <Button variant="outlined">Back</Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="outlined"
+              onClick={() => setActive(active - 1)}
+              disabled={active === 0}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setActive(active + 1)}
+              disabled={active === questions.length - 1}
+            >
               Next
             </Button>
           </Stack>
