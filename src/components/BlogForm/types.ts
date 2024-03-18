@@ -1,5 +1,5 @@
 export type DataProps = {
   title: string;
-  body: string;
+  desc: string;
   tags: string;
 };

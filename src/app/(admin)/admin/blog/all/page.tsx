@@ -1,4 +1,4 @@
-import NewPost from "components/BlogForm/NewPost";
+import NewPost from "components/BlogForm/NewCard";
 
 const page = () => {
   return <NewPost />;
