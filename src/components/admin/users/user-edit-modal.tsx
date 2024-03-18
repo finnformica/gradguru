@@ -11,8 +11,9 @@ import {
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 
-import { indexToRoleMapping } from "@/utils/permissions";
-import { IUserFormInput } from "@/components/globalTypes";
+import { useCourseIds } from "api/courses";
+import { IUserFormInput } from "components/globalTypes";
+import { indexToRoleMapping } from "utils/permissions";
 
 const style = {
   position: "absolute" as "absolute",
@@ -41,6 +42,8 @@ const UserEditModal = ({
   onSubmit,
 }: UserEditModalProps) => {
   const { control, handleSubmit, setValue } = useForm({ defaultValues });
+  const { courseIds, loading } = useCourseIds();
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
@@ -86,10 +89,7 @@ const UserEditModal = ({
             <Controller
               name="role"
               control={control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }: any) => {
+              render={({ field: { value } }: any) => {
                 const onValueChange = (
                   event: SyntheticEvent<Element, Event>,
                   data: any
@@ -132,7 +132,9 @@ const UserEditModal = ({
                   <Autocomplete
                     value={value}
                     onChange={onValueChange}
-                    options={["consulting", "finance", "software"]}
+                    options={courseIds || []}
+                    loading={loading}
+                    loadingText="Loading courses..."
                     renderInput={(params) => (
                       <TextField {...params} label="Courses" />
                     )}

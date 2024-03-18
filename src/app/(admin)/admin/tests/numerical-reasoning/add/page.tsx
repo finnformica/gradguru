@@ -4,15 +4,15 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-import { NRForm } from "@/components/NRForm";
+import { NRForm } from "components/NRForm";
 import {
   INRForm,
   tableForm,
   graphForm,
   gmatForm,
-} from "@/components/NRForm/types";
-import { LoadingScreen } from "@/components/global-components";
-import { postNRTest } from "@/api/tests";
+} from "components/NRForm/types";
+import { LoadingScreen } from "components/global-components";
+import { postNRTest } from "api/tests";
 
 const AddNR = () => {
   const { enqueueSnackbar } = useSnackbar();

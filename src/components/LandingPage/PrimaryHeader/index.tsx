@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import SquareButton from "components/LandingPage/Buttons/SquareButton";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";

@@ -1,6 +1,6 @@
 import { Modal, Box, Typography } from "@mui/material";
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
-import SquareButton from "@/components/LandingPage/Buttons/SquareButton";
+import SmallTitle from "components/LandingPage/Titles/SmallTitle";
+import SquareButton from "components/LandingPage/Buttons/SquareButton";
 
 type UdemyModalProps = {
   open: boolean;

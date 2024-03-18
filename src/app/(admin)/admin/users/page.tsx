@@ -11,14 +11,14 @@ import { GridColDef, GridRowId } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { SubmitHandler } from "react-hook-form";
 
-import { indexToRoleMapping } from "@/utils/permissions";
-import { deleteUser, postUser, useUsers } from "@/api/user";
+import { indexToRoleMapping } from "utils/permissions";
+import { deleteUser, postUser, useUsers } from "api/user";
 
-import FullFeaturedCrudGrid from "@/components/global-components/FullFeaturedCrudGrid";
-import UserEditModal from "@/components/admin/users/user-edit-modal";
-import { LoadingScreen } from "@/components/global-components";
-import ConfirmationDialog from "@/components/global-components/confirmation-dialog";
-import { IUserFormInput } from "@/components/globalTypes";
+import FullFeaturedCrudGrid from "components/global-components/FullFeaturedCrudGrid";
+import UserEditModal from "components/admin/users/user-edit-modal";
+import { LoadingScreen } from "components/global-components";
+import ConfirmationDialog from "components/global-components/confirmation-dialog";
+import { IUserFormInput } from "components/globalTypes";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 250 },

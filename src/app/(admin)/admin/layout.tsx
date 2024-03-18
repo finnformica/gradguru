@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/auth/config";
-import LatexContext from "@/context/latex";
-import MiniDrawer from "@/components/AdminLayout/MiniDrawer";
+import { authOptions } from "auth/config";
+import LatexContext from "context/latex";
+import AdminLayout from "layouts/admin";
 
-export default async function AdminLayout({
+export default async function AdminLayoutPage({
   children,
 }: {
   children: React.ReactNode;
@@ -16,11 +16,11 @@ export default async function AdminLayout({
   // or does not have update, delete, or create permissions
   const notAdmin = !data || data.user.role < 2 || data.user.role === undefined;
   if (notAdmin) {
-    notFound(); // TODO: nice not found pa
+    notFound(); // TODO: nice not found page
   }
   return (
     <LatexContext>
-      <MiniDrawer>{children}</MiniDrawer>
+      <AdminLayout>{children}</AdminLayout>
     </LatexContext>
   );
 }

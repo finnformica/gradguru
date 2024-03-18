@@ -2,7 +2,7 @@
 
 import { useContext, createContext, useState } from "react";
 
-import { CourseType } from "@/components/globalTypes";
+import { CourseType } from "components/globalTypes";
 
 export interface CourseContextType {
   course: CourseType | null;

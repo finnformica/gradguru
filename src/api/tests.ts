@@ -3,9 +3,10 @@ import {
   endpoints,
   getFetcher,
   postFetcher,
-} from "@/utils/axios";
-import { useMemo } from "react";
-import useSWR from "swr";
+  putFetcher,
+  patchFetcher,
+  deleteFetcher,
+} from "utils/axios";
 
 export function useSJTTests() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
