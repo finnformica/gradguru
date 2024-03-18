@@ -1,5 +1,5 @@
 "use client"; // needed for useform
-import { postBlog, storageBlog } from "@/api/blog";
+import { postBlog, storageBlog } from "api/blog";
 import { Button, Stack, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
