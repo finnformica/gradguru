@@ -1,6 +1,13 @@
 "use client"; // needed for useform
 import { postBlog, storageBlog } from "api/blog";
-import { Button, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  Stack,
+  TextField,
+  Box,
+  Container,
+  MenuItem,
+} from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
@@ -61,71 +68,91 @@ const NewPost = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack direction="column" spacing={2} py={2}>
-        <Controller
-          name="title"
-          control={control}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, value },
-            fieldState: { error },
-          }: any) => (
-            <TextField
-              fullWidth
-              label="Title"
-              multiline
-              minRows={1}
-              value={value}
-              onChange={onChange}
-              error={!!error}
-              helperText={!!error && "Title is required"}
-              size="small"
+        <Box
+          sx={{
+            display: "flex column",
+            flex: "space-between",
+            border: "solid black 2px",
+            borderRadius: "14px",
+          }}
+        >
+          <Container>
+            <Controller
+              name="title"
+              control={control}
+              rules={{ required: true }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }: any) => (
+                <TextField
+                  fullWidth
+                  label="Title"
+                  multiline
+                  minRows={1}
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={!!error && "Title is required"}
+                  size="small"
+                  sx={{ my: "10px" }}
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          name="body"
-          control={control}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, value },
-            fieldState: { error },
-          }: any) => (
-            <TextField
-              fullWidth
-              label="Body"
-              multiline
-              minRows={5}
-              value={value}
-              onChange={onChange}
-              error={!!error}
-              helperText={!!error && "Body text is required"}
-              size="small"
+            <Controller
+              name="body"
+              control={control}
+              rules={{ required: true }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }: any) => (
+                <TextField
+                  fullWidth
+                  label="Body"
+                  multiline
+                  minRows={5}
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={!!error && "Body text is required"}
+                  size="small"
+                  sx={{ my: "10px" }}
+                />
+              )}
             />
-          )}
-        />
 
-        <Controller
-          name="tags"
-          control={control}
-          rules={{ required: true }}
-          render={({
-            field: { onChange, value },
-            fieldState: { error },
-          }: any) => (
-            <TextField
-              fullWidth
-              label="Tags"
-              multiline
-              minRows={1}
-              value={value}
-              onChange={onChange}
-              error={!!error}
-              helperText={!!error && "A Tag is required"}
-              size="small"
+            <Controller
+              name="tags"
+              control={control}
+              rules={{ required: true }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }: any) => (
+                <TextField
+                  label="Tags"
+                  select
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={!!error && "A Tag is required"}
+                  size="small"
+                  sx={{ my: "10px" }}
+                >
+                  {" "}
+                  {tagOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
             />
-          )}
-        />
+          </Container>
+        </Box>
 
         <input type="file" onChange={handleImageChange} />
 
@@ -138,3 +165,5 @@ const NewPost = () => {
 };
 
 export default NewPost;
+
+const tagOptions = ["Finance", "Jobs", "Education", "Loose Cannon"];
