@@ -71,8 +71,6 @@ const SituationalJudgementTest = () => {
   };
 
   const onSubmit = (data: any) => {
-    console.log("data", data);
-
     if (Object.keys(data).length !== questions.length) {
       enqueueSnackbar("Not all questions answered", { variant: "error" });
       return;
