@@ -1,7 +1,7 @@
 "use client";
 
-import { Controller } from "react-hook-form";
 import { Card, Stack, Typography } from "@mui/material";
+import { Controller } from "react-hook-form";
 
 import { useStepsForm } from "hooks/useStepsForm";
 
@@ -14,9 +14,16 @@ import TestSolution from "./test-solution";
 type SJTTestCardProps = {
   questions: any[];
   handleEndTest: (data: any) => void;
+  testComplete: boolean;
+  testLoading: boolean;
 };
 
-const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
+const SJTTestCard = ({
+  questions,
+  handleEndTest,
+  testComplete,
+  testLoading,
+}: SJTTestCardProps) => {
   const { handleSubmit, currentStep, gotoStep, control, setValue } =
     useStepsForm({
       isBackValidate: false,
@@ -33,6 +40,8 @@ const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
           questions={questions}
           gotoStep={gotoStep}
           currentStep={currentStep}
+          testComplete={testComplete}
+          loading={testLoading}
         />
         <Stack p={6} spacing={4}>
           <Stack spacing={2} mb={4}>
@@ -74,13 +83,15 @@ const SJTTestCard = ({ questions, handleEndTest }: SJTTestCardProps) => {
                   render={() => (
                     <RankOrder
                       setOptions={handleRankOrderChange}
-                      options={questions[currentStep].options}
+                      options={questions[currentStep].options} // TODO: randomise options
                     />
                   )}
                 />
               ))
           )}
-          <TestSolution currentStep={currentStep} questions={questions} />
+          {testComplete && (
+            <TestSolution currentStep={currentStep} questions={questions} />
+          )}
           <CardActions
             questions={questions}
             currentStep={currentStep}
