@@ -65,17 +65,17 @@ const NavMini = ({ width }: { width: number }) => {
       ? [
           {
             name: "Situational Judgement",
-            href: "/tests/sjt",
+            href: "/tests/situational-judgement",
             icon: (sx: SxProps) => <Quiz sx={sx} />,
           },
           {
             name: "Numerical Reasoning",
-            href: "/tests/nr",
+            href: "/tests/numerical-reasoning",
             icon: (sx: SxProps) => <Quiz sx={sx} />,
           },
           {
             name: "Logical Reasoning",
-            href: "/tests/lr",
+            href: "/tests/logical-reasoning",
             icon: (sx: SxProps) => <Quiz sx={sx} />,
           },
         ]
