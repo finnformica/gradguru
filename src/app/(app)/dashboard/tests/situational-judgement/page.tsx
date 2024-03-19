@@ -31,8 +31,8 @@ const SituationalJudgementTest = () => {
   useEffect(() => {
     if (allQuestions) {
       setQuestions(
-        allQuestions
-          ?.slice(0, 4) // TODO: randomise questions
+        _.shuffle(allQuestions)
+          ?.slice(0, 4) // TODO: provide questions the user hasn't seen
           .map((question) =>
             question.questions.map((q: any) => ({
               ...q,
