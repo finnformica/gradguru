@@ -28,7 +28,7 @@ const NavMini = ({ width }: { width: number }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  if (!session) return null;
+  if (!session) return null; // TODO: return skeleton
 
   const home = {
     name: "Home",
@@ -50,46 +50,21 @@ const NavMini = ({ width }: { width: number }) => {
         icon: (sx: SxProps) => <Mail sx={sx} />,
       }))
     : [];
-  const videos =
+  const links =
     courses.length > 0
       ? [
           {
-            name: "Consulting videos",
+            name: "Videos",
             href: "/video/consulting",
             icon: (sx: SxProps) => <VideoLibrary sx={sx} />,
           },
-        ]
-      : [];
-  const tests =
-    courses.length > 0
-      ? [
           {
-            name: "Situational Judgement",
-            href: "/tests/situational-judgement",
+            name: "Tests",
+            href: "/tests",
             icon: (sx: SxProps) => <Quiz sx={sx} />,
           },
           {
-            name: "Numerical Reasoning",
-            href: "/tests/numerical-reasoning",
-            icon: (sx: SxProps) => <Quiz sx={sx} />,
-          },
-          {
-            name: "Logical Reasoning",
-            href: "/tests/logical-reasoning",
-            icon: (sx: SxProps) => <Quiz sx={sx} />,
-          },
-        ]
-      : [];
-  const resources =
-    courses.length > 0
-      ? [
-          {
-            name: "resource1",
-            href: "/resources",
-            icon: (sx: SxProps) => <FilePresent sx={sx} />,
-          },
-          {
-            name: "resource2",
+            name: "Resources",
             href: "/resources",
             icon: (sx: SxProps) => <FilePresent sx={sx} />,
           },
@@ -123,11 +98,9 @@ const NavMini = ({ width }: { width: number }) => {
         <NavListItem item={home} key="home" />
         {courses.length > 0 &&
           courses &&
-          [courses, videos, tests, resources].map((section: any) =>
-            section.map((item: any) => (
-              <NavListItem item={item} key={item.name} />
-            ))
-          )}
+          [...courses, ...links].map((item: any) => (
+            <NavListItem item={item} key={item.name} />
+          ))}
         {session.user.role > 1 && <NavListItem key="admin" item={admin} />}
       </List>
     </Box>

@@ -1,3 +1,5 @@
+"use client";
+
 import { PlayArrow } from "@mui/icons-material";
 import { Box, Button, Stack } from "@mui/material";
 import { PageBreadcrumbs } from "components/global-components";
@@ -13,19 +15,20 @@ const TopPanel = () => {
       alignItems="center"
     >
       <PageBreadcrumbs
-        header="Situational Judgement"
-        links={[{ label: "Tests" }, { label: "Situational Judgement" }]}
+        header="Tests"
+        links={[
+          { label: "Consulting", href: "/dashboard/courses/consulting" },
+          { label: "Tests" },
+        ]}
       />
       <Box>
         <Button
           variant="contained"
           color="primary"
+          onClick={() => router.push("/dashboard/tests/situational-judgement")}
           startIcon={<PlayArrow />}
-          onClick={() =>
-            router.replace("dashboard/tests/situational-judgement/test")
-          }
         >
-          Start new test
+          Begin new test
         </Button>
       </Box>
     </Stack>

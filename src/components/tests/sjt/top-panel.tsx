@@ -12,12 +12,8 @@ const TopPanel = () => {
       <PageBreadcrumbs
         header="Situational Judgement"
         links={[
-          { label: "Tests" },
-          {
-            label: "Situational Judgement",
-            href: "/dashboard/tests/situational-judgement",
-          },
-          { label: "Test" },
+          { label: "Tests", href: "/dashboard/tests" },
+          { label: "Situational Judgement" },
         ]}
       />
     </Stack>

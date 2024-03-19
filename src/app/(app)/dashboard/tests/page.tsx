@@ -1,7 +1,13 @@
-import { PageBreadcrumbs } from "components/global-components";
+import TopPanel from "./top-panel";
+
+// TODO: display test results
+// type of test
+// score (percentage)
+// date taken
+// time taken
 
 const CourseTests = () => {
-  return <PageBreadcrumbs header="Tests" links={[{ label: "Tests" }]} />;
+  return <TopPanel />;
 };
 
 export default CourseTests;
