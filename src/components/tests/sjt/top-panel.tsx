@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { PageBreadcrumbs } from "components/global-components";
 
 const TopPanel = () => {
@@ -12,15 +12,14 @@ const TopPanel = () => {
       <PageBreadcrumbs
         header="Situational Judgement"
         links={[
-          { label: "Tests", href: "/dashboard/tests" },
-          { label: "Situational Judgement" },
+          { label: "Tests" },
+          {
+            label: "Situational Judgement",
+            href: "/dashboard/tests/situational-judgement",
+          },
+          { label: "Test" },
         ]}
       />
-      <Box>
-        <Button variant="contained" color="primary">
-          Action
-        </Button>
-      </Box>
     </Stack>
   );
 };

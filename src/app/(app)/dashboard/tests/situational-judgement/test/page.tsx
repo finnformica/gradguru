@@ -20,15 +20,13 @@ type SJTQuestion = {
 };
 
 const SituationalJudgementTest = () => {
-  const [testComplete, setTestComplete] = useState(false);
+  const [testComplete, setTestComplete] = useState(true);
   const [testLoading, setTestLoading] = useState(false);
   const { questions: allQuestions } = useSJTTests();
   const { enqueueSnackbar } = useSnackbar();
 
   // map questions into a flat array
-  const [questions, setQuestions] = useState<SJTQuestion[] | undefined>(
-    undefined
-  );
+  const [questions, setQuestions] = useState<SJTQuestion[]>();
 
   useEffect(() => {
     if (allQuestions) {
@@ -48,7 +46,7 @@ const SituationalJudgementTest = () => {
     }
   }, [allQuestions]);
 
-  if (!questions) return <LoadingScreen />;
+  if (!questions || questions.length === 0) return <LoadingScreen />;
 
   const markTest = (data: any) => {
     const marked = questions.map((question, index) => {
@@ -72,7 +70,7 @@ const SituationalJudgementTest = () => {
     setTestLoading(false);
   };
 
-  const onSubmit = (data: any) => {
+  const handleEndTest = (data: any) => {
     if (Object.keys(data).length !== questions.length) {
       enqueueSnackbar("Not all questions answered", { variant: "error" });
       return;
@@ -88,7 +86,7 @@ const SituationalJudgementTest = () => {
       <TopPanel />
       <SJTTestCard
         questions={questions}
-        handleEndTest={onSubmit}
+        handleEndTest={handleEndTest}
         testComplete={testComplete}
         testLoading={testLoading}
       />
