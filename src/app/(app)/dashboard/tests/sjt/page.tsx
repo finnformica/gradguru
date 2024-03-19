@@ -14,6 +14,7 @@ type SJTQuestion = {
   scenario: string;
   type: "multiple" | "rank";
   options: string[];
+  shuffled: string[];
   answer: string;
   success: boolean | null;
 };
@@ -37,6 +38,7 @@ const SituationalJudgementTest = () => {
           .map((question) =>
             question.questions.map((q: any) => ({
               ...q,
+              shuffled: _.shuffle(q.options),
               scenario: question.scenario,
               success: null,
             }))

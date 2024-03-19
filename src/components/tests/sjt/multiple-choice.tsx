@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   FormControl,
   FormControlLabel,
@@ -7,7 +9,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
 
 type MultipleChoiceProps = {
   setAnswer: (newAnswer: string) => void;

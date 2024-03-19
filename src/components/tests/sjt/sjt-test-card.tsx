@@ -1,8 +1,11 @@
 "use client";
 
-import { Card, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 
+import { Card, Stack, Typography } from "@mui/material";
+
+import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 
 import CardActions from "./card-actions";
@@ -10,8 +13,6 @@ import CardHeader from "./card-header";
 import MultipleChoice from "./multiple-choice";
 import RankOrder from "./rank-order";
 import TestSolution from "./test-solution";
-import ConfirmationDialog from "components/global-components/confirmation-dialog";
-import { useState } from "react";
 
 type SJTTestCardProps = {
   questions: any[];
@@ -87,7 +88,7 @@ const SJTTestCard = ({
                   render={() => (
                     <RankOrder
                       setOptions={handleRankOrderChange}
-                      options={questions[currentStep].options} // TODO: randomise options
+                      options={questions[currentStep].shuffled}
                     />
                   )}
                 />
