@@ -10,6 +10,8 @@ import CardHeader from "./card-header";
 import MultipleChoice from "./multiple-choice";
 import RankOrder from "./rank-order";
 import TestSolution from "./test-solution";
+import ConfirmationDialog from "components/global-components/confirmation-dialog";
+import { useState } from "react";
 
 type SJTTestCardProps = {
   questions: any[];
@@ -24,6 +26,7 @@ const SJTTestCard = ({
   testComplete,
   testLoading,
 }: SJTTestCardProps) => {
+  const [endTestDialogOpen, setEndTestDialogOpen] = useState(false);
   const { handleSubmit, currentStep, gotoStep, control, setValue } =
     useStepsForm({
       isBackValidate: false,
@@ -42,6 +45,7 @@ const SJTTestCard = ({
           currentStep={currentStep}
           testComplete={testComplete}
           loading={testLoading}
+          onSubmit={() => setEndTestDialogOpen(true)}
         />
         <Stack p={6} spacing={4}>
           <Stack spacing={2} mb={4}>
@@ -93,12 +97,24 @@ const SJTTestCard = ({
             <TestSolution currentStep={currentStep} questions={questions} />
           )}
           <CardActions
+            testComplete={testComplete}
             questions={questions}
             currentStep={currentStep}
             gotoStep={gotoStep}
+            onSubmit={() => setEndTestDialogOpen(true)}
           />
         </Stack>
       </Card>
+      <ConfirmationDialog
+        title="Are you sure you want to complete the test?"
+        submitButtonType="submit"
+        open={endTestDialogOpen}
+        onClose={() => setEndTestDialogOpen(false)}
+        onSubmit={() => {
+          handleSubmit(handleEndTest)();
+          setEndTestDialogOpen(false);
+        }}
+      />
     </form>
   );
 };

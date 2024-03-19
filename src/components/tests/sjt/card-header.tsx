@@ -7,6 +7,7 @@ type CardHeaderProps = {
   testComplete: boolean;
   currentStep: number;
   loading: boolean;
+  onSubmit: () => void;
 };
 
 const CardHeader = ({
@@ -15,12 +16,13 @@ const CardHeader = ({
   currentStep,
   testComplete,
   loading,
+  onSubmit,
 }: CardHeaderProps) => {
   // console.log("questions", questions);
   return (
     <>
       <UnderlineButton
-        type="submit"
+        onClick={onSubmit}
         label="End test"
         sx={{ position: "absolute", top: 10, left: 14 }}
         disabled={testComplete}
