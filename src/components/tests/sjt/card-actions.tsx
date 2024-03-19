@@ -1,15 +1,20 @@
 import { Button, Stack } from "@mui/material";
+import UnderlineButton from "./underline-button";
 
 type CardActionsProps = {
   questions: any[];
   currentStep: number;
   gotoStep: (step: number) => void;
+  testComplete: boolean;
+  onSubmit: () => void;
 };
 
 const CardActions = ({
   questions,
   currentStep,
   gotoStep,
+  testComplete,
+  onSubmit,
 }: CardActionsProps) => {
   return (
     <Stack
@@ -25,14 +30,22 @@ const CardActions = ({
       >
         Back
       </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => gotoStep(currentStep + 1)}
-        disabled={currentStep === questions.length - 1}
-      >
-        Next
-      </Button>
+      {currentStep === questions.length - 1 ? (
+        <UnderlineButton
+          onClick={onSubmit}
+          label="End test"
+          disabled={testComplete}
+        />
+      ) : (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => gotoStep(currentStep + 1)}
+          disabled={currentStep === questions.length - 1}
+        >
+          Next
+        </Button>
+      )}
     </Stack>
   );
 };

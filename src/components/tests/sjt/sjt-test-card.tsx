@@ -107,7 +107,6 @@ const SJTTestCard = ({
       </Card>
       <ConfirmationDialog
         title="Are you sure you want to complete the test?"
-        submitButtonType="submit"
         open={endTestDialogOpen}
         onClose={() => setEndTestDialogOpen(false)}
         onSubmit={() => {
