@@ -1,16 +1,19 @@
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, ButtonProps, SxProps } from "@mui/material";
+
+interface UnderlineButtonProps extends ButtonProps {
+  label: string;
+  onClick?: () => void;
+  sx?: SxProps;
+  type?: "submit" | "button";
+}
 
 const UnderlineButton = ({
   label,
   onClick,
   sx,
   type = "button",
-}: {
-  label: string;
-  onClick?: () => void;
-  sx?: SxProps;
-  type?: "submit" | "button";
-}) => (
+  ...props
+}: UnderlineButtonProps) => (
   <Box>
     <Button
       disableFocusRipple
@@ -24,6 +27,7 @@ const UnderlineButton = ({
         p: 0,
         ...sx,
       }}
+      {...props}
     >
       {label}
     </Button>
