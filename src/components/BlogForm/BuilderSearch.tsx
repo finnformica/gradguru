@@ -23,13 +23,13 @@ const BuilderSearch = () => {
     },
   });
 
-  const onsubmit = () => {
-    console.log("value");
+  const onSubmit = (data: any) => {
+    console.log("data:", data.addingBlock);
   };
   return (
-    <Stack direction="row" spacing={5} alignItems={"center"}>
-      <Container maxWidth="xs">
-        <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Stack direction="row" spacing={5} alignItems={"center"}>
+        <Container maxWidth="xs">
           <Controller
             name="addingBlock"
             control={control}
@@ -43,7 +43,7 @@ const BuilderSearch = () => {
                 onChange={onChange}
                 value={value}
                 error={!!error}
-                helperText={!!error && "Title is required"}
+                helperText={!!error && "Item is required"}
                 fullWidth
                 label="What would you like to add?"
                 sx={{ my: 2 }}
@@ -56,25 +56,25 @@ const BuilderSearch = () => {
               </TextField>
             )}
           />
-        </form>
-      </Container>
+        </Container>
 
-      <IconButton
-        sx={{ borderRadius: 5, backgroundColor: theme.palette.primary.main }}
-        onClick={onsubmit}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            p: 1,
-            gap: 2,
-          }}
+        <IconButton
+          sx={{ borderRadius: 5, backgroundColor: theme.palette.primary.main }}
+          type="submit"
         >
-          <Typography color={"white"}>Add</Typography>
-          <AddIcon sx={{ color: "white" }} />
-        </Box>
-      </IconButton>
-    </Stack>
+          <Box
+            sx={{
+              display: "flex",
+              p: 1,
+              gap: 2,
+            }}
+          >
+            <Typography color={"white"}>Add</Typography>
+            <AddIcon sx={{ color: "white" }} />
+          </Box>
+        </IconButton>
+      </Stack>
+    </form>
   );
 };
 
