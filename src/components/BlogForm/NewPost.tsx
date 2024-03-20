@@ -1,7 +1,19 @@
-import React from "react";
+"use client";
+import { Typography } from "@mui/material";
+import BuilderSearch from "./BuilderSearch";
+
+const NewPostLayout = [{ type: String, value: "no items here yet" }];
 
 const NewPost = () => {
-  return <div>NewPost</div>;
+  return (
+    <>
+      {NewPostLayout.map((item, i) => (
+        <Typography key={i}>{item.value}</Typography>
+      ))}
+      {/* <BuilderModel /> */}
+      <BuilderSearch />
+    </>
+  );
 };
 
 export default NewPost;

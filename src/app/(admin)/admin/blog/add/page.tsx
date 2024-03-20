@@ -5,15 +5,15 @@ import NewPost from "components/BlogForm/NewPost";
 const page = () => {
   return (
     <>
-      <Typography variant="h4" pb={2}>
+      {/* <Typography variant="h4" pb={2}>
         Add blog post
       </Typography>
       <Typography variant="h5" pb={2}>
         Card Detials
-      </Typography>
-      <NewCard />
+      </Typography> */}
+      {/* <NewCard /> */}
       <Typography variant="h5" py={2}>
-        Blog Details
+        Blog Builder
       </Typography>
       <NewPost />
     </>
