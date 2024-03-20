@@ -4,10 +4,11 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 
-import { useSJTTests } from "api/tests";
+import { createTestRecord, useSJTTests } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
+import { useSession } from "next-auth/react";
 
 type SJTQuestion = {
   question: string;
@@ -17,10 +18,12 @@ type SJTQuestion = {
   shuffled: string[];
   answer: string;
   success: boolean | null;
+  id?: string;
 };
 
 const SituationalJudgementTest = () => {
-  const [testComplete, setTestComplete] = useState(true);
+  const { data: session } = useSession();
+  const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const { questions: allQuestions } = useSJTTests();
   const { enqueueSnackbar } = useSnackbar();
@@ -36,9 +39,10 @@ const SituationalJudgementTest = () => {
           .map((question) =>
             question.questions.map((q: any) => ({
               ...q,
-              shuffled: _.shuffle(q.options),
-              scenario: question.scenario,
               success: null,
+              shuffled: _.shuffle(q.options),
+              id: question.id,
+              scenario: question.scenario,
             }))
           )
           .flat()
@@ -63,8 +67,22 @@ const SituationalJudgementTest = () => {
           };
     });
 
-    // TODO: store results
+    // calculate test metrics
+    // TODO: include time taken
+    const correct = marked.filter((q) => q.success).length;
+    const score = {
+      percent: correct / marked.length,
+      correct: correct,
+      total: marked.length,
+    };
+    const date = Date.now();
+    const type = { label: "Situational Judgement", name: "sjt" };
+    const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
+    // store results
+    createTestRecord({ score, date, type, questionIds }, session!.user.id);
+
+    // update state
     setQuestions(marked);
     setTestComplete(true);
     setTestLoading(false);

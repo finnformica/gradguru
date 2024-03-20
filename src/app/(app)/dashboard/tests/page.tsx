@@ -4,7 +4,6 @@ import TopPanel from "./top-panel";
 // type of test
 // score (percentage)
 // date taken
-// time taken
 
 const CourseTests = () => {
   return <TopPanel />;
