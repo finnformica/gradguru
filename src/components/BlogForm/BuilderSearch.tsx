@@ -4,77 +4,74 @@ import {
   Box,
   Container,
   IconButton,
+  Menu,
   MenuItem,
-  Stack,
-  Typography,
   useTheme,
 } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import { Controller, useForm } from "react-hook-form";
+import { useState } from "react";
+import TextModal from "./TextModal";
 
-const BlogBlocks = ["Text", "Image", "Video", "Table"];
+const MenuItems = ["Text", "Video", "Picutre", "Table"];
 
 const BuilderSearch = () => {
   const theme = useTheme();
-
-  const { control, handleSubmit, reset } = useForm({
-    defaultValues: {
-      addingBlock: "",
-    },
-  });
-
-  const onSubmit = (data: any) => {
-    console.log("data:", data.addingBlock);
+  const [addingBlock, setAddingBlock] = useState<null | string>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+    setAddingBlock(null);
   };
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack direction="row" spacing={5} alignItems={"center"}>
-        <Container maxWidth="xs">
-          <Controller
-            name="addingBlock"
-            control={control}
-            rules={{ required: true }}
-            render={({
-              field: { onChange, value },
-              fieldState: { error },
-            }: any) => (
-              <TextField
-                select
-                onChange={onChange}
-                value={value}
-                error={!!error}
-                helperText={!!error && "Item is required"}
-                fullWidth
-                label="What would you like to add?"
-                sx={{ my: 2 }}
-              >
-                {BlogBlocks.map((block) => (
-                  <MenuItem key={block} value={block}>
-                    {block}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-          />
-        </Container>
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-        <IconButton
-          sx={{ borderRadius: 5, backgroundColor: theme.palette.primary.main }}
-          type="submit"
+  return (
+    <Container>
+      <IconButton
+        id="add-button"
+        aria-controls={open ? "add-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        sx={{
+          backgroundColor: theme.palette.primary.main,
+          "&:hover": { backgroundColor: theme.palette.primary.dark },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            p: 1,
+            gap: 2,
+          }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              p: 1,
-              gap: 2,
+          <AddIcon sx={{ color: "white" }} />
+        </Box>
+      </IconButton>
+      <Menu
+        id="add-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "add-button",
+        }}
+      >
+        {MenuItems.map((item) => (
+          <MenuItem
+            key={item}
+            onClick={() => {
+              setAddingBlock(item);
+              handleClose();
             }}
           >
-            <Typography color={"white"}>Add</Typography>
-            <AddIcon sx={{ color: "white" }} />
-          </Box>
-        </IconButton>
-      </Stack>
-    </form>
+            {item}
+          </MenuItem>
+        ))}
+      </Menu>
+      {addingBlock === "Text" && <TextModal active={true} />}
+    </Container>
   );
 };
 
