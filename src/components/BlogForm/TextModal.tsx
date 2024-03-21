@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  MenuItem,
   Modal,
   Stack,
   TextField,
@@ -10,6 +11,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import { style } from "./styles";
+import { Controller, useForm } from "react-hook-form";
+import { TextType } from "./StoredArrays";
 
 type TextModelProps = {
   active: boolean;
@@ -25,15 +28,30 @@ const TextModal = ({ active }: TextModelProps) => {
   }
   const theme = useTheme();
   return (
-    <div>
+    <form>
       <Modal open={open} aria-labelledby="modal-modal-title">
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Text Editor
           </Typography>
           <TextField
+            select
+            fullWidth
+            label="Select"
+            helperText="Please select a text type"
+            id="text-type"
+            sx={{ mt: 2 }}
+          >
+            {TextType.map((text) => (
+              <MenuItem key={text.name} value={text.name}>
+                <Typography variant={text.style}>{text.name}</Typography>
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
             label="Enter Your Text here"
-            minRows={20}
+            minRows={15}
             multiline
             fullWidth
             sx={{ mt: 2 }}
@@ -63,7 +81,7 @@ const TextModal = ({ active }: TextModelProps) => {
           </Stack>
         </Box>
       </Modal>
-    </div>
+    </form>
   );
 };
 

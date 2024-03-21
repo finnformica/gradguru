@@ -10,8 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import TextModal from "./TextModal";
-
-const MenuItems = ["Text", "Video", "Picutre", "Table"];
+import { MenuItems } from "./StoredArrays";
 
 const BuilderSearch = () => {
   const theme = useTheme();

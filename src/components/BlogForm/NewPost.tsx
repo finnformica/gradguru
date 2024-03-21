@@ -10,7 +10,6 @@ const NewPost = () => {
       {NewPostLayout.map((item, i) => (
         <Typography key={i}>{item.value}</Typography>
       ))}
-      {/* <BuilderModel /> */}
       <BuilderSearch />
     </>
   );

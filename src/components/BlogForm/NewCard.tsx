@@ -118,7 +118,7 @@ const NewCard = () => {
               }: any) => (
                 <TextField
                   fullWidth
-                  label="Desciption"
+                  label="Description"
                   multiline
                   minRows={5}
                   value={value}
