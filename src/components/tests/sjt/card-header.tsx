@@ -1,5 +1,7 @@
-import { Stack, Typography, IconButton, LinearProgress } from "@mui/material";
+import { IconButton, LinearProgress, Stack, Typography } from "@mui/material";
+import { useStopwatch } from "react-timer-hook";
 import UnderlineButton from "./underline-button";
+import { useEffect } from "react";
 
 type CardHeaderProps = {
   questions: any[];
@@ -18,7 +20,12 @@ const CardHeader = ({
   loading,
   onSubmit,
 }: CardHeaderProps) => {
-  // console.log("questions", questions);
+  const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
+
+  useEffect(() => {
+    if (testComplete) return pause();
+  }, [testComplete, pause]);
+
   return (
     <>
       <UnderlineButton
@@ -64,6 +71,15 @@ const CardHeader = ({
             </IconButton>
           );
         })}
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ position: "absolute", top: 12, left: "calc(100% - 72px)" }}
+        >
+          {hours.toString().padStart(2, "0")}:
+          {minutes.toString().padStart(2, "0")}:
+          {seconds.toString().padStart(2, "0")}
+        </Typography>
       </Stack>
       {loading && <LinearProgress />}
     </>
