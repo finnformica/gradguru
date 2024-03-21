@@ -1,17 +1,15 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+"use client";
+import {
+  Box,
+  Button,
+  Modal,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React from "react";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { style } from "./styles";
 
 type TextModelProps = {
   active: boolean;
@@ -25,21 +23,44 @@ const TextModal = ({ active }: TextModelProps) => {
   if (active) {
     makeOpen;
   }
+  const theme = useTheme();
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} aria-labelledby="modal-modal-title">
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Text Editor
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <TextField
+            label="Enter Your Text here"
+            minRows={20}
+            multiline
+            fullWidth
+            sx={{ mt: 2 }}
+          ></TextField>
+          <Stack direction="row" gap={2} justifyContent={"space-between"}>
+            <Button
+              sx={{
+                mt: 2,
+                background: theme.palette.primary.main,
+                color: "white",
+                "&:hover": { background: theme.palette.primary.dark },
+              }}
+            >
+              Add
+            </Button>
+            <Button
+              sx={{
+                mt: 2,
+                background: "rgb(200, 0, 0)",
+                color: "white",
+                "&:hover": { background: "rgb(255, 0, 0)" },
+              }}
+              onClick={handleClose}
+            >
+              Close
+            </Button>
+          </Stack>
         </Box>
       </Modal>
     </div>
