@@ -33,7 +33,7 @@ const MultipleChoice = ({
       <RadioGroup onChange={handleChange} value={answer}>
         {options.map((option, index) => (
           <Stack
-            key={option}
+            key={index}
             spacing={2}
             direction="row"
             alignItems="center"
