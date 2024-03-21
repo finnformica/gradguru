@@ -33,6 +33,21 @@ const columns: GridColDef[] = [
       <Rating value={Math.ceil(params.value * 5)} readOnly />
     ),
   },
+  {
+    field: "time",
+    headerName: "Time taken",
+    width: 150,
+    renderCell: (params) => {
+      const date = new Date(params.value);
+      const hours = date.getUTCHours();
+      const minutes = date.getUTCMinutes();
+      const seconds = date.getUTCSeconds();
+
+      return params.value
+        ? `${hours ? `${hours}h ` : ""}${minutes ? `${minutes}m ` : ""}${seconds ? `${seconds}s` : ""}`
+        : null;
+    },
+  },
 ];
 
 const CourseTests = () => {
@@ -48,6 +63,7 @@ const CourseTests = () => {
           score: test.score.percent,
           id: test.date,
           rating: test.score.percent,
+          time: test.time,
         }))
       )
     );

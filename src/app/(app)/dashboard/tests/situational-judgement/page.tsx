@@ -22,6 +22,7 @@ type SJTQuestion = {
 };
 
 const SituationalJudgementTest = () => {
+  const timeStarted = Date.now();
   const { data: session } = useSession();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
@@ -76,16 +77,26 @@ const SituationalJudgementTest = () => {
       total: marked.length,
     };
     const date = Date.now();
+    const timeTaken = date - timeStarted;
     const type = { label: "Situational Judgement", name: "sjt" };
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results
-    createTestRecord({ score, date, type, questionIds }, session!.user.id);
-
-    // update state
-    setQuestions(marked);
-    setTestComplete(true);
-    setTestLoading(false);
+    createTestRecord(
+      { score, date, type, questionIds, time: timeTaken },
+      session!.user.id
+    )
+      .then(() => enqueueSnackbar("Test result saved"))
+      .catch((err) =>
+        enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        setQuestions(marked);
+        setTestComplete(true);
+        setTestLoading(false);
+      });
   };
 
   const handleEndTest = (data: any) => {
