@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import NewPost from "@/components/BlogForm/NewPost";
+import NewPost from "components/BlogForm/NewPost";
 
 const page = () => {
   return (

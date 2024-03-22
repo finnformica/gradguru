@@ -1,7 +1,7 @@
 "use client";
-import { useBlogs } from "@/api/blog";
-import BlogCard from "@/components/BlogPage/Cards/BlogCard";
-import { LoadingScreen } from "@/components/global-components";
+import { useBlogs } from "api/blog";
+import BlogCard from "components/BlogPage/Cards/BlogCard";
+import { LoadingScreen } from "components/global-components";
 import { Container } from "@mui/material";
 
 const borderColor = "lightgrey";
