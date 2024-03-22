@@ -10,32 +10,26 @@ import { useStepsForm } from "hooks/useStepsForm";
 
 import CardActions from "../card-actions";
 import CardHeader from "../card-header";
-import MultipleChoice from "./multiple-choice";
-import RankOrder from "./rank-order";
-import TestSolution from "./test-solution";
 
-type SJTTestCardProps = {
+type NRTestCardProps = {
   questions: any[];
   handleEndTest: (data: any) => void;
   testComplete: boolean;
   testLoading: boolean;
 };
 
-const SJTTestCard = ({
+const NRTestCard = ({
   questions,
   handleEndTest,
   testComplete,
   testLoading,
-}: SJTTestCardProps) => {
+}: NRTestCardProps) => {
   const [endTestDialogOpen, setEndTestDialogOpen] = useState(false);
   const { handleSubmit, currentStep, gotoStep, control, setValue } =
     useStepsForm({
       isBackValidate: false,
       initialStep: 0,
     });
-
-  const handleRankOrderChange = (newOptions: string[]) =>
-    setValue(currentStep.toString(), newOptions);
 
   return (
     <form onSubmit={handleSubmit(handleEndTest)}>
@@ -58,45 +52,7 @@ const SJTTestCard = ({
               {questions[currentStep].question}
             </Typography>
           </Stack>
-          {questions.map(
-            (question, index) =>
-              index === currentStep &&
-              (question.type === "multiple" ? (
-                <Controller
-                  key={index}
-                  name={currentStep.toString()}
-                  control={control}
-                  rules={{ required: true }}
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <MultipleChoice
-                      setAnswer={onChange}
-                      answer={value}
-                      options={questions[currentStep].options}
-                      error={!!error}
-                      helperText={!!error && "Answer is required"}
-                    />
-                  )}
-                />
-              ) : (
-                <Controller
-                  key={index}
-                  name={currentStep.toString()}
-                  control={control}
-                  render={() => (
-                    <RankOrder
-                      setOptions={handleRankOrderChange}
-                      options={questions[currentStep].shuffled}
-                    />
-                  )}
-                />
-              ))
-          )}
-          {testComplete && (
-            <TestSolution currentStep={currentStep} questions={questions} />
-          )}
+
           <CardActions
             testComplete={testComplete}
             questions={questions}
@@ -119,4 +75,4 @@ const SJTTestCard = ({
   );
 };
 
-export default SJTTestCard;
+export default NRTestCard;
