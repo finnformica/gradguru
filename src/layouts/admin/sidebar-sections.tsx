@@ -13,9 +13,6 @@ import {
   Pin,
   Quiz,
   ViewInAr,
-  BookmarkAdd,
-  Book,
-  CollectionsBookmark,
 } from "@mui/icons-material";
 
 export const sidebarSections = [
