@@ -4,6 +4,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Tooltip,
 } from "@mui/material";
 import ListCollapse from "./list-collapse";
 
@@ -27,7 +28,9 @@ const ListCollapseItem = ({ section }: any) => {
               justifyContent: "center",
             }}
           >
-            {section.icon}
+            <Tooltip title={section.name} placement="right">
+              {section.icon}
+            </Tooltip>
           </ListItemIcon>
           <ListItemText primary={section.name} />
         </ListItemButton>
