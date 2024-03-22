@@ -13,6 +13,11 @@ import { FirestoreCollectionType, FirestoreDataType } from "./types";
 
 const db = getFirestore(app);
 
+export const getDocumentIds = async (collectionName: string) => {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  return querySnapshot.docs.map((doc) => doc.id);
+};
+
 const addData = async (
   data: FirestoreDataType,
   id: string | null,
