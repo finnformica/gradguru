@@ -6,7 +6,7 @@ import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Pie } from "react-chartjs-2";
 
-import { IGraphForm } from "@/components/NRForm/types";
+import { IGraphForm } from "components/NRForm/types";
 
 Chart.register(CategoryScale, ChartDataLabels);
 

@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from "@mui/material";
 
-import { useCourse } from "@/context/course";
+import { useCourse } from "context/course";
 
 type BulletType = {
   title: string;

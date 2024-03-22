@@ -1,22 +1,20 @@
-import React from "react";
 import Link from "next/link";
+import { useState } from "react";
 
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
-  Tooltip,
+  IconButton,
   Menu,
   MenuItem,
-  IconButton,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 
 import { pages } from "./pages";
 
 const MenuButton = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };

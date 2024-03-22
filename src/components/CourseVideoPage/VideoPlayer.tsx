@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 
-import { useCourse } from "@/context/course";
+import { useCourse } from "context/course";
 import { Box, CircularProgress } from "@mui/material";
 
 const VideoPlayer = () => {

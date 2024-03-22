@@ -2,11 +2,11 @@
 
 import { Container } from "@mui/material";
 
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
-import ContainerTitle from "@/components/LandingPage/Titles/ContainerTitle";
-import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
-import FeaturesList from "@/components/LandingPage/FeaturesList";
-import CustomAccordion from "@/components/LandingPage/CustomAccordion";
+import SmallTitle from "components/LandingPage/Titles/SmallTitle";
+import ContainerTitle from "components/LandingPage/Titles/ContainerTitle";
+import ColouredContainer from "components/LandingPage/Containers/ColouredContainer";
+import FeaturesList from "components/LandingPage/FeaturesList";
+import CustomAccordion from "components/LandingPage/CustomAccordion";
 
 const accordionItems = [
   {

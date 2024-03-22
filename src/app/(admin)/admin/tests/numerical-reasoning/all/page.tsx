@@ -15,12 +15,12 @@ import {
 import { useSession } from "next-auth/react";
 import _ from "lodash";
 
-import { LoadingScreen } from "@/components/global-components";
+import { LoadingScreen } from "components/global-components";
 
-import NRModal from "@/components/NRForm/NRModal";
-import { NRQuestion } from "@/components/NRForm/types";
+import NRModal from "components/NRForm/NRModal";
+import { NRQuestion } from "components/NRForm/types";
 
-import { useNRTests } from "@/api/tests";
+import { useNRTests } from "api/tests";
 
 const NRListItem = ({
   refresh,

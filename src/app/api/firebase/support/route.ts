@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { addData } from "@/firebase/utils";
+import { addData } from "lib/firebase/utils";
 
 export async function POST(request: NextRequest) {
   const { name, email, message } = await request.json();

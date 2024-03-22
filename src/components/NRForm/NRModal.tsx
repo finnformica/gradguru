@@ -1,4 +1,4 @@
-import { deleteNRTest, postNRTest } from "@/api/tests";
+import { deleteNRTest, postNRTest } from "api/tests";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import FormModalWrapper from "../global-components/FormModalWrapper";

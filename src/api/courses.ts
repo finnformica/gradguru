@@ -1,6 +1,26 @@
+import { endpoints, getFetcher, postFetcher } from "utils/axios";
 import { useMemo } from "react";
 import useSWR from "swr";
-import { endpoints, getFetcher, postFetcher } from "@/utils/axios";
+
+// list of course ids
+export function useCourseIds() {
+  const URL = endpoints.admin.courses.all;
+  const { data, isLoading, error, isValidating, mutate } = useSWR(
+    URL,
+    getFetcher
+  );
+
+  return useMemo(
+    () => ({
+      courseIds: data?.documents.map((doc: any) => doc.id),
+      loading: isLoading,
+      error,
+      isValidating,
+      refresh: () => mutate(),
+    }),
+    [data, error, isLoading, isValidating, mutate]
+  );
+}
 
 // list of courses
 export function useCourses() {

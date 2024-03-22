@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { useSnackbar } from "notistack";
 
-import { deleteSJTTest, postSJTTest } from "@/api/tests";
-import FormModalWrapper from "@/components/global-components/FormModalWrapper";
+import { deleteSJTTest, postSJTTest } from "api/tests";
+import FormModalWrapper from "components/global-components/FormModalWrapper";
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
 

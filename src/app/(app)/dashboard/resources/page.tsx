@@ -1,13 +1,8 @@
-import { Box, Container, Typography } from "@mui/material";
+import { PageBreadcrumbs } from "components/global-components";
 
 const CourseResources = () => {
   return (
-    <Container sx={{ pt: 4 }}>
-      <Typography variant="h2" fontWeight={500}>
-        Your Resources
-      </Typography>
-      <Box></Box>
-    </Container>
+    <PageBreadcrumbs header="Resources" links={[{ label: "Resources" }]} />
   );
 };
 

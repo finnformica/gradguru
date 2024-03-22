@@ -2,10 +2,10 @@
 
 import { Box, Container, useTheme } from "@mui/material";
 
-import ColouredContainer from "@/components/LandingPage/Containers/ColouredContainer";
-import FullWidthContainer from "@/components/LandingPage/Containers/FullWidthContainer";
-import CustomAccordion from "@/components/LandingPage/CustomAccordion";
-import SmallTitle from "@/components/LandingPage/Titles/SmallTitle";
+import ColouredContainer from "components/LandingPage/Containers/ColouredContainer";
+import FullWidthContainer from "components/LandingPage/Containers/FullWidthContainer";
+import CustomAccordion from "components/LandingPage/CustomAccordion";
+import SmallTitle from "components/LandingPage/Titles/SmallTitle";
 
 const questions = [
   {

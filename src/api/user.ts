@@ -1,11 +1,9 @@
-import {
-  deleteFetcher,
-  endpoints,
-  getFetcher,
-  postFetcher,
-} from "@/utils/axios";
+import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
 import { useMemo } from "react";
 import useSWR from "swr";
+
+import { db } from "lib/firebase/config";
+import { doc, getDoc } from "firebase/firestore";
 
 export function useUsers() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
@@ -33,4 +31,9 @@ export function postUser(id: string, data: any) {
 export function deleteUser(id: string) {
   const URL = endpoints.admin.users.user(id);
   return deleteFetcher(URL);
+}
+
+export function userUserMeta(id: string) {
+  const docRef = doc(db, "user-meta", id);
+  return getDoc(docRef).then((doc) => doc.data());
 }
