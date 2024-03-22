@@ -7,10 +7,10 @@ export const pages = [
     name: "Blog",
     route: "/blog",
   },
-  {
-    name: "Courses",
-    route: "/courses",
-  },
+  // {
+  //   name: "Courses",
+  //   route: "/courses",
+  // },
   {
     name: "Learn More",
     route: "/learn-more",

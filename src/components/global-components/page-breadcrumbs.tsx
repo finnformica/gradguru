@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { ChevronRight } from "@mui/icons-material";
-import { Breadcrumbs, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Typography } from "@mui/material";
 
 type BreadcrumbLinkProps = {
   href?: string;
@@ -56,7 +56,7 @@ const PageBreadcrumbs = ({ header, links }: PageBreadcrumbsProps) => {
   const lastLink = links[links.length - 1];
 
   return (
-    <>
+    <Box>
       <Typography pb={1} variant="h4" textTransform="capitalize">
         {header}
       </Typography>
@@ -65,7 +65,7 @@ const PageBreadcrumbs = ({ header, links }: PageBreadcrumbsProps) => {
           <LinkItem key={key} link={link} last={lastLink === link} />
         ))}
       </Breadcrumbs>
-    </>
+    </Box>
   );
 };
 

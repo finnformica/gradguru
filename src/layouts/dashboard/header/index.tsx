@@ -7,13 +7,14 @@ const DashboardHeader = ({ height }: { height: number }) => {
     <AppBar
       position="fixed"
       sx={{
-        background: "#FFF",
-        boxShadow: "none",
+        background: "transparent",
+        backdropFilter: "blur(10px)",
         px: 4,
         height: `${height}px`,
+        boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2)",
       }}
     >
-      <Toolbar sx={{ backgroundColor: "#FFF", my: "auto" }} disableGutters>
+      <Toolbar sx={{ my: "auto" }} disableGutters>
         <Box display="flex" alignItems="center" flexGrow={1} />
 
         <AuthButton />

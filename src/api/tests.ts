@@ -2,6 +2,9 @@ import { useMemo } from "react";
 import useSWR from "swr";
 import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
 
+import { arrayUnion, doc, setDoc } from "firebase/firestore";
+import { db } from "lib/firebase/config";
+
 export function useSJTTests() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
     endpoints.admin.tests.sjt.all,
@@ -57,3 +60,10 @@ export function deleteNRTest(id: string) {
   const URL = endpoints.admin.tests.nr.test(id);
   return deleteFetcher(URL);
 }
+
+export const createTestRecord = (data: any, id: string) => {
+  const docRef = doc(db, "user-meta", id);
+
+  // setDoc automatically creates the document if it doesn't exists
+  return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
+};
