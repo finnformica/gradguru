@@ -1,4 +1,11 @@
-const TextType = [
+import { TypographyProps } from "@mui/material";
+
+type TextOptionsType = {
+  style: TypographyProps["variant"];
+  name: string;
+};
+
+const textOptions: TextOptionsType[] = [
   { style: "h4", name: "Large Heading" },
   { style: "h5", name: "Medium Heading" },
   { style: "h6", name: "Small Heading" },
@@ -8,4 +15,4 @@ const TextType = [
 
 const MenuItems = ["Text", "Video", "Picutre", "Table"];
 
-export { MenuItems, TextType };
+export { MenuItems, textOptions };

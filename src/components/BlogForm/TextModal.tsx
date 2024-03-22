@@ -12,7 +12,7 @@ import {
 import React from "react";
 import { style } from "./styles";
 import { Controller, useForm } from "react-hook-form";
-import { TextType } from "./StoredArrays";
+import { textOptions } from "./StoredArrays";
 
 type TextModelProps = {
   active: boolean;
@@ -42,7 +42,7 @@ const TextModal = ({ active }: TextModelProps) => {
             id="text-type"
             sx={{ mt: 2 }}
           >
-            {TextType.map((text) => (
+            {textOptions.map((text) => (
               <MenuItem key={text.name} value={text.name}>
                 <Typography variant={text.style}>{text.name}</Typography>
               </MenuItem>
