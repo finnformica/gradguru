@@ -22,15 +22,14 @@ type SJTQuestion = {
 };
 
 const SituationalJudgementTest = () => {
-  const timeStarted = Date.now();
-  const { data: session } = useSession();
-  const [testComplete, setTestComplete] = useState(false);
-  const [testLoading, setTestLoading] = useState(false);
   const { questions: allQuestions } = useSJTTests();
   const { enqueueSnackbar } = useSnackbar();
+  const { data: session } = useSession();
+  const timeStarted = Date.now();
 
-  // map questions into a flat array
   const [questions, setQuestions] = useState<SJTQuestion[]>();
+  const [testComplete, setTestComplete] = useState(false);
+  const [testLoading, setTestLoading] = useState(false);
 
   useEffect(() => {
     if (allQuestions) {
@@ -69,7 +68,6 @@ const SituationalJudgementTest = () => {
     });
 
     // calculate test metrics
-    // TODO: include time taken
     const correct = marked.filter((q) => q.success).length;
     const score = {
       percent: correct / marked.length,
