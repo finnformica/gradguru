@@ -10,6 +10,9 @@ import {
   Pin,
   Quiz,
   ViewInAr,
+  BookmarkAdd,
+  Book,
+  CollectionsBookmark,
 } from "@mui/icons-material";
 
 export const sidebarSections = [
@@ -28,6 +31,25 @@ export const sidebarSections = [
         name: "Add Course",
         icon: <Add />,
         route: "/admin/courses/add",
+        active: true,
+      },
+    ],
+  },
+  {
+    name: "Blog",
+    icon: <Book />,
+    active: true,
+    children: [
+      {
+        name: "All Post",
+        icon: <CollectionsBookmark />,
+        route: "/admin/blog/all",
+        active: true,
+      },
+      {
+        name: "Add Post",
+        icon: <BookmarkAdd />,
+        route: "/admin/blog/add",
         active: true,
       },
     ],
