@@ -8,12 +8,10 @@ import {
   TextField,
 } from "@mui/material";
 import { blogStorage, postBlog } from "api/blog";
-import { fileStorage } from "lib/firebase/utils";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { endpoints } from "utils/axios";
 import { LoadingScreen } from "../global-components";
 import { tagOptions } from "./blogArrays";
 import { DataProps } from "./types";
