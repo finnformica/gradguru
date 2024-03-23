@@ -42,9 +42,9 @@ const NewCard = () => {
       return enqueueSnackbar("No file selected.", { variant: "error" });
     }
     const imageId = fileStorage(imageUpload, endpoints.admin.storage.blog)
-      .then(() => enqueueSnackbar("Image Uploaded"))
+      .then(() => enqueueSnackbar("Image uploaded successfully"))
       .catch(() =>
-        enqueueSnackbar("Image Upload Failed", {
+        enqueueSnackbar("Image upload failed", {
           variant: "error",
         })
       )

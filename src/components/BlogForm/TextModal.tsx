@@ -10,9 +10,8 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { style } from "./styles";
-import { Controller, useForm } from "react-hook-form";
 import { textOptions } from "./blogArrays";
+import { style } from "./styles";
 
 type TextModelProps = {
   active: boolean;

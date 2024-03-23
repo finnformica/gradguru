@@ -1,18 +1,17 @@
 import {
-  getFirestore,
-  doc,
-  collection,
-  setDoc,
   addDoc,
-  getDocs,
-  getDoc,
+  collection,
   deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  setDoc,
 } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
+import { v4 as uuid } from "uuid";
 import { app, storage } from "./config";
 import { FirestoreCollectionType, FirestoreDataType } from "./types";
-import { v4 as uuid } from "uuid";
-import { ref, uploadBytes } from "firebase/storage";
-import { endpoints } from "utils/axios";
 
 const db = getFirestore(app);
 
@@ -70,14 +69,14 @@ const retrieveDocument = async (
 
 export function fileStorage(file: File, endpoint: string) {
   const address = file.name + "_" + uuid();
-  const _ref = ref(storage, `${endpoint} /test/ ${address}`);
+  const _ref = ref(storage, `${endpoint + address}`);
   return uploadBytes(_ref, file).then(() => address);
 }
 
 export {
   addData,
-  retrieveDocumentIds,
-  retrieveDocument,
-  retrieveAllDocuments,
   deleteDocument,
+  retrieveAllDocuments,
+  retrieveDocument,
+  retrieveDocumentIds,
 };

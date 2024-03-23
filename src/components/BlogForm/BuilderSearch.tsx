@@ -70,7 +70,6 @@ const BuilderSearch = () => {
         ))}
       </Menu>
       {addingBlock === "Text" && <TextModal active={true} />}
-      {/* {true && <TextModal active={true} />} */}
     </Container>
   );
 };

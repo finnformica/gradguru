@@ -1,9 +1,6 @@
-import { endpoints, getFetcher, postFetcher } from "utils/axios";
-import { ref, uploadBytes } from "firebase/storage";
 import { useMemo } from "react";
 import useSWR from "swr";
-import { v4 as uuid } from "uuid";
-import { storage } from "lib/firebase/config";
+import { endpoints, getFetcher, postFetcher } from "utils/axios";
 
 // list of blogs
 export function useBlogs() {
