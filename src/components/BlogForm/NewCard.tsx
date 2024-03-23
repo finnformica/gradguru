@@ -7,13 +7,11 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { postBlog } from "api/blog";
-import { fileStorage } from "lib/firebase/utils";
+import { blogStorage, postBlog } from "api/blog";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { endpoints } from "utils/axios";
 import { LoadingScreen } from "../global-components";
 import { tagOptions } from "./blogArrays";
 import { DataProps } from "./types";
@@ -41,29 +39,29 @@ const NewCard = () => {
     if (!imageUpload) {
       return enqueueSnackbar("No file selected.", { variant: "error" });
     }
-    const imageId = fileStorage(imageUpload, endpoints.admin.storage.blog)
-      .then(() => enqueueSnackbar("Image uploaded successfully"))
-      .catch(() =>
-        enqueueSnackbar("Image upload failed", {
-          variant: "error",
-        })
-      )
-      .finally(() => setImageUpload(null));
-
-    postBlog(null, {
-      ...data,
-      author: user.name,
-      date: new Date().toDateString(),
-      authorId: user.id,
-      imageId: imageId,
-    })
-      .then(() => enqueueSnackbar("Blog Card has been added"))
-      .catch((e) =>
-        enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => reset());
+    let imageId;
+    let blogSlug;
+    blogStorage(imageUpload, data.title).then((res) => {
+      ({ imageId, blogSlug } = res);
+      postBlog(null, {
+        ...data,
+        author: user.name,
+        date: new Date().toDateString(),
+        authorId: user.id,
+        imageId: imageId,
+        slug: blogSlug,
+      })
+        .then(() => enqueueSnackbar("Blog card has been added"))
+        .catch((e) =>
+          enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
+            variant: "error",
+          })
+        )
+        .finally(() => {
+          reset();
+          setImageUpload(null);
+        });
+    });
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
