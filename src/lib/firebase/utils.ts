@@ -67,9 +67,12 @@ const retrieveDocument = async (
   return docSnap.exists() ? docSnap.data() : null;
 };
 
-export function fileStorage(file: File, endpoint: string) {
+export function fileStorage(file: File, folder: string, subfolder?: string) {
   const address = file.name + "_" + uuid();
-  const _ref = ref(storage, `${endpoint + address}`);
+  const _ref = ref(
+    storage,
+    `${folder}/${subfolder ? `${subfolder}/` : ""}${address}`
+  );
   return uploadBytes(_ref, file).then(() => address);
 }
 

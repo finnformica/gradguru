@@ -7,7 +7,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { postBlog } from "api/blog";
+import { blogStorage, postBlog } from "api/blog";
 import { fileStorage } from "lib/firebase/utils";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
@@ -41,7 +41,7 @@ const NewCard = () => {
     if (!imageUpload) {
       return enqueueSnackbar("No file selected.", { variant: "error" });
     }
-    const imageId = fileStorage(imageUpload, endpoints.admin.storage.blog)
+    const imageId = blogStorage(imageUpload, data.title)
       .then(() => enqueueSnackbar("Image uploaded successfully"))
       .catch(() =>
         enqueueSnackbar("Image upload failed", {
