@@ -1,72 +1,80 @@
 "use client";
 
 import _ from "lodash";
+import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 
-import { createTestRecord, useSJTTests } from "api/tests";
+import { createTestRecord, getNRTests } from "api/tests";
 
 import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
 import TopPanel from "components/tests/nr/top-panel";
 
-type SJTQuestion = {
+type NRQuestion = {
   question: string;
   scenario: string;
-  type: "multiple" | "rank";
+  type: "table" | "graph" | "gmat";
   options: string[];
   shuffled: string[];
   answer: string;
   success: boolean | null;
-  id?: string;
+  id: string;
 };
 
 const NumericalReasoningTest = () => {
-  const { questions: allQuestions } = useSJTTests();
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
   const timeStarted = Date.now();
 
-  const [questions, setQuestions] = useState<SJTQuestion[]>();
+  const [questions, setQuestions] = useState<NRQuestion[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
 
+  const fetchTableOrGraph = async (type: string) => {
+    const tableQuestions = await getNRTests(type);
+    const sample = _.sample(tableQuestions) as any;
+    const questions = sample.questions.map((q: any) => ({
+      ...q,
+      ..._.omit(sample, ["questions", "created"]),
+      success: null,
+    }));
+
+    return questions;
+  };
+
+  const fetchGmat = async () => {
+    const gmatQuestions = await getNRTests("gmat");
+    const samples = _.sampleSize(gmatQuestions, 2) as any;
+    const questions = samples.map((q: any) => ({
+      ..._.omit(q, "created"),
+      success: null,
+    }));
+
+    return questions;
+  };
+
   useEffect(() => {
-    if (allQuestions) {
-      setQuestions(
-        _.shuffle(allQuestions)
-          ?.slice(0, 4) // TODO: provide questions the user hasn't seen
-          .map((question) =>
-            question.questions.map((q: any) => ({
-              ...q,
-              success: null,
-              shuffled: _.shuffle(q.options),
-              id: question.id,
-              scenario: question.scenario,
-            }))
-          )
-          .flat()
+    const createTest = async () => {
+      const table = await fetchTableOrGraph("table");
+      const graph = await fetchTableOrGraph("graph");
+      const gmat = await fetchGmat();
+
+      Promise.all([table, graph, gmat]).then((values) =>
+        setQuestions(values.flat())
       );
-    }
-  }, [allQuestions]);
+    };
+
+    createTest();
+  }, []);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
   const markTest = (data: any) => {
-    const marked = questions.map((question, index) => {
-      return question.type === "multiple"
-        ? {
-            // mc answer may be string or number
-            ...question,
-            success: question.answer == data[index],
-          }
-        : {
-            // compare if arrays are equal and ordered the same
-            ...question,
-            success: _.isEqual(question.options, data[index]),
-          };
-    });
+    const marked = questions.map((question, index) => ({
+      ...question,
+      success: question.answer == data[index],
+    }));
 
     // calculate test metrics
     const correct = marked.filter((q) => q.success).length;
@@ -77,7 +85,7 @@ const NumericalReasoningTest = () => {
     };
     const date = Date.now();
     const timeTaken = date - timeStarted;
-    const type = { label: "Situational Judgement", name: "sjt" };
+    const type = { label: "Numerical Reasoning", name: "nr" };
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results

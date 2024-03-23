@@ -2,7 +2,15 @@ import { useMemo } from "react";
 import useSWR from "swr";
 import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
 
-import { arrayUnion, doc, setDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "lib/firebase/config";
 
 export function useSJTTests() {
@@ -48,6 +56,18 @@ export function useNRTests() {
       refresh: () => mutate(),
     }),
     [data, error, isLoading, isValidating, mutate]
+  );
+}
+
+export async function getNRTests(type: string) {
+  const nrRef = collection(db, "nr-consulting");
+  const q = query(nrRef, where("type", "==", type));
+
+  return getDocs(q).then((questions) =>
+    questions.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
   );
 }
 
