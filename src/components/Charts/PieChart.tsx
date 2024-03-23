@@ -48,6 +48,7 @@ const PieChart = ({ data }: PieChartProps) => {
     <Pie
       data={chartData}
       options={{
+        animation: false,
         plugins: {
           datalabels: {
             display: true,
