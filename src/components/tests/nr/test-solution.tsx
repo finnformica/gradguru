@@ -1,6 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
 import UnderlineButton from "../underline-button";
 import { useState } from "react";
+import { ClientWrapper } from "components/global-components";
+import { MathJax } from "better-react-mathjax";
 
 type TestSolutionProps = {
   currentStep: number;
@@ -26,15 +28,23 @@ const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {
         <Stack spacing={2} mt={2}>
           {questions[currentStep].type === "table" ||
           questions[currentStep].type === "graph" ? (
-            <Typography variant="body1">
-              Correct answer: {questions[currentStep].answer.value}
-            </Typography>
+            <>
+              <Typography variant="body1">
+                Correct answer: {questions[currentStep].answer.value}
+              </Typography>
+              <Typography variant="body1">
+                {questions[currentStep].explanation}
+              </Typography>
+            </>
           ) : (
-            <Box>{/* add latex parser */}</Box>
+            <Box>
+              <ClientWrapper>
+                <MathJax hideUntilTypeset={"first"}>
+                  {questions[currentStep].explanation}
+                </MathJax>
+              </ClientWrapper>
+            </Box>
           )}
-          <Typography variant="body1">
-            {questions[currentStep].explanation}
-          </Typography>
         </Stack>
       )}
     </>

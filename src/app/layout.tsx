@@ -13,6 +13,7 @@ import NextAuthProvider from "context/next-auth";
 import SnackbarContext from "context/snackbar";
 
 import favicons from "./favicons";
+import LatexContext from "context/latex";
 
 export const metadata = {
   title: "gradguru",
@@ -30,7 +31,9 @@ export default function RootLayout({
       <NextAuthProvider>
         <html lang="en">
           <body suppressHydrationWarning={true}>
-            <SnackbarContext>{children}</SnackbarContext>
+            <SnackbarContext>
+              <LatexContext>{children}</LatexContext>
+            </SnackbarContext>
           </body>
         </html>
       </NextAuthProvider>
