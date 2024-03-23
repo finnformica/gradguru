@@ -1,8 +1,11 @@
-import { Box, Stack, Typography } from "@mui/material";
-import UnderlineButton from "../underline-button";
 import { useState } from "react";
-import { ClientWrapper } from "components/global-components";
+
+import { Stack, Typography } from "@mui/material";
 import { MathJax } from "better-react-mathjax";
+
+import { ClientWrapper } from "components/global-components";
+
+import UnderlineButton from "../underline-button";
 
 type TestSolutionProps = {
   currentStep: number;
@@ -26,8 +29,7 @@ const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {
       />
       {showSolution[currentStep] && (
         <Stack spacing={2} mt={2}>
-          {questions[currentStep].type === "table" ||
-          questions[currentStep].type === "graph" ? (
+          {questions[currentStep].type !== "gmat" ? (
             <>
               <Typography variant="body1">
                 Correct answer: {questions[currentStep].answer.value}
@@ -37,13 +39,11 @@ const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {
               </Typography>
             </>
           ) : (
-            <Box>
-              <ClientWrapper>
-                <MathJax hideUntilTypeset={"first"}>
-                  {questions[currentStep].explanation}
-                </MathJax>
-              </ClientWrapper>
-            </Box>
+            <ClientWrapper>
+              <MathJax hideUntilTypeset={"first"}>
+                {questions[currentStep].explanation}
+              </MathJax>
+            </ClientWrapper>
           )}
         </Stack>
       )}
