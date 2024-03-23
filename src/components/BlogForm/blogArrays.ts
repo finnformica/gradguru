@@ -13,6 +13,8 @@ const textOptions: TextOptionsType[] = [
   { style: "body2", name: "Body Two" },
 ];
 
-const MenuItems = ["Text", "Video", "Picutre", "Table"];
+const menuItems = ["Text", "Video", "Picutre", "Table"];
 
-export { MenuItems, textOptions };
+const tagOptions = ["Finance", "Jobs", "Education", "Loose Cannon"];
+
+export { menuItems, textOptions, tagOptions };

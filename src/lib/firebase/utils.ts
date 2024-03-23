@@ -8,8 +8,11 @@ import {
   getDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { app } from "./config";
+import { app, storage } from "./config";
 import { FirestoreCollectionType, FirestoreDataType } from "./types";
+import { v4 as uuid } from "uuid";
+import { ref, uploadBytes } from "firebase/storage";
+import { endpoints } from "utils/axios";
 
 const db = getFirestore(app);
 
@@ -64,6 +67,12 @@ const retrieveDocument = async (
   const docSnap = await getDoc(docRef);
   return docSnap.exists() ? docSnap.data() : null;
 };
+
+export function fileStorage(file: File, endpoint: string) {
+  const address = file.name + "_" + uuid();
+  const _ref = ref(storage, `${endpoint} /test/ ${address}`);
+  return uploadBytes(_ref, file).then(() => address);
+}
 
 export {
   addData,

@@ -12,7 +12,7 @@ import {
 import React from "react";
 import { style } from "./styles";
 import { Controller, useForm } from "react-hook-form";
-import { textOptions } from "./StoredArrays";
+import { textOptions } from "./blogArrays";
 
 type TextModelProps = {
   active: boolean;

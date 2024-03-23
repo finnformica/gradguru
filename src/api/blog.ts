@@ -28,9 +28,3 @@ export function postBlog(id: string | null, data: any) {
   const URL = endpoints.admin.blogs.blog(id);
   return postFetcher([URL, {}, data]);
 }
-
-export function storageBlog(file: File, endpoint?: string) {
-  const address = file.name + uuid();
-  const _ref = ref(storage, `${endpoints.admin.storage.blogImage + address}`);
-  return uploadBytes(_ref, file).then(() => address);
-}

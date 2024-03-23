@@ -1,18 +1,21 @@
 "use client"; // needed for useform
-import { postBlog, storageBlog } from "api/blog";
 import {
-  Button,
-  Stack,
-  TextField,
   Box,
+  Button,
   Container,
   MenuItem,
+  Stack,
+  TextField,
 } from "@mui/material";
+import { postBlog } from "api/blog";
+import { fileStorage } from "lib/firebase/utils";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { endpoints } from "utils/axios";
 import { LoadingScreen } from "../global-components";
+import { tagOptions } from "./blogArrays";
 import { DataProps } from "./types";
 
 const NewCard = () => {
@@ -38,7 +41,7 @@ const NewCard = () => {
     if (!imageUpload) {
       return enqueueSnackbar("No file selected.", { variant: "error" });
     }
-    const imageId = storageBlog(imageUpload)
+    const imageId = fileStorage(imageUpload, endpoints.admin.storage.blog)
       .then(() => enqueueSnackbar("Image Uploaded"))
       .catch(() =>
         enqueueSnackbar("Image Upload Failed", {
@@ -54,9 +57,9 @@ const NewCard = () => {
       authorId: user.id,
       imageId: imageId,
     })
-      .then(() => enqueueSnackbar("Post has been added"))
+      .then(() => enqueueSnackbar("Blog Card has been added"))
       .catch((e) =>
-        enqueueSnackbar(`Error adding the post: ${e.message}`, {
+        enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
           variant: "error",
         })
       )
@@ -150,7 +153,6 @@ const NewCard = () => {
                   size="small"
                   sx={{ my: "10px" }}
                 >
-                  {" "}
                   {tagOptions.map((option) => (
                     <MenuItem key={option} value={option}>
                       {option}
@@ -173,5 +175,3 @@ const NewCard = () => {
 };
 
 export default NewCard;
-
-const tagOptions = ["Finance", "Jobs", "Education", "Loose Cannon"];

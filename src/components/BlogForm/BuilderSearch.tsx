@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import TextModal from "./TextModal";
-import { MenuItems } from "./StoredArrays";
+import { menuItems } from "./blogArrays";
 
 const BuilderSearch = () => {
   const theme = useTheme();
@@ -57,7 +57,7 @@ const BuilderSearch = () => {
           "aria-labelledby": "add-button",
         }}
       >
-        {MenuItems.map((item) => (
+        {menuItems.map((item) => (
           <MenuItem
             key={item}
             onClick={() => {
