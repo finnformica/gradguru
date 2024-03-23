@@ -3,6 +3,10 @@ export const pages = [
     name: "Home",
     route: "/",
   },
+  {
+    name: "Blog",
+    route: "/blog",
+  },
   // {
   //   name: "Courses",
   //   route: "/courses",

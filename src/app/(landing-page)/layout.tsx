@@ -8,11 +8,10 @@ export default async function PrimaryLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-
-  if (session?.user) {
-    redirect("/dashboard");
-  }
+  // const session = await getServerSession(authOptions);
+  // if (session?.user) {
+  //   redirect("/dashboard");
+  // }
 
   return (
     <>
