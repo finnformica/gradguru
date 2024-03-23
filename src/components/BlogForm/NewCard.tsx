@@ -58,7 +58,8 @@ const NewCard = () => {
           })
         )
         .finally(() => {
-          reset(), setImageUpload(null);
+          reset();
+          setImageUpload(null);
         });
     });
   };
