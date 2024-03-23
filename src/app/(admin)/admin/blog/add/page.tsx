@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import NewCard from "components/BlogForm/NewCard";
 import NewPost from "components/BlogForm/NewPost";
 
 const page = () => {
@@ -8,12 +9,13 @@ const page = () => {
         Add blog post
       </Typography>
       <Typography variant="h5" pb={2}>
-        Card Detials
+        Card Details
+      </Typography>
+      <NewCard />
+      <Typography variant="h5" py={2}>
+        Blog Builder
       </Typography>
       <NewPost />
-      <Typography variant="h5" py={2}>
-        Blog Details
-      </Typography>
     </>
   );
 };

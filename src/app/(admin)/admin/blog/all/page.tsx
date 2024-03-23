@@ -1,7 +1,5 @@
-import NewPost from "components/BlogForm/NewPost";
-
 const page = () => {
-  return <NewPost />;
+  return <div>Hello World</div>;
 };
 
 export default page;
