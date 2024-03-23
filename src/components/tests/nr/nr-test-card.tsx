@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 
-import { Card, Stack, Typography } from "@mui/material";
+import { Card, Stack, TextField, Typography } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
+import { BarChart, LineChart, PieChart } from "components/Charts";
 import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 
 import CardActions from "../card-actions";
 import CardHeader from "../card-header";
+import TestSolution from "./test-solution";
 
 type NRTestCardProps = {
   questions: any[];
@@ -25,11 +28,10 @@ const NRTestCard = ({
   testLoading,
 }: NRTestCardProps) => {
   const [endTestDialogOpen, setEndTestDialogOpen] = useState(false);
-  const { handleSubmit, currentStep, gotoStep, control, setValue } =
-    useStepsForm({
-      isBackValidate: false,
-      initialStep: 0,
-    });
+  const { handleSubmit, currentStep, gotoStep, control } = useStepsForm({
+    isBackValidate: false,
+    initialStep: 0,
+  });
 
   return (
     <form onSubmit={handleSubmit(handleEndTest)}>
@@ -52,6 +54,65 @@ const NRTestCard = ({
               {questions[currentStep].question}
             </Typography>
           </Stack>
+
+          {questions.map(
+            (question, index) =>
+              index === currentStep && (
+                <React.Fragment key={index}>
+                  {question.type === "table" && (
+                    <DataGrid
+                      rows={question.data.rows.map(
+                        (row: any, index: number) => ({
+                          id: index,
+                          ...row,
+                        })
+                      )}
+                      columns={question.data.columns.map((column: any) => ({
+                        ...column,
+                        width: 200,
+                      }))}
+                      hideFooter
+                    />
+                  )}
+                  {question.type === "graph" && (
+                    <Stack maxHeight={500} alignItems="center">
+                      {question.graph === "pie" && (
+                        <PieChart data={question.data} />
+                      )}
+                      {question.graph === "bar" && (
+                        <BarChart data={question.data} />
+                      )}
+                      {question.graph === "line" && (
+                        <LineChart data={question.data} />
+                      )}
+                    </Stack>
+                  )}
+                  <Controller
+                    key={index}
+                    name={currentStep.toString()}
+                    control={control}
+                    // rules={{ required: true }}
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        label="Answer"
+                        onChange={onChange}
+                        value={value}
+                        error={!!error}
+                        helperText={!!error && "Answer is required"}
+                        sx={{ maxWidth: 200 }}
+                      />
+                    )}
+                  />
+                </React.Fragment>
+              )
+          )}
+
+          {testComplete && (
+            <TestSolution currentStep={currentStep} questions={questions} />
+          )}
 
           <CardActions
             testComplete={testComplete}
