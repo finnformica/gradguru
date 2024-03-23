@@ -41,32 +41,26 @@ const NewCard = () => {
     }
     let imageId;
     let blogSlug;
-    blogStorage(imageUpload, data.title)
-      .then((res) => {
-        ({ imageId, blogSlug } = res);
-        postBlog(null, {
-          ...data,
-          author: user.name,
-          date: new Date().toDateString(),
-          authorId: user.id,
-          imageId: imageId,
-          slug: blogSlug,
-        })
-          .then(() => enqueueSnackbar("Blog card has been added"))
-          .catch((e) =>
-            enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
-              variant: "error",
-            })
-          )
-          .finally(() => reset());
+    blogStorage(imageUpload, data.title).then((res) => {
+      ({ imageId, blogSlug } = res);
+      postBlog(null, {
+        ...data,
+        author: user.name,
+        date: new Date().toDateString(),
+        authorId: user.id,
+        imageId: imageId,
+        slug: blogSlug,
       })
-      .then(() => enqueueSnackbar("Image uploaded successfully"))
-      .catch(() =>
-        enqueueSnackbar("Image upload failed", {
-          variant: "error",
-        })
-      )
-      .finally(() => setImageUpload(null));
+        .then(() => enqueueSnackbar("Blog card has been added"))
+        .catch((e) =>
+          enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
+            variant: "error",
+          })
+        )
+        .finally(() => {
+          reset(), setImageUpload(null);
+        });
+    });
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
