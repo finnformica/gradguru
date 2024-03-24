@@ -47,6 +47,20 @@ const renderGraph = (question: any) =>
     </Stack>
   );
 
+const inputType = (type: string) => {
+  switch (type) {
+    case "percentage":
+    case "currency":
+    case "number":
+      return "number";
+    case "ratio":
+    case "other":
+      return "text";
+    default:
+      return "text";
+  }
+};
+
 const renderEndAdornment = (type: string) => {
   let adornment;
   switch (type) {
@@ -93,8 +107,15 @@ const renderInputFields = (
                 onChange={onChange}
                 value={value}
                 error={!!error}
+                type={inputType(question.answer.value.type)}
                 helperText={!!error && `${_.startCase(option)} is required`}
                 sx={{ maxWidth: 200 }}
+                InputProps={{
+                  endAdornment: renderEndAdornment(question.answer.value.type),
+                  startAdornment: renderStartAdornment(
+                    question.answer.value.type
+                  ),
+                }}
               />
             )}
           />
@@ -108,6 +129,7 @@ const renderInputFields = (
       rules={{ required: true }}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
+          type={inputType(question.answer.type)}
           label="Answer"
           onChange={onChange}
           value={value}
