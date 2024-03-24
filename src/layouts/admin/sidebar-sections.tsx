@@ -1,18 +1,18 @@
 import {
   Abc,
   Add,
+  AddBox,
   AllInclusive,
+  Book,
   Dashboard,
   Extension,
   GolfCourse,
   Group,
   Hardware,
+  LibraryBooks,
   Pin,
   Quiz,
   ViewInAr,
-  BookmarkAdd,
-  Book,
-  CollectionsBookmark,
 } from "@mui/icons-material";
 
 export const sidebarSections = [
@@ -41,14 +41,14 @@ export const sidebarSections = [
     active: true,
     children: [
       {
-        name: "All Post",
-        icon: <CollectionsBookmark />,
+        name: "All Posts",
+        icon: <LibraryBooks />,
         route: "/admin/blog/all",
         active: true,
       },
       {
         name: "Add Post",
-        icon: <BookmarkAdd />,
+        icon: <AddBox />,
         route: "/admin/blog/add",
         active: true,
       },

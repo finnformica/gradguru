@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
@@ -14,31 +14,31 @@ type PieChartProps = {
   data: IGraphForm["data"];
 };
 
-const PieChart = ({ data }: PieChartProps) => {
+const buildChartData = (data: IGraphForm["data"]) => {
   const { columns, rows } = data;
   const labels = rows.map((row) => row[columns[0].field]);
 
-  const datasets = useMemo(
-    () => [
-      {
-        label: columns[1].headerName,
-        data: rows.map((row) => row[columns[1].field]),
-      },
-    ],
-    [columns, rows]
-  );
+  const datasets = [
+    {
+      label: columns[1].headerName,
+      data: rows.map((row) => row[columns[1].field]),
+    },
+  ];
 
-  useEffect(() => {
-    setChartData({
-      labels,
-      datasets,
-    });
-  }, [data, columns, rows, labels, datasets]);
-
-  const [chartData, setChartData] = useState({
+  return {
     labels,
     datasets,
-  });
+  };
+};
+
+const PieChart = ({ data }: PieChartProps) => {
+  const { columns, rows } = data;
+
+  const [chartData, setChartData] = useState(buildChartData(data));
+
+  useEffect(() => {
+    setChartData(buildChartData(data));
+  }, [data]);
 
   if (columns.length < 2 || rows.length === 0) {
     return <>No data</>;
@@ -48,6 +48,7 @@ const PieChart = ({ data }: PieChartProps) => {
     <Pie
       data={chartData}
       options={{
+        animation: false,
         plugins: {
           datalabels: {
             display: true,

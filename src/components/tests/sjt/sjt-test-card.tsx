@@ -8,8 +8,8 @@ import { Card, Stack, Typography } from "@mui/material";
 import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 
-import CardActions from "./card-actions";
-import CardHeader from "./card-header";
+import CardActions from "../card-actions";
+import CardHeader from "../card-header";
 import MultipleChoice from "./multiple-choice";
 import RankOrder from "./rank-order";
 import TestSolution from "./test-solution";
