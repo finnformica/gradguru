@@ -1,15 +1,17 @@
 "use client";
 
+import _ from "lodash";
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 
-import { Card, Stack, TextField, Typography } from "@mui/material";
+import { Card, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 import { BarChart, LineChart, PieChart } from "components/Charts";
 import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 
+import { InfoOutlined } from "@mui/icons-material";
 import CardActions from "../card-actions";
 import CardHeader from "../card-header";
 import TestSolution from "./test-solution";
@@ -29,7 +31,7 @@ const NRTestCard = ({
 }: NRTestCardProps) => {
   const [endTestDialogOpen, setEndTestDialogOpen] = useState(false);
   const { handleSubmit, currentStep, gotoStep, control } = useStepsForm({
-    isBackValidate: false,
+    isBackValidate: true,
     initialStep: 0,
   });
 
@@ -46,7 +48,14 @@ const NRTestCard = ({
         />
         <Stack p={6} spacing={4}>
           <Stack spacing={2} mb={4}>
-            <Typography variant="h5">Question {currentStep + 1}</Typography>
+            <Stack spacing={2} direction="row" alignItems="center">
+              <Typography variant="h5">Question {currentStep + 1}</Typography>
+              <Tooltip title="For numerical values, provide answers to 2d.p. if not specified. For ratio values, provide answers in the form x:y.">
+                <InfoOutlined
+                  sx={{ color: "grey.400", fontSize: 20, cursor: "pointer" }}
+                />
+              </Tooltip>
+            </Stack>
             <Typography variant="body1">
               {questions[currentStep].scenario}
             </Typography>
@@ -70,6 +79,7 @@ const NRTestCard = ({
                       columns={question.data.columns.map((column: any) => ({
                         ...column,
                         width: 200,
+                        flex: 1,
                       }))}
                       hideFooter
                     />
@@ -87,25 +97,56 @@ const NRTestCard = ({
                       )}
                     </Stack>
                   )}
-                  <Controller
-                    key={index}
-                    name={currentStep.toString()}
-                    control={control}
-                    // rules={{ required: true }}
-                    render={({
-                      field: { onChange, value },
-                      fieldState: { error },
-                    }) => (
-                      <TextField
-                        label="Answer"
-                        onChange={onChange}
-                        value={value}
-                        error={!!error}
-                        helperText={!!error && "Answer is required"}
-                        sx={{ maxWidth: 200 }}
-                      />
-                    )}
-                  />
+                  {question.answer.type === "multiple" ? (
+                    <Stack spacing={2} direction="row">
+                      {Object.keys(_.omit(question.answer.value, "type"))
+                        .sort()
+                        .map((option, i) => (
+                          <Controller
+                            key={`${index}.${option}`}
+                            name={`${currentStep.toString()}.${option}`}
+                            control={control}
+                            rules={{ required: true }}
+                            render={({
+                              field: { onChange, value },
+                              fieldState: { error },
+                            }) => (
+                              <TextField
+                                label={_.startCase(option)}
+                                onChange={onChange}
+                                value={value}
+                                error={!!error}
+                                helperText={
+                                  !!error &&
+                                  `${_.startCase(option)} is required`
+                                }
+                                sx={{ maxWidth: 200 }}
+                              />
+                            )}
+                          />
+                        ))}
+                    </Stack>
+                  ) : (
+                    <Controller
+                      key={index}
+                      name={currentStep.toString()}
+                      control={control}
+                      rules={{ required: true }}
+                      render={({
+                        field: { onChange, value },
+                        fieldState: { error },
+                      }) => (
+                        <TextField
+                          label="Answer"
+                          onChange={onChange}
+                          value={value}
+                          error={!!error}
+                          helperText={!!error && "Answer is required"}
+                          sx={{ maxWidth: 200 }}
+                        />
+                      )}
+                    />
+                  )}
                 </React.Fragment>
               )
           )}
