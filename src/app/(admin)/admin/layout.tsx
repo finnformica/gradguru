@@ -1,8 +1,7 @@
-import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 
 import { authOptions } from "auth/config";
-import LatexContext from "context/latex";
 import AdminLayout from "layouts/admin";
 
 export default async function AdminLayoutPage({
@@ -18,9 +17,5 @@ export default async function AdminLayoutPage({
   if (notAdmin) {
     notFound(); // TODO: nice not found page
   }
-  return (
-    <LatexContext>
-      <AdminLayout>{children}</AdminLayout>
-    </LatexContext>
-  );
+  return <AdminLayout>{children}</AdminLayout>;
 }

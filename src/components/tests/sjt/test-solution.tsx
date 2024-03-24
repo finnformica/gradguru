@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlineButton from "./underline-button";
+import UnderlineButton from "../underline-button";
 import { useState } from "react";
 
 type TestSolutionProps = {

@@ -85,6 +85,13 @@ const CourseTests = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          pageSizeOptions={[10, 25, 50]}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } },
+            sorting: {
+              sortModel: [{ field: "id", sort: "desc" }],
+            },
+          }}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {
