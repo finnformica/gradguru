@@ -17,7 +17,7 @@ type NRQuestion = {
   type: "table" | "graph" | "gmat";
   options: string[];
   shuffled: string[];
-  answer: string;
+  answer: any;
   success: boolean | null;
   id: string;
 };
@@ -71,10 +71,36 @@ const NumericalReasoningTest = () => {
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
   const markTest = (data: any) => {
-    const marked = questions.map((question, index) => ({
-      ...question,
-      success: question.answer == data[index],
-    }));
+    const marked = questions.map((question, index) => {
+      if (question.type === "gmat") {
+        return {
+          ...question,
+          success: question.answer === data[index],
+        };
+      }
+
+      if (question.answer.type === "multiple") {
+        const correctAnswer = _.omit(question.answer.value, "type");
+        return {
+          ...question,
+          success: _.isEqual(correctAnswer, data[index]),
+        };
+      }
+
+      if (question.answer.type === "other") {
+        return {
+          ...question,
+          success:
+            question.answer.value.toLowerCase() === data[index].toLowerCase(),
+        };
+      }
+
+      return {
+        ...question,
+        // answer could be string or number
+        success: question.answer.value == data[index],
+      };
+    });
 
     // calculate test metrics
     const correct = marked.filter((q) => q.success).length;
