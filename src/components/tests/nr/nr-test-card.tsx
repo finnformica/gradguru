@@ -4,6 +4,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 
+import { InfoOutlined } from "@mui/icons-material";
 import {
   Card,
   InputAdornment,
@@ -18,7 +19,6 @@ import { BarChart, LineChart, PieChart } from "components/Charts";
 import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 
-import { InfoOutlined } from "@mui/icons-material";
 import CardActions from "../card-actions";
 import CardHeader from "../card-header";
 import TestSolution from "./test-solution";
