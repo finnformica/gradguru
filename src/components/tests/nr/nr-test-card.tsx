@@ -47,6 +47,30 @@ const renderGraph = (question: any) =>
     </Stack>
   );
 
+const renderEndAdornment = (type: string) => {
+  let adornment;
+  switch (type) {
+    case "percentage":
+      adornment = "%";
+      break;
+    default:
+      return null;
+  }
+  return <InputAdornment position="end">{adornment}</InputAdornment>;
+};
+
+const renderStartAdornment = (type: string) => {
+  let adornment;
+  switch (type) {
+    case "currency":
+      adornment = "£";
+      break;
+    default:
+      return null;
+  }
+  return <InputAdornment position="start">{adornment}</InputAdornment>;
+};
+
 const renderInputFields = (
   question: any,
   currentStep: number,
@@ -91,7 +115,8 @@ const renderInputFields = (
           helperText={!!error && "Answer is required"}
           sx={{ maxWidth: 200 }}
           InputProps={{
-            endAdornment: <InputAdornment position="start">kg</InputAdornment>,
+            endAdornment: renderEndAdornment(question.answer.type),
+            startAdornment: renderStartAdornment(question.answer.type),
           }}
         />
       )}
