@@ -180,8 +180,6 @@ const NRTestCard = ({
     initialStep: 0,
   });
 
-  console.log(questions);
-
   return (
     <form onSubmit={handleSubmit(handleEndTest)}>
       <Card sx={{ borderRadius: 6, height: "100%", position: "relative" }}>
