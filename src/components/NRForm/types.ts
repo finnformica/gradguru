@@ -12,7 +12,8 @@ export type DataType = {
 };
 
 export type AnswerType = {
-  type: string;
+  type: "multiple" | "number" | "string" | "currency";
+  unit?: string | null;
   value: string | {};
 };
 
@@ -45,7 +46,7 @@ export interface IGraphForm {
 export interface IGmatForm {
   explanation: string;
   question: string;
-  answer: string;
+  answer: AnswerType;
   type: "gmat";
 }
 
@@ -59,7 +60,7 @@ export const initialData = {
 } as DataType;
 
 export const initialAnswer = {
-  type: "ratio",
+  type: "string",
   value: "",
 } as AnswerType;
 
@@ -92,6 +93,9 @@ export const graphForm = {
 export const gmatForm = {
   type: "gmat" as "gmat",
   question: "",
-  answer: "",
+  answer: {
+    type: "string",
+    value: "",
+  } as AnswerType,
   explanation: "",
 } as IGmatForm;
