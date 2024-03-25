@@ -1,24 +1,23 @@
 "use client";
 import {
-  Container,
-  Typography,
-  TextField,
-  Box,
   Button,
-  useTheme,
+  Container,
   Stack,
+  TextField,
+  Typography,
+  useTheme,
 } from "@mui/material";
 import { LoadingScreen } from "components/global-components";
+import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
-import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { titleDataProps } from "./types";
 
 const TitleEntry = () => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
-  //   const [title, setTitle] = useState<String | null>(null);
 
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -33,7 +32,8 @@ const TitleEntry = () => {
 
   const { user } = session;
 
-  const onSubmit = () => console.log("hellow world");
+  const onSubmit = (data: titleDataProps) =>
+    console.log(_.kebabCase(data.title));
 
   return (
     // <div>Hello world</div>
