@@ -37,49 +37,54 @@ const TitleEntry = () => {
 
   return (
     // <div>Hello world</div>
-    <Container maxWidth="sm" sx={{ height: "100%" }}>
+    <Container maxWidth="lg" sx={{ height: "100%", mt: 20 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack
+          direction={"column"}
+          spacing={4}
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alightContent: "center",
+            alignItems: "center",
             textAlign: "center",
-            height: "100%",
-            gap: 4,
-            border: "1px solid red",
           }}
         >
           <Typography variant="h4">Please enter a title</Typography>
-          <Controller
-            name="title"
-            control={control}
-            rules={{ required: true }}
-            render={({
-              field: { onChange, value },
-              fieldState: { error },
-            }: any) => (
-              <TextField
-                label="New Title..."
-                value={value}
-                onChange={onChange}
-                error={!!error}
-                helperText={!!error && "Title is required"}
-              ></TextField>
-            )}
-          />
-          <Button
-            type="submit"
-            sx={{
-              mt: 2,
-              background: theme.palette.primary.main,
-              color: "white",
-              "&:hover": { background: theme.palette.primary.dark },
-            }}
+          <Stack
+            direction={"row"}
+            spacing={4}
+            justifyContent={"space-around"}
+            minWidth={"50%"}
           >
-            Add
-          </Button>
+            <Controller
+              name="title"
+              control={control}
+              rules={{ required: true }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }: any) => (
+                <TextField
+                  label="New Title..."
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={!!error && "Title is required"}
+                ></TextField>
+              )}
+            />
+            <Button
+              type="submit"
+              sx={{
+                mt: 2,
+                background: theme.palette.primary.main,
+                color: "white",
+                width: 10,
+                "&:hover": { background: theme.palette.primary.dark },
+              }}
+            >
+              Add
+            </Button>
+          </Stack>
         </Stack>
       </form>
     </Container>
