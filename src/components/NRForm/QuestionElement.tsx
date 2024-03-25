@@ -23,6 +23,32 @@ type TableQuestionElementProps = {
   question: ITableQuestion | IGraphQuestion;
 };
 
+const renderHelperText = (type?: string) => {
+  if (!type) return null;
+  switch (type.toLowerCase()) {
+    case "currency":
+      return "Provider numeric value only";
+    case "number":
+      return "If applicable, provide value to 2d.p.";
+    case "string":
+      return "If ratio value, provide in the form x:y";
+    default:
+      return "Type not specified";
+  }
+};
+
+const textFieldInputValidation = (type?: string) => {
+  switch (type) {
+    case "currency":
+    case "number":
+      return "number";
+    case "string":
+      return "text";
+    default:
+      return "text";
+  }
+};
+
 export const TableQuestionElement = ({
   form,
   setForm,
@@ -31,10 +57,11 @@ export const TableQuestionElement = ({
 }: TableQuestionElementProps) => {
   const answerOptions = [
     "Multiple",
-    "Ratio",
-    "Percentage",
     "Number",
+    "String",
     "Currency",
+    "Percentage",
+    "Ratio",
     "Other",
   ];
 
@@ -92,37 +119,35 @@ export const TableQuestionElement = ({
           ))}
         <Box>
           <InputLabel sx={{ pb: 0.5 }}>Answer type</InputLabel>
-          <Select
-            value={form.questions[index].answer.type}
-            size="small"
-            label="Answer type"
-            sx={{ mb: 1 }}
-            onChange={(e: SelectChangeEvent) => {
-              setForm({
-                ...form,
-                questions: form.questions.map((q, k) => {
-                  return k === index
-                    ? {
-                        ...q,
-                        answer: { ...question.answer, type: e.target.value },
-                      }
-                    : q;
-                }),
-              });
-            }}
-          >
-            {answerOptions.map((name, index) => (
-              <MenuItem value={name.toLowerCase()} key={index}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-          {form.questions[index].answer.type === "multiple" ? (
-            <>
+          <Stack spacing={2} direction={"row"}>
+            <Select
+              value={form.questions[index].answer.type}
+              size="small"
+              label="Answer type"
+              sx={{ mb: 1 }}
+              onChange={(e: SelectChangeEvent) => {
+                setForm({
+                  ...form,
+                  questions: form.questions.map((q, k) => {
+                    return k === index
+                      ? ({
+                          ...q,
+                          answer: { ...question.answer, type: e.target.value },
+                        } as ITableQuestion | IGraphQuestion)
+                      : q;
+                  }),
+                });
+              }}
+            >
+              {answerOptions.map((name, index) => (
+                <MenuItem value={name.toLowerCase()} key={index}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+            {form.questions[index].answer.type === "multiple" && (
               <Select
-                value={
-                  (form.questions[index].answer.value as { type: string }).type
-                }
+                value={form.questions[index].answer.type2}
                 size="small"
                 sx={{ ml: 1 }}
                 onChange={(e: SelectChangeEvent) => {
@@ -130,13 +155,13 @@ export const TableQuestionElement = ({
                     ...form,
                     questions: form.questions.map((q, k) => {
                       return k === index
-                        ? {
+                        ? ({
                             ...q,
                             answer: {
                               ...question.answer,
-                              value: { type: e.target.value },
+                              type2: e.target.value,
                             },
-                          }
+                          } as ITableQuestion | IGraphQuestion)
                         : q;
                     }),
                   });
@@ -150,56 +175,57 @@ export const TableQuestionElement = ({
                     </MenuItem>
                   ))}
               </Select>
-              <InputLabel sx={{ pb: 0.5 }}>
-                Provide ratio answer in form 1:3 or numeric answer only for
-                other types
-              </InputLabel>
-              <Stack spacing={2} direction={"row"}>
-                {generateUniqueKeys(form).map((row: any, i: number) => {
-                  const rowValues = form.questions[index].answer.value as {
-                    [key: string]: any;
-                  };
+            )}
+          </Stack>
+          <Stack spacing={2} direction={"row"} pt={3}>
+            {form.questions[index].answer.type === "multiple" ? (
+              generateUniqueKeys(form).map((row: any, i: number) => {
+                const rowValues = form.questions[index].answer.value as {
+                  [key: string]: any;
+                };
 
-                  return (
-                    <TextField
-                      label={row}
-                      required
-                      key={i}
-                      value={rowValues[row]}
-                      onChange={(e) => {
-                        setForm({
-                          ...form,
-                          questions: form.questions.map((q, k) => {
-                            return k === index
-                              ? {
-                                  ...q,
-                                  answer: {
-                                    ...q.answer,
-                                    value: {
-                                      ...(q.answer.value as {}),
-                                      [row]: e.target.value,
-                                    },
+                return (
+                  <TextField
+                    label={row}
+                    required
+                    key={i}
+                    value={rowValues[row]}
+                    helperText={renderHelperText(
+                      form.questions[index].answer.type2
+                    )}
+                    type={textFieldInputValidation(
+                      form.questions[index].answer.type2
+                    )}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        questions: form.questions.map((q, k) => {
+                          return k === index
+                            ? {
+                                ...q,
+                                answer: {
+                                  ...q.answer,
+                                  value: {
+                                    ...(q.answer.value as {}),
+                                    [row]: e.target.value,
                                   },
-                                }
-                              : q;
-                          }),
-                        });
-                      }}
-                    />
-                  );
-                })}
-              </Stack>
-            </>
-          ) : (
-            <>
-              <InputLabel sx={{ pb: 0.5 }}>
-                {form.questions[index].answer.type === "ratio"
-                  ? "Provide answer in form 1:3"
-                  : "Provide numeric answer only (except for other)"}
-              </InputLabel>
+                                },
+                              }
+                            : q;
+                        }),
+                      });
+                    }}
+                  />
+                );
+              })
+            ) : (
               <TextField
                 label={`Answer ${index + 1}`}
                 value={form.questions[index].answer.value}
+                helperText={renderHelperText(form.questions[index].answer.type)}
+                type={textFieldInputValidation(
+                  form.questions[index].answer.type
+                )}
                 required
                 onChange={(e) => {
                   setForm({
@@ -215,8 +241,29 @@ export const TableQuestionElement = ({
                   });
                 }}
               />
-            </>
-          )}
+            )}
+
+            <TextField
+              label="Unit"
+              helperText="e.g. £, kg, BTU; leave blank if none"
+              value={form.questions[index].answer.unit}
+              type="text"
+              sx={{ ml: 2 }}
+              onChange={(e) => {
+                setForm({
+                  ...form,
+                  questions: form.questions.map((q, k) => {
+                    return k === index
+                      ? {
+                          ...q,
+                          answer: { ...q.answer, unit: e.target.value },
+                        }
+                      : q;
+                  }),
+                });
+              }}
+            />
+          </Stack>
         </Box>
       </Box>
     </>

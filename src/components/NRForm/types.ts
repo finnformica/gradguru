@@ -13,6 +13,7 @@ export type DataType = {
 
 export type AnswerType = {
   type: "multiple" | "number" | "string" | "currency";
+  type2?: "multiple" | "number" | "string" | "currency";
   unit?: string | null;
   value: string | {};
 };
