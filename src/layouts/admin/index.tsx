@@ -95,7 +95,7 @@ const Drawer = styled(MuiDrawer, {
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
