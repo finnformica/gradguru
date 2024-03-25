@@ -13,6 +13,8 @@ import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
 import { titleDataProps } from "./types";
+import { v4 as uuid } from "uuid";
+import { postBlog } from "api/blog";
 
 const TitleEntry = () => {
   const theme = useTheme();
@@ -32,11 +34,27 @@ const TitleEntry = () => {
 
   const { user } = session;
 
-  const onSubmit = (data: titleDataProps) =>
-    console.log(_.kebabCase(data.title));
+  const onSubmit = (data: titleDataProps) => {
+    const blogSlug = _.kebabCase(data.title);
+    const blogPostId = blogSlug + uuid();
+    console.log(_.kebabCase(blogPostId));
+    postBlog(blogPostId, {
+      ...data,
+      author: user.name,
+      slug: blogSlug,
+      date: new Date().toDateString(),
+    })
+      .then(() =>
+        enqueueSnackbar("Success! A new blog post has been initialised")
+      )
+      .catch((e) =>
+        enqueueSnackbar(`Error! Unable to initialise new blog post`, {
+          variant: "error",
+        })
+      );
+  };
 
   return (
-    // <div>Hello world</div>
     <Container maxWidth="lg" sx={{ height: "100%", mt: 20 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack
