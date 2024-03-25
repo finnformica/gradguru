@@ -100,3 +100,5 @@ export const gmatForm = {
   } as AnswerType,
   explanation: "",
 } as IGmatForm;
+
+export const answerOptions = ["Multiple", "Number", "String", "Currency"];
