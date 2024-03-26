@@ -29,13 +29,20 @@ const AddNR = () => {
     postNRTest(null, form)
       .then(() => {
         enqueueSnackbar("Numerical reasoning question added");
-        setForm(
-          form.type === "table"
-            ? tableForm
-            : form.type === "graph"
-              ? graphForm
-              : gmatForm
-        );
+
+        switch (form.type) {
+          case "table":
+            setForm(tableForm);
+            break;
+          case "graph":
+            setForm(graphForm);
+            break;
+          case "gmat":
+            setForm(gmatForm);
+            break;
+          default:
+            throw new Error("Invalid form type");
+        }
       })
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {

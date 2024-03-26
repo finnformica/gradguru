@@ -2,6 +2,9 @@ import {
   Box,
   Button,
   InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Stack,
   TextField,
   Typography,
@@ -9,7 +12,8 @@ import {
 import { MathJax } from "better-react-mathjax";
 
 import { ClientWrapper } from "components/global-components";
-import { IGmatForm } from "./types";
+import { IGmatForm, answerOptions } from "./types";
+import { textFieldInputValidation, renderHelperText } from "./utils";
 
 type GmatFormProps = {
   form: IGmatForm;
@@ -58,18 +62,57 @@ const GmatForm = ({ form, setForm }: GmatFormProps) => {
 
       <InputContainer>
         <Typography variant="h5">Answer</Typography>
-        <InputLabel>Numerical or ratio value only</InputLabel>
-        <TextField
-          label="Answer"
-          fullWidth
-          multiline
-          required
-          sx={{ width: "100px" }}
-          value={form.answer}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setForm({ ...form, answer: event.target.value })
-          }
-        />
+        <Typography variant="body2">
+          {typeof form.answer === "string" ? form.answer : null}
+        </Typography>
+        <Stack spacing={2} direction={"row"}>
+          <Select
+            value={form.answer.type}
+            size="small"
+            label="Answer type"
+            sx={{ mb: 1 }}
+            onChange={(e: SelectChangeEvent) => {
+              setForm({
+                ...form,
+                answer: {
+                  ...form.answer,
+                  type: e.target.value as IGmatForm["answer"]["type"],
+                },
+              });
+            }}
+          >
+            {answerOptions.map((name, index) => (
+              <MenuItem value={name.toLowerCase()} key={index}>
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+          <TextField
+            label="Answer"
+            required
+            helperText={renderHelperText(form.answer.type)}
+            type={textFieldInputValidation(form.answer.type)}
+            // sx={{ width: "100px" }}
+            value={form.answer.value}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setForm({
+                ...form,
+                answer: { ...form.answer, value: event.target.value },
+              })
+            }
+          />
+          <TextField
+            label="Unit"
+            // sx={{ width: "100px" }}
+            value={form.answer.unit}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setForm({
+                ...form,
+                answer: { ...form.answer, unit: event.target.value },
+              })
+            }
+          />
+        </Stack>
       </InputContainer>
       <Box>
         <Button type="submit" variant="contained" sx={{ float: "right" }}>
