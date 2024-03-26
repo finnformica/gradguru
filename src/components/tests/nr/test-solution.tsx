@@ -29,15 +29,25 @@ const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {
       />
       {showSolution[currentStep] && (
         <Stack spacing={2} mt={2}>
+          {questions[currentStep].answer.type === "multiple" ? (
+            <Stack direction="row" spacing={2}>
+              {Object.keys(questions[currentStep].answer.value)
+                .sort()
+                .map((key, i) => (
+                  <Typography key={i} variant="body1">
+                    {key}: {questions[currentStep].answer.value[key]}
+                  </Typography>
+                ))}
+            </Stack>
+          ) : (
+            <Typography variant="body1">
+              Correct answer: {questions[currentStep].answer.value}
+            </Typography>
+          )}
           {questions[currentStep].type !== "gmat" ? (
-            <>
-              <Typography variant="body1">
-                Correct answer: {questions[currentStep].answer.value}
-              </Typography>
-              <Typography variant="body1">
-                {questions[currentStep].explanation}
-              </Typography>
-            </>
+            <Typography variant="body1">
+              {questions[currentStep].explanation}
+            </Typography>
           ) : (
             <ClientWrapper>
               <MathJax hideUntilTypeset={"first"}>
