@@ -72,34 +72,25 @@ const NumericalReasoningTest = () => {
 
   const markTest = (data: any) => {
     const marked = questions.map((question, index) => {
-      if (question.type === "gmat") {
-        return {
-          ...question,
-          success: question.answer === data[index],
-        };
-      }
-
+      // deep comparison for objects
       if (question.answer.type === "multiple") {
-        const correctAnswer = _.omit(question.answer.value, "type");
         return {
           ...question,
-          success: _.isEqual(correctAnswer, data[index]),
+          success: _.isEqual(question.answer.value, data[index]),
         };
       }
 
-      if (question.answer.type === "other") {
-        return {
-          ...question,
-          success:
-            question.answer.value.toLowerCase() === data[index].toLowerCase(),
-        };
+      // remove whitespace and convert to lowercase for string comparison
+      if (question.answer.type === "string") {
+        const correctAnswer = question.answer.value
+          .toLowerCase()
+          .replace(/\s/g, "");
+        const userAnswer = data[index].toLowerCase().replace(/\s/g, "");
+        return { ...question, success: correctAnswer === userAnswer };
       }
 
-      return {
-        ...question,
-        // answer could be string or number
-        success: question.answer.value == data[index],
-      };
+      // numerical comparison (converted to string by form)
+      return { ...question, success: question.answer.value === data[index] };
     });
 
     // calculate test metrics

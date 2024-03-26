@@ -22,12 +22,13 @@ import { useStepsForm } from "hooks/useStepsForm";
 import CardActions from "../card-actions";
 import CardHeader from "../card-header";
 import TestSolution from "./test-solution";
+import { AnswerType } from "components/NRForm/types";
 
 const renderQuestionText = (questions: any[], currentStep: number) => (
   <Stack spacing={2} mb={4}>
     <Stack spacing={2} direction="row" alignItems="center">
       <Typography variant="h5">Question {currentStep + 1}</Typography>
-      <Tooltip title="For numerical values, provide answers to 2d.p. if not specified. For ratio values, provide answers in the form x:y.">
+      <Tooltip title="Provide numerical answers to 2d.p. if not specified.">
         <InfoOutlined
           sx={{ color: "grey.400", fontSize: 20, cursor: "pointer" }}
         />
@@ -47,42 +48,38 @@ const renderGraph = (question: any) =>
     </Stack>
   );
 
-const inputType = (type: string) => {
+const inputType = (type: AnswerType["type"]) => {
   switch (type) {
-    case "percentage":
     case "currency":
     case "number":
       return "number";
-    case "ratio":
-    case "other":
+    case "string":
       return "text";
     default:
       return "text";
   }
 };
 
-const renderEndAdornment = (type: string) => {
-  let adornment;
-  switch (type) {
-    case "percentage":
-      adornment = "%";
-      break;
-    default:
+const renderEndAdornment = (unit: string) => {
+  if (!unit) return null;
+  switch (unit) {
+    case "$":
+    case "£":
       return null;
+    default:
+      return <InputAdornment position="end">{unit}</InputAdornment>;
   }
-  return <InputAdornment position="end">{adornment}</InputAdornment>;
 };
 
-const renderStartAdornment = (type: string) => {
-  let adornment;
-  switch (type) {
-    case "currency":
-      adornment = "£";
-      break;
+const renderStartAdornment = (unit: string) => {
+  if (!unit) return null;
+  switch (unit) {
+    case "$":
+    case "£":
+      return <InputAdornment position="end">{unit}</InputAdornment>;
     default:
       return null;
   }
-  return <InputAdornment position="start">{adornment}</InputAdornment>;
 };
 
 const renderInputFields = (
@@ -107,14 +104,12 @@ const renderInputFields = (
                 onChange={onChange}
                 value={value}
                 error={!!error}
-                type={inputType(question.answer.value.type)}
+                type={inputType(question.answer.type2)}
                 helperText={!!error && `${_.startCase(option)} is required`}
                 sx={{ maxWidth: 200 }}
                 InputProps={{
-                  endAdornment: renderEndAdornment(question.answer.value.type),
-                  startAdornment: renderStartAdornment(
-                    question.answer.value.type
-                  ),
+                  endAdornment: renderEndAdornment(question.answer.unit),
+                  startAdornment: renderStartAdornment(question.answer.unit),
                 }}
               />
             )}
@@ -137,8 +132,8 @@ const renderInputFields = (
           helperText={!!error && "Answer is required"}
           sx={{ maxWidth: 200 }}
           InputProps={{
-            endAdornment: renderEndAdornment(question.answer.type),
-            startAdornment: renderStartAdornment(question.answer.type),
+            endAdornment: renderEndAdornment(question.answer.unit),
+            startAdornment: renderStartAdornment(question.answer.unit),
           }}
         />
       )}
