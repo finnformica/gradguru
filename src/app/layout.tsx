@@ -4,16 +4,14 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import "styles/global.css";
+import "@/styles/global.css";
 
-import "next-cloudinary/dist/cld-video-player.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-import GradguruThemeProvider from "context/theme";
-import NextAuthProvider from "context/next-auth";
-import SnackbarContext from "context/snackbar";
+import GradguruThemeProvider from "@/theme";
 
 import favicons from "./favicons";
-import LatexContext from "context/latex";
 
 export const metadata = {
   title: "gradguru",
@@ -28,15 +26,16 @@ export default function RootLayout({
 }) {
   return (
     <GradguruThemeProvider>
-      <NextAuthProvider>
-        <html lang="en">
-          <body suppressHydrationWarning={true}>
-            <SnackbarContext>
-              <LatexContext>{children}</LatexContext>
-            </SnackbarContext>
-          </body>
-        </html>
-      </NextAuthProvider>
+      <html
+        lang="en"
+        style={{ scrollBehavior: "smooth", scrollPadding: "75px" }}
+      >
+        <body style={{ margin: 0 }} suppressHydrationWarning={true}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </html>
     </GradguruThemeProvider>
   );
 }
