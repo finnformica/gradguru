@@ -2,80 +2,109 @@
 
 import { useState } from "react";
 
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListSubheader,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useSession } from "next-auth/react";
 import _ from "lodash";
+import { useSession } from "next-auth/react";
 
-import { LoadingScreen } from "components/global-components";
+import { IconButton, Stack, Typography } from "@mui/material";
 
+import {
+  ConfirmationDialog,
+  LoadingScreen,
+} from "components/global-components";
 import NRModal from "components/NRForm/NRModal";
 import { NRQuestion } from "components/NRForm/types";
 
-import { useNRTests } from "api/tests";
-
-const NRListItem = ({
-  refresh,
-  ...question
-}: { refresh: () => void } & NRQuestion) => {
-  const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
-
-  return (
-    <>
-      <NRModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
-      <ListItem disablePadding>
-        <ListItemButton
-          onClick={() => setOpen(true)}
-          disabled={(session?.user.role ?? 0) < 3}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Stack direction="row" spacing={2}>
-              <Typography>{_.startCase(question.type)}</Typography>
-              <Typography
-                sx={{
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  width: "60vw",
-                }}
-              >
-                {question.type === "table" && question.questions[0].question}
-                {question.type === "gmat" && question.question}
-                {question.type === "graph" && question.scenario}
-              </Typography>
-            </Stack>
-            <Typography>
-              {new Date(
-                question.created ? question.created : Date.now()
-              ).toLocaleDateString()}
-            </Typography>
-          </Box>
-        </ListItemButton>
-      </ListItem>
-      <Divider />
-    </>
-  );
-};
+import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { deleteNRTest, useNRTests } from "api/tests";
+import { useSnackbar } from "notistack";
 
 const AllNR = () => {
+  const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
+  const [questionToEdit, setQuestionToEdit] = useState<NRQuestion | null>(null);
+  const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
   const { questions, loading, refresh } = useNRTests();
 
-  if (!questions || loading) return <LoadingScreen />;
+  if (!questions || loading || !session) return <LoadingScreen />;
+
+  const columns: GridColDef[] = [
+    {
+      field: "question",
+      headerName: "Question",
+      flex: 1,
+      renderCell: (params) => {
+        switch (params.row.type) {
+          case "table":
+            return params.row.questions[0].question;
+          case "graph":
+            return params.row.scenario;
+          default:
+            return params.value;
+        }
+      },
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: 80,
+      renderCell: (params) => _.startCase(params.value as string),
+    },
+    {
+      field: "created",
+      headerName: "Created",
+      width: 150,
+      renderCell: (params) => {
+        return new Date(params.value as number).toLocaleString();
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <Stack direction="row" justifyContent="center">
+            <IconButton
+              size="small"
+              disabled={(session?.user?.role || 0) < 3}
+              onClick={() => setQuestionToEdit(params.row)}
+            >
+              <DriveFileRenameOutline fontSize="small" />
+            </IconButton>
+            <IconButton
+              size="small"
+              disabled={(session?.user?.role || 0) < 4}
+              onClick={() => setQuestionToDelete(params.row.id)}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+
+  const handleDelete = async () => {
+    if (!questionToDelete) {
+      enqueueSnackbar("Something went wrong - no question found", {
+        variant: "error",
+      });
+      return;
+    }
+
+    deleteNRTest(questionToDelete)
+      .then(() => enqueueSnackbar("NR question deleted"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        refresh();
+        setQuestionToDelete(null);
+      });
+  };
 
   return (
     <>
@@ -83,31 +112,44 @@ const AllNR = () => {
         All NR questions
       </Typography>
 
-      <List
-        subheader={
-          <ListSubheader>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Stack direction="row" spacing={2}>
-                <Typography>Type</Typography>
-                <Typography>Scenario</Typography>
-              </Stack>
-              <Typography>Date created</Typography>
-            </Box>
-          </ListSubheader>
-        }
-      >
-        {questions
-          .sort((a, b) => b.created - a.created)
-          .map((question: NRQuestion, key) => (
-            <NRListItem key={key} refresh={refresh} {...question} />
-          ))}
-      </List>
+      <DataGrid
+        rows={questions}
+        columns={columns}
+        disableDensitySelector
+        disableRowSelectionOnClick
+        rowHeight={40}
+        autoHeight
+        pageSizeOptions={[15, 25, 50, 100]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 15 } },
+          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
+        }}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            printOptions: { disableToolbarButton: true },
+            csvOptions: { disableToolbarButton: true },
+          },
+        }}
+      />
+      {questionToEdit && (
+        <NRModal
+          question={questionToEdit}
+          setQuestion={setQuestionToEdit}
+          refresh={refresh}
+          handleDelete={handleDelete}
+        />
+      )}
+      {questionToDelete && (
+        <ConfirmationDialog
+          title="Are you sure you want to delete this question?"
+          open={!!questionToDelete}
+          onSubmit={handleDelete}
+          onClose={() => setQuestionToDelete(null)}
+          confirmText="Delete"
+        />
+      )}
     </>
   );
 };
