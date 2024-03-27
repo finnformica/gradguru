@@ -37,7 +37,6 @@ const TitleEntry = () => {
   const onSubmit = (data: titleDataProps) => {
     const blogSlug = _.kebabCase(data.title);
     const blogPostId = blogSlug + uuid();
-    console.log(_.kebabCase(blogPostId));
     postBlog(blogPostId, {
       ...data,
       author: user.name,
