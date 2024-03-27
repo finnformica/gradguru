@@ -67,12 +67,12 @@ const BlogCard = ({
           </Typography>
         </Box>
       </Box>
-      <Image
+      {/* <Image
         src={"/imgs/blog/testImage.jpg"}
         width={150}
         height={150}
         alt="Image for blog card"
-      ></Image>
+      ></Image> */}
     </Box>
   );
 };

@@ -7,21 +7,21 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { postBlog } from "api/blog";
 import { LoadingScreen } from "components/global-components";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
-import { titleDataProps } from "./types";
 import { v4 as uuid } from "uuid";
-import { postBlog } from "api/blog";
+import { titleDataProps } from "./types";
 
 const TitleEntry = () => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       title: "",
       date: "",
@@ -44,9 +44,10 @@ const TitleEntry = () => {
       slug: blogSlug,
       date: new Date().toDateString(),
     })
-      .then(() =>
-        enqueueSnackbar("Success! A new blog post has been initialised")
-      )
+      .then(() => {
+        enqueueSnackbar("Success! A new blog post has been initialised");
+        window.location.replace("http://localhost:3000/dashboard");
+      })
       .catch((e) =>
         enqueueSnackbar(`Error! Unable to initialise new blog post`, {
           variant: "error",
