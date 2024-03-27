@@ -7,6 +7,20 @@ import { ClientWrapper } from "components/global-components";
 
 import UnderlineButton from "../underline-button";
 
+const renderCorrectAnswer = (unit: string | null, value: string) => {
+  console.log(unit, value);
+
+  if (!unit) return value;
+
+  switch (unit) {
+    case "$":
+    case "£":
+      return `${unit}${value}`;
+    default:
+      return `${value}${unit}`;
+  }
+};
+
 type TestSolutionProps = {
   currentStep: number;
   questions: any[];
@@ -35,13 +49,21 @@ const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {
                 .sort()
                 .map((key, i) => (
                   <Typography key={i} variant="body1">
-                    {key}: {questions[currentStep].answer.value[key]}
+                    {key}:{" "}
+                    {renderCorrectAnswer(
+                      questions[currentStep].answer.unit,
+                      questions[currentStep].answer.value[key]
+                    )}
                   </Typography>
                 ))}
             </Stack>
           ) : (
             <Typography variant="body1">
-              Correct answer: {questions[currentStep].answer.value}
+              Correct answer:{" "}
+              {renderCorrectAnswer(
+                questions[currentStep].answer.unit,
+                questions[currentStep].answer.value
+              )}
             </Typography>
           )}
           {questions[currentStep].type !== "gmat" ? (
