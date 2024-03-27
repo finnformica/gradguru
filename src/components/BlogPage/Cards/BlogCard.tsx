@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
 
 type BlogCardProps = {
   borderColor: string;
@@ -67,12 +66,6 @@ const BlogCard = ({
           </Typography>
         </Box>
       </Box>
-      <Image
-        src={"/imgs/blog/testImage.jpg"}
-        width={150}
-        height={150}
-        alt="Image for blog card"
-      ></Image>
     </Box>
   );
 };
