@@ -13,8 +13,6 @@ import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
-import { v4 as uuid } from "uuid";
-import { titleDataProps } from "./types";
 
 const TitleEntry = () => {
   const theme = useTheme();
@@ -34,21 +32,18 @@ const TitleEntry = () => {
 
   const { user } = session;
 
-  const onSubmit = (data: titleDataProps) => {
+  const onSubmit = (data: { title: string }) => {
     const blogSlug = _.kebabCase(data.title);
-    const blogPostId = blogSlug + uuid();
-    postBlog(blogPostId, {
+    postBlog(blogSlug, {
       ...data,
       author: user.name,
-      slug: blogSlug,
       date: new Date().toDateString(),
     })
       .then(() => {
-        enqueueSnackbar("Success! A new blog post has been initialised");
-        window.location.replace("http://localhost:3000/dashboard");
+        enqueueSnackbar("Successfully created a new blog post");
       })
       .catch((e) =>
-        enqueueSnackbar(`Error! Unable to initialise new blog post`, {
+        enqueueSnackbar(`Error! failed to make a new blog post`, {
           variant: "error",
         })
       );
@@ -65,7 +60,7 @@ const TitleEntry = () => {
             textAlign: "center",
           }}
         >
-          <Typography variant="h4">Please enter a title</Typography>
+          <Typography variant="h4">Title</Typography>
           <Stack
             direction={"row"}
             spacing={4}
@@ -81,23 +76,22 @@ const TitleEntry = () => {
                 fieldState: { error },
               }: any) => (
                 <TextField
-                  label="New Title..."
+                  label="New Title"
                   fullWidth
                   value={value}
                   onChange={onChange}
                   error={!!error}
                   helperText={!!error && "Title is required"}
-                ></TextField>
+                />
               )}
             />
             <Button
               type="submit"
               sx={{
                 mt: 2,
-                background: theme.palette.primary.main,
-                color: "white",
+                color: theme.palette.primary.main,
+                // color: "white",
                 width: 10,
-                "&:hover": { background: theme.palette.primary.dark },
               }}
             >
               Add
