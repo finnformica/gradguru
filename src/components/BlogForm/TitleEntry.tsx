@@ -87,7 +87,7 @@ const TitleEntry = () => {
             />
             <Button
               type="submit"
-              // color="primary"
+              color="primary"
               sx={{
                 mt: 2,
                 width: 10,
