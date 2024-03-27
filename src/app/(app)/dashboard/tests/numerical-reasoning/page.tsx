@@ -4,6 +4,7 @@ import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { useStopwatch } from "react-timer-hook";
 
 import { createTestRecord, getNRTests } from "api/tests";
 
@@ -26,11 +27,16 @@ type NRQuestion = {
 const NumericalReasoningTest = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
-  const timeStarted = Date.now();
 
   const [questions, setQuestions] = useState<NRQuestion[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
+
+  const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
+
+  useEffect(() => {
+    if (testComplete) return pause();
+  }, [testComplete, pause]);
 
   const fetchTableOrGraph = async (type: string) => {
     const tableQuestions = await getNRTests(type);
@@ -104,7 +110,7 @@ const NumericalReasoningTest = () => {
       total: marked.length,
     };
     const date = Date.now();
-    const timeTaken = date - timeStarted;
+    const timeTaken = (hours * 3600 + minutes * 60 + seconds) * 1000;
     const type = { label: "Numerical Reasoning", name: "nr" };
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
