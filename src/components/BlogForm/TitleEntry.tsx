@@ -85,14 +85,7 @@ const TitleEntry = () => {
                 />
               )}
             />
-            <Button
-              type="submit"
-              color="primary"
-              sx={{
-                mt: 2,
-                width: 10,
-              }}
-            >
+            <Button type="submit" variant="contained">
               Add
             </Button>
           </Stack>
