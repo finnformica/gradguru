@@ -1,7 +1,7 @@
-import TitleEntry from "components/BlogForm/TitleEntry";
+import AddBlog from "components/BlogForm/AddBlog";
 
 const page = () => {
-  return <TitleEntry />;
+  return <AddBlog />;
 };
 
 export default page;
