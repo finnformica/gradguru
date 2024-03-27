@@ -1,14 +1,17 @@
 "use client";
 
-import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+
 import _ from "lodash";
+import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
+import { useStopwatch } from "react-timer-hook";
 
 import { createTestRecord, useSJTTests } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
-import { useSession } from "next-auth/react";
+import { useBeforeUnload } from "hooks/useBeforeUnload";
 
 type SJTQuestion = {
   question: string;
@@ -25,11 +28,16 @@ const SituationalJudgementTest = () => {
   const { questions: allQuestions } = useSJTTests();
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
-  const timeStarted = Date.now();
 
   const [questions, setQuestions] = useState<SJTQuestion[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
+
+  const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
+
+  useEffect(() => {
+    if (testComplete) return pause();
+  }, [testComplete, pause]);
 
   useEffect(() => {
     if (allQuestions) {
@@ -49,6 +57,8 @@ const SituationalJudgementTest = () => {
       );
     }
   }, [allQuestions]);
+
+  useBeforeUnload(!testComplete);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
@@ -75,7 +85,7 @@ const SituationalJudgementTest = () => {
       total: marked.length,
     };
     const date = Date.now();
-    const timeTaken = date - timeStarted;
+    const timeTaken = (hours * 3600 + minutes * 60 + seconds) * 1000;
     const type = { label: "Situational Judgement", name: "sjt" };
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 

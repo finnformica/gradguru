@@ -1,17 +1,7 @@
 "use client";
 
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  Button,
-  IconButton,
-  Modal,
-  Paper,
-  Popper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useSession } from "next-auth/react";
+import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
 
 const style = {
   position: "absolute" as "absolute",
@@ -30,28 +20,16 @@ const style = {
 const FormModalWrapper = ({
   title,
   open,
-  anchorEl,
-  onClose,
-  handleDelete,
-  handleClick,
   handleClose,
   children,
 }: {
   title: string;
   open: boolean;
-  anchorEl: null | HTMLElement;
-  onClose: () => void;
-  handleDelete: () => void;
-  handleClick: (event: React.MouseEvent<HTMLElement>) => void;
   handleClose: () => void;
   children: React.ReactNode;
 }) => {
-  const { data: session } = useSession();
-  const openPopper = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
-
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
         <Box
           sx={{
@@ -63,43 +41,6 @@ const FormModalWrapper = ({
         >
           <Stack direction="row" spacing={4}>
             <Typography variant="h4">{title}</Typography>
-            <Button
-              variant="contained"
-              color="error"
-              size="small"
-              onClick={handleClick}
-              disabled={(session?.user.role ?? 0) < 4}
-            >
-              Delete
-            </Button>
-            <Popper
-              id={id}
-              open={openPopper}
-              anchorEl={anchorEl}
-              sx={{ zIndex: (theme) => theme.zIndex.modal + 1 }}
-            >
-              <Paper sx={{ p: 1, borderRadius: 1 }}>
-                <Typography pb={2} variant="h6">
-                  Are you sure?
-                </Typography>
-                <Stack direction="row" spacing={2}>
-                  <Button
-                    variant="contained"
-                    color={"error"}
-                    onClick={handleDelete}
-                  >
-                    Confirm
-                  </Button>
-                  <Button
-                    onClick={handleClick}
-                    variant="outlined"
-                    color={"error"}
-                  >
-                    Cancel
-                  </Button>
-                </Stack>
-              </Paper>
-            </Popper>
           </Stack>
           <IconButton onClick={handleClose}>
             <CloseIcon />
