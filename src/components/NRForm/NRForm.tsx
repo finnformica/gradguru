@@ -24,7 +24,7 @@ const NRForm = ({ form, setForm, handleSubmit }: NRFormProps) => {
         setForm({ ...gmatForm });
         break;
       default:
-        break;
+        throw new Error("Invalid form type");
     }
   };
 
