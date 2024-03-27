@@ -9,6 +9,7 @@ import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
 import { useSession } from "next-auth/react";
+import { useBeforeUnload } from "hooks/useBeforeUnload";
 
 type SJTQuestion = {
   question: string;
@@ -49,6 +50,8 @@ const SituationalJudgementTest = () => {
       );
     }
   }, [allQuestions]);
+
+  useBeforeUnload(!testComplete);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 

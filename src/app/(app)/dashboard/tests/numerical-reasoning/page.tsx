@@ -10,6 +10,7 @@ import { createTestRecord, getNRTests } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
 import TopPanel from "components/tests/nr/top-panel";
+import { useBeforeUnload } from "hooks/useBeforeUnload";
 
 type NRQuestion = {
   question: string;
@@ -67,6 +68,8 @@ const NumericalReasoningTest = () => {
 
     createTest();
   }, []);
+
+  useBeforeUnload(!testComplete);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
