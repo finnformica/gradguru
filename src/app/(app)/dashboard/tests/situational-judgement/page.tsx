@@ -50,6 +50,19 @@ const SituationalJudgementTest = () => {
     }
   }, [allQuestions]);
 
+  useEffect(() => {
+    // prevent user from leaving page before test is complete
+    const onBeforeUnload = (e: Event) => {
+      if (!testComplete) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", onBeforeUnload);
+
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  });
+
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
   const markTest = (data: any) => {
