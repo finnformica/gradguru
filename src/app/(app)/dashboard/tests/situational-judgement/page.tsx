@@ -9,6 +9,7 @@ import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
 import { useSession } from "next-auth/react";
+import { useBeforeUnload } from "hooks/useBeforeUnload";
 
 type SJTQuestion = {
   question: string;
@@ -50,18 +51,7 @@ const SituationalJudgementTest = () => {
     }
   }, [allQuestions]);
 
-  useEffect(() => {
-    // prevent user from leaving page before test is complete
-    const onBeforeUnload = (e: Event) => {
-      if (!testComplete) {
-        e.preventDefault();
-      }
-    };
-
-    window.addEventListener("beforeunload", onBeforeUnload);
-
-    return () => window.removeEventListener("beforeunload", onBeforeUnload);
-  });
+  useBeforeUnload(!testComplete);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 

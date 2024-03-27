@@ -10,6 +10,7 @@ import { createTestRecord, getNRTests } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
 import TopPanel from "components/tests/nr/top-panel";
+import { useBeforeUnload } from "hooks/useBeforeUnload";
 
 type NRQuestion = {
   question: string;
@@ -68,18 +69,7 @@ const NumericalReasoningTest = () => {
     createTest();
   }, []);
 
-  useEffect(() => {
-    // prevent user from leaving page before test is complete
-    const onBeforeUnload = (e: Event) => {
-      if (!testComplete) {
-        e.preventDefault();
-      }
-    };
-
-    window.addEventListener("beforeunload", onBeforeUnload);
-
-    return () => window.removeEventListener("beforeunload", onBeforeUnload);
-  });
+  useBeforeUnload(!testComplete);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
