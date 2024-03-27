@@ -43,7 +43,7 @@ const TitleEntry = () => {
         enqueueSnackbar("Successfully created a new blog post");
       })
       .catch((e) =>
-        enqueueSnackbar(`Error! failed to make a new blog post`, {
+        enqueueSnackbar(`Failed to make a new blog post`, {
           variant: "error",
         })
       );
@@ -87,10 +87,9 @@ const TitleEntry = () => {
             />
             <Button
               type="submit"
+              // color="primary"
               sx={{
                 mt: 2,
-                color: theme.palette.primary.main,
-                // color: "white",
                 width: 10,
               }}
             >
