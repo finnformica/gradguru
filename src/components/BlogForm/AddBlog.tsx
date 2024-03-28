@@ -62,7 +62,6 @@ const AddBlog = () => {
       postBlog(blogSlug, {
         ...data,
         author: user.name,
-        date: new Date().toDateString(),
         imageId: imageId,
         slug: blogSlug,
         content: content,
@@ -80,10 +79,6 @@ const AddBlog = () => {
         });
     });
   };
-
-  // const onSubmit = (data: addFormData) => {
-  //   console.log(data.heroPhoto);
-  // };
 
   return (
     <Container maxWidth="md">
@@ -145,6 +140,7 @@ const AddBlog = () => {
               <TextField
                 label={"Summary"}
                 onChange={onChange}
+                multiline
                 error={!!error}
                 helperText={!!error && "A Summary is required"}
                 value={value}
@@ -170,12 +166,7 @@ const AddBlog = () => {
               modules={modules}
             />
           </Box>
-          <Button
-            // size="small"
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
+          <Button type="submit" variant="contained" color="primary">
             submit
           </Button>
         </Stack>
