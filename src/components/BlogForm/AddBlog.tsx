@@ -48,7 +48,7 @@ const tagOptions = ["Finance", "Jobs", "Education", "Loose Cannon"];
 const AddBlog = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [mdxDoc, setMdxDox] = useState("");
+  const [content, setContent] = useState("");
   const [imageUpload, setImageUpload] = useState<File | null>(null);
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -101,6 +101,10 @@ const AddBlog = () => {
         });
     });
   };
+
+  // const onSubmit = () => {
+  //   console.log(content);
+  // };
 
   return (
     <Container maxWidth="md">
@@ -182,8 +186,8 @@ const AddBlog = () => {
           >
             <ReactQuill
               theme="snow"
-              value={mdxDoc}
-              onChange={setMdxDox}
+              value={content}
+              onChange={(newValue) => setContent(newValue)}
               // modules={modules}
             />
           </Box>

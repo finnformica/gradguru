@@ -5,3 +5,9 @@ export type DataProps = {
 };
 
 export type titleDataProps = { title: string };
+
+export type addFormData = {
+  title: string;
+  summary: string;
+  tags: string;
+};
