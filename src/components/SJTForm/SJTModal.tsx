@@ -1,57 +1,26 @@
 "use client";
 
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 
-import { useSnackbar } from "notistack";
-
-import { deleteSJTTest, postSJTTest } from "api/tests";
+import { postSJTTest } from "api/tests";
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
 
 const SJTModal = ({
   open,
-  setOpen,
+  setQuestion,
   refresh,
-  ...question
+  question,
 }: {
   open: boolean;
-  setOpen: (newOpen: boolean) => void;
+  setQuestion: (question: SJTQuestion | null) => void;
   refresh: () => void;
-} & SJTQuestion) => {
+  question: SJTQuestion;
+}) => {
   const { enqueueSnackbar } = useSnackbar();
   const [form, setForm] = useState<SJTQuestion>(question);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setOpen(false);
-  };
-
-  const handleDelete = async () => {
-    if (!form.id) {
-      enqueueSnackbar("Something went wrong - form not found", {
-        variant: "error",
-      });
-      return;
-    }
-
-    deleteSJTTest(form.id)
-      .then(() => enqueueSnackbar("SJT question updated"))
-      .catch((err) =>
-        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => {
-        refresh();
-        handleClose();
-      });
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,7 +41,7 @@ const SJTModal = ({
       )
       .finally(() => {
         refresh();
-        setOpen(false);
+        setQuestion(null);
       });
   };
 
@@ -80,11 +49,7 @@ const SJTModal = ({
     <FormModalWrapper
       title="Edit SJT question"
       open={open}
-      anchorEl={anchorEl}
-      onClose={handleClose}
-      handleDelete={handleDelete}
-      handleClick={handleClick}
-      handleClose={handleClose}
+      handleClose={() => setQuestion(null)}
     >
       <SJTForm form={form} setForm={setForm} handleSubmit={handleSubmit} />
     </FormModalWrapper>

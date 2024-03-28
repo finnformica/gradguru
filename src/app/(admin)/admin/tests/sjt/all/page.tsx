@@ -1,101 +1,138 @@
 "use client";
 
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListSubheader,
-  Typography,
-} from "@mui/material";
 import { useState } from "react";
 
-import { useSJTTests } from "api/tests";
+import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
+
+import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
+import { IconButton, Stack, Typography } from "@mui/material";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+
+import { deleteSJTTest, useSJTTests } from "api/tests";
 import { SJTModal } from "components/SJTForm";
 import { SJTQuestion } from "components/SJTForm/types";
-import { LoadingScreen } from "components/global-components";
-import { useSession } from "next-auth/react";
-
-const SJTListItem = ({
-  refresh,
-  ...question
-}: { refresh: () => void } & SJTQuestion) => {
-  const { data: session } = useSession();
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <SJTModal open={open} setOpen={setOpen} refresh={refresh} {...question} />
-      <ListItem disablePadding>
-        <ListItemButton
-          onClick={() => setOpen(true)}
-          disabled={(session?.user.role ?? 0) < 3}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              sx={{
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                width: "60vw",
-              }}
-            >
-              {question.scenario.length === 0
-                ? "No scenario provided"
-                : question.scenario}
-            </Typography>
-            <Typography>
-              {new Date(
-                question.created ? question.created : Date.now()
-              ).toLocaleDateString()}
-            </Typography>
-          </Box>
-        </ListItemButton>
-      </ListItem>
-      <Divider />
-    </>
-  );
-};
+import {
+  ConfirmationDialog,
+  LoadingScreen,
+} from "components/global-components";
 
 const AllSJT = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { data: session } = useSession();
+  const [questionToEdit, setQuestionToEdit] = useState<SJTQuestion | null>(
+    null
+  );
+  const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
   const { questions, loading, refresh } = useSJTTests();
 
-  if (!questions || loading) return <LoadingScreen />;
+  if (!questions || loading || !session) return <LoadingScreen />;
+
+  const columns: GridColDef[] = [
+    {
+      field: "scenario",
+      headerName: "Scenario",
+      flex: 1,
+    },
+    {
+      field: "created",
+      headerName: "Created",
+      width: 150,
+      renderCell: (params) => {
+        return new Date(params.value as number).toLocaleString();
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <Stack direction="row" justifyContent="center">
+            <IconButton
+              size="small"
+              disabled={(session?.user?.role || 0) < 3}
+              onClick={() => setQuestionToEdit(params.row)}
+            >
+              <DriveFileRenameOutline fontSize="small" />
+            </IconButton>
+            <IconButton
+              size="small"
+              disabled={(session?.user?.role || 0) < 4}
+              onClick={() => setQuestionToDelete(params.row.id)}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Stack>
+        );
+      },
+    },
+  ];
+
+  const handleDelete = async () => {
+    if (!questionToDelete) {
+      enqueueSnackbar("Something went wrong - form not found", {
+        variant: "error",
+      });
+      return;
+    }
+
+    deleteSJTTest(questionToDelete)
+      .then(() => enqueueSnackbar("SJT question updated"))
+      .catch((err) =>
+        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        refresh();
+        setQuestionToDelete(null);
+      });
+  };
 
   return (
     <>
       <Typography variant="h4" pb={2}>
         All SJT questions
       </Typography>
-      <List
-        subheader={
-          <ListSubheader>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography>Scenario</Typography>
-              <Typography>Date created</Typography>
-            </Box>
-          </ListSubheader>
-        }
-      >
-        {questions
-          .sort((a, b) => b.created - a.created)
-          .map((question, key) => (
-            <SJTListItem key={key} refresh={refresh} {...question} />
-          ))}
-      </List>
+      <DataGrid
+        rows={questions}
+        columns={columns}
+        disableDensitySelector
+        disableRowSelectionOnClick
+        rowHeight={40}
+        autoHeight
+        pageSizeOptions={[15, 25, 50, 100]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 15 } },
+          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
+        }}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            printOptions: { disableToolbarButton: true },
+            csvOptions: { disableToolbarButton: true },
+          },
+        }}
+      />
+      {questionToEdit && (
+        <SJTModal
+          open={!!questionToEdit}
+          question={questionToEdit}
+          setQuestion={setQuestionToEdit}
+          refresh={refresh}
+        />
+      )}
+      {questionToDelete && (
+        <ConfirmationDialog
+          title="Are you sure you want to delete this question?"
+          open={!!questionToDelete}
+          onSubmit={handleDelete}
+          onClose={() => setQuestionToDelete(null)}
+          confirmText="Delete"
+        />
+      )}
     </>
   );
 };
