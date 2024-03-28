@@ -43,13 +43,13 @@ const modules = {
   ],
 };
 
-const tagOptions = ["Finance", "Jobs", "Education", "Loose Cannon"];
+const tagOptions = ["Finance", "Jobs", "Education"];
 
 const AddBlog = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
-  const [imageUpload, setImageUpload] = useState<File | null>(null);
+  const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       title: "",
@@ -61,7 +61,7 @@ const AddBlog = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
-      setImageUpload(files[0]);
+      setHeroPhoto(files[0]);
       enqueueSnackbar("Image Selected");
     } else {
       enqueueSnackbar("No file selected.", { variant: "error" });
@@ -74,20 +74,21 @@ const AddBlog = () => {
   const { user } = session;
 
   const onSubmit = (data: addFormData) => {
-    if (!imageUpload) {
+    if (!heroPhoto) {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
     let imageId;
     let blogSlug;
-    blogStorage(imageUpload, data.title).then((res) => {
+
+    blogStorage(heroPhoto, data.title).then((res) => {
       ({ imageId, blogSlug } = res);
-      postBlog(null, {
+      postBlog(blogSlug, {
         ...data,
         author: user.name,
         date: new Date().toDateString(),
-        authorId: user.id,
         imageId: imageId,
         slug: blogSlug,
+        content: content,
       })
         .then(() => enqueueSnackbar("Blog card has been added"))
         .catch((e) =>
@@ -97,13 +98,14 @@ const AddBlog = () => {
         )
         .finally(() => {
           reset();
-          setImageUpload(null);
+          setHeroPhoto(null);
+          setContent("");
         });
     });
   };
 
-  // const onSubmit = () => {
-  //   console.log(content);
+  // const onSubmit = (data: addFormData) => {
+  //   console.log(data.heroPhoto);
   // };
 
   return (
@@ -174,7 +176,7 @@ const AddBlog = () => {
             )}
           />
 
-          <Input type={"file"} onChange={handleImageChange} />
+          <TextField type={"file"} size="small" onChange={handleImageChange} />
 
           <Box
             sx={{
