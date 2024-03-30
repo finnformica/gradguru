@@ -1,7 +1,3 @@
-import { useMemo } from "react";
-import useSWR from "swr";
-import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
-
 import {
   addDoc,
   arrayUnion,
@@ -15,28 +11,10 @@ import {
 } from "firebase/firestore";
 import { db } from "lib/firebase/config";
 
-// ----  Using Next.js API routes ----
+// ----  Legacy ----
 
-export function useNRTests() {
-  const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.tests.nr.all,
-    getFetcher
-  );
-
-  return useMemo(
-    () => ({
-      questions: data?.documents as any[] | undefined,
-      loading: isLoading,
-      error,
-      isValidating,
-      refresh: () => mutate(),
-    }),
-    [data, error, isLoading, isValidating, mutate]
-  );
-}
-
-export async function getNRTests(type: string) {
-  const nrRef = collection(db, "nr-consulting");
+export async function getNRQuestions(type: string) {
+  const nrRef = collection(db, "nr-consulting"); // incorrect collection ref
   const q = query(nrRef, where("type", "==", type));
 
   return getDocs(q).then((questions) =>
@@ -46,18 +24,6 @@ export async function getNRTests(type: string) {
     }))
   );
 }
-
-export function postNRTest(id: string | null, data: any) {
-  const URL = endpoints.admin.tests.nr.test(id);
-  return postFetcher([URL, {}, data]);
-}
-
-export function deleteNRTest(id: string) {
-  const URL = endpoints.admin.tests.nr.test(id);
-  return deleteFetcher(URL);
-}
-
-// ---- Using Firebase API ----
 
 // ---- Tests ----
 

@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 
+import { createQuestion } from "api/tests";
 import { NRForm } from "components/NRForm";
 import {
   INRForm,
-  tableForm,
-  graphForm,
   gmatForm,
+  graphForm,
+  tableForm,
 } from "components/NRForm/types";
 import { LoadingScreen } from "components/global-components";
-import { postNRTest } from "api/tests";
 
 const AddNRQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -26,7 +26,7 @@ const AddNRQuestion = () => {
 
     setLoading(true);
 
-    postNRTest(null, form)
+    createQuestion("numerical-reasoning", form)
       .then(() => {
         enqueueSnackbar("Numerical reasoning question added");
 

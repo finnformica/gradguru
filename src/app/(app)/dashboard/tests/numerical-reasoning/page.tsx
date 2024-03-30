@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
 
-import { createTestRecord, getNRTests } from "api/tests";
+import { createTestRecord, getNRQuestions } from "api/tests";
 
 import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
@@ -39,7 +39,7 @@ const NumericalReasoningTest = () => {
   }, [testComplete, pause]);
 
   const fetchTableOrGraph = async (type: string) => {
-    const tableQuestions = await getNRTests(type);
+    const tableQuestions = await getNRQuestions(type);
     const sample = _.sample(tableQuestions) as any;
     const questions = sample.questions.map((q: any) => ({
       ...q,
@@ -51,7 +51,7 @@ const NumericalReasoningTest = () => {
   };
 
   const fetchGmat = async () => {
-    const gmatQuestions = await getNRTests("gmat");
+    const gmatQuestions = await getNRQuestions("gmat");
     const samples = _.sampleSize(gmatQuestions, 2) as any;
     const questions = samples.map((q: any) => ({
       ..._.omit(q, "created"),

@@ -1,32 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import _ from "lodash";
 import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
+import { deleteQuestion, getQuestions } from "api/tests";
+import NRModal from "components/NRForm/NRModal";
+import { NRQuestion } from "components/NRForm/types";
+import EditDeleteActions from "components/data-grid/edit-delete-action";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import NRModal from "components/NRForm/NRModal";
-import { NRQuestion } from "components/NRForm/types";
-
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { deleteNRTest, useNRTests } from "api/tests";
-import EditDeleteActions from "components/data-grid/edit-delete-action";
-import { useSnackbar } from "notistack";
 
 const AllNRQuestions = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
+  const [questions, setQuestions] = useState<any[] | null>(null);
   const [questionToEdit, setQuestionToEdit] = useState<NRQuestion | null>(null);
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
-  const { questions, loading, refresh } = useNRTests();
 
-  if (!questions || loading || !session) return <LoadingScreen />;
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getQuestions("numerical-reasoning");
+      setQuestions(res);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!questions || !session) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -86,17 +94,14 @@ const AllNRQuestions = () => {
       return;
     }
 
-    deleteNRTest(questionToDelete)
+    deleteQuestion("numerical-reasoning", questionToDelete)
       .then(() => enqueueSnackbar("NR question deleted"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
       )
-      .finally(() => {
-        refresh();
-        setQuestionToDelete(null);
-      });
+      .finally(() => setQuestionToDelete(null));
   };
 
   return (
@@ -130,7 +135,6 @@ const AllNRQuestions = () => {
         <NRModal
           question={questionToEdit}
           setQuestion={setQuestionToEdit}
-          refresh={refresh}
           handleDelete={handleDelete}
         />
       )}

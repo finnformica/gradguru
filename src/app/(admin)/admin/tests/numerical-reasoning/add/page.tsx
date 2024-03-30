@@ -104,9 +104,8 @@ const AddNRTest = () => {
     createTest("numerical-reasoning", { questions: data })
       .then((id) => {
         // add testId to each question
-        uniqueQuestions.forEach(
-          (question) =>
-            patchQuestion(question, "numerical-reasoning", { testId: null }) // TODO: use id
+        uniqueQuestions.forEach((question) =>
+          patchQuestion(question, "numerical-reasoning", { testId: id })
         );
       })
       .then(() => enqueueSnackbar("Test created successfully"))

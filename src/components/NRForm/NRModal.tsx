@@ -1,7 +1,7 @@
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 
-import { postNRTest } from "api/tests";
+import { patchQuestion } from "api/tests";
 
 import FormModalWrapper from "../global-components/FormModalWrapper";
 import NRForm from "./NRForm";
@@ -9,11 +9,9 @@ import { NRQuestion } from "./types";
 
 const NRModal = ({
   setQuestion,
-  refresh,
   question,
 }: {
   setQuestion: (question: NRQuestion | null) => void;
-  refresh: () => void;
   question: NRQuestion;
   handleDelete: () => void;
 }) => {
@@ -30,17 +28,14 @@ const NRModal = ({
       return;
     }
 
-    postNRTest(form.id, form)
+    patchQuestion("numerical-reasoning", form.id, form)
       .then(() => enqueueSnackbar("NR question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
       )
-      .finally(() => {
-        refresh();
-        setQuestion(null);
-      });
+      .finally(() => setQuestion(null));
   };
 
   return (
