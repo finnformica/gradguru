@@ -89,18 +89,56 @@ export const createTestRecord = (data: any, userId: string) => {
   return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
 };
 
-export const createTest = async (collectionName: string, data: any) => {
+export const getQuestions = async (testType: string) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType
+  );
+
+  return getDocs(ref).then((questions) =>
+    questions.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+  );
+};
+
+export const getTests = async (testType: string) => {
   const ref = collection(
     db,
     "courses",
     "consulting",
     "tests",
     "tests",
-    collectionName
+    testType
   );
 
+  return getDocs(ref).then((tests) =>
+    tests.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+  );
+};
+
+export const createTest = async (testType: string, data: any) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "tests",
+    testType
+  );
+
+  const payload = { ...data, created: Date.now() };
+
   // TODO: add created and updated timestamps
-  return addDoc(ref, data).then((docRef) => docRef.id);
+  return addDoc(ref, payload).then((docRef) => docRef.id);
 };
 
 export const patchQuestion = async (
