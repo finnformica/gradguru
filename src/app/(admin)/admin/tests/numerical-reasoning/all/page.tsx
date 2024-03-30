@@ -58,8 +58,6 @@ const AllNRTests = () => {
   ];
 
   const handleDeleteTest = async () => {
-    console.log("Deleting test", testToDelete.id);
-
     const flattenedQuestions = Object.values(
       testToDelete.questions
     ).flat() as string[];

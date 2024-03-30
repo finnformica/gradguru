@@ -58,8 +58,6 @@ const AllSJTTests = () => {
   ];
 
   const handleDeleteTest = async () => {
-    console.log("Deleting test", testToDelete.id);
-
     // delete reference to testId from each question
     const questionsUpdated = await testToDelete.questions.forEach(
       (question: string) =>
