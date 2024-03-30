@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
 
 import {
+  addDoc,
   arrayUnion,
   collection,
   doc,
@@ -81,9 +82,42 @@ export function deleteNRTest(id: string) {
   return deleteFetcher(URL);
 }
 
-export const createTestRecord = (data: any, id: string) => {
-  const docRef = doc(db, "user-meta", id);
+export const createTestRecord = (data: any, userId: string) => {
+  const docRef = doc(db, "user-meta", userId);
 
   // setDoc automatically creates the document if it doesn't exists
   return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
+};
+
+export const createTest = async (collectionName: string, data: any) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "tests",
+    collectionName
+  );
+
+  // TODO: add created and updated timestamps
+  return addDoc(ref, data).then((docRef) => docRef.id);
+};
+
+export const patchQuestion = async (
+  questionId: string,
+  testType: string,
+  data: any
+) => {
+  const ref = doc(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType,
+    questionId
+  );
+
+  // TODO: add updated timestamps
+  return setDoc(ref, data, { merge: true });
 };
