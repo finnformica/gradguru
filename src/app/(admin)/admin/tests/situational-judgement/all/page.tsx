@@ -18,12 +18,11 @@ const AllSJTTests = () => {
   const [testToDelete, setTestToDelete] = useState<any | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getTests("situational-judgement");
-      setTests(res);
-    };
+    // add event listener on firestore collection
+    const unsubscribe = getTests("situational-judgement", setTests);
 
-    fetchData();
+    // remove event listener on unmount
+    return () => unsubscribe();
   }, []);
 
   const columns: GridColDef[] = [

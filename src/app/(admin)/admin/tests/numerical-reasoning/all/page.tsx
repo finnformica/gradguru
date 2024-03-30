@@ -18,12 +18,11 @@ const AllNRTests = () => {
   const [testToDelete, setTestToDelete] = useState<any | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getTests("numerical-reasoning");
-      setTests(res);
-    };
+    // add event listener on firestore collection
+    const unsubscribe = getTests("numerical-reasoning", setTests);
 
-    fetchData();
+    // remove event listener on unmount
+    return () => unsubscribe();
   }, []);
 
   const columns: GridColDef[] = [

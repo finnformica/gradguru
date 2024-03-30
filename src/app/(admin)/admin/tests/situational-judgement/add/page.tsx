@@ -24,12 +24,11 @@ const AddSJTTest = () => {
   const { control, handleSubmit, setValue, reset } = useForm();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getQuestions("situational-judgement");
-      setQuestions(res);
-    };
+    // add event listener on firestore collection
+    const unsubscribe = getQuestions("situational-judgement", setQuestions);
 
-    fetchData();
+    // remove event listener on unmount
+    return () => unsubscribe();
   }, []);
 
   const onSubmit = async (data: any) => {

@@ -26,12 +26,11 @@ const AllNRQuestions = () => {
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getQuestions("numerical-reasoning");
-      setQuestions(res);
-    };
+    // add event listener on firestore collection
+    const unsubscribe = getQuestions("numerical-reasoning", setQuestions);
 
-    fetchData();
+    // remove event listener on unmount
+    return () => unsubscribe();
   }, []);
 
   if (!questions || !session) return <LoadingScreen />;

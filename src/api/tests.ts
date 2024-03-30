@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  onSnapshot,
   query,
   setDoc,
   where,
@@ -27,7 +28,10 @@ export async function getNRQuestions(type: string) {
 
 // ---- Tests ----
 
-export const getTests = async (testType: string) => {
+export const getTests = (
+  testType: string,
+  setState: (state: any[]) => void
+) => {
   const ref = collection(
     db,
     "courses",
@@ -37,12 +41,12 @@ export const getTests = async (testType: string) => {
     testType
   );
 
-  return getDocs(ref).then((tests) =>
-    tests.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-  );
+  const q = query(ref); // listens on document modifications
+
+  return onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setState(data);
+  });
 };
 
 export const createTest = async (testType: string, data: any) => {
@@ -77,27 +81,9 @@ export const deleteTest = async (testType: string, testId: string) => {
 
 // ---- Questions ----
 
-export const getQuestions = async (testType: string) => {
-  const ref = collection(
-    db,
-    "courses",
-    "consulting",
-    "tests",
-    "questions",
-    testType
-  );
-
-  return getDocs(ref).then((questions) =>
-    questions.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-  );
-};
-
-export const getQuestionsById = async (
+export const getQuestions = (
   testType: string,
-  questionIds: string[]
+  setState: (state: any[]) => void
 ) => {
   const ref = collection(
     db,
@@ -108,12 +94,34 @@ export const getQuestionsById = async (
     testType
   );
 
-  return getDocs(query(ref, where("id", "in", questionIds))).then((questions) =>
-    questions.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
+  const q = query(ref); // listens on document modifications
+
+  return onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setState(data);
+  });
+};
+
+export const getQuestionsById = (
+  testType: string,
+  questionIds: string[],
+  setState: (state: any[]) => void
+) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType
   );
+
+  const q = query(ref, where("id", "in", questionIds));
+
+  return onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setState(data);
+  });
 };
 
 export const createQuestion = async (testType: string, data: any) => {
