@@ -6,6 +6,7 @@ import {
   addDoc,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   query,
@@ -89,24 +90,6 @@ export const createTestRecord = (data: any, userId: string) => {
   return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
 };
 
-export const getQuestions = async (testType: string) => {
-  const ref = collection(
-    db,
-    "courses",
-    "consulting",
-    "tests",
-    "questions",
-    testType
-  );
-
-  return getDocs(ref).then((questions) =>
-    questions.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-  );
-};
-
 export const getTests = async (testType: string) => {
   const ref = collection(
     db,
@@ -139,6 +122,38 @@ export const createTest = async (testType: string, data: any) => {
 
   // TODO: add created and updated timestamps
   return addDoc(ref, payload).then((docRef) => docRef.id);
+};
+
+export const deleteTest = async (testType: string, testId: string) => {
+  const ref = doc(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "tests",
+    testType,
+    testId
+  );
+
+  return deleteDoc(ref);
+};
+
+export const getQuestions = async (testType: string) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType
+  );
+
+  return getDocs(ref).then((questions) =>
+    questions.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+  );
 };
 
 export const patchQuestion = async (
