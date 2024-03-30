@@ -15,6 +15,7 @@ const ListCollapseItem = ({ section }: any) => {
     <ListItem disablePadding sx={{ display: "block" }}>
       <Link href={section.route} passHref>
         <ListItemButton
+          disabled={!section.active}
           sx={{
             minHeight: 48,
             justifyContent: "initial",
