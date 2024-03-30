@@ -3,8 +3,8 @@ import { IconButton, Stack } from "@mui/material";
 
 type EditDeleteActionsProps = {
   session: any;
-  onEditClick: () => void;
-  onDeleteClick: () => void;
+  onEditClick?: () => void;
+  onDeleteClick?: () => void;
 };
 
 const EditDeleteActions = ({
@@ -14,20 +14,24 @@ const EditDeleteActions = ({
 }: EditDeleteActionsProps) => {
   return (
     <Stack direction="row" justifyContent="center">
-      <IconButton
-        size="small"
-        disabled={(session?.user?.role || 0) < 3}
-        onClick={onEditClick}
-      >
-        <DriveFileRenameOutline fontSize="small" />
-      </IconButton>
-      <IconButton
-        size="small"
-        disabled={(session?.user?.role || 0) < 4}
-        onClick={onDeleteClick}
-      >
-        <Delete fontSize="small" />
-      </IconButton>
+      {onEditClick && (
+        <IconButton
+          size="small"
+          disabled={(session?.user?.role || 0) < 3}
+          onClick={onEditClick}
+        >
+          <DriveFileRenameOutline fontSize="small" />
+        </IconButton>
+      )}
+      {onDeleteClick && (
+        <IconButton
+          size="small"
+          disabled={(session?.user?.role || 0) < 4}
+          onClick={onDeleteClick}
+        >
+          <Delete fontSize="small" />
+        </IconButton>
+      )}
     </Stack>
   );
 };
