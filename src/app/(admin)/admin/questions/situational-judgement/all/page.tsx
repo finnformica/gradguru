@@ -2,53 +2,37 @@
 
 import { useState } from "react";
 
-import _ from "lodash";
 import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
 
+import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
 import { IconButton, Stack, Typography } from "@mui/material";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
+import { deleteSJTTest, useSJTTests } from "api/tests";
+import { SJTModal } from "components/SJTForm";
+import { SJTQuestion } from "components/SJTForm/types";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import NRModal from "components/NRForm/NRModal";
-import { NRQuestion } from "components/NRForm/types";
 
-import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { deleteNRTest, useNRTests } from "api/tests";
-import { useSnackbar } from "notistack";
-
-const AllNR = () => {
-  const { data: session } = useSession();
+const AllSJTQuestions = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [questionToEdit, setQuestionToEdit] = useState<NRQuestion | null>(null);
+  const { data: session } = useSession();
+  const [questionToEdit, setQuestionToEdit] = useState<SJTQuestion | null>(
+    null
+  );
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
-  const { questions, loading, refresh } = useNRTests();
+  const { questions, loading, refresh } = useSJTTests();
 
   if (!questions || loading || !session) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
-      field: "question",
-      headerName: "Question",
+      field: "scenario",
+      headerName: "Scenario",
       flex: 1,
-      renderCell: (params) => {
-        switch (params.row.type) {
-          case "table":
-            return params.row.questions[0].question;
-          case "graph":
-            return params.row.scenario;
-          default:
-            return params.value;
-        }
-      },
-    },
-    {
-      field: "type",
-      headerName: "Type",
-      width: 80,
-      renderCell: (params) => _.startCase(params.value as string),
     },
     {
       field: "created",
@@ -87,14 +71,14 @@ const AllNR = () => {
 
   const handleDelete = async () => {
     if (!questionToDelete) {
-      enqueueSnackbar("Something went wrong - no question found", {
+      enqueueSnackbar("Something went wrong - form not found", {
         variant: "error",
       });
       return;
     }
 
-    deleteNRTest(questionToDelete)
-      .then(() => enqueueSnackbar("NR question deleted"))
+    deleteSJTTest(questionToDelete)
+      .then(() => enqueueSnackbar("SJT question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
@@ -109,9 +93,8 @@ const AllNR = () => {
   return (
     <>
       <Typography variant="h4" pb={2}>
-        All NR questions
+        All SJT questions
       </Typography>
-
       <DataGrid
         rows={questions}
         columns={columns}
@@ -134,11 +117,11 @@ const AllNR = () => {
         }}
       />
       {questionToEdit && (
-        <NRModal
+        <SJTModal
+          open={!!questionToEdit}
           question={questionToEdit}
           setQuestion={setQuestionToEdit}
           refresh={refresh}
-          handleDelete={handleDelete}
         />
       )}
       {questionToDelete && (
@@ -154,4 +137,4 @@ const AllNR = () => {
   );
 };
 
-export default AllNR;
+export default AllSJTQuestions;

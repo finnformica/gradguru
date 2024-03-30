@@ -14,7 +14,7 @@ import {
 import { LoadingScreen } from "components/global-components";
 import { postNRTest } from "api/tests";
 
-const AddNR = () => {
+const AddNRQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState<boolean>(false);
   const [form, setForm] = useState<INRForm>({
@@ -64,4 +64,4 @@ const AddNR = () => {
   );
 };
 
-export default AddNR;
+export default AddNRQuestion;

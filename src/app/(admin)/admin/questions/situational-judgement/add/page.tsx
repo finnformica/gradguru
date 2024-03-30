@@ -11,7 +11,7 @@ import { postSJTTest } from "api/tests";
 import { SJTForm } from "components/SJTForm";
 import { LoadingScreen } from "components/global-components";
 
-const AddSJT = () => {
+const AddSJTQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<SJTScenarioForm>({ ...initialForm });
@@ -46,4 +46,4 @@ const AddSJT = () => {
   );
 };
 
-export default AddSJT;
+export default AddSJTQuestion;
