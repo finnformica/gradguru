@@ -15,33 +15,7 @@ import {
 } from "firebase/firestore";
 import { db } from "lib/firebase/config";
 
-export function useSJTTests() {
-  const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.tests.sjt.all,
-    getFetcher
-  );
-
-  return useMemo(
-    () => ({
-      questions: data?.documents as any[] | undefined,
-      loading: isLoading,
-      error,
-      isValidating,
-      refresh: () => mutate(),
-    }),
-    [data, error, isLoading, isValidating, mutate]
-  );
-}
-
-export function postSJTTest(id: string | null, data: any) {
-  const URL = endpoints.admin.tests.sjt.test(id);
-  return postFetcher([URL, {}, data]);
-}
-
-export function deleteSJTTest(id: string) {
-  const URL = endpoints.admin.tests.sjt.test(id);
-  return deleteFetcher(URL);
-}
+// ----  Using Next.js API routes ----
 
 export function useNRTests() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
@@ -83,12 +57,9 @@ export function deleteNRTest(id: string) {
   return deleteFetcher(URL);
 }
 
-export const createTestRecord = (data: any, userId: string) => {
-  const docRef = doc(db, "user-meta", userId);
+// ---- Using Firebase API ----
 
-  // setDoc automatically creates the document if it doesn't exists
-  return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
-};
+// ---- Tests ----
 
 export const getTests = async (testType: string) => {
   const ref = collection(
@@ -138,6 +109,8 @@ export const deleteTest = async (testType: string, testId: string) => {
   return deleteDoc(ref);
 };
 
+// ---- Questions ----
+
 export const getQuestions = async (testType: string) => {
   const ref = collection(
     db,
@@ -154,6 +127,43 @@ export const getQuestions = async (testType: string) => {
       ...doc.data(),
     }))
   );
+};
+
+export const getQuestionsById = async (
+  testType: string,
+  questionIds: string[]
+) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType
+  );
+
+  return getDocs(query(ref, where("id", "in", questionIds))).then((questions) =>
+    questions.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+  );
+};
+
+export const createQuestion = async (testType: string, data: any) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType
+  );
+
+  const payload = { ...data, created: Date.now() };
+
+  // TODO: add created and updated timestamps
+  return addDoc(ref, payload).then((docRef) => docRef.id);
 };
 
 export const patchQuestion = async (
@@ -173,4 +183,27 @@ export const patchQuestion = async (
 
   // TODO: add updated timestamps
   return setDoc(ref, data, { merge: true });
+};
+
+export const deleteQuestion = async (testType: string, questionId: string) => {
+  const ref = doc(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "questions",
+    testType,
+    questionId
+  );
+
+  return deleteDoc(ref);
+};
+
+// ---- User ----
+
+export const createTestRecord = (data: any, userId: string) => {
+  const docRef = doc(db, "user-meta", userId);
+
+  // setDoc automatically creates the document if it doesn't exists
+  return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
 };

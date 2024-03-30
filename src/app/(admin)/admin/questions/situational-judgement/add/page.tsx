@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 
 import { SJTScenarioForm, initialForm } from "components/SJTForm/types";
 
-import { postSJTTest } from "api/tests";
+import { createQuestion } from "api/tests";
 import { SJTForm } from "components/SJTForm";
 import { LoadingScreen } from "components/global-components";
 
@@ -21,7 +21,7 @@ const AddSJTQuestion = () => {
 
     setLoading(true);
 
-    postSJTTest(null, form)
+    createQuestion("situational-judgement", form)
       .then(() => enqueueSnackbar("SJT question added"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {

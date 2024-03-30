@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useStopwatch } from "react-timer-hook";
 
-import { createTestRecord, useSJTTests } from "api/tests";
+import { createTestRecord, getQuestions } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
@@ -25,7 +25,6 @@ type SJTQuestion = {
 };
 
 const SituationalJudgementTest = () => {
-  const { questions: allQuestions } = useSJTTests();
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
@@ -40,7 +39,8 @@ const SituationalJudgementTest = () => {
   }, [testComplete, pause]);
 
   useEffect(() => {
-    if (allQuestions) {
+    const fetchData = async () => {
+      const allQuestions: any[] = await getQuestions("situational-judgement");
       setQuestions(
         _.shuffle(allQuestions)
           ?.slice(0, 4) // TODO: provide questions the user hasn't seen
@@ -55,8 +55,10 @@ const SituationalJudgementTest = () => {
           )
           .flat()
       );
-    }
-  }, [allQuestions]);
+    };
+
+    fetchData();
+  }, []);
 
   useBeforeUnload(!testComplete);
 

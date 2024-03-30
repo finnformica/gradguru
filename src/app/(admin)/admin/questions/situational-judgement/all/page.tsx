@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 import { Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
-import { deleteSJTTest, useSJTTests } from "api/tests";
+import { deleteQuestion, getQuestions } from "api/tests";
 import { SJTModal } from "components/SJTForm";
 import { SJTQuestion } from "components/SJTForm/types";
 import EditDeleteActions from "components/data-grid/edit-delete-action";
@@ -24,9 +24,18 @@ const AllSJTQuestions = () => {
     null
   );
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
-  const { questions, loading, refresh } = useSJTTests();
+  const [questions, setQuestions] = useState<any[] | null>(null);
 
-  if (!questions || loading || !session) return <LoadingScreen />;
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getQuestions("situational-judgement");
+      setQuestions(res);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!questions || !session) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -66,17 +75,14 @@ const AllSJTQuestions = () => {
       return;
     }
 
-    deleteSJTTest(questionToDelete)
-      .then(() => enqueueSnackbar("SJT question updated"))
+    deleteQuestion("situational-judgement", questionToDelete)
+      .then(() => enqueueSnackbar("SJT question deleted"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
       )
-      .finally(() => {
-        refresh();
-        setQuestionToDelete(null);
-      });
+      .finally(() => setQuestionToDelete(null));
   };
 
   return (
@@ -110,7 +116,6 @@ const AllSJTQuestions = () => {
           open={!!questionToEdit}
           question={questionToEdit}
           setQuestion={setQuestionToEdit}
-          refresh={refresh}
         />
       )}
       {questionToDelete && (

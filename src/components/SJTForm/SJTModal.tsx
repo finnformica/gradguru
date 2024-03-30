@@ -3,20 +3,19 @@
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 
-import { postSJTTest } from "api/tests";
+import { patchQuestion } from "api/tests";
 import FormModalWrapper from "components/global-components/FormModalWrapper";
+
 import SJTForm from "./SJTForm";
 import { SJTQuestion } from "./types";
 
 const SJTModal = ({
   open,
   setQuestion,
-  refresh,
   question,
 }: {
   open: boolean;
   setQuestion: (question: SJTQuestion | null) => void;
-  refresh: () => void;
   question: SJTQuestion;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,17 +31,14 @@ const SJTModal = ({
       return;
     }
 
-    postSJTTest(form.id, form)
+    patchQuestion(form.id, "situational-judgement", form)
       .then(() => enqueueSnackbar("SJT question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
         })
       )
-      .finally(() => {
-        refresh();
-        setQuestion(null);
-      });
+      .finally(() => setQuestion(null));
   };
 
   return (
