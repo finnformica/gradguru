@@ -12,15 +12,25 @@ import {
   Typography,
 } from "@mui/material";
 
-import { createTest, patchQuestion, useSJTTests } from "api/tests";
+import { createTest, getQuestions, patchQuestion } from "api/tests";
 import { LoadingScreen } from "components/global-components";
+import { useEffect, useState } from "react";
 
 const SJT_QUESTIONS_PER_TEST = 4;
 
 const AddSJTTest = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const [questions, setQuestions] = useState<any[]>([]);
   const { control, handleSubmit, setValue, reset } = useForm();
-  const { questions } = useSJTTests();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getQuestions("situational-judgement");
+      setQuestions(res);
+    };
+
+    fetchData();
+  }, []);
 
   const onSubmit = async (data: any) => {
     const uniqueQuestions: string[] = _.uniq(Object.values(data));
@@ -36,8 +46,9 @@ const AddSJTTest = () => {
     createTest("situational-judgement", { questions: uniqueQuestions })
       .then((id) => {
         // add testId to each question
-        uniqueQuestions.forEach((question) =>
-          patchQuestion(question, "situational-judgement", { testId: id })
+        uniqueQuestions.forEach(
+          (question) =>
+            patchQuestion(question, "situational-judgement", { testId: null }) // TODO: use id when ready
         );
       })
       .then(() => enqueueSnackbar("Test created successfully"))
@@ -49,11 +60,12 @@ const AddSJTTest = () => {
 
   if (!questions) return <LoadingScreen />;
 
-  // TODO: filter out questions that are already in a test
-  const options = questions.map((question) => ({
-    id: question.id,
-    label: question.scenario || "No scenario",
-  }));
+  const options = questions
+    .filter((question) => !question.testId)
+    .map((question) => ({
+      id: question.id,
+      label: question.scenario || "No scenario",
+    }));
 
   return (
     <>
