@@ -39,7 +39,6 @@ const CardActions = ({
       ) : (
         <Button
           variant="contained"
-          color="primary"
           onClick={() => gotoStep(currentStep + 1)}
           disabled={currentStep === questions.length - 1}
         >

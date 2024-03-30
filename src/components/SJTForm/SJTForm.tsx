@@ -38,7 +38,6 @@ const SJTForm = ({ form, setForm, handleSubmit }: SJTFormProps) => {
         <Stack spacing={2} direction={"row"}>
           <Button
             variant="outlined"
-            color="primary"
             startIcon={<AddIcon />}
             onClick={() =>
               setForm({

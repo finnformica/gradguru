@@ -45,7 +45,6 @@ const TopPanel = () => {
       <Box>
         <Button
           variant="outlined"
-          color="primary"
           onClick={handleClick}
           endIcon={<ExpandMore />}
         >
