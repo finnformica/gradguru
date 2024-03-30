@@ -2,6 +2,17 @@ import { endpoints, getFetcher, postFetcher } from "utils/axios";
 import { useMemo } from "react";
 import useSWR from "swr";
 
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+import { db } from "lib/firebase/config";
+
 // list of course ids
 export function useCourseIds() {
   const URL = endpoints.admin.courses.all;
@@ -23,21 +34,15 @@ export function useCourseIds() {
 }
 
 // list of courses
-export function useCourses() {
-  const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.courses.all,
-    getFetcher
-  );
+export async function getCourses() {
+  const ref = collection(db, "courses");
+  const q = query(ref);
 
-  return useMemo(
-    () => ({
-      courses: data?.documents as any[] | undefined, // return documents field for list of courses
-      loading: isLoading,
-      error,
-      isValidating,
-      refresh: () => mutate(),
-    }),
-    [data, error, isLoading, isValidating, mutate]
+  return getDocs(q).then((questions) =>
+    questions.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
   );
 }
 
