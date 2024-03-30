@@ -1,17 +1,17 @@
 import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 
-type DataGridActionsProps = {
+type EditDeleteActionsProps = {
   session: any;
   onEditClick: () => void;
   onDeleteClick: () => void;
 };
 
-const DataGridActions = ({
+const EditDeleteActions = ({
   session,
   onEditClick,
   onDeleteClick,
-}: DataGridActionsProps) => {
+}: EditDeleteActionsProps) => {
   return (
     <Stack direction="row" justifyContent="center">
       <IconButton
@@ -32,4 +32,4 @@ const DataGridActions = ({
   );
 };
 
-export default DataGridActions;
+export default EditDeleteActions;

@@ -16,7 +16,7 @@ import { NRQuestion } from "components/NRForm/types";
 
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { deleteNRTest, useNRTests } from "api/tests";
-import DataGridActions from "components/data-grid/data-grid-actions";
+import EditDeleteActions from "components/data-grid/edit-delete-action";
 import { useSnackbar } from "notistack";
 
 const AllNRQuestions = () => {
@@ -64,7 +64,7 @@ const AllNRQuestions = () => {
       width: 100,
       renderCell: (params) => {
         return (
-          <DataGridActions
+          <EditDeleteActions
             session={session}
             onEditClick={() => {
               setQuestionToEdit(params.row as NRQuestion);

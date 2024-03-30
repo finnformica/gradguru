@@ -11,7 +11,7 @@ import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { deleteSJTTest, useSJTTests } from "api/tests";
 import { SJTModal } from "components/SJTForm";
 import { SJTQuestion } from "components/SJTForm/types";
-import DataGridActions from "components/data-grid/data-grid-actions";
+import EditDeleteActions from "components/data-grid/edit-delete-action";
 import {
   ConfirmationDialog,
   LoadingScreen,
@@ -48,7 +48,7 @@ const AllSJTQuestions = () => {
       width: 100,
       renderCell: (params) => {
         return (
-          <DataGridActions
+          <EditDeleteActions
             session={session}
             onEditClick={() => setQuestionToEdit(params.row as SJTQuestion)}
             onDeleteClick={() => setQuestionToDelete(params.row.id)}
