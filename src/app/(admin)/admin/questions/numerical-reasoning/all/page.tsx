@@ -5,7 +5,7 @@ import { useState } from "react";
 import _ from "lodash";
 import { useSession } from "next-auth/react";
 
-import { IconButton, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import {
   ConfirmationDialog,
@@ -14,9 +14,9 @@ import {
 import NRModal from "components/NRForm/NRModal";
 import { NRQuestion } from "components/NRForm/types";
 
-import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { deleteNRTest, useNRTests } from "api/tests";
+import DataGridActions from "components/data-grid/data-grid-actions";
 import { useSnackbar } from "notistack";
 
 const AllNRQuestions = () => {
@@ -64,22 +64,15 @@ const AllNRQuestions = () => {
       width: 100,
       renderCell: (params) => {
         return (
-          <Stack direction="row" justifyContent="center">
-            <IconButton
-              size="small"
-              disabled={(session?.user?.role || 0) < 3}
-              onClick={() => setQuestionToEdit(params.row)}
-            >
-              <DriveFileRenameOutline fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              disabled={(session?.user?.role || 0) < 4}
-              onClick={() => setQuestionToDelete(params.row.id)}
-            >
-              <Delete fontSize="small" />
-            </IconButton>
-          </Stack>
+          <DataGridActions
+            session={session}
+            onEditClick={() => {
+              setQuestionToEdit(params.row as NRQuestion);
+            }}
+            onDeleteClick={() => {
+              setQuestionToDelete(params.row.id as string);
+            }}
+          />
         );
       },
     },

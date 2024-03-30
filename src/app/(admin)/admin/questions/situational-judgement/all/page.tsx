@@ -5,13 +5,13 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
-import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
-import { IconButton, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 import { deleteSJTTest, useSJTTests } from "api/tests";
 import { SJTModal } from "components/SJTForm";
 import { SJTQuestion } from "components/SJTForm/types";
+import DataGridActions from "components/data-grid/data-grid-actions";
 import {
   ConfirmationDialog,
   LoadingScreen,
@@ -48,22 +48,11 @@ const AllSJTQuestions = () => {
       width: 100,
       renderCell: (params) => {
         return (
-          <Stack direction="row" justifyContent="center">
-            <IconButton
-              size="small"
-              disabled={(session?.user?.role || 0) < 3}
-              onClick={() => setQuestionToEdit(params.row)}
-            >
-              <DriveFileRenameOutline fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              disabled={(session?.user?.role || 0) < 4}
-              onClick={() => setQuestionToDelete(params.row.id)}
-            >
-              <Delete fontSize="small" />
-            </IconButton>
-          </Stack>
+          <DataGridActions
+            session={session}
+            onEditClick={() => setQuestionToEdit(params.row as SJTQuestion)}
+            onDeleteClick={() => setQuestionToDelete(params.row.id)}
+          />
         );
       },
     },
