@@ -17,7 +17,7 @@ import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import QuizIcon from "@mui/icons-material/Quiz";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 
-import { CourseType } from "components/globalTypes";
+import { CourseType } from "types";
 
 const Title = ({
   children,

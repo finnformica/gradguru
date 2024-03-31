@@ -18,7 +18,7 @@ import FullFeaturedCrudGrid from "components/global-components/FullFeaturedCrudG
 import UserEditModal from "components/admin/users/user-edit-modal";
 import { LoadingScreen } from "components/global-components";
 import ConfirmationDialog from "components/global-components/confirmation-dialog";
-import { IUserFormInput } from "components/globalTypes";
+import { IUserFormInput } from "types";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 250 },

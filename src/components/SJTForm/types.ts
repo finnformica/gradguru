@@ -1,4 +1,4 @@
-import { IFirestoreData } from "components/globalTypes";
+import { IFirestoreData } from "types";
 
 export interface SJTQuestionState {
   type: "rank" | "multiple";

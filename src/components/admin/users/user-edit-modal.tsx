@@ -12,7 +12,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 
 import { useCourseIds } from "api/courses";
-import { IUserFormInput } from "components/globalTypes";
+import { IUserFormInput } from "types";
 import { indexToRoleMapping } from "utils/permissions";
 
 const style = {
