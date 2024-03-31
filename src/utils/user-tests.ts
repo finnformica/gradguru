@@ -40,3 +40,22 @@ export const formatGmat = (data: any) => {
 
   return question;
 };
+
+const containsNum = (str: string) => /\d/.test(str);
+
+export const sortAlphaNumeric = (a: any, b: any) => {
+  const nameA = a.toLowerCase();
+  const nameB = b.toLowerCase();
+
+  if (containsNum(nameA) && containsNum(nameB)) {
+    const numA = nameA.match(/\d+/)[0];
+    const numB = nameB.match(/\d+/)[0];
+
+    if (numA !== numB) return numA - numB;
+  }
+
+  if (nameA < nameB) return -1;
+  if (nameA > nameB) return 1;
+
+  return 0;
+};

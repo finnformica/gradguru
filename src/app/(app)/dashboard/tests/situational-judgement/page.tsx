@@ -10,7 +10,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { getTestRecords, getTests } from "api/tests";
 import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
-import { combineTestsAndRecords } from "utils/user-tests";
+import { combineTestsAndRecords, sortAlphaNumeric } from "utils/user-tests";
 
 const TopPanel = () => {
   return (
@@ -63,7 +63,7 @@ const SituationalJudgementHome = () => {
       headerName: "Name",
       width: 200,
       flex: 1,
-      sortComparator: (v1, v2) => v1.localeCompare(v2),
+      sortComparator: sortAlphaNumeric,
     },
     {
       field: "avgTime",
