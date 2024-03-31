@@ -32,7 +32,7 @@ const AddSJTTest = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
-    const uniqueQuestions: string[] = _.uniq(Object.values(data));
+    const uniqueQuestions: string[] = _.uniq(Object.values(data.questions));
 
     if (uniqueQuestions.length < SJT_QUESTIONS_PER_TEST) {
       enqueueSnackbar(
@@ -42,7 +42,7 @@ const AddSJTTest = () => {
       return;
     }
 
-    createTest("situational-judgement", { questions: uniqueQuestions })
+    createTest("situational-judgement", { ...data })
       .then((id) => {
         // add testId to each question
         uniqueQuestions.forEach((question) =>
@@ -72,10 +72,23 @@ const AddSJTTest = () => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2} pb={2}>
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: true }}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                {...field}
+                label="Name"
+                error={!!error}
+                helperText={!!error && "Name is required"}
+              />
+            )}
+          />
           {_.range(SJT_QUESTIONS_PER_TEST).map((i) => (
             <Controller
               key={i}
-              name={i.toString()}
+              name={`questions.${i.toString()}`}
               control={control}
               rules={{ required: true }}
               render={({ field: { value }, fieldState: { error } }) => (
@@ -83,7 +96,9 @@ const AddSJTTest = () => {
                   fullWidth
                   value={value}
                   options={options}
-                  onChange={(_, data) => setValue(i.toString(), data.id)}
+                  onChange={(_, data) =>
+                    setValue(`questions.${i.toString()}`, data.id)
+                  }
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }

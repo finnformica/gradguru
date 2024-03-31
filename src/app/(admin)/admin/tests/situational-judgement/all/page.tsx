@@ -26,7 +26,7 @@ const AllSJTTests = () => {
   }, []);
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 200 },
+    { field: "name", headerName: "Name", width: 200 },
     {
       field: "questions",
       headerName: "Questions",
@@ -85,7 +85,11 @@ const AllSJTTests = () => {
         rows={tests}
         columns={columns}
         autoHeight
-        sx={{ minHeight: 400 }}
+        pageSizeOptions={[15, 25, 50, 100]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 15 } },
+          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
+        }}
       />
       {testToDelete && (
         <ConfirmationDialog

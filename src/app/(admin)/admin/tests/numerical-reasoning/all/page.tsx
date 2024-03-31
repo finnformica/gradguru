@@ -87,8 +87,6 @@ const AllNRTests = () => {
       <DataGrid
         rows={tests}
         columns={columns}
-        disableDensitySelector
-        disableRowSelectionOnClick
         autoHeight
         pageSizeOptions={[15, 25, 50, 100]}
         initialState={{
