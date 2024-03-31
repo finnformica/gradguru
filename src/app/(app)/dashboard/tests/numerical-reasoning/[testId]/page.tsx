@@ -42,6 +42,7 @@ const NumericalReasoningTest = ({
   const [questions, setQuestions] = useState<NRQuestion[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
+  const [test, setTest] = useState<any | null>(null);
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -68,6 +69,7 @@ const NumericalReasoningTest = ({
       if (!test.questions) {
         notFound();
       } else {
+        setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];
 
         getQuestionsById(
@@ -153,7 +155,7 @@ const NumericalReasoningTest = ({
 
   return (
     <>
-      <TopPanel testId={testId} />
+      <TopPanel testId={test.name || "Test"} />
       <NRTestCard
         questions={questions}
         handleEndTest={handleEndTest}

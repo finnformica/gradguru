@@ -10,14 +10,14 @@ const TopPanel = ({ testId }: { testId: string }) => {
       alignItems="center"
     >
       <PageBreadcrumbs
-        header="Situational Judgement"
+        header={testId}
         links={[
           {
-            label: "Situational Judgement",
+            label: "Tests",
             href: "/dashboard/tests/situational-judgement",
           },
           {
-            label: testId,
+            label: "Situational Judgement",
           },
         ]}
       />

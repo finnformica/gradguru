@@ -41,6 +41,7 @@ const SituationalJudgementTest = ({
   const [questions, setQuestions] = useState<SJTQuestion[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
+  const [test, setTest] = useState<any | null>(null);
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -68,6 +69,7 @@ const SituationalJudgementTest = ({
       if (!test.questions) {
         notFound();
       } else {
+        setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];
         getQuestionsById(
           "situational-judgement",
@@ -145,7 +147,7 @@ const SituationalJudgementTest = ({
 
   return (
     <>
-      <TopPanel testId={testId} />
+      <TopPanel testId={test.name || "Test"} />
       <SJTTestCard
         questions={questions}
         handleEndTest={handleEndTest}
