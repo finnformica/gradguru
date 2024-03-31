@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { PlayArrow } from "@mui/icons-material";
-import { IconButton, Stack } from "@mui/material";
+import { Card, IconButton, Stack, Tooltip } from "@mui/material";
 
 import { getTests } from "api/tests";
 import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
@@ -47,6 +47,7 @@ const NumericalReasoningHome = () => {
       headerName: "Name",
       width: 200,
       flex: 1,
+      sortComparator: (v1, v2) => v1.localeCompare(v2),
     },
     {
       field: "avgTime",
@@ -69,16 +70,18 @@ const NumericalReasoningHome = () => {
       width: 100,
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
-          <IconButton
-            size="small"
-            onClick={() =>
-              router.push(
-                `/dashboard/tests/numerical-reasoning/${params.row.id}`
-              )
-            }
-          >
-            <PlayArrow sx={{ color: "grey.400" }} />
-          </IconButton>
+          <Tooltip title="Start Test">
+            <IconButton
+              size="small"
+              onClick={() =>
+                router.push(
+                  `/dashboard/tests/numerical-reasoning/${params.row.id}`
+                )
+              }
+            >
+              <PlayArrow sx={{ color: "grey.400" }} />
+            </IconButton>
+          </Tooltip>
         </Stack>
       ),
     },
@@ -89,16 +92,18 @@ const NumericalReasoningHome = () => {
   return (
     <>
       <TopPanel />
-      <DataGrid
-        rows={tests}
-        columns={columns}
-        autoHeight
-        hideFooter
-        hideFooterPagination
-        initialState={{
-          sorting: { sortModel: [{ field: "name", sort: "asc" }] },
-        }}
-      />
+      <Card elevation={0}>
+        <DataGrid
+          rows={tests}
+          columns={columns}
+          autoHeight
+          hideFooter
+          hideFooterPagination
+          initialState={{
+            sorting: { sortModel: [{ field: "name", sort: "asc" }] },
+          }}
+        />
+      </Card>
     </>
   );
 };
