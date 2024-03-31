@@ -11,7 +11,7 @@ import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import NRModal from "components/NRForm/NRModal";
-import EditDeleteActions from "components/data-grid/edit-delete-action";
+import { EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,
   LoadingScreen,
