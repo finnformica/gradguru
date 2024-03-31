@@ -139,6 +139,17 @@ export type INRTest = IFirestoreData & {
   };
 };
 
+export type NRQuestionFlat = {
+  question: string;
+  scenario: string;
+  type: "table" | "graph" | "gmat";
+  options: string[];
+  shuffled: string[];
+  answer: any;
+  success: boolean | null;
+  id: string;
+};
+
 // -- Situational Judgement --
 
 export type ISJScenario = IFirestoreData &
@@ -160,4 +171,15 @@ export type ISJTest = IFirestoreData & {
   created: number;
   name: string;
   questions: string[];
+};
+
+export type SJQuestionFlat = {
+  question: string;
+  scenario: string;
+  type: "multiple" | "rank";
+  options: string[];
+  shuffled: string[];
+  answer: string;
+  success: boolean | null;
+  id?: string;
 };

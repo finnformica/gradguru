@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { notFound } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { notFound } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import _ from "lodash";
 import { useSnackbar } from "notistack";
@@ -14,18 +14,8 @@ import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
 import TopPanel from "components/tests/nr/top-panel";
 import { useBeforeUnload } from "hooks/useBeforeUnload";
+import { INRTest, NRQuestionFlat } from "types";
 import { formatGmat, formatTableOrGraph } from "utils/user-tests";
-
-type NRQuestion = {
-  question: string;
-  scenario: string;
-  type: "table" | "graph" | "gmat";
-  options: string[];
-  shuffled: string[];
-  answer: any;
-  success: boolean | null;
-  id: string;
-};
 
 type NumericalReasoningTestProps = {
   params: {
@@ -39,10 +29,10 @@ const NumericalReasoningTest = ({
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
-  const [questions, setQuestions] = useState<NRQuestion[]>();
+  const [questions, setQuestions] = useState<NRQuestionFlat[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
-  const [test, setTest] = useState<any | null>(null);
+  const [test, setTest] = useState<INRTest | null>(null);
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -155,7 +145,7 @@ const NumericalReasoningTest = ({
 
   return (
     <>
-      <TopPanel testId={test.name || "Test"} />
+      <TopPanel testId={test?.name || "Test"} />
       <NRTestCard
         questions={questions}
         handleEndTest={handleEndTest}

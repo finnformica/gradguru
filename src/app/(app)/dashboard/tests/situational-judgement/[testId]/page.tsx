@@ -14,17 +14,7 @@ import { useBeforeUnload } from "hooks/useBeforeUnload";
 import { LoadingScreen } from "components/global-components";
 import SJTTestCard from "components/tests/sjt/sjt-test-card";
 import TopPanel from "components/tests/sjt/top-panel";
-
-type SJTQuestion = {
-  question: string;
-  scenario: string;
-  type: "multiple" | "rank";
-  options: string[];
-  shuffled: string[];
-  answer: string;
-  success: boolean | null;
-  id?: string;
-};
+import { ISJScenario, ISJTest, SJQuestionFlat } from "types";
 
 type SituationalJudgementTestProps = {
   params: {
@@ -38,10 +28,10 @@ const SituationalJudgementTest = ({
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
-  const [questions, setQuestions] = useState<SJTQuestion[]>();
+  const [questions, setQuestions] = useState<SJQuestionFlat[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
-  const [test, setTest] = useState<any | null>(null);
+  const [test, setTest] = useState<ISJTest | null>(null);
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -50,8 +40,8 @@ const SituationalJudgementTest = ({
   }, [testComplete, pause]);
 
   const mapAndSetQuestions = (data: any) => {
-    const questions = data.map((question: any) =>
-      question.questions.map((q: any) => ({
+    const questions = data.map((question: ISJScenario) =>
+      question.questions.map((q) => ({
         ...q,
         success: null,
         shuffled: _.shuffle(q.options),
@@ -147,7 +137,7 @@ const SituationalJudgementTest = ({
 
   return (
     <>
-      <TopPanel testId={test.name || "Test"} />
+      <TopPanel testId={test?.name || "Test"} />
       <SJTTestCard
         questions={questions}
         handleEndTest={handleEndTest}

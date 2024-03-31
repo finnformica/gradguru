@@ -11,6 +11,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getTestRecords, getTests } from "api/tests";
 import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
 import { combineTestsAndRecords, sortAlphaNumeric } from "utils/user-tests";
+import { INRTest, ITestRecord } from "types";
 
 const TopPanel = () => {
   return (
@@ -35,8 +36,8 @@ const NumericalReasoningHome = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [tests, setTests] = useState<any[] | null>(null);
-  const [testRecords, setTestRecords] = useState<any[] | null>(null);
+  const [tests, setTests] = useState<INRTest[] | null>(null);
+  const [testRecords, setTestRecords] = useState<ITestRecord[] | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection
