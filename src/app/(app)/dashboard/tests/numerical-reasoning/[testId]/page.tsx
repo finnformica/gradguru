@@ -12,6 +12,7 @@ import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
 import TopPanel from "components/tests/nr/top-panel";
 import { useBeforeUnload } from "hooks/useBeforeUnload";
+import { notFound } from "next/navigation";
 
 type NRQuestion = {
   question: string;
@@ -81,9 +82,17 @@ const NumericalReasoningTest = ({
   useEffect(() => {
     const createTest = async () => {
       const test = await getTestById("numerical-reasoning", testId);
-      const questionIds = Object.values(test.questions).flat() as string[];
+      if (!test.questions) {
+        notFound();
+      } else {
+        const questionIds = Object.values(test.questions).flat() as string[];
 
-      getQuestionsById("numerical-reasoning", questionIds, mapAndSetQuestions);
+        getQuestionsById(
+          "numerical-reasoning",
+          questionIds,
+          mapAndSetQuestions
+        );
+      }
     };
 
     createTest();
