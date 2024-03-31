@@ -8,8 +8,6 @@ import { ClientWrapper } from "components/global-components";
 import UnderlineButton from "../underline-button";
 
 const renderCorrectAnswer = (unit: string | null, value: string) => {
-  console.log(unit, value);
-
   if (!unit) return value;
 
   switch (unit) {

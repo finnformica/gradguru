@@ -91,7 +91,6 @@ const AddNRTest = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const uniqueQuestions = _.uniq(
       Object.values(data.questions).flat()
     ) as string[];
