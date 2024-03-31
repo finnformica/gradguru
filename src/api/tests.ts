@@ -4,6 +4,8 @@ import {
   collection,
   deleteDoc,
   doc,
+  documentId,
+  getDoc,
   getDocs,
   onSnapshot,
   query,
@@ -47,6 +49,39 @@ export const getTests = (
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setState(data);
   });
+};
+
+export const getTestById = async (testType: string, testId: string) => {
+  const ref = doc(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "tests",
+    testType,
+    testId
+  );
+
+  return getDoc(ref).then(
+    (snapshot) =>
+      ({
+        id: snapshot.id,
+        ...snapshot.data(),
+      }) as any
+  );
+};
+
+export const getTestIds = async (testType: string) => {
+  const ref = collection(
+    db,
+    "courses",
+    "consulting",
+    "tests",
+    "tests",
+    testType
+  );
+
+  return getDocs(ref).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 };
 
 export const createTest = async (testType: string, data: any) => {
@@ -116,9 +151,9 @@ export const getQuestionsById = (
     testType
   );
 
-  const q = query(ref, where("id", "in", questionIds));
+  const q = query(ref, where(documentId(), "in", questionIds));
 
-  return onSnapshot(q, (snapshot) => {
+  return onSnapshot(q, (snapshot): void => {
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setState(data);
   });
