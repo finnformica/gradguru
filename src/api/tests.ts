@@ -210,9 +210,44 @@ export const deleteQuestion = async (testType: string, questionId: string) => {
 
 // ---- User ----
 
-export const createTestRecord = (data: any, userId: string) => {
-  const docRef = doc(db, "user-meta", userId);
+export const createTestRecord = (
+  testType: string,
+  userId: string,
+  testId: string,
+  data: any
+) => {
+  const ref = doc(
+    db,
+    "user-meta",
+    userId,
+    "consulting",
+    "tests",
+    testType,
+    testId
+  );
 
   // setDoc automatically creates the document if it doesn't exists
-  return setDoc(docRef, { testRecords: arrayUnion(data) }, { merge: true });
+  return setDoc(ref, { results: arrayUnion(data) }, { merge: true });
+};
+
+export const getTestRecords = (
+  testType: string,
+  userId: string,
+  setState: (state: any[]) => void
+) => {
+  const ref = collection(
+    db,
+    "user-meta",
+    userId,
+    "consulting",
+    "tests",
+    testType
+  );
+
+  const q = query(ref);
+
+  return onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setState(data);
+  });
 };
