@@ -15,12 +15,13 @@ import {
 import { createTest, getQuestions, patchQuestion } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import { useEffect, useState } from "react";
+import { ISJScenario } from "types";
 
 const SJT_QUESTIONS_PER_TEST = 4;
 
 const AddSJTTest = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<ISJScenario[]>([]);
   const { control, handleSubmit, setValue, reset } = useForm();
 
   useEffect(() => {

@@ -10,17 +10,17 @@ import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import { SJTModal } from "components/SJTForm";
-import { SJTQuestion } from "components/SJTForm/types";
 import EditDeleteActions from "components/data-grid/edit-delete-action";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
+import { ISJScenario } from "types";
 
 const AllSJTQuestions = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
-  const [questionToEdit, setQuestionToEdit] = useState<SJTQuestion | null>(
+  const [questionToEdit, setQuestionToEdit] = useState<ISJScenario | null>(
     null
   );
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
@@ -58,7 +58,7 @@ const AllSJTQuestions = () => {
         return (
           <EditDeleteActions
             session={session}
-            onEditClick={() => setQuestionToEdit(params.row as SJTQuestion)}
+            onEditClick={() => setQuestionToEdit(params.row as ISJScenario)}
             onDeleteClick={() => setQuestionToDelete(params.row.id)}
           />
         );

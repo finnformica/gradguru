@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { SJTQuestion } from "./types";
+import { ISJScenario } from "types";
 
 const QuestionElement = ({
   index,
@@ -20,8 +20,8 @@ const QuestionElement = ({
   setForm,
 }: {
   index: number;
-  form: SJTQuestion;
-  setForm: (newState: SJTQuestion) => void;
+  form: ISJScenario;
+  setForm: (newState: ISJScenario) => void;
 }) => {
   const options = [1, 2, 3, 4, 5];
 

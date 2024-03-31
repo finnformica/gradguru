@@ -2,12 +2,13 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, Divider, Stack, TextField } from "@mui/material";
 
+import { ISJScenario } from "types";
 import QuestionElement from "./QuestionElement";
-import { SJTQuestion, initialQuestion } from "./types";
+import { initialQuestion } from "./constants";
 
 type SJTFormProps = {
-  form: SJTQuestion;
-  setForm: (value: SJTQuestion) => void;
+  form: ISJScenario;
+  setForm: (value: ISJScenario) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 

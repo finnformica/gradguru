@@ -11,18 +11,20 @@ import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import NRModal from "components/NRForm/NRModal";
-import { NRQuestion } from "components/NRForm/types";
 import EditDeleteActions from "components/data-grid/edit-delete-action";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
+import { INRQuestion } from "types";
 
 const AllNRQuestions = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [questions, setQuestions] = useState<any[] | null>(null);
-  const [questionToEdit, setQuestionToEdit] = useState<NRQuestion | null>(null);
+  const [questionToEdit, setQuestionToEdit] = useState<INRQuestion | null>(
+    null
+  );
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const AllNRQuestions = () => {
           <EditDeleteActions
             session={session}
             onEditClick={() => {
-              setQuestionToEdit(params.row as NRQuestion);
+              setQuestionToEdit(params.row as INRQuestion);
             }}
             onDeleteClick={() => {
               setQuestionToDelete(params.row.id as string);

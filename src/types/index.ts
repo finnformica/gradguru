@@ -61,6 +61,10 @@ export type IUserFormInput = IFirestoreData & {
 
 // ---- Tests ----
 
+export type ITest = {
+  testId?: string;
+};
+
 export type ITestRecord = IFirestoreData & {
   testId: string;
   score: number;
@@ -124,7 +128,9 @@ export type IGmatQuestion = {
   type: "gmat";
 };
 
-export type INRQuestion = ITableQuestion | IGraphQuestion | IGmatQuestion;
+export type INRQuestion = (IGraphQuestion | ITableQuestion | IGmatQuestion) &
+  IFirestoreData &
+  ITest;
 
 export type INRTest = IFirestoreData & {
   name: string;
@@ -135,11 +141,11 @@ export type INRTest = IFirestoreData & {
 
 // -- Situational Judgement --
 
-export type ISJScenario = IFirestoreData & {
-  questions: ISJQuestion[];
-  scenario: string;
-  testId?: string;
-};
+export type ISJScenario = IFirestoreData &
+  ITest & {
+    questions: ISJQuestion[];
+    scenario: string;
+  };
 
 export type ISJQuestion = {
   type: "rank" | "multiple";
@@ -147,4 +153,11 @@ export type ISJQuestion = {
   options: string[];
   explanation: string;
   answer: string;
+} & IFirestoreData &
+  ITest;
+
+export type ISJTest = IFirestoreData & {
+  created: number;
+  name: string;
+  questions: string[];
 };

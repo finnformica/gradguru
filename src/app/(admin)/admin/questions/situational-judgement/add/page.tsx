@@ -5,16 +5,16 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-import { SJTScenarioForm, initialForm } from "components/SJTForm/types";
-
 import { createQuestion } from "api/tests";
 import { SJTForm } from "components/SJTForm";
+import { initialForm } from "components/SJTForm/constants";
 import { LoadingScreen } from "components/global-components";
+import { ISJScenario } from "types";
 
 const AddSJTQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<SJTScenarioForm>({ ...initialForm });
+  const [form, setForm] = useState<ISJScenario>({ ...initialForm });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

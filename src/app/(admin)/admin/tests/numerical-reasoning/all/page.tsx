@@ -10,12 +10,14 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import EditDeleteActions from "components/data-grid/edit-delete-action";
 import { ConfirmationDialog } from "components/global-components";
+import { INRTest } from "types";
 
 const AllNRTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [tests, setTests] = useState<any[]>([]);
-  const [testToDelete, setTestToDelete] = useState<any | null>(null);
+
+  const [tests, setTests] = useState<INRTest[]>([]);
+  const [testToDelete, setTestToDelete] = useState<INRTest | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection
@@ -57,6 +59,8 @@ const AllNRTests = () => {
   ];
 
   const handleDeleteTest = async () => {
+    if (!testToDelete) return;
+
     const flattenedQuestions = Object.values(
       testToDelete.questions
     ).flat() as string[];
@@ -69,7 +73,7 @@ const AllNRTests = () => {
     // delete the test
     const testDeleted = await deleteTest(
       "numerical-reasoning",
-      testToDelete.id
+      testToDelete.id || ""
     );
 
     // wait for all promises to resolve

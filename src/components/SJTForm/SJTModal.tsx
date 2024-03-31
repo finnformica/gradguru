@@ -6,8 +6,8 @@ import { useState } from "react";
 import { patchQuestion } from "api/tests";
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 
+import { ISJScenario } from "types";
 import SJTForm from "./SJTForm";
-import { SJTQuestion } from "./types";
 
 const SJTModal = ({
   open,
@@ -15,11 +15,11 @@ const SJTModal = ({
   question,
 }: {
   open: boolean;
-  setQuestion: (question: SJTQuestion | null) => void;
-  question: SJTQuestion;
+  setQuestion: (question: ISJScenario | null) => void;
+  question: ISJScenario;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
-  const [form, setForm] = useState<SJTQuestion>(question);
+  const [form, setForm] = useState<ISJScenario>(question);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

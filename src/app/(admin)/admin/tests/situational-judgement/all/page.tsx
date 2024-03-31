@@ -10,12 +10,13 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import EditDeleteActions from "components/data-grid/edit-delete-action";
 import { ConfirmationDialog } from "components/global-components";
+import { ISJTest } from "types";
 
 const AllSJTTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [tests, setTests] = useState<any[]>([]);
-  const [testToDelete, setTestToDelete] = useState<any | null>(null);
+  const [testToDelete, setTestToDelete] = useState<ISJTest | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection
@@ -57,6 +58,7 @@ const AllSJTTests = () => {
   ];
 
   const handleDeleteTest = async () => {
+    if (!testToDelete) return;
     // delete reference to testId from each question
     const questionsUpdated = await testToDelete.questions.forEach(
       (question: string) =>
@@ -66,7 +68,7 @@ const AllSJTTests = () => {
     // delete the test
     const testDeleted = await deleteTest(
       "situational-judgement",
-      testToDelete.id
+      testToDelete.id || ""
     );
 
     // wait for all promises to resolve

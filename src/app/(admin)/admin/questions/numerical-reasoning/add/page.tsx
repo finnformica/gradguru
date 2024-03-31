@@ -6,18 +6,14 @@ import { useState } from "react";
 
 import { createQuestion } from "api/tests";
 import { NRForm } from "components/NRForm";
-import {
-  INRForm,
-  gmatForm,
-  graphForm,
-  tableForm,
-} from "components/NRForm/types";
+import { gmatForm, graphForm, tableForm } from "components/NRForm/types";
 import { LoadingScreen } from "components/global-components";
+import { INRQuestion } from "types";
 
 const AddNRQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState<boolean>(false);
-  const [form, setForm] = useState<INRForm>({
+  const [form, setForm] = useState<INRQuestion>({
     ...tableForm,
   });
 

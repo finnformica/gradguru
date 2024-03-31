@@ -16,6 +16,7 @@ import {
 import { createTest, getQuestions, patchQuestion } from "api/tests";
 import { LoadingScreen } from "components/global-components";
 import { useEffect, useState } from "react";
+import { INRQuestion } from "types";
 
 const NR_GRAPH_QUESTIONS_PER_TEST = 1;
 const NR_TABLE_QUESTIONS_PER_TEST = 1;
@@ -79,7 +80,7 @@ const renderInput = ({
 
 const AddNRTest = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<INRQuestion[]>([]);
   const { control, handleSubmit, setValue, reset } = useForm();
 
   useEffect(() => {
