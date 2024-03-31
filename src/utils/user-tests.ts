@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export const combineTestsAndRecords = (tests: any[], records: any[]) => {
   return tests.map((test) => {
     const testRecord = records.find((record) => record.id === test.id);
@@ -18,4 +20,23 @@ export const combineTestsAndRecords = (tests: any[], records: any[]) => {
 
     return { ...test, avgTime, avgScore, bestScore };
   });
+};
+
+export const formatTableOrGraph = (data: any) => {
+  const questions = data.questions.map((q: any) => ({
+    ...q,
+    ..._.omit(data, ["questions", "created", "testId"]),
+    success: null,
+  }));
+
+  return questions;
+};
+
+export const formatGmat = (data: any) => {
+  const question = {
+    ..._.omit(data, "created", "testId"),
+    success: null,
+  };
+
+  return question;
 };

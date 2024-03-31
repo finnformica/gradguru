@@ -1,9 +1,11 @@
 "use client";
 
-import _ from "lodash";
-import { useSession } from "next-auth/react";
-import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { notFound } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+import _ from "lodash";
+import { useSnackbar } from "notistack";
 import { useStopwatch } from "react-timer-hook";
 
 import { createTestRecord, getQuestionsById, getTestById } from "api/tests";
@@ -12,7 +14,7 @@ import { LoadingScreen } from "components/global-components";
 import NRTestCard from "components/tests/nr/nr-test-card";
 import TopPanel from "components/tests/nr/top-panel";
 import { useBeforeUnload } from "hooks/useBeforeUnload";
-import { notFound } from "next/navigation";
+import { formatGmat, formatTableOrGraph } from "utils/user-tests";
 
 type NRQuestion = {
   question: string;
@@ -23,25 +25,6 @@ type NRQuestion = {
   answer: any;
   success: boolean | null;
   id: string;
-};
-
-const formatTableOrGraph = (data: any) => {
-  const questions = data.questions.map((q: any) => ({
-    ...q,
-    ..._.omit(data, ["questions", "created", "testId"]),
-    success: null,
-  }));
-
-  return questions;
-};
-
-const formatGmat = (data: any) => {
-  const question = {
-    ..._.omit(data, "created", "testId"),
-    success: null,
-  };
-
-  return question;
 };
 
 type NumericalReasoningTestProps = {
@@ -75,8 +58,6 @@ const NumericalReasoningTest = ({
         return formatTableOrGraph(q);
       if (q.type === "gmat") return formatGmat(q);
     });
-
-    console.log(questions.flat());
 
     setQuestions(questions.flat());
   };
