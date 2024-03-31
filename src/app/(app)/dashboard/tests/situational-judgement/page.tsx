@@ -1,136 +1,111 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import _ from "lodash";
-import { useSession } from "next-auth/react";
-import { useSnackbar } from "notistack";
-import { useStopwatch } from "react-timer-hook";
+import { PlayArrow } from "@mui/icons-material";
+import { Card, IconButton, Stack, Tooltip } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { createTestRecord, getQuestions } from "api/tests";
-import { LoadingScreen } from "components/global-components";
-import SJTTestCard from "components/tests/sjt/sjt-test-card";
-import TopPanel from "components/tests/sjt/top-panel";
-import { useBeforeUnload } from "hooks/useBeforeUnload";
+import { getTests } from "api/tests";
+import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
 
-type SJTQuestion = {
-  question: string;
-  scenario: string;
-  type: "multiple" | "rank";
-  options: string[];
-  shuffled: string[];
-  answer: string;
-  success: boolean | null;
-  id?: string;
+const TopPanel = () => {
+  return (
+    <Stack
+      pb={4}
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <PageBreadcrumbs
+        header="Situational Judgement"
+        links={[
+          { label: "Tests", href: "/dashboard/tests" },
+          { label: "Situational Judgement" },
+        ]}
+      />
+    </Stack>
+  );
 };
 
-const SituationalJudgementTest = () => {
-  const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
-
-  const [questions, setQuestions] = useState<SJTQuestion[]>();
-  const [testComplete, setTestComplete] = useState(false);
-  const [testLoading, setTestLoading] = useState(false);
-
-  const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
+const SituationalJudgementHome = () => {
+  const router = useRouter();
+  const [tests, setTests] = useState<any[] | null>(null);
 
   useEffect(() => {
-    if (testComplete) return pause();
-  }, [testComplete, pause]);
+    // add event listener on firestore collection
+    const unsubscribe = getTests("situational-judgement", setTests);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const allQuestions: any[] = await getQuestions("situational-judgement");
-      setQuestions(
-        _.shuffle(allQuestions)
-          ?.slice(0, 4) // TODO: provide questions the user hasn't seen
-          .map((question) =>
-            question.questions.map((q: any) => ({
-              ...q,
-              success: null,
-              shuffled: _.shuffle(q.options),
-              id: question.id,
-              scenario: question.scenario,
-            }))
-          )
-          .flat()
-      );
-    };
-
-    fetchData();
+    // remove event listener on unmount
+    return () => unsubscribe();
   }, []);
 
-  useBeforeUnload(!testComplete);
+  const columns: GridColDef[] = [
+    {
+      field: "name",
+      headerName: "Name",
+      width: 200,
+      flex: 1,
+      sortComparator: (v1, v2) => v1.localeCompare(v2),
+    },
+    {
+      field: "avgTime",
+      headerName: "Average Time",
+      width: 200,
+    },
+    {
+      field: "avgScore",
+      headerName: "Average Score",
+      width: 200,
+    },
+    {
+      field: "bestScore",
+      headerName: "Best Score",
+      width: 200,
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 100,
+      renderCell: (params) => (
+        <Stack direction="row" spacing={1}>
+          <Tooltip title="Start Test">
+            <IconButton
+              size="small"
+              onClick={() =>
+                router.push(
+                  `/dashboard/tests/situational-judgement/${params.row.id}`
+                )
+              }
+            >
+              <PlayArrow sx={{ color: "grey.400" }} />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      ),
+    },
+  ];
 
-  if (!questions || questions.length === 0) return <LoadingScreen />;
-
-  const markTest = (data: any) => {
-    const marked = questions.map((question, index) => {
-      return question.type === "multiple"
-        ? {
-            // mc answer may be string or number
-            ...question,
-            success: question.answer == data[index],
-          }
-        : {
-            // compare if arrays are equal and ordered the same
-            ...question,
-            success: _.isEqual(question.options, data[index]),
-          };
-    });
-
-    // calculate test metrics
-    const correct = marked.filter((q) => q.success).length;
-    const score = {
-      percent: correct / marked.length,
-      correct: correct,
-      total: marked.length,
-    };
-    const date = Date.now();
-    const timeTaken = (hours * 3600 + minutes * 60 + seconds) * 1000;
-    const type = { label: "Situational Judgement", name: "sjt" };
-    const questionIds = Array.from(new Set(marked.map((q) => q.id)));
-
-    // store results
-    createTestRecord(
-      { score, date, type, questionIds, time: timeTaken },
-      session!.user.id
-    )
-      .then(() => enqueueSnackbar("Test result saved"))
-      .catch((err) =>
-        enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => {
-        setQuestions(marked);
-        setTestComplete(true);
-        setTestLoading(false);
-      });
-  };
-
-  const handleEndTest = (data: any) => {
-    if (Object.keys(data).length !== questions.length) {
-      enqueueSnackbar("Not all questions answered", { variant: "error" });
-      return;
-    }
-
-    // simulate marking of test
-    setTestLoading(true);
-    setTimeout(() => markTest(data), 1800);
-  };
+  if (!tests) return <LoadingScreen />;
 
   return (
     <>
       <TopPanel />
-      <SJTTestCard
-        questions={questions}
-        handleEndTest={handleEndTest}
-        testComplete={testComplete}
-        testLoading={testLoading}
-      />
+      <Card elevation={0}>
+        <DataGrid
+          rows={tests}
+          columns={columns}
+          autoHeight
+          hideFooter
+          hideFooterPagination
+          initialState={{
+            sorting: { sortModel: [{ field: "name", sort: "asc" }] },
+          }}
+        />
+      </Card>
     </>
   );
 };
 
-export default SituationalJudgementTest;
+export default SituationalJudgementHome;

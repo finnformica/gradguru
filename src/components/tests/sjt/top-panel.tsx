@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { PageBreadcrumbs } from "components/global-components";
 
-const TopPanel = () => {
+const TopPanel = ({ testId }: { testId: string }) => {
   return (
     <Stack
       pb={4}
@@ -12,8 +12,13 @@ const TopPanel = () => {
       <PageBreadcrumbs
         header="Situational Judgement"
         links={[
-          { label: "Tests", href: "/dashboard/tests" },
-          { label: "Situational Judgement" },
+          {
+            label: "Situational Judgement",
+            href: "/dashboard/tests/situational-judgement",
+          },
+          {
+            label: testId,
+          },
         ]}
       />
     </Stack>
