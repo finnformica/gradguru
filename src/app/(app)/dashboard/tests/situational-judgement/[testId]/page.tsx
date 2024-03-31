@@ -112,10 +112,13 @@ const SituationalJudgementTest = ({
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results
-    createTestRecord(
-      { score, date, type, questionIds, time: timeTaken },
-      session!.user.id
-    )
+    createTestRecord("situational-judgement", session!.user.id, testId, {
+      score,
+      date,
+      type,
+      questionIds,
+      time: timeTaken,
+    })
       .then(() => enqueueSnackbar("Test result saved"))
       .catch((err) =>
         enqueueSnackbar(`Test result not saved - ${err.statusText}`, {

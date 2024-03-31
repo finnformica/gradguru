@@ -25,6 +25,25 @@ type NRQuestion = {
   id: string;
 };
 
+const formatTableOrGraph = (data: any) => {
+  const questions = data.questions.map((q: any) => ({
+    ...q,
+    ..._.omit(data, ["questions", "created", "testId"]),
+    success: null,
+  }));
+
+  return questions;
+};
+
+const formatGmat = (data: any) => {
+  const question = {
+    ..._.omit(data, "created", "testId"),
+    success: null,
+  };
+
+  return question;
+};
+
 type NumericalReasoningTestProps = {
   params: {
     testId: string;
@@ -43,29 +62,12 @@ const NumericalReasoningTest = ({
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
+  useBeforeUnload(!testComplete);
+
   useEffect(() => {
     if (testComplete) return pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testComplete]);
-
-  const formatTableOrGraph = (data: any) => {
-    const questions = data.questions.map((q: any) => ({
-      ...q,
-      ..._.omit(data, ["questions", "created", "testId"]),
-      success: null,
-    }));
-
-    return questions;
-  };
-
-  const formatGmat = (data: any) => {
-    const question = {
-      ..._.omit(data, "created", "testId"),
-      success: null,
-    };
-
-    return question;
-  };
 
   const mapAndSetQuestions = (data: any[]) => {
     const questions = data.map((q) => {
@@ -96,9 +98,8 @@ const NumericalReasoningTest = ({
     };
 
     createTest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testId]);
-
-  useBeforeUnload(!testComplete);
 
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
@@ -138,13 +139,16 @@ const NumericalReasoningTest = ({
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results
-    createTestRecord(
-      { score, date, type, questionIds, time: timeTaken },
-      session!.user.id
-    )
+    createTestRecord("numerical-reasoning", session!.user.id, testId, {
+      score,
+      date,
+      type,
+      questionIds,
+      time: timeTaken,
+    })
       .then(() => enqueueSnackbar("Test result saved"))
-      .catch((err) =>
-        enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
+      .catch(() =>
+        enqueueSnackbar("Test result not saved", {
           variant: "error",
         })
       )
