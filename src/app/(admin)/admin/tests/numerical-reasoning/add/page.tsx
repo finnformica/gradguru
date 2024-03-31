@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import {
   Autocomplete,
+  Box,
   Button,
   Stack,
   TextField,
@@ -39,15 +40,15 @@ const renderInput = ({
   control,
   setValue,
 }: renderInputProps) => (
-  <>
+  <Box>
     <Typography variant="h5" pb={2}>
       {title}
     </Typography>
-    <Stack spacing={2} pb={2}>
+    <Stack spacing={2}>
       {_.range(numQuestions).map((i) => (
         <Controller
           key={i}
-          name={`${title.toLowerCase()}.${i}`}
+          name={`questions.${title.toLowerCase()}.${i}`}
           control={control}
           rules={{ required: true }}
           render={({ field: { value }, fieldState: { error } }) => (
@@ -56,7 +57,7 @@ const renderInput = ({
               value={value}
               options={options}
               onChange={(_, data) =>
-                setValue(`${title.toLowerCase()}.${i}`, data.id)
+                setValue(`questions.${title.toLowerCase()}.${i}`, data.id)
               }
               isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionKey={(option) => option.id}
@@ -73,7 +74,7 @@ const renderInput = ({
         />
       ))}
     </Stack>
-  </>
+  </Box>
 );
 
 const AddNRTest = () => {
@@ -90,7 +91,10 @@ const AddNRTest = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
-    const uniqueQuestions = _.uniq(Object.values(data).flat()) as string[];
+    console.log(data);
+    const uniqueQuestions = _.uniq(
+      Object.values(data.questions).flat()
+    ) as string[];
 
     if (uniqueQuestions.length < NR_QUESTIONS_PER_TEST) {
       enqueueSnackbar(
@@ -100,7 +104,7 @@ const AddNRTest = () => {
       return;
     }
 
-    createTest("numerical-reasoning", { questions: data })
+    createTest("numerical-reasoning", { ...data })
       .then((id) => {
         // add testId to each question
         uniqueQuestions.forEach((question) =>
@@ -145,27 +149,42 @@ const AddNRTest = () => {
         Create Numerical Reasoning Test
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {renderInput({
-          title: "Table",
-          options: tableOptions,
-          numQuestions: NR_TABLE_QUESTIONS_PER_TEST,
-          control,
-          setValue,
-        })}
-        {renderInput({
-          title: "Graph",
-          options: graphOptions,
-          numQuestions: NR_GRAPH_QUESTIONS_PER_TEST,
-          control,
-          setValue,
-        })}
-        {renderInput({
-          title: "GMAT",
-          options: gmatOptions,
-          numQuestions: NR_GMAT_QUESTIONS_PER_TEST,
-          control,
-          setValue,
-        })}
+        <Stack spacing={2} pb={2}>
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: true }}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                {...field}
+                label="Name"
+                error={!!error}
+                helperText={!!error && "Name is required"}
+              />
+            )}
+          />
+          {renderInput({
+            title: "Table",
+            options: tableOptions,
+            numQuestions: NR_TABLE_QUESTIONS_PER_TEST,
+            control,
+            setValue,
+          })}
+          {renderInput({
+            title: "Graph",
+            options: graphOptions,
+            numQuestions: NR_GRAPH_QUESTIONS_PER_TEST,
+            control,
+            setValue,
+          })}
+          {renderInput({
+            title: "GMAT",
+            options: gmatOptions,
+            numQuestions: NR_GMAT_QUESTIONS_PER_TEST,
+            control,
+            setValue,
+          })}
+        </Stack>
         <Button variant="contained" type="submit">
           Create
         </Button>
