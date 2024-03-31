@@ -1,16 +1,14 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import _ from "lodash";
 
-import { Card, Rating } from "@mui/material";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { Card, CardActionArea, CardHeader, Grid, Rating } from "@mui/material";
 
-import { userUserMeta } from "api/user";
-import { LoadingScreen } from "components/global-components";
-
+import { GridColDef } from "@mui/x-data-grid";
+import { useRouter } from "next/navigation";
 import TopPanel from "./top-panel";
 
+// keep for test pages
 const columns: GridColDef[] = [
   { field: "type", headerName: "Type", width: 250 },
   {
@@ -51,57 +49,31 @@ const columns: GridColDef[] = [
 ];
 
 const CourseTests = () => {
-  const [tests, setTests] = useState<any>(null);
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    if (!session) return;
-    userUserMeta(session.user.id).then((data) =>
-      setTests(
-        data?.testRecords.map((test: any) => ({
-          type: test.type.label,
-          score: test.score.percent,
-          id: test.date,
-          rating: test.score.percent,
-          time: test.time,
-        }))
-      )
-    );
-  }, [session]);
-
-  if (!session) return <LoadingScreen />;
+  const router = useRouter();
+  const tests: string[] = [
+    "Numerical Reasoning",
+    "Situational Judgement",
+    "Logical Reasoning",
+  ];
 
   return (
     <>
       <TopPanel />
-      <Card elevation={0}>
-        <DataGrid
-          rows={tests || []} // TODO: no rows overlay not displaying
-          columns={columns}
-          loading={!tests}
-          sx={{
-            minHeight: 400,
-          }}
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          pageSizeOptions={[10, 25, 50]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 10 } },
-            sorting: {
-              sortModel: [{ field: "id", sort: "desc" }],
-            },
-          }}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              printOptions: { disableToolbarButton: true },
-              csvOptions: { disableToolbarButton: true },
-            },
-          }}
-        />
-      </Card>
+      <Grid container spacing={2}>
+        {tests.map((test) => (
+          <Grid key={test} item xs={12} sm={6} md={4} lg={3}>
+            <Card sx={{ mb: 2, borderRadius: 4 }}>
+              <CardActionArea
+                onClick={() =>
+                  router.push(`/dashboard/tests/${_.kebabCase(test)}`)
+                }
+              >
+                <CardHeader title={test} />
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
 };
