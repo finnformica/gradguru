@@ -1,4 +1,4 @@
-export type addFormData = {
+export type BlogFormType = {
   title: string;
   summary: string;
   tags: string;

@@ -1,7 +1,7 @@
 import AddBlog from "components/BlogForm/AddBlog";
 
-const page = () => {
+const BlogForm = () => {
   return <AddBlog />;
 };
 
-export default page;
+export default BlogForm;
