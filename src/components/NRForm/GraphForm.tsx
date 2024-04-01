@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { BarChart, LineChart, PieChart } from "components/Charts";
+import { BarChart, LineChart, PieChart } from "components/charts";
 
 import { EditableTable } from "./EditableTable";
 import { TableQuestionElement } from "./QuestionElement";

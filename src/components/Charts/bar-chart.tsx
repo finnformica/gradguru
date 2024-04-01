@@ -1,18 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Bar } from "react-chartjs-2";
 
-import { IGraphForm } from "components/NRForm/types";
+import { IGraphQuestion } from "types";
 import { buildChartData } from "./utils";
 
 Chart.register(CategoryScale, ChartDataLabels);
 
 type BarChartProps = {
-  data: IGraphForm["data"];
+  data: IGraphQuestion["data"];
 };
 
 const BarChart = ({ data }: BarChartProps) => {

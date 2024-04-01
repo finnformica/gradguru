@@ -6,15 +6,15 @@ import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Pie } from "react-chartjs-2";
 
-import { IGraphForm } from "components/NRForm/types";
+import { IGraphQuestion } from "types";
 
 Chart.register(CategoryScale, ChartDataLabels);
 
 type PieChartProps = {
-  data: IGraphForm["data"];
+  data: IGraphQuestion["data"];
 };
 
-const buildChartData = (data: IGraphForm["data"]) => {
+const buildChartData = (data: IGraphQuestion["data"]) => {
   const { columns, rows } = data;
   const labels = rows.map((row) => row[columns[0].field]);
 
