@@ -26,20 +26,24 @@ const TriangleGrid = () => {
                 height: TRIANGLE_SIZE,
                 margin: `0 calc(-1 * ${TRIANGLE_SIZE} / 4)`,
                 backgroundColor: "black",
+                transition: "background-color 0.3s ease-out",
+                cursor: "pointer",
                 clipPath:
                   i % 2 === 0
                     ? "polygon(50%   0%, 0% 100%, 100% 100%)"
                     : "polygon(50% 100%, 0%   0%, 100%   0%)",
-
-                "&:hover": {
-                  backgroundColor: "tomato",
+                "&:hover:before": {
+                  backgroundColor: "#DFDFDF",
                 },
-                "&:after": {
+
+                "&:before": {
                   content: '""',
                   width: `calc(${TRIANGLE_SIZE} * 0.98)`,
                   height: `calc(${TRIANGLE_SIZE} * 0.98)`,
                   position: "absolute",
                   backgroundColor: "white",
+                  transition: "background-color 0.3s ease-out",
+                  zIndex: -1,
                   clipPath:
                     i % 2 === 0
                       ? "polygon(50%   0%, 0% 100%, 100% 100%)"
