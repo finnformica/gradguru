@@ -18,7 +18,11 @@ export const combineTestsAndRecords = (tests: any[], records: any[]) => {
       .map((r: any) => r.score.percent)
       .sort((a: number, b: number) => b - a)[0];
 
-    return { ...test, avgTime, avgScore, bestScore };
+    const attempts = results.length;
+    const lastAttempt = results.sort((a: any, b: any) => b.date - a.date)[0]
+      .date;
+
+    return { ...test, avgTime, avgScore, bestScore, attempts, lastAttempt };
   });
 };
 

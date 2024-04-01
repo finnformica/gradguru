@@ -62,9 +62,21 @@ const NumericalReasoningHome = () => {
     {
       field: "name",
       headerName: "Name",
-      width: 200,
+      minWidth: 300,
       flex: 1,
       sortComparator: sortAlphaNumeric,
+    },
+    {
+      field: "lastAttempt",
+      headerName: "Last Attempt",
+      width: 200,
+      renderCell: (params) =>
+        params.value ? new Date(params.value).toLocaleString() : null,
+    },
+    {
+      field: "attempts",
+      headerName: "Attempts",
+      width: 200,
     },
     {
       field: "avgTime",
@@ -102,7 +114,7 @@ const NumericalReasoningHome = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 100,
+      width: 80,
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
           <Tooltip title="Start Test">
