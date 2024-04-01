@@ -119,16 +119,15 @@ export const mapIcon = (
   }
 };
 
+export const squareGridDefaultCell: CellData = {
+  type: "text",
+  value: "",
+  color: "#000",
+  rotation: 0,
+};
+
 export const initialiseSquareGrid = (numRows: number) => {
-  const emptyRow = _.range(1, numRows + 1).map(
-    (row) =>
-      ({
-        type: "text",
-        value: "",
-        color: "#000",
-        rotation: 0,
-      }) as CellData
-  );
+  const emptyRow = _.range(1, numRows + 1).map((row) => squareGridDefaultCell);
   const grid = _.range(1, numRows + 1).map((r) => emptyRow);
   return grid;
 };

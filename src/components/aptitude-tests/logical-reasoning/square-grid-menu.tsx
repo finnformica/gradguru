@@ -4,12 +4,14 @@ import { useState } from "react";
 
 import {
   Autocomplete,
+  Divider,
   InputAdornment,
+  ListItemText,
   MenuItem,
   Stack,
   TextField,
 } from "@mui/material";
-import { mapIcon } from "./utils";
+import { mapIcon, squareGridDefaultCell } from "./utils";
 
 const updateGrid = (grid: any, setGrid: any, coord: any, value: any) => {
   setGrid([
@@ -170,6 +172,14 @@ export const MenuContent = ({
           <MenuItem onClick={() => setMenuDisplay("icon")}>Icon</MenuItem>
           <MenuItem onClick={() => setMenuDisplay("image")} disabled>
             Image
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={() =>
+              updateGrid(grid, setGrid, coord, squareGridDefaultCell)
+            }
+          >
+            <ListItemText secondary="Clear cell" />
           </MenuItem>
         </>
       );
