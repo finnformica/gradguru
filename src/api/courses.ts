@@ -1,16 +1,8 @@
-import { endpoints, getFetcher, postFetcher } from "utils/axios";
 import { useMemo } from "react";
 import useSWR from "swr";
+import { endpoints, getFetcher, postFetcher } from "utils/axios";
 
-import {
-  arrayUnion,
-  collection,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "lib/firebase/config";
 
 // list of course ids
