@@ -30,13 +30,11 @@ const SJTTestCard = ({
 }: SJTTestCardProps) => {
   const [endTestDialogOpen, setEndTestDialogOpen] = useState(false);
   const { handleSubmit, currentStep, gotoStep, control, setValue } =
-    useStepsForm({
-      isBackValidate: false,
-      initialStep: 0,
-    });
+    useStepsForm({ isBackValidate: false, initialStep: 0 });
 
-  const handleRankOrderChange = (newOptions: string[]) =>
+  const handleRankOrderChange = (newOptions: string[]) => {
     setValue(currentStep.toString(), newOptions);
+  };
 
   return (
     <form onSubmit={handleSubmit(handleEndTest)}>
@@ -86,10 +84,10 @@ const SJTTestCard = ({
                   key={index}
                   name={currentStep.toString()}
                   control={control}
-                  render={() => (
+                  render={({ field: { value } }) => (
                     <RankOrder
                       setOptions={handleRankOrderChange}
-                      options={questions[currentStep].shuffled}
+                      options={value || questions[currentStep].shuffled}
                     />
                   )}
                 />

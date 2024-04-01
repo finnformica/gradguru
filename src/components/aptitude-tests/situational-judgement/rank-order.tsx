@@ -1,7 +1,8 @@
+import { Reorder } from "framer-motion";
+import { useState } from "react";
+
 import { DragIndicator } from "@mui/icons-material";
 import { Box, Stack, Tooltip, Typography } from "@mui/material";
-import { Reorder } from "framer-motion";
-import { useEffect, useState } from "react";
 
 const ReorderItemElement = ({ item }: { item: string }) => (
   <Box
@@ -27,9 +28,6 @@ type RankOrderProps = {
 
 const RankOrder = ({ options, setOptions }: RankOrderProps) => {
   const [items, setItems] = useState(options);
-  useEffect(() => {
-    setOptions(options);
-  }, [options, setOptions]);
 
   const handleReorder = (newItems: string[]) => {
     setItems(newItems);
