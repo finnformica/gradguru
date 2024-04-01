@@ -123,19 +123,31 @@ export const sidebarSections = [
       {
         name: "LR",
         icon: <Extension />,
-        active: false,
+        active: true,
         children: [
           {
-            name: "All LR",
+            name: "All questions",
             icon: <AllInclusive />,
-            route: "/admin/tests/logical-reasoning/all",
+            route: "/admin/questions/logical-reasoning/all",
             active: true,
           },
           {
-            name: "Add LR",
+            name: "Add question",
+            icon: <AddBox />,
+            route: "/admin/questions/logical-reasoning/add",
+            active: true,
+          },
+          {
+            name: "All tests",
+            icon: <AllInclusive />,
+            route: "/admin/tests/logical-reasoning/add",
+            active: false,
+          },
+          {
+            name: "Add test",
             icon: <AddBox />,
             route: "/admin/tests/logical-reasoning/add",
-            active: true,
+            active: false,
           },
         ],
       },
