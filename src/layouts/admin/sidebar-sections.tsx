@@ -1,17 +1,16 @@
 import {
   Abc,
-  Add,
   AddBox,
   AllInclusive,
   Book,
   Dashboard,
+  Description,
   Extension,
   GolfCourse,
   Group,
   Hardware,
   LibraryBooks,
   Pin,
-  Quiz,
   ViewInAr,
 } from "@mui/icons-material";
 
@@ -29,7 +28,7 @@ export const sidebarSections = [
       },
       {
         name: "Add Course",
-        icon: <Add />,
+        icon: <AddBox />,
         route: "/admin/courses/add",
         active: true,
       },
@@ -56,7 +55,7 @@ export const sidebarSections = [
   },
   {
     name: "Tests",
-    icon: <Quiz />,
+    icon: <Description />,
     active: true,
     children: [
       {
@@ -65,15 +64,27 @@ export const sidebarSections = [
         active: true,
         children: [
           {
-            name: "All SJT",
+            name: "All questions",
             icon: <AllInclusive />,
-            route: "/admin/tests/sjt/all",
+            route: "/admin/questions/situational-judgement/all",
             active: true,
           },
           {
-            name: "Add SJT",
-            icon: <Add />,
-            route: "/admin/tests/sjt/add",
+            name: "Add question",
+            icon: <AddBox />,
+            route: "/admin/questions/situational-judgement/add",
+            active: true,
+          },
+          {
+            name: "All tests",
+            icon: <AllInclusive />,
+            route: "/admin/tests/situational-judgement/all",
+            active: true,
+          },
+          {
+            name: "Add test",
+            icon: <AddBox />,
+            route: "/admin/tests/situational-judgement/add",
             active: true,
           },
         ],
@@ -84,14 +95,26 @@ export const sidebarSections = [
         active: true,
         children: [
           {
-            name: "All NR",
+            name: "All questions",
+            icon: <AllInclusive />,
+            route: "/admin/questions/numerical-reasoning/all",
+            active: true,
+          },
+          {
+            name: "Add question",
+            icon: <AddBox />,
+            route: "/admin/questions/numerical-reasoning/add",
+            active: true,
+          },
+          {
+            name: "All tests",
             icon: <AllInclusive />,
             route: "/admin/tests/numerical-reasoning/all",
             active: true,
           },
           {
-            name: "Add NR",
-            icon: <Add />,
+            name: "Add test",
+            icon: <AddBox />,
             route: "/admin/tests/numerical-reasoning/add",
             active: true,
           },
@@ -110,7 +133,7 @@ export const sidebarSections = [
           },
           {
             name: "Add LR",
-            icon: <Add />,
+            icon: <AddBox />,
             route: "/admin/tests/logical-reasoning/add",
             active: true,
           },
