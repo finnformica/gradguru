@@ -3,7 +3,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { Button, Divider, Stack, TextField } from "@mui/material";
 
 import { ISJScenario } from "types";
-import QuestionElement from "./QuestionElement";
+import QuestionElement from "./sjt-form-question-element";
 import { initialQuestion } from "./constants";
 
 type SJTFormProps = {

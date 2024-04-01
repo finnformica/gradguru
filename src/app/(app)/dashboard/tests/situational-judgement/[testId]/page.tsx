@@ -11,9 +11,11 @@ import { useStopwatch } from "react-timer-hook";
 import { createTestRecord, getQuestionsById, getTestById } from "api/tests";
 import { useBeforeUnload } from "hooks/useBeforeUnload";
 
+import {
+  SJTTestCard,
+  TopPanel,
+} from "components/aptitude-tests/situational-judgement";
 import { LoadingScreen } from "components/global-components";
-import SJTTestCard from "components/aptitude-tests/situational-judgement/sjt-test-card";
-import TopPanel from "components/aptitude-tests/situational-judgement/top-panel";
 import { ISJScenario, ISJTest, SJQuestionFlat } from "types";
 
 type SituationalJudgementTestProps = {

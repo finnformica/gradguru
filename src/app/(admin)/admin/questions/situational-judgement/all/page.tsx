@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
-import { SJTModal } from "components/SJTForm";
+import { SJTModal } from "components/aptitude-tests/situational-judgement";
 import { EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,

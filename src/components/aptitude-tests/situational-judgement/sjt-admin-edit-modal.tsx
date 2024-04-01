@@ -7,7 +7,7 @@ import { patchQuestion } from "api/tests";
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 
 import { ISJScenario } from "types";
-import SJTForm from "./SJTForm";
+import SJTForm from "./sjt-admin-form";
 
 const SJTModal = ({
   open,

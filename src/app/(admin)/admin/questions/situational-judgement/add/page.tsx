@@ -6,8 +6,8 @@ import { Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 
 import { createQuestion } from "api/tests";
-import { SJTForm } from "components/SJTForm";
-import { initialForm } from "components/SJTForm/constants";
+import { SJTForm } from "components/aptitude-tests/situational-judgement";
+import { initialForm } from "components/aptitude-tests/situational-judgement/constants";
 import { LoadingScreen } from "components/global-components";
 import { ISJScenario } from "types";
 
