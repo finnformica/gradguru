@@ -6,6 +6,7 @@ import { MathJax } from "better-react-mathjax";
 import { ClientWrapper } from "components/global-components";
 
 import UnderlineButton from "../underline-button";
+import { NRQuestionFlat } from "types";
 
 const renderCorrectAnswer = (unit: string | null, value: string) => {
   if (!unit) return value;
@@ -21,7 +22,7 @@ const renderCorrectAnswer = (unit: string | null, value: string) => {
 
 type TestSolutionProps = {
   currentStep: number;
-  questions: any[];
+  questions: NRQuestionFlat[];
 };
 
 const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {

@@ -15,16 +15,19 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
-import { BarChart, LineChart, PieChart } from "components/Charts";
+import { BarChart, LineChart, PieChart } from "components/charts";
 import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
+import { NRAnswer, NRQuestionFlat } from "types";
 
 import CardActions from "../card-actions";
 import CardHeader from "../card-header";
 import TestSolution from "./test-solution";
-import { AnswerType } from "components/NRForm/types";
 
-const renderQuestionText = (questions: any[], currentStep: number) => (
+const renderQuestionText = (
+  questions: NRQuestionFlat[],
+  currentStep: number
+) => (
   <Stack spacing={2} mb={4}>
     <Stack spacing={2} direction="row" alignItems="center">
       <Typography variant="h5">Question {currentStep + 1}</Typography>
@@ -48,7 +51,7 @@ const renderGraph = (question: any) =>
     </Stack>
   );
 
-const inputType = (type: AnswerType["type"]) => {
+const inputType = (type: NRAnswer["type"]) => {
   switch (type) {
     case "currency":
     case "number":
@@ -83,7 +86,7 @@ const renderStartAdornment = (unit: string) => {
 };
 
 const renderInputFields = (
-  question: any,
+  question: NRQuestionFlat,
   currentStep: number,
   index: number,
   control: any
@@ -157,7 +160,7 @@ const renderDataGrid = (question: any) =>
   );
 
 type NRTestCardProps = {
-  questions: any[];
+  questions: NRQuestionFlat[];
   handleEndTest: (data: any) => void;
   testComplete: boolean;
   testLoading: boolean;

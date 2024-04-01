@@ -148,6 +148,7 @@ export type NRQuestionFlat = {
   answer: any;
   success: boolean | null;
   id: string;
+  explanation: string;
 };
 
 // -- Situational Judgement --
