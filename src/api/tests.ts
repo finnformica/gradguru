@@ -14,20 +14,6 @@ import {
 } from "firebase/firestore";
 import { db } from "lib/firebase/config";
 
-// ----  Legacy ----
-
-export async function getNRQuestions(type: string) {
-  const nrRef = collection(db, "nr-consulting"); // incorrect collection ref
-  const q = query(nrRef, where("type", "==", type));
-
-  return getDocs(q).then((questions) =>
-    questions.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-  );
-}
-
 // ---- Tests ----
 
 export const getTests = (
