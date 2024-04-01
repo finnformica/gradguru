@@ -1,6 +1,6 @@
-import { IGraphForm } from "../NRForm/types";
+import { IGraphQuestion } from "types";
 
-const buildChartData = (data: IGraphForm["data"]) => {
+const buildChartData = (data: IGraphQuestion["data"]) => {
   const { columns, rows, pivot } = data;
 
   if (pivot) {

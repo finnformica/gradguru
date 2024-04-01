@@ -14,13 +14,14 @@ import {
 
 import { BarChart, LineChart, PieChart } from "components/charts";
 
-import { EditableTable } from "./EditableTable";
-import { TableQuestionElement } from "./QuestionElement";
-import { IGraphForm, ITableForm, graphQuestion } from "./types";
+import { IGraphQuestion, ITableGraphQuestion } from "types";
+import { EditableTable } from "./editable-table";
+import { TableQuestionElement } from "./nr-form-question-element";
+import { graphQuestion } from "./constants";
 
 interface GraphFormProps {
-  form: IGraphForm;
-  setForm: (newForm: ITableForm | IGraphForm) => void;
+  form: IGraphQuestion;
+  setForm: (newForm: ITableGraphQuestion) => void;
 }
 
 const GraphForm = ({ form, setForm }: GraphFormProps) => {
@@ -34,7 +35,10 @@ const GraphForm = ({ form, setForm }: GraphFormProps) => {
           label="Chart type"
           required
           onChange={(e: SelectChangeEvent) =>
-            setForm({ ...form, graph: e.target.value as IGraphForm["graph"] })
+            setForm({
+              ...form,
+              graph: e.target.value as IGraphQuestion["graph"],
+            })
           }
           size="small"
         >

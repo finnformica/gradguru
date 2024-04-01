@@ -5,8 +5,12 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 
 import { createQuestion } from "api/tests";
-import { NRForm } from "components/NRForm";
-import { gmatForm, graphForm, tableForm } from "components/NRForm/types";
+import { NRForm } from "components/aptitude-tests/numerical-reasoning";
+import {
+  gmatForm,
+  graphForm,
+  tableForm,
+} from "components/aptitude-tests/numerical-reasoning/constants";
 import { LoadingScreen } from "components/global-components";
 import { INRQuestion } from "types";
 

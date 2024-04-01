@@ -21,7 +21,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 
-import { IGraphForm, ITableForm } from "./types";
+import { ITableGraphQuestion } from "types";
 
 const camelise = (str: string) => {
   // removes special characters and spaces, returns a camel case string
@@ -85,8 +85,8 @@ const FullFeaturedCRUDTable = ({
   setForm,
 }: {
   columnNames: string[];
-  form: ITableForm | IGraphForm;
-  setForm: (newForm: ITableForm | IGraphForm) => void;
+  form: ITableGraphQuestion;
+  setForm: (newForm: ITableGraphQuestion) => void;
 }) => {
   const [rows, setRows] = useState<GridRowsProp>(
     form.data.rows.map((row, id) => ({ ...row, id: id })) || []
@@ -261,8 +261,8 @@ const EditableTable = ({
   form,
   setForm,
 }: {
-  form: ITableForm | IGraphForm;
-  setForm: (newForm: ITableForm | IGraphForm) => void;
+  form: ITableGraphQuestion;
+  setForm: (newForm: ITableGraphQuestion) => void;
 }) => {
   const [columnNames, setColumnNames] = useState<string[]>(
     form.data.columns.map((col) => col.headerName) || [""]

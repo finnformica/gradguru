@@ -8,14 +8,15 @@ import { Card, Stack, Typography } from "@mui/material";
 import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 
-import CardActions from "../card-actions";
-import CardHeader from "../card-header";
+import CardActions from "../common/card-actions";
+import CardHeader from "../common/card-header";
 import MultipleChoice from "./multiple-choice";
 import RankOrder from "./rank-order";
 import TestSolution from "./test-solution";
+import { SJQuestionFlat } from "types";
 
 type SJTTestCardProps = {
-  questions: any[];
+  questions: SJQuestionFlat[];
   handleEndTest: (data: any) => void;
   testComplete: boolean;
   testLoading: boolean;

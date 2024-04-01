@@ -128,6 +128,9 @@ export type IGmatQuestion = {
   type: "gmat";
 };
 
+export type ITableGraphScenario = ITableScenario | IGraphScenario;
+export type ITableGraphQuestion = ITableQuestion | IGraphQuestion;
+
 export type INRQuestion = (IGraphQuestion | ITableQuestion | IGmatQuestion) &
   IFirestoreData &
   ITest;
@@ -177,6 +180,7 @@ export type ISJTest = IFirestoreData & {
 export type SJQuestionFlat = {
   question: string;
   scenario: string;
+  explanation: string;
   type: "multiple" | "rank";
   options: string[];
   shuffled: string[];

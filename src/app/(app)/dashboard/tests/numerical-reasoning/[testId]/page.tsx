@@ -9,11 +9,14 @@ import { useSnackbar } from "notistack";
 import { useStopwatch } from "react-timer-hook";
 
 import { createTestRecord, getQuestionsById, getTestById } from "api/tests";
-
-import { LoadingScreen } from "components/global-components";
-import NRTestCard from "components/tests/nr/nr-test-card";
-import TopPanel from "components/tests/nr/top-panel";
 import { useBeforeUnload } from "hooks/useBeforeUnload";
+
+import {
+  NRTestCard,
+  TopPanel,
+} from "components/aptitude-tests/numerical-reasoning";
+import { LoadingScreen } from "components/global-components";
+
 import { INRTest, NRQuestionFlat } from "types";
 import { formatGmat, formatTableOrGraph } from "utils/user-tests";
 

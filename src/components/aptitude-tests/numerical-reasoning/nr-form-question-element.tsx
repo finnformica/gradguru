@@ -1,28 +1,23 @@
 import {
   Box,
-  Select,
-  TextField,
-  Typography,
-  MenuItem,
   InputLabel,
+  MenuItem,
+  Select,
   SelectChangeEvent,
   Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 
-import {
-  IGraphForm,
-  IGraphQuestion,
-  ITableForm,
-  ITableQuestion,
-  answerOptions,
-} from "./types";
+import { ITableGraphQuestion, ITableGraphScenario } from "types";
+import { answerOptions } from "./constants";
 import { renderHelperText, textFieldInputValidation } from "./utils";
 
 type TableQuestionElementProps = {
-  form: ITableForm | IGraphForm;
-  setForm: (newForm: ITableForm | IGraphForm) => void;
+  form: ITableGraphQuestion;
+  setForm: (newForm: ITableGraphQuestion) => void;
   index: number;
-  question: ITableQuestion | IGraphQuestion;
+  question: ITableGraphScenario;
 };
 
 export const TableQuestionElement = ({
@@ -62,11 +57,7 @@ export const TableQuestionElement = ({
               label={`${key.charAt(0).toUpperCase() + key.slice(1)} ${
                 index + 1
               }`}
-              value={
-                form.questions[index][
-                  key as keyof (ITableQuestion | IGraphQuestion)
-                ]
-              }
+              value={form.questions[index][key as keyof ITableGraphScenario]}
               key={i}
               required
               multiline
@@ -99,7 +90,7 @@ export const TableQuestionElement = ({
                       ? ({
                           ...q,
                           answer: { ...question.answer, type: e.target.value },
-                        } as ITableQuestion | IGraphQuestion)
+                        } as ITableGraphScenario)
                       : q;
                   }),
                 });
@@ -127,7 +118,7 @@ export const TableQuestionElement = ({
                               ...question.answer,
                               type2: e.target.value,
                             },
-                          } as ITableQuestion | IGraphQuestion)
+                          } as ITableGraphScenario)
                         : q;
                     }),
                   });
@@ -147,7 +138,7 @@ export const TableQuestionElement = ({
             {form.questions[index].answer.type === "multiple" ? (
               generateUniqueKeys(form).map((row: any, i: number) => {
                 const rowValues = form.questions[index].answer.value as {
-                  [key: string]: any;
+                  [key: string]: ITableGraphScenario;
                 };
 
                 return (

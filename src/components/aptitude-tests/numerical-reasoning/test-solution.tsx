@@ -5,7 +5,7 @@ import { MathJax } from "better-react-mathjax";
 
 import { ClientWrapper } from "components/global-components";
 
-import UnderlineButton from "../underline-button";
+import UnderlineButton from "../common/underline-button";
 import { NRQuestionFlat } from "types";
 
 const renderCorrectAnswer = (unit: string | null, value: string) => {

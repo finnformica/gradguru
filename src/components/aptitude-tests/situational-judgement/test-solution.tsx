@@ -1,10 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
-import UnderlineButton from "../underline-button";
+import UnderlineButton from "../common/underline-button";
 import { useState } from "react";
+import { SJQuestionFlat } from "types";
 
 type TestSolutionProps = {
   currentStep: number;
-  questions: any[];
+  questions: SJQuestionFlat[];
 };
 
 const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {

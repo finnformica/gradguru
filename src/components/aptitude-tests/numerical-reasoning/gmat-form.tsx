@@ -12,12 +12,13 @@ import {
 import { MathJax } from "better-react-mathjax";
 
 import { ClientWrapper } from "components/global-components";
-import { IGmatForm, answerOptions } from "./types";
-import { textFieldInputValidation, renderHelperText } from "./utils";
+import { IGmatQuestion } from "types";
+import { answerOptions } from "./constants";
+import { renderHelperText, textFieldInputValidation } from "./utils";
 
 type GmatFormProps = {
-  form: IGmatForm;
-  setForm: (form: IGmatForm) => void;
+  form: IGmatQuestion;
+  setForm: (form: IGmatQuestion) => void;
 };
 
 const InputContainer = ({ children }: { children: React.ReactNode }) => (
@@ -76,7 +77,7 @@ const GmatForm = ({ form, setForm }: GmatFormProps) => {
                 ...form,
                 answer: {
                   ...form.answer,
-                  type: e.target.value as IGmatForm["answer"]["type"],
+                  type: e.target.value as IGmatQuestion["answer"]["type"],
                 },
               });
             }}

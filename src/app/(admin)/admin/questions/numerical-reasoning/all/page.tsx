@@ -10,7 +10,7 @@ import { Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
-import NRModal from "components/NRForm/NRModal";
+import { NRModal } from "components/aptitude-tests/numerical-reasoning";
 import { EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,

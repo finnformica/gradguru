@@ -20,8 +20,8 @@ import { ConfirmationDialog } from "components/global-components";
 import { useStepsForm } from "hooks/useStepsForm";
 import { NRAnswer, NRQuestionFlat } from "types";
 
-import CardActions from "../card-actions";
-import CardHeader from "../card-header";
+import CardActions from "../common/card-actions";
+import CardHeader from "../common/card-header";
 import TestSolution from "./test-solution";
 
 const renderQuestionText = (

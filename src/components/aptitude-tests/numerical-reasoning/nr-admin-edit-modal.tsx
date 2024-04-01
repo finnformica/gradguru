@@ -3,20 +3,20 @@ import React, { useState } from "react";
 
 import { patchQuestion } from "api/tests";
 
-import FormModalWrapper from "../global-components/FormModalWrapper";
-import NRForm from "./NRForm";
-import { NRQuestion } from "./types";
+import { INRQuestion } from "types";
+import FormModalWrapper from "../../global-components/FormModalWrapper";
+import NRForm from "./nr-admin-form";
 
 const NRModal = ({
   setQuestion,
   question,
 }: {
-  setQuestion: (question: NRQuestion | null) => void;
-  question: NRQuestion;
+  setQuestion: (question: INRQuestion | null) => void;
+  question: INRQuestion;
   handleDelete: () => void;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
-  const [form, setForm] = useState<NRQuestion>(question);
+  const [form, setForm] = useState<INRQuestion>(question);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

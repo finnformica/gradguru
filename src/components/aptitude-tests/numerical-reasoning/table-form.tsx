@@ -1,13 +1,14 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { Box, Button, Stack, Typography } from "@mui/material";
 
+import { ITableGraphQuestion, ITableQuestion } from "types";
 import { EditableTable, TableQuestionElement } from ".";
-import { ITableForm, IGraphForm, tableQuestion } from "./types";
+import { tableQuestion } from "./constants";
 
 interface TableFormProps {
-  form: ITableForm;
-  setForm: (newForm: ITableForm | IGraphForm) => void;
+  form: ITableQuestion;
+  setForm: (newForm: ITableGraphQuestion) => void;
 }
 
 const TableForm = ({ form, setForm }: TableFormProps) => {
