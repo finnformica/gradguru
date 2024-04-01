@@ -190,3 +190,10 @@ export type SJQuestionFlat = {
 };
 
 // -- Logical Reasoning --
+
+export type CellData = {
+  type: string;
+  value: string;
+  color: string;
+  rotation: number;
+};
