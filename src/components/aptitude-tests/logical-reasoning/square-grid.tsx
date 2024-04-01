@@ -14,13 +14,9 @@ import {
 
 import { CellData } from "types";
 
+import { squareSizeMapping } from "./constants";
 import { MenuContent } from "./square-grid-menu";
-import {
-  applyGridBorders,
-  initialiseSquareGrid,
-  mapIcon,
-  squareSizeMapping,
-} from "./utils";
+import { applyGridBorders, initialiseSquareGrid, mapIcon } from "./utils";
 
 const renderCell = (cell: CellData) => {
   if (!cell || !cell.value) return null;

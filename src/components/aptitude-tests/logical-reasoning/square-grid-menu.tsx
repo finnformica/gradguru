@@ -11,7 +11,8 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { mapIcon, squareGridDefaultCell } from "./utils";
+import { mapIcon } from "./utils";
+import { icons, squareGridDefaultCell } from "./constants";
 
 const updateGrid = (grid: any, setGrid: any, coord: any, value: any) => {
   setGrid([
@@ -87,29 +88,7 @@ const TextMenu = ({ grid, setGrid, coord }: InputProps) => {
 const IconMenu = ({ grid, setGrid, coord }: InputProps) => {
   return (
     <Autocomplete
-      options={[
-        "Plane",
-        "Face",
-        "Person",
-        "Tree",
-        "Forest",
-        "Grass",
-        "Mountain",
-        "Sun",
-        "Moon",
-        "Circle",
-        "Square",
-        "Pentagon",
-        "Hexagon",
-        "Star",
-        "Clock",
-        "Cookie",
-        "Anchor",
-        "Boat",
-        "Water",
-        "House",
-        "Castle",
-      ]}
+      options={icons}
       value={grid[coord.row][coord.col].value}
       onChange={(e, value) =>
         updateGrid(grid, setGrid, coord, { type: "icon", value })

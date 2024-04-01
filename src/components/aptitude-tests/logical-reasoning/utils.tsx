@@ -24,7 +24,7 @@ import {
 
 import _ from "lodash";
 
-import { CellData } from "types";
+import { squareGridDefaultCell } from "./constants";
 
 export const applyGridBorders = ({
   row,
@@ -55,13 +55,6 @@ export const applyGridBorders = ({
       ? `calc(2 * ${borderSize}) solid black`
       : "auto",
 });
-
-export const squareSizeMapping: { [key: number]: string } = {
-  4: "60px",
-  3: "80px",
-  2: "120px",
-  1: "240px",
-};
 
 export const mapIcon = (
   icon: any,
@@ -117,13 +110,6 @@ export const mapIcon = (
     default:
       return null;
   }
-};
-
-export const squareGridDefaultCell: CellData = {
-  type: "text",
-  value: "",
-  color: "#000",
-  rotation: 0,
 };
 
 export const initialiseSquareGrid = (numRows: number) => {
