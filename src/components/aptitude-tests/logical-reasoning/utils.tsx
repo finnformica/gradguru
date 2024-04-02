@@ -3,6 +3,7 @@ import {
   AirplanemodeActive,
   Anchor,
   Brightness2,
+  ChangeHistory,
   Circle,
   Cookie,
   Face,
@@ -117,6 +118,8 @@ export const mapIcon = ({
       return <Forest sx={sx} fontSize={fontSize} />;
     case "moon":
       return <Brightness2 sx={sx} fontSize={fontSize} />;
+    case "triangle":
+      return <ChangeHistory sx={sx} fontSize={fontSize} />;
     default:
       return null;
   }

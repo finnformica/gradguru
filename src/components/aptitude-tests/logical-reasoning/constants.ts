@@ -2,6 +2,12 @@ import { SvgIconOwnProps } from "@mui/material";
 import { CellData } from "types";
 
 export const icons = [
+  "Circle",
+  "Triangle",
+  "Square",
+  "Pentagon",
+  "Hexagon",
+  "Star",
   "Plane",
   "Face",
   "Person",
@@ -11,11 +17,6 @@ export const icons = [
   "Mountain",
   "Sun",
   "Moon",
-  "Circle",
-  "Square",
-  "Pentagon",
-  "Hexagon",
-  "Star",
   "Clock",
   "Cookie",
   "Anchor",
