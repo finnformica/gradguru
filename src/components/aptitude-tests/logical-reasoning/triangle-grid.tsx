@@ -9,7 +9,6 @@ import { CellData, Grid, GridCoord } from "types";
 import { MenuContent } from "./grid-menu";
 import { initialiseTriangleGrid, renderCell } from "./utils";
 
-const NUM_ROWS = 4;
 const TRIANGLE_SIZE = "60px";
 
 const TriangleCell = ({
@@ -61,9 +60,13 @@ const TriangleCell = ({
   </Box>
 );
 
-const TriangleGrid = () => {
+type TriangleGridProps = {
+  numRows?: number;
+};
+
+const TriangleGrid = ({ numRows = 4 }: TriangleGridProps) => {
   const [gridState, setGridState] = useState<Grid>(
-    initialiseTriangleGrid(NUM_ROWS)
+    initialiseTriangleGrid(numRows)
   );
   const [coord, setCoord] = useState<GridCoord>({
     row: 0,
@@ -108,7 +111,7 @@ const TriangleGrid = () => {
         <Stack justifyContent="center">
           <Tooltip title="Reset grid">
             <IconButton
-              onClick={() => setGridState(initialiseTriangleGrid(NUM_ROWS))}
+              onClick={() => setGridState(initialiseTriangleGrid(numRows))}
             >
               <Delete />
             </IconButton>
