@@ -127,6 +127,16 @@ export const mapIcon = ({
 export const initialiseSquareGrid = (numRows: number) => {
   const emptyRow = _.range(1, numRows + 1).map((row) => gridDefaultCell());
   const grid = _.range(1, numRows + 1).map((r) => emptyRow);
+
+  return grid;
+};
+
+export const initialiseTriangleGrid = (numRows: number) => {
+  const rows = _.range(1, numRows + 1).map((row) => row);
+  const grid = rows.map((row) =>
+    _.range(row * 2 - 1).map((num) => gridDefaultCell("small"))
+  );
+
   return grid;
 };
 
