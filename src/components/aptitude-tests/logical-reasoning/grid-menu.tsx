@@ -129,6 +129,9 @@ export const MenuContent = ({ grid, setGrid, coord }: InputProps) => {
             type="color"
           />
           <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
+          <MenuItem onClick={() => setMenuDisplay("menu")}>
+            <ListItemText secondary="View options" />
+          </MenuItem>
         </Stack>
       );
     case "icon":
@@ -142,6 +145,9 @@ export const MenuContent = ({ grid, setGrid, coord }: InputProps) => {
             type="color"
           />
           <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
+          <MenuItem onClick={() => setMenuDisplay("menu")}>
+            <ListItemText secondary="View options" />
+          </MenuItem>
         </Stack>
       );
     case "background":
@@ -153,6 +159,9 @@ export const MenuContent = ({ grid, setGrid, coord }: InputProps) => {
             coord={coord}
             type="backgroundColor"
           />
+          <MenuItem onClick={() => setMenuDisplay("menu")}>
+            <ListItemText secondary="View options" />
+          </MenuItem>
         </Stack>
       );
     case "image":
