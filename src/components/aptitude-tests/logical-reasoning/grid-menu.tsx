@@ -11,8 +11,8 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { mapIcon } from "./utils";
-import { icons, squareGridDefaultCell } from "./constants";
+
+import { icons, gridDefaultCell, colors } from "./constants";
 
 const updateGrid = (grid: any, setGrid: any, coord: any, value: any) => {
   setGrid([
@@ -49,22 +49,28 @@ const RotationInput = ({ grid, setGrid, coord }: InputProps) => {
   );
 };
 
-const ColorDropdown = ({ grid, setGrid, coord }: InputProps) => {
+const ColorDropdown = ({
+  grid,
+  setGrid,
+  coord,
+  type = "color",
+}: InputProps & { type: "color" | "backgroundColor" }) => {
   return (
     <TextField
       label="Color"
       select
       size="small"
-      value={grid[coord.row][coord.col].color}
+      value={grid[coord.row][coord.col][type]}
       onChange={(e) =>
-        updateGrid(grid, setGrid, coord, { color: e.target.value })
+        updateGrid(grid, setGrid, coord, { [type]: e.target.value })
       }
-      sx={{ mx: 1 }}
+      sx={{ width: 200 }}
     >
-      <MenuItem value="#000">Black</MenuItem>
-      <MenuItem value="#ef5350">Red</MenuItem>
-      <MenuItem value="#1e88e5">Blue</MenuItem>
-      <MenuItem value="#4caf50">Green</MenuItem>
+      {colors.map((color) => (
+        <MenuItem key={color.label} value={color.value}>
+          {color.label}
+        </MenuItem>
+      ))}
     </TextField>
   );
 };
@@ -95,20 +101,7 @@ const IconMenu = ({ grid, setGrid, coord }: InputProps) => {
       }
       isOptionEqualToValue={(option, value) => option === value}
       renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Icon"
-          size="small"
-          sx={{ width: 200 }}
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: (
-              <InputAdornment position="start">
-                {mapIcon(params.inputProps.value)}
-              </InputAdornment>
-            ),
-          }}
-        />
+        <TextField {...params} label="Icon" size="small" sx={{ width: 200 }} />
       )}
     />
   );
@@ -124,13 +117,19 @@ export const MenuContent = ({
   coord: any;
 }) => {
   const [menuDisplay, setMenuDisplay] = useState("menu");
+  const { fontSize } = grid[0][0];
 
   switch (menuDisplay) {
     case "text":
       return (
         <Stack spacing={2} mx={1}>
           <TextMenu grid={grid} setGrid={setGrid} coord={coord} />
-          <ColorDropdown grid={grid} setGrid={setGrid} coord={coord} />
+          <ColorDropdown
+            grid={grid}
+            setGrid={setGrid}
+            coord={coord}
+            type="color"
+          />
           <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
         </Stack>
       );
@@ -138,8 +137,24 @@ export const MenuContent = ({
       return (
         <Stack spacing={2} mx={1}>
           <IconMenu grid={grid} setGrid={setGrid} coord={coord} />
-          <ColorDropdown grid={grid} setGrid={setGrid} coord={coord} />
+          <ColorDropdown
+            grid={grid}
+            setGrid={setGrid}
+            coord={coord}
+            type="color"
+          />
           <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
+        </Stack>
+      );
+    case "background":
+      return (
+        <Stack spacing={2} mx={1}>
+          <ColorDropdown
+            grid={grid}
+            setGrid={setGrid}
+            coord={coord}
+            type="backgroundColor"
+          />
         </Stack>
       );
     case "image":
@@ -149,13 +164,16 @@ export const MenuContent = ({
         <>
           <MenuItem onClick={() => setMenuDisplay("text")}>Text</MenuItem>
           <MenuItem onClick={() => setMenuDisplay("icon")}>Icon</MenuItem>
+          <MenuItem onClick={() => setMenuDisplay("background")}>
+            Background
+          </MenuItem>
           <MenuItem onClick={() => setMenuDisplay("image")} disabled>
             Image
           </MenuItem>
           <Divider />
           <MenuItem
             onClick={() =>
-              updateGrid(grid, setGrid, coord, squareGridDefaultCell)
+              updateGrid(grid, setGrid, coord, gridDefaultCell(fontSize))
             }
           >
             <ListItemText secondary="Clear cell" />
