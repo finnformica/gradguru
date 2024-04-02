@@ -11,7 +11,6 @@ import {
   TextField,
   Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { blogStorage, postBlog } from "api/blog";
 import { LoadingScreen } from "components/global-components";
@@ -33,7 +32,6 @@ const tagOptions = [
 ];
 
 const AddBlog = () => {
-  const theme = useTheme();
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
