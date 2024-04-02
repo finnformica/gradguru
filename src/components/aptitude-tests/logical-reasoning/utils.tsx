@@ -24,7 +24,9 @@ import {
 
 import _ from "lodash";
 
-import { squareGridDefaultCell } from "./constants";
+import { gridDefaultCell } from "./constants";
+import { CellData } from "types";
+import { SvgIconOwnProps, Typography } from "@mui/material";
 
 export const applyGridBorders = ({
   row,
@@ -56,15 +58,25 @@ export const applyGridBorders = ({
       : "auto",
 });
 
-export const mapIcon = (
-  icon: any,
-  color: string = "black",
-  rot: number = 0
-) => {
-  const sx = { color, transform: `rotate(${rot}deg)` };
-  const fontSize = "large";
+export const mapIcon = ({
+  value,
+  color = "black",
+  rotation = 0,
+  size = "large",
+}: {
+  value: string;
+  color: string;
+  rotation: number;
+  size?: SvgIconOwnProps["fontSize"];
+}) => {
+  const sx = { color, transform: `rotate(${rotation}deg)` };
+  const fontSize = size;
 
-  switch (icon.toLowerCase()) {
+  console.log("fontSize", fontSize);
+
+  if (!value) return null;
+
+  switch (value.toLowerCase()) {
     case "plane":
       return <AirplanemodeActive sx={sx} fontSize={fontSize} />;
     case "face":
@@ -113,7 +125,35 @@ export const mapIcon = (
 };
 
 export const initialiseSquareGrid = (numRows: number) => {
-  const emptyRow = _.range(1, numRows + 1).map((row) => squareGridDefaultCell);
+  const emptyRow = _.range(1, numRows + 1).map((row) => gridDefaultCell());
   const grid = _.range(1, numRows + 1).map((r) => emptyRow);
   return grid;
+};
+
+export const renderCell = (cell: CellData) => {
+  if (!cell || !cell.value) return null;
+
+  console.log(cell);
+
+  switch (cell.type) {
+    case "text":
+      return (
+        <Typography
+          sx={{
+            color: cell.color,
+            fontSize: 28,
+            fontWeight: 500,
+            transform: `rotate(${cell.rotation}deg)`,
+          }}
+        >
+          {cell.value.toUpperCase()}
+        </Typography>
+      );
+    case "icon":
+      return mapIcon({ ...cell });
+    case "image":
+      return null; // TODO: Implement image rendering
+    default:
+      return cell.value;
+  }
 };

@@ -3,50 +3,17 @@
 import { useState } from "react";
 
 import { Delete } from "@mui/icons-material";
-import {
-  Box,
-  IconButton,
-  Menu,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-
-import { CellData } from "types";
+import { Box, IconButton, Menu, Stack, Tooltip } from "@mui/material";
 
 import { squareSizeMapping } from "./constants";
-import { MenuContent } from "./square-grid-menu";
-import { applyGridBorders, initialiseSquareGrid, mapIcon } from "./utils";
-
-const renderCell = (cell: CellData) => {
-  if (!cell || !cell.value) return null;
-
-  switch (cell.type) {
-    case "text":
-      return (
-        <Typography
-          sx={{
-            color: cell.color,
-            fontSize: 28,
-            fontWeight: 500,
-            transform: `rotate(${cell.rotation}deg)`,
-          }}
-        >
-          {cell.value.toUpperCase()}
-        </Typography>
-      );
-    case "icon":
-      return mapIcon(cell.value, cell.color, cell.rotation);
-    case "image":
-      return null; // TODO: Implement image rendering
-    default:
-      return cell.value;
-  }
-};
+import { MenuContent } from "./grid-menu";
+import { applyGridBorders, initialiseSquareGrid, renderCell } from "./utils";
+import { CellData } from "types";
 
 type SquareElementProps = {
   col: number;
   row: number;
+  cell: CellData;
   size: string;
   innerGrid: boolean;
   showBorders: boolean;
@@ -59,6 +26,7 @@ const SquareElement = ({
   children,
   size,
   onClick,
+  cell,
   ...grid
 }: SquareElementProps) => {
   return (
@@ -71,6 +39,7 @@ const SquareElement = ({
         display: "grid",
         placeItems: "center",
         transition: "background-color 0.3s ease-out",
+        backgroundColor: `${cell.backgroundColor}`,
         ...applyGridBorders({ ...grid }),
         "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
       }}
@@ -131,6 +100,7 @@ const SquareGrid = ({
                 innerGrid={innerGrid}
                 numRows={numRows}
                 showBorders={showBorders}
+                cell={cell}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                   handleClick(e, { row: rowIndex, col: colIndex })
                 }
