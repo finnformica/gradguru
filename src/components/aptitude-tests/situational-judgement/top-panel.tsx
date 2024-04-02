@@ -1,8 +1,7 @@
 import { Stack } from "@mui/material";
-
 import { PageBreadcrumbs } from "components/global-components";
 
-const TopPanel = () => {
+const TopPanel = ({ testId }: { testId: string }) => {
   return (
     <Stack
       pb={4}
@@ -11,10 +10,15 @@ const TopPanel = () => {
       alignItems="center"
     >
       <PageBreadcrumbs
-        header="Tests"
+        header={testId}
         links={[
-          { label: "Consulting", href: "/dashboard/courses/consulting" },
-          { label: "Tests" },
+          {
+            label: "Tests",
+            href: "/dashboard/tests/situational-judgement",
+          },
+          {
+            label: "Situational Judgement",
+          },
         ]}
       />
     </Stack>

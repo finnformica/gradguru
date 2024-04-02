@@ -10,18 +10,17 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import { EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog } from "components/global-components";
-import { INRTest } from "types";
+import { ISJTest } from "types";
 
-const AllNRTests = () => {
+const AllSJTTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-
-  const [tests, setTests] = useState<INRTest[]>([]);
-  const [testToDelete, setTestToDelete] = useState<INRTest | null>(null);
+  const [tests, setTests] = useState<any[]>([]);
+  const [testToDelete, setTestToDelete] = useState<ISJTest | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection
-    const unsubscribe = getTests("numerical-reasoning", setTests);
+    const unsubscribe = getTests("situational-judgement", setTests);
 
     // remove event listener on unmount
     return () => unsubscribe();
@@ -35,7 +34,7 @@ const AllNRTests = () => {
       flex: 1,
       width: 200,
       renderCell: (params) =>
-        (Object.values(params.value).flat() as string[]).map((q) => (
+        params.value.map((q: string) => (
           <Chip key={q} label={q} sx={{ mx: 0.5 }} />
         )),
     },
@@ -60,19 +59,15 @@ const AllNRTests = () => {
 
   const handleDeleteTest = async () => {
     if (!testToDelete) return;
-
-    const flattenedQuestions = Object.values(
-      testToDelete.questions
-    ).flat() as string[];
-
     // delete reference to testId from each question
-    const questionsUpdated = await flattenedQuestions.forEach((question) =>
-      patchQuestion(question, "numerical-reasoning", { testId: null })
+    const questionsUpdated = await testToDelete.questions.forEach(
+      (question: string) =>
+        patchQuestion(question, "situational-judgement", { testId: null })
     );
 
     // delete the test
     const testDeleted = await deleteTest(
-      "numerical-reasoning",
+      "situational-judgement",
       testToDelete.id || ""
     );
 
@@ -86,7 +81,7 @@ const AllNRTests = () => {
   return (
     <>
       <Typography variant="h4" pb={4}>
-        All Numerical Reasoning Tests
+        All Situational Judgement Tests
       </Typography>
       <DataGrid
         rows={tests}
@@ -111,4 +106,4 @@ const AllNRTests = () => {
   );
 };
 
-export default AllNRTests;
+export default AllSJTTests;

@@ -1,159 +1,158 @@
 "use client";
 
-import _ from "lodash";
 import { useSession } from "next-auth/react";
-import { useSnackbar } from "notistack";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useStopwatch } from "react-timer-hook";
 
-import { createTestRecord, getNRTests } from "api/tests";
+import { PlayArrow } from "@mui/icons-material";
+import { Card, IconButton, Stack, Tooltip } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { LoadingScreen } from "components/global-components";
-import NRTestCard from "components/tests/nr/nr-test-card";
-import TopPanel from "components/tests/nr/top-panel";
-import { useBeforeUnload } from "hooks/useBeforeUnload";
+import { getTestRecords, getTests } from "api/tests";
+import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
+import { combineTestsAndRecords, sortAlphaNumeric } from "utils/user-tests";
+import { INRTest, ITestRecord } from "types";
 
-type NRQuestion = {
-  question: string;
-  scenario: string;
-  type: "table" | "graph" | "gmat";
-  options: string[];
-  shuffled: string[];
-  answer: any;
-  success: boolean | null;
-  id: string;
+const TopPanel = () => {
+  return (
+    <Stack
+      pb={4}
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <PageBreadcrumbs
+        header="Numerical Reasoning"
+        links={[
+          { label: "Tests", href: "/dashboard/tests" },
+          { label: "Numerical Reasoning" },
+        ]}
+      />
+    </Stack>
+  );
 };
 
-const NumericalReasoningTest = () => {
-  const { enqueueSnackbar } = useSnackbar();
+const NumericalReasoningHome = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
-  const [questions, setQuestions] = useState<NRQuestion[]>();
-  const [testComplete, setTestComplete] = useState(false);
-  const [testLoading, setTestLoading] = useState(false);
-
-  const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
+  const [tests, setTests] = useState<INRTest[] | null>(null);
+  const [testRecords, setTestRecords] = useState<ITestRecord[] | null>(null);
 
   useEffect(() => {
-    if (testComplete) return pause();
-  }, [testComplete, pause]);
+    // add event listener on firestore collection
+    const unsubscribe = getTests("numerical-reasoning", setTests);
 
-  const fetchTableOrGraph = async (type: string) => {
-    const tableQuestions = await getNRTests(type);
-    const sample = _.sample(tableQuestions) as any;
-    const questions = sample.questions.map((q: any) => ({
-      ...q,
-      ..._.omit(sample, ["questions", "created"]),
-      success: null,
-    }));
-
-    return questions;
-  };
-
-  const fetchGmat = async () => {
-    const gmatQuestions = await getNRTests("gmat");
-    const samples = _.sampleSize(gmatQuestions, 2) as any;
-    const questions = samples.map((q: any) => ({
-      ..._.omit(q, "created"),
-      success: null,
-    }));
-
-    return questions;
-  };
-
-  useEffect(() => {
-    const createTest = async () => {
-      const table = await fetchTableOrGraph("table");
-      const graph = await fetchTableOrGraph("graph");
-      const gmat = await fetchGmat();
-
-      Promise.all([table, graph, gmat]).then((values) =>
-        setQuestions(values.flat())
-      );
-    };
-
-    createTest();
+    // remove event listener on unmount
+    return () => unsubscribe();
   }, []);
 
-  useBeforeUnload(!testComplete);
+  useEffect(() => {
+    if (!session) return;
+    const unsubscribe = getTestRecords(
+      "numerical-reasoning",
+      session?.user?.id,
+      setTestRecords
+    );
 
-  if (!questions || questions.length === 0) return <LoadingScreen />;
+    return () => unsubscribe();
+  }, [session]);
 
-  const markTest = (data: any) => {
-    const marked = questions.map((question, index) => {
-      // deep comparison for objects
-      if (question.answer.type === "multiple") {
-        return {
-          ...question,
-          success: _.isEqual(question.answer.value, data[index]),
-        };
-      }
+  const columns: GridColDef[] = [
+    {
+      field: "name",
+      headerName: "Name",
+      minWidth: 300,
+      flex: 1,
+      sortComparator: sortAlphaNumeric,
+    },
+    {
+      field: "lastAttempt",
+      headerName: "Last Attempt",
+      width: 200,
+      renderCell: (params) =>
+        params.value ? new Date(params.value).toLocaleString() : null,
+    },
+    {
+      field: "attempts",
+      headerName: "Attempts",
+      width: 200,
+    },
+    {
+      field: "avgTime",
+      headerName: "Average Time",
+      width: 200,
+      renderCell: (params) => {
+        const date = new Date(params.value);
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+        const seconds = date.getUTCSeconds();
 
-      // remove whitespace and convert to lowercase for string comparison
-      if (question.answer.type === "string") {
-        const correctAnswer = question.answer.value
-          .toLowerCase()
-          .replace(/\s/g, "");
-        const userAnswer = data[index].toLowerCase().replace(/\s/g, "");
-        return { ...question, success: correctAnswer === userAnswer };
-      }
+        return params.value
+          ? `${hours ? `${hours}h ` : ""}${minutes ? `${minutes}m ` : ""}${seconds ? `${seconds}s` : ""}`
+          : null;
+      },
+    },
+    {
+      field: "avgScore",
+      headerName: "Average Score",
+      width: 200,
+      renderCell: (params) =>
+        params.value || params.value === 0
+          ? `${(params.value * 100).toFixed(2)}%`
+          : null,
+    },
+    {
+      field: "bestScore",
+      headerName: "Best Score",
+      width: 200,
+      renderCell: (params) =>
+        params.value || params.value === 0
+          ? `${(params.value * 100).toFixed(2)}%`
+          : null,
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 80,
+      renderCell: (params) => (
+        <Stack direction="row" spacing={1}>
+          <Tooltip title="Start Test">
+            <IconButton
+              size="small"
+              onClick={() =>
+                router.push(
+                  `/dashboard/tests/numerical-reasoning/${params.row.id}`
+                )
+              }
+            >
+              <PlayArrow sx={{ color: "grey.400" }} />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      ),
+    },
+  ];
 
-      // numerical comparison (converted to string by form)
-      return { ...question, success: question.answer.value === data[index] };
-    });
-
-    // calculate test metrics
-    const correct = marked.filter((q) => q.success).length;
-    const score = {
-      percent: correct / marked.length,
-      correct: correct,
-      total: marked.length,
-    };
-    const date = Date.now();
-    const timeTaken = (hours * 3600 + minutes * 60 + seconds) * 1000;
-    const type = { label: "Numerical Reasoning", name: "nr" };
-    const questionIds = Array.from(new Set(marked.map((q) => q.id)));
-
-    // store results
-    createTestRecord(
-      { score, date, type, questionIds, time: timeTaken },
-      session!.user.id
-    )
-      .then(() => enqueueSnackbar("Test result saved"))
-      .catch((err) =>
-        enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => {
-        setQuestions(marked);
-        setTestComplete(true);
-        setTestLoading(false);
-      });
-  };
-
-  const handleEndTest = (data: any) => {
-    if (Object.keys(data).length !== questions.length) {
-      enqueueSnackbar("Not all questions answered", { variant: "error" });
-      return;
-    }
-
-    // simulate marking of test
-    setTestLoading(true);
-    setTimeout(() => markTest(data), 1800);
-  };
+  if (!tests) return <LoadingScreen />;
 
   return (
     <>
       <TopPanel />
-      <NRTestCard
-        questions={questions}
-        handleEndTest={handleEndTest}
-        testComplete={testComplete}
-        testLoading={testLoading}
-      />
+      <Card elevation={0}>
+        <DataGrid
+          rows={combineTestsAndRecords(tests, testRecords || [])}
+          columns={columns}
+          autoHeight
+          hideFooter
+          hideFooterPagination
+          initialState={{
+            sorting: { sortModel: [{ field: "name", sort: "asc" }] },
+          }}
+        />
+      </Card>
     </>
   );
 };
 
-export default NumericalReasoningTest;
+export default NumericalReasoningHome;
