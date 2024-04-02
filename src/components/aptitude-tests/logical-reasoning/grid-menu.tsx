@@ -13,8 +13,14 @@ import {
 } from "@mui/material";
 
 import { icons, gridDefaultCell, colors } from "./constants";
+import { Grid, GridCoord } from "types";
 
-const updateGrid = (grid: any, setGrid: any, coord: any, value: any) => {
+const updateGrid = (
+  grid: Grid,
+  setGrid: (newGrid: Grid) => void,
+  coord: GridCoord,
+  value: {}
+) => {
   setGrid([
     ...grid.slice(0, coord.row),
     [
@@ -27,9 +33,9 @@ const updateGrid = (grid: any, setGrid: any, coord: any, value: any) => {
 };
 
 type InputProps = {
-  grid: any;
-  setGrid: (grid: any) => void;
-  coord: any;
+  grid: Grid;
+  setGrid: (grid: Grid) => void;
+  coord: GridCoord;
 };
 
 const RotationInput = ({ grid, setGrid, coord }: InputProps) => {
@@ -107,17 +113,9 @@ const IconMenu = ({ grid, setGrid, coord }: InputProps) => {
   );
 };
 
-export const MenuContent = ({
-  grid,
-  setGrid,
-  coord,
-}: {
-  grid: any;
-  setGrid: (grid: any) => void;
-  coord: any;
-}) => {
+export const MenuContent = ({ grid, setGrid, coord }: InputProps) => {
   const [menuDisplay, setMenuDisplay] = useState("menu");
-  const { fontSize } = grid[0][0];
+  const { size } = grid[0][0];
 
   switch (menuDisplay) {
     case "text":
@@ -173,7 +171,7 @@ export const MenuContent = ({
           <Divider />
           <MenuItem
             onClick={() =>
-              updateGrid(grid, setGrid, coord, gridDefaultCell(fontSize))
+              updateGrid(grid, setGrid, coord, gridDefaultCell(size))
             }
           >
             <ListItemText secondary="Clear cell" />

@@ -201,3 +201,10 @@ export type CellData = {
   backgroundColor: string;
   size: SvgIconOwnProps["fontSize"];
 };
+
+export type Grid = CellData[][];
+
+export type GridCoord = {
+  row: number;
+  col: number;
+};

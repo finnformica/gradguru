@@ -8,7 +8,7 @@ import { Box, IconButton, Menu, Stack, Tooltip } from "@mui/material";
 import { squareSizeMapping } from "./constants";
 import { MenuContent } from "./grid-menu";
 import { applyGridBorders, initialiseSquareGrid, renderCell } from "./utils";
-import { CellData } from "types";
+import { CellData, Grid, GridCoord } from "types";
 
 type SquareElementProps = {
   col: number;
@@ -61,8 +61,10 @@ const SquareGrid = ({
   showBorders = true,
 }: SquareGridProps) => {
   const size = squareSizeMapping[numRows];
-  const [gridState, setGridState] = useState(initialiseSquareGrid(numRows));
-  const [coord, setCoord] = useState({
+  const [gridState, setGridState] = useState<Grid>(
+    initialiseSquareGrid(numRows)
+  );
+  const [coord, setCoord] = useState<GridCoord>({
     row: 0,
     col: 0,
   });
@@ -71,7 +73,7 @@ const SquareGrid = ({
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement>,
-    coord: any
+    coord: GridCoord
   ) => {
     setAnchorEl(event.currentTarget);
     setCoord(coord);

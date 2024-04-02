@@ -21,12 +21,12 @@ import {
   Water,
   WbSunny,
 } from "@mui/icons-material";
+import { SvgIconOwnProps, Typography } from "@mui/material";
 
 import _ from "lodash";
 
-import { gridDefaultCell } from "./constants";
 import { CellData } from "types";
-import { SvgIconOwnProps, Typography } from "@mui/material";
+import { gridDefaultCell } from "./constants";
 
 export const applyGridBorders = ({
   row,
@@ -71,8 +71,6 @@ export const mapIcon = ({
 }) => {
   const sx = { color, transform: `rotate(${rotation}deg)` };
   const fontSize = size;
-
-  console.log("fontSize", fontSize);
 
   if (!value) return null;
 
@@ -142,8 +140,6 @@ export const initialiseTriangleGrid = (numRows: number) => {
 
 export const renderCell = (cell: CellData) => {
   if (!cell || !cell.value) return null;
-
-  console.log(cell);
 
   switch (cell.type) {
     case "text":

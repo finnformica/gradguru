@@ -1,17 +1,13 @@
 "use client";
 
-import _ from "lodash";
-
-import { Box, Menu, Stack } from "@mui/material";
-import { MenuContent } from "./grid-menu";
 import { useState } from "react";
-import { gridDefaultCell } from "./constants";
-import { renderCell } from "./utils";
-import { CellData } from "types";
 
-// fill triangle - different colors
-// add different shapes inside each triangle segment - different colors
-// reset button to clear all grid cells
+import { Delete } from "@mui/icons-material";
+import { Box, IconButton, Menu, Stack, Tooltip } from "@mui/material";
+
+import { CellData, Grid, GridCoord } from "types";
+import { MenuContent } from "./grid-menu";
+import { initialiseTriangleGrid, renderCell } from "./utils";
 
 const NUM_ROWS = 4;
 const TRIANGLE_SIZE = "60px";
@@ -66,13 +62,10 @@ const TriangleCell = ({
 );
 
 const TriangleGrid = () => {
-  const rows = _.range(1, NUM_ROWS + 1).map((row) => row);
-  const grid = rows.map((row) =>
-    _.range(row * 2 - 1).map((num) => gridDefaultCell("small"))
+  const [gridState, setGridState] = useState<Grid>(
+    initialiseTriangleGrid(NUM_ROWS)
   );
-
-  const [gridState, setGridState] = useState(grid);
-  const [coord, setCoord] = useState({
+  const [coord, setCoord] = useState<GridCoord>({
     row: 0,
     col: 0,
   });
@@ -81,7 +74,7 @@ const TriangleGrid = () => {
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement>,
-    coord: any
+    coord: GridCoord
   ) => {
     setAnchorEl(event.currentTarget);
     setCoord(coord);
@@ -92,29 +85,40 @@ const TriangleGrid = () => {
   };
 
   return (
-    <>
-      <Stack direction="column">
-        {gridState.map((row, rowIndex) => (
-          <Box key={rowIndex} display="flex" justifyContent="center">
-            {row.map((cell, colIndex) => (
-              <TriangleCell
-                key={colIndex}
-                index={colIndex}
-                cell={cell}
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                  handleClick(e, { row: rowIndex, col: colIndex })
-                }
-              >
-                {renderCell(cell)}
-              </TriangleCell>
-            ))}
-          </Box>
-        ))}
+    <Box mx={2}>
+      <Stack direction="row" spacing={1}>
+        <Stack direction="column">
+          {gridState.map((row, rowIndex) => (
+            <Box key={rowIndex} display="flex" justifyContent="center">
+              {row.map((cell, colIndex) => (
+                <TriangleCell
+                  key={colIndex}
+                  index={colIndex}
+                  cell={cell}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    handleClick(e, { row: rowIndex, col: colIndex })
+                  }
+                >
+                  {renderCell(cell)}
+                </TriangleCell>
+              ))}
+            </Box>
+          ))}
+        </Stack>
+        <Stack justifyContent="center">
+          <Tooltip title="Reset grid">
+            <IconButton
+              onClick={() => setGridState(initialiseTriangleGrid(NUM_ROWS))}
+            >
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuContent grid={gridState} setGrid={setGridState} coord={coord} />
       </Menu>
-    </>
+    </Box>
   );
 };
 
