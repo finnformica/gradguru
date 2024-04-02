@@ -1,24 +1,20 @@
-import { Card, Stack, Typography } from "@mui/material";
+"use client";
 
-import {
-  SquareGrid,
-  TriangleGrid,
-} from "components/aptitude-tests/logical-reasoning";
+import { Typography } from "@mui/material";
+
+import { LRQuestionForm } from "components/aptitude-tests/logical-reasoning";
 
 const AddLRQuestion = () => {
+  const onSubmit = (data: any) => {
+    console.log("LR question submitted", data);
+  };
+
   return (
     <>
       <Typography variant="h4" pb={2}>
         Add Logical Reasoning question
       </Typography>
-      <Stack direction="column" spacing={2}>
-        <Card sx={{ p: 2 }}>
-          <TriangleGrid />
-        </Card>
-        <Card sx={{ p: 2 }}>
-          <SquareGrid numRows={4} />
-        </Card>
-      </Stack>
+      <LRQuestionForm onSubmit={onSubmit} />
     </>
   );
 };
