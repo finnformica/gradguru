@@ -138,6 +138,19 @@ export const initialiseTriangleGrid = (numRows: number) => {
   return grid;
 };
 
+const fontSizeMapping = (fontSize: SvgIconOwnProps["fontSize"]) => {
+  switch (fontSize) {
+    case "small":
+      return 20;
+    case "medium":
+      return 24;
+    case "large":
+      return 28;
+    default:
+      return 28;
+  }
+};
+
 export const renderCell = (cell: CellData) => {
   if (!cell || !cell.value) return null;
 
@@ -147,7 +160,7 @@ export const renderCell = (cell: CellData) => {
         <Typography
           sx={{
             color: cell.color,
-            fontSize: 28,
+            fontSize: fontSizeMapping(cell.size),
             fontWeight: 500,
             transform: `rotate(${cell.rotation}deg)`,
           }}
