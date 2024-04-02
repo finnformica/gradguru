@@ -1,26 +1,30 @@
 "use client";
 
+import { Delete } from "@mui/icons-material";
 import {
   Autocomplete,
   Box,
   Button,
   Container,
-  MenuItem,
+  IconButton,
   Stack,
   TextField,
+  Tooltip,
+  Typography,
+  useTheme,
 } from "@mui/material";
 import { blogStorage, postBlog } from "api/blog";
 import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
-import { BlogFormType } from "./types";
 import { modules } from "./modulesRQ";
-import { truncateSync } from "fs";
+import { BlogFormType } from "./types";
 
 const tagOptions = [
   { label: "Finance" },
@@ -29,6 +33,7 @@ const tagOptions = [
 ];
 
 const AddBlog = () => {
+  const theme = useTheme();
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
@@ -45,10 +50,13 @@ const AddBlog = () => {
     const { files } = event.target;
     if (files && files.length > 0) {
       setHeroPhoto(files[0]);
-      enqueueSnackbar("Image Selected");
     } else {
       enqueueSnackbar("No file selected.", { variant: "error" });
     }
+  };
+
+  const handleClearChange = () => {
+    setHeroPhoto(null);
   };
 
   if (!session?.user) {
@@ -155,16 +163,40 @@ const AddBlog = () => {
             )}
           />
 
-          <TextField type={"file"} size="small" onChange={handleImageChange} />
+          {heroPhoto ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <Image
+                src={URL.createObjectURL(heroPhoto)}
+                width={400}
+                height={300}
+                alt="Selected hero photo"
+                style={{
+                  borderRadius: "12px",
+                }}
+              />
+              <Typography variant="body1">{heroPhoto.name}</Typography>
+              <Tooltip title="Clear Image">
+                <IconButton onClick={handleClearChange}>
+                  <Delete />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          ) : (
+            <TextField
+              type={"file"}
+              size="small"
+              onChange={handleImageChange}
+            />
+          )}
 
-          <Box
-            sx={{
-              border: "1px solid black",
-              minHeight: 200,
-              p: 2,
-              borderRadius: "4px",
-            }}
-          >
+          <Box>
             <ReactQuill
               theme="snow"
               value={content}
@@ -173,7 +205,7 @@ const AddBlog = () => {
             />
           </Box>
           <Button type="submit" variant="contained">
-            submit
+            Submit
           </Button>
         </Stack>
       </form>
