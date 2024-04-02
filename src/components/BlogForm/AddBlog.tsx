@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -17,10 +18,15 @@ import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
-import { addFormData } from "./types";
+import { BlogFormType } from "./types";
 import { modules } from "./modulesRQ";
+import { truncateSync } from "fs";
 
-const tagOptions = ["Finance", "Jobs", "Education"];
+const tagOptions = [
+  { label: "Finance" },
+  { label: "Jobs" },
+  { label: "Education" },
+];
 
 const AddBlog = () => {
   const { data: session } = useSession();
@@ -50,7 +56,7 @@ const AddBlog = () => {
   }
   const { user } = session;
 
-  const onSubmit = (data: addFormData) => {
+  const onSubmit = (data: BlogFormType) => {
     if (!heroPhoto) {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
@@ -102,30 +108,30 @@ const AddBlog = () => {
               />
             )}
           />
-          <Controller
-            name="tags"
-            control={control}
-            rules={{ required: true }}
-            render={({
-              field: { onChange, value },
-              fieldState: { error },
-            }: any) => (
-              <TextField
-                label="Tags"
-                size="small"
-                select
-                fullWidth
-                value={value}
-                onChange={onChange}
-                error={!!error}
-                helperText={!!error && "A Tag is required"}
-              >
-                {tagOptions.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
+          <Autocomplete
+            disablePortal
+            id="tags-box"
+            options={tagOptions}
+            renderInput={(params) => (
+              <Controller
+                name="tags"
+                control={control}
+                rules={{ required: false }}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }: any) => (
+                  <TextField
+                    {...params}
+                    label="Tags"
+                    size="small"
+                    fullWidth
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                  />
+                )}
+              />
             )}
           />
 
@@ -166,7 +172,7 @@ const AddBlog = () => {
               modules={modules}
             />
           </Box>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained">
             submit
           </Button>
         </Stack>
