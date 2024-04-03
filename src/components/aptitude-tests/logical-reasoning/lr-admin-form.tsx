@@ -94,7 +94,6 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
     );
 
     const optionsLength = templateType === "grid" ? 4 : length;
-    console.log(templateType, optionsLength);
     setValue(
       "grid.options",
       _.range(override || optionsLength).map(() => initialiseGrid(numRows))
