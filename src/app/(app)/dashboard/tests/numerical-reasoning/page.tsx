@@ -76,12 +76,12 @@ const NumericalReasoningHome = () => {
     {
       field: "attempts",
       headerName: "Attempts",
-      width: 200,
+      width: 120,
     },
     {
       field: "avgTime",
       headerName: "Average Time",
-      width: 200,
+      width: 120,
       renderCell: (params) => {
         const date = new Date(params.value);
         const hours = date.getUTCHours();
@@ -96,7 +96,7 @@ const NumericalReasoningHome = () => {
     {
       field: "avgScore",
       headerName: "Average Score",
-      width: 200,
+      width: 120,
       renderCell: (params) =>
         params.value || params.value === 0
           ? `${(params.value * 100).toFixed(2)}%`
@@ -105,7 +105,7 @@ const NumericalReasoningHome = () => {
     {
       field: "bestScore",
       headerName: "Best Score",
-      width: 200,
+      width: 120,
       renderCell: (params) =>
         params.value || params.value === 0
           ? `${(params.value * 100).toFixed(2)}%`
@@ -139,7 +139,7 @@ const NumericalReasoningHome = () => {
   return (
     <>
       <TopPanel />
-      <Card elevation={0}>
+      <Card elevation={0} sx={{ maxWidth: 1200, mx: "auto", width: "100%" }}>
         <DataGrid
           rows={combineTestsAndRecords(tests, testRecords || [])}
           columns={columns}

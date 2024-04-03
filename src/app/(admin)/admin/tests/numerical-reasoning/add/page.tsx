@@ -19,8 +19,8 @@ import { useEffect, useState } from "react";
 import { INRQuestion } from "types";
 
 const NR_GRAPH_QUESTIONS_PER_TEST = 1;
-const NR_TABLE_QUESTIONS_PER_TEST = 1;
-const NR_GMAT_QUESTIONS_PER_TEST = 2;
+const NR_TABLE_QUESTIONS_PER_TEST = 2;
+const NR_GMAT_QUESTIONS_PER_TEST = 4;
 const NR_QUESTIONS_PER_TEST =
   NR_GMAT_QUESTIONS_PER_TEST +
   NR_GRAPH_QUESTIONS_PER_TEST +
