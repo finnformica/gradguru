@@ -1,9 +1,11 @@
 export interface BlogsInterface {
   author: string;
-  body: string;
-  date: string;
+  content: string;
+  created: number;
+  imageId: string;
+  slug: string;
+  summary: string;
   tags: string;
   title: string;
-  read_time: number;
-  id: string;
+  borderColor: string;
 }

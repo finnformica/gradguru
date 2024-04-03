@@ -2,7 +2,7 @@
 import { useBlogs } from "api/blog";
 import BlogCard from "components/BlogPage/Cards/BlogCard";
 import { LoadingScreen } from "components/global-components";
-import { Container } from "@mui/material";
+import { Container, Grid, useTheme } from "@mui/material";
 
 const borderColor = "lightgrey";
 
@@ -18,16 +18,22 @@ const BlogPage = () => {
         sx={{
           borderRight: `1px solid ${borderColor}`,
           borderLeft: `1px solid ${borderColor}`,
+          my: 4,
+          py: 2,
         }}
       >
-        {posts.map((post) => (
-          <BlogCard
-            borderColor={borderColor}
-            {...post}
-            id={post.id}
-            key={post.id}
-          />
-        ))}
+        <Grid container spacing={3}>
+          {posts.map((post) => (
+            <Grid key={post.slog} item>
+              <BlogCard
+                key={post.slug}
+                id={post.slug}
+                borderColor={borderColor}
+                {...post}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     );
   }
