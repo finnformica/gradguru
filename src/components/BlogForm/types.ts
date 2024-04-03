@@ -1,5 +1,5 @@
 export type BlogFormType = {
   title: string;
   summary: string;
-  tags: string;
+  tags: string | null;
 };

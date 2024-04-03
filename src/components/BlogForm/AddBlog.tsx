@@ -25,22 +25,18 @@ import "react-quill/dist/quill.snow.css";
 import { modules } from "./modulesRQ";
 import { BlogFormType } from "./types";
 
-const tagOptions = [
-  { label: "Finance" },
-  { label: "Jobs" },
-  { label: "Education" },
-];
+const tagOptions = ["Finance", "Jobs", "Education"];
 
 const AddBlog = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
   const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
       title: "",
       summary: "",
-      tags: "",
+      tags: null,
     },
   });
 
@@ -114,26 +110,24 @@ const AddBlog = () => {
               />
             )}
           />
-          <Autocomplete
-            disablePortal
-            id="tags-box"
-            options={tagOptions}
-            renderInput={(params) => (
-              <Controller
-                name="tags"
-                control={control}
-                rules={{ required: false }}
-                render={({
-                  field: { onChange, value },
-                  fieldState: { error },
-                }: any) => (
+          <Controller
+            name="tags"
+            control={control}
+            rules={{ required: false }}
+            render={({ field, fieldState: { error } }: any) => (
+              <Autocomplete
+                id="tags"
+                fullWidth
+                value={field.value}
+                options={tagOptions}
+                onChange={(_, data) => {
+                  setValue("tags", data);
+                }}
+                renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Tags"
                     size="small"
-                    fullWidth
-                    value={value}
-                    onChange={onChange}
                     error={!!error}
                   />
                 )}
