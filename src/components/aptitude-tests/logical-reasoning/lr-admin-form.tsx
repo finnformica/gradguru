@@ -231,7 +231,9 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
                       onClick={() =>
                         setValue(
                           `grid.data.${index}`,
-                          initialiseSquareGrid(numRows)
+                          gridType === "square"
+                            ? initialiseSquareGrid(numRows)
+                            : initialiseTriangleGrid(numRows)
                         )
                       }
                     >
