@@ -2,32 +2,28 @@
 
 import { useState } from "react";
 
-import { Delete } from "@mui/icons-material";
-import { Box, IconButton, Menu, Stack, Tooltip } from "@mui/material";
+import { Box, Menu, Stack } from "@mui/material";
+
+import { CellData, Grid, GridCoord } from "types";
 
 import { squareSizeMapping } from "./constants";
 import { MenuContent } from "./grid-menu";
-import { applyGridBorders, initialiseSquareGrid, renderCell } from "./utils";
-import { CellData, Grid, GridCoord } from "types";
+import { renderCell } from "./utils";
 
 type SquareElementProps = {
-  col: number;
-  row: number;
   cell: CellData;
-  size: string;
   innerGrid: boolean;
-  showBorders: boolean;
+  size: string;
+  onClick: any;
   children: React.ReactNode;
-  numRows: number;
-  onClick?: any;
 };
 
 const SquareElement = ({
-  children,
   size,
   onClick,
   cell,
-  ...grid
+  innerGrid,
+  children,
 }: SquareElementProps) => {
   return (
     <Box
@@ -40,7 +36,7 @@ const SquareElement = ({
         placeItems: "center",
         transition: "background-color 0.3s ease-out",
         backgroundColor: `${cell.backgroundColor}`,
-        ...applyGridBorders({ ...grid }),
+        border: innerGrid ? `1px solid black` : "none",
         "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
       }}
     >
@@ -53,17 +49,18 @@ type SquareGridProps = {
   numRows?: number;
   innerGrid?: boolean;
   showBorders?: boolean;
+  grid: Grid;
+  setGrid?: (grid: Grid) => void;
 };
 
 const SquareGrid = ({
   numRows = 1,
   innerGrid = true,
   showBorders = true,
+  grid,
+  setGrid,
 }: SquareGridProps) => {
   const size = squareSizeMapping[numRows];
-  const [gridState, setGridState] = useState<Grid>(
-    initialiseSquareGrid(numRows)
-  );
   const [coord, setCoord] = useState<GridCoord>({
     row: 0,
     col: 0,
@@ -90,18 +87,15 @@ const SquareGrid = ({
           sx={{
             display: "grid",
             gridTemplateColumns: `repeat(${numRows}, ${size})`,
+            border: showBorders ? "1px solid black" : "none",
           }}
         >
-          {gridState.map((row, rowIndex) =>
+          {grid.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <SquareElement
                 key={colIndex}
-                col={colIndex}
-                row={rowIndex}
                 size={size}
                 innerGrid={innerGrid}
-                numRows={numRows}
-                showBorders={showBorders}
                 cell={cell}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                   handleClick(e, { row: rowIndex, col: colIndex })
@@ -112,20 +106,12 @@ const SquareGrid = ({
             ))
           )}
         </Box>
-
-        <Stack justifyContent="center">
-          <Tooltip title="Reset grid">
-            <IconButton
-              onClick={() => setGridState(initialiseSquareGrid(numRows))}
-            >
-              <Delete />
-            </IconButton>
-          </Tooltip>
-        </Stack>
       </Stack>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuContent grid={gridState} setGrid={setGridState} coord={coord} />
-      </Menu>
+      {setGrid && (
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuContent grid={grid} setGrid={setGrid} coord={coord} />
+        </Menu>
+      )}
     </>
   );
 };
