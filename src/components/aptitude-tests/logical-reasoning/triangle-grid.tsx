@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-import { Delete } from "@mui/icons-material";
-import { Box, IconButton, Menu, Stack, Tooltip } from "@mui/material";
+import { Box, Menu, Stack } from "@mui/material";
 
 import { CellData, Grid, GridCoord } from "types";
 import { MenuContent } from "./grid-menu";
@@ -88,7 +87,7 @@ const TriangleGrid = ({ numRows = 4 }: TriangleGridProps) => {
   };
 
   return (
-    <Box mx={2}>
+    <Box mx={2} px={1}>
       <Stack direction="row" spacing={1}>
         <Stack direction="column">
           {gridState.map((row, rowIndex) => (
@@ -107,15 +106,6 @@ const TriangleGrid = ({ numRows = 4 }: TriangleGridProps) => {
               ))}
             </Box>
           ))}
-        </Stack>
-        <Stack justifyContent="center">
-          <Tooltip title="Reset grid">
-            <IconButton
-              onClick={() => setGridState(initialiseTriangleGrid(numRows))}
-            >
-              <Delete />
-            </IconButton>
-          </Tooltip>
         </Stack>
       </Stack>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
