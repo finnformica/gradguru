@@ -1,13 +1,20 @@
 import {
-  Box,
   Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  Skeleton,
   Typography,
 } from "@mui/material";
+import { initializeApp } from "firebase/app";
+
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { config } from "lib/firebase/config";
+import { useEffect, useState } from "react";
+
+const app = initializeApp(config);
 
 type BlogCardProps = {
   author: string;
@@ -32,15 +39,35 @@ const BlogCard = ({
   title,
   borderColor,
 }: BlogCardProps) => {
+  // Create a reference with an initial file path and name
+
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storage = getStorage();
+    const pathReference = ref(storage, `blog/${slug}/${imageId}`);
+    getDownloadURL(pathReference)
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        setImageUrl(null);
+      });
+  }, [slug, imageId]);
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        />
+        {imageUrl ? (
+          <CardMedia
+            component="img"
+            height="140"
+            image={imageUrl}
+            alt={imageId}
+          />
+        ) : (
+          <Skeleton variant="rectangular" width={210} height={118} />
+        )}
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}

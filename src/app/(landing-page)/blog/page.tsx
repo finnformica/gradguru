@@ -22,9 +22,14 @@ const BlogPage = () => {
           py: 2,
         }}
       >
-        <Grid container spacing={3}>
+        <Grid
+          container
+          rowSpacing={0}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ justifyContent: "space-around" }}
+        >
           {posts.map((post) => (
-            <Grid key={post.slog} item>
+            <Grid key={post.slug} item>
               <BlogCard
                 key={post.slug}
                 id={post.slug}
