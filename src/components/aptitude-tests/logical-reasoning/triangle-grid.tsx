@@ -6,7 +6,7 @@ import { Box, Menu, Stack } from "@mui/material";
 
 import { CellData, Grid, GridCoord } from "types";
 import { MenuContent } from "./grid-menu";
-import { initialiseTriangleGrid, renderCell } from "./utils";
+import { renderCell } from "./utils";
 
 const TRIANGLE_SIZE = "60px";
 
@@ -61,12 +61,11 @@ const TriangleCell = ({
 
 type TriangleGridProps = {
   numRows?: number;
+  grid: Grid;
+  setGrid?: (grid: Grid) => void;
 };
 
-const TriangleGrid = ({ numRows = 4 }: TriangleGridProps) => {
-  const [gridState, setGridState] = useState<Grid>(
-    initialiseTriangleGrid(numRows)
-  );
+const TriangleGrid = ({ numRows = 4, grid, setGrid }: TriangleGridProps) => {
   const [coord, setCoord] = useState<GridCoord>({
     row: 0,
     col: 0,
@@ -90,7 +89,7 @@ const TriangleGrid = ({ numRows = 4 }: TriangleGridProps) => {
     <Box mx={2} px={1}>
       <Stack direction="row" spacing={1}>
         <Stack direction="column">
-          {gridState.map((row, rowIndex) => (
+          {grid.map((row, rowIndex) => (
             <Box key={rowIndex} display="flex" justifyContent="center">
               {row.map((cell, colIndex) => (
                 <TriangleCell
@@ -108,9 +107,11 @@ const TriangleGrid = ({ numRows = 4 }: TriangleGridProps) => {
           ))}
         </Stack>
       </Stack>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuContent grid={gridState} setGrid={setGridState} coord={coord} />
-      </Menu>
+      {setGrid && (
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuContent grid={grid} setGrid={setGrid} coord={coord} />
+        </Menu>
+      )}
     </Box>
   );
 };

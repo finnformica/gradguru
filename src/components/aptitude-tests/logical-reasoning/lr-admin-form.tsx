@@ -205,7 +205,13 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
                 spacing={0.5}
               >
                 {gridType === "triangle" ? (
-                  <TriangleGrid numRows={numRows} />
+                  <TriangleGrid
+                    numRows={numRows}
+                    grid={value}
+                    setGrid={(grid: Grid) =>
+                      setValue(`grid.data.${index}`, grid)
+                    }
+                  />
                 ) : (
                   <SquareGrid
                     numRows={numRows}
