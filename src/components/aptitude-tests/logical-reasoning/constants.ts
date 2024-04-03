@@ -47,7 +47,20 @@ export const gridDefaultCell = (
 
 export const squareSizeMapping: { [key: number]: string } = {
   4: "60px",
-  3: "80px",
-  2: "120px",
-  1: "240px",
+  3: "60px",
+  2: "85px",
+  1: "150px",
+};
+
+export const fontSizeMapping = (fontSize: SvgIconOwnProps["fontSize"]) => {
+  switch (fontSize) {
+    case "small":
+      return 20;
+    case "medium":
+      return 24;
+    case "large":
+      return 28;
+    default:
+      return 28;
+  }
 };

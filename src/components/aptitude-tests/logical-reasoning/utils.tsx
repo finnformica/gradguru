@@ -26,38 +26,8 @@ import { SvgIconOwnProps, Typography } from "@mui/material";
 
 import _ from "lodash";
 
-import { CellData } from "types";
-import { gridDefaultCell } from "./constants";
-
-export const applyGridBorders = ({
-  row,
-  col,
-  numRows,
-  innerGrid,
-  showBorders,
-  borderSize = "1px",
-}: {
-  row: number;
-  col: number;
-  numRows: number;
-  innerGrid: boolean;
-  showBorders: boolean;
-  borderSize?: string;
-}) => ({
-  border: innerGrid ? `${borderSize} solid black` : "none",
-  borderTop:
-    row === 0 && showBorders ? `calc(2 * ${borderSize}) solid black` : "auto",
-  borderLeft:
-    col === 0 && showBorders ? `calc(2 * ${borderSize}) solid black` : "auto",
-  borderBottom:
-    row === numRows - 1 && showBorders
-      ? `calc(2 * ${borderSize}) solid black`
-      : "auto",
-  borderRight:
-    col === numRows - 1 && showBorders
-      ? `calc(2 * ${borderSize}) solid black`
-      : "auto",
-});
+import { CellData, Grid } from "types";
+import { fontSizeMapping, gridDefaultCell } from "./constants";
 
 export const mapIcon = ({
   value,
@@ -125,7 +95,7 @@ export const mapIcon = ({
   }
 };
 
-export const initialiseSquareGrid = (numRows: number) => {
+export const initialiseSquareGrid = (numRows: number): Grid => {
   const emptyRow = _.range(1, numRows + 1).map((row) => gridDefaultCell());
   const grid = _.range(1, numRows + 1).map((r) => emptyRow);
 
@@ -139,19 +109,6 @@ export const initialiseTriangleGrid = (numRows: number) => {
   );
 
   return grid;
-};
-
-const fontSizeMapping = (fontSize: SvgIconOwnProps["fontSize"]) => {
-  switch (fontSize) {
-    case "small":
-      return 20;
-    case "medium":
-      return 24;
-    case "large":
-      return 28;
-    default:
-      return 28;
-  }
 };
 
 export const renderCell = (cell: CellData) => {
