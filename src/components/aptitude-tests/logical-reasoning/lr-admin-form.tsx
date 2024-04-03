@@ -1,7 +1,7 @@
 "use client";
 
 import _ from "lodash";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 
 import { AddCircleOutline, Clear, Delete } from "@mui/icons-material";
 import {
@@ -68,14 +68,20 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
     name: "grid.options",
   });
 
-  const [templateType, gridType, numRows, questionType] = watch([
-    "grid.template",
+  const [gridType, numRows, questionType] = watch([
     "grid.type",
     "grid.rows",
     "type",
   ]);
 
-  const updateFormGrid = (type: string, numRows: number, numGrids?: number) => {
+  const templateType = useWatch({ control, name: "grid.template" });
+
+  const updateFormGrid = (
+    type: string,
+    numRows: number,
+    numGrids?: number,
+    override?: number
+  ) => {
     if (!numRows) return;
 
     const length = numGrids || fields.length;
@@ -91,13 +97,13 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
     console.log(templateType, optionsLength);
     setValue(
       "grid.options",
-      _.range(optionsLength).map(() => initialiseGrid(numRows))
+      _.range(override || optionsLength).map(() => initialiseGrid(numRows))
     );
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack direction="column" spacing={2} pb={2}>
+      <Stack direction="column" spacing={2} pb={4}>
         <Controller
           name="question"
           control={control}
@@ -136,15 +142,13 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
           name="answer"
           control={control}
           rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
+          render={({ field }) => (
             <TextField
               select
               {...field}
-              sx={{ width: 200 }}
+              sx={{ width: 100 }}
               label="Answer"
               size="small"
-              error={!!error}
-              helperText={!!error && "Answer is required"}
             >
               {Object.keys(alphaToNumericMapping).map((key) => (
                 <MenuItem key={key} value={key}>
@@ -156,20 +160,22 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
         />
       </Stack>
 
+      <Typography variant="h5" pb={2}>
+        Question configuration
+      </Typography>
+
       <Stack direction="row" spacing={1} pb={1}>
         <Controller
           name="type"
           control={control}
           rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
+          render={({ field }) => (
             <TextField
               select
               {...field}
-              sx={{ width: 200 }}
+              sx={{ width: 250 }}
               label="Question type"
               size="small"
-              error={!!error}
-              helperText={!!error && "Question type is required"}
             >
               <MenuItem value="odd-one-out">Odd one out</MenuItem>
               <MenuItem value="complete-the-sequence">
@@ -183,19 +189,17 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
           name="grid.template"
           control={control}
           rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
+          render={({ field }) => (
             <TextField
               select
               {...field}
               sx={{ width: 150 }}
               label="Template"
               size="small"
-              error={!!error}
-              helperText={!!error && "Template is required"}
             >
               <MenuItem
                 value="grid"
-                onClick={() => updateFormGrid(gridType, numRows, 9)}
+                onClick={() => updateFormGrid(gridType, numRows, 9, 4)}
               >
                 Grid
               </MenuItem>
@@ -213,15 +217,13 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
           name="grid.type"
           control={control}
           rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
+          render={({ field }) => (
             <TextField
               select
               {...field}
               sx={{ width: 150 }}
               label="Grid type"
               size="small"
-              error={!!error}
-              helperText={!!error && "Grid type is required"}
             >
               <MenuItem
                 value="triangle"
@@ -243,15 +245,13 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
           name="grid.rows"
           control={control}
           rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
+          render={({ field }) => (
             <TextField
               select
               {...field}
               sx={{ width: 80 }}
               label="Grid rows"
               size="small"
-              error={!!error}
-              helperText={!!error && "Number of rows is required"}
             >
               {_.range(1, 5).map((row) => (
                 <MenuItem
@@ -347,7 +347,7 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
 
       {questionType === "complete-the-sequence" && (
         <>
-          <Stack direction="row" spacing={1} pt={2} alignItems="center">
+          <Stack direction="row" spacing={1} pt={1} alignItems="center">
             <Typography variant="h5">Answer options</Typography>
 
             {questionType === "complete-the-sequence" && (
