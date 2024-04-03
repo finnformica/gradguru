@@ -1,7 +1,7 @@
-import TitleEntry from "components/BlogForm/TitleEntry";
+import AddBlog from "components/BlogForm/AddBlog";
 
-const page = () => {
-  return <TitleEntry />;
+const BlogForm = () => {
+  return <AddBlog />;
 };
 
-export default page;
+export default BlogForm;
