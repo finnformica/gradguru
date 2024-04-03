@@ -1,7 +1,5 @@
-export type DataProps = {
+export type BlogFormType = {
   title: string;
-  desc: string;
-  tags: string;
+  summary: string;
+  tags: string | null;
 };
-
-export type titleDataProps = { title: string };
