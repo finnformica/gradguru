@@ -1,11 +1,14 @@
 import {
-  Button,
+  Box,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
+  CardHeader,
   CardMedia,
+  Chip,
   Skeleton,
+  Stack,
   Typography,
 } from "@mui/material";
 import { initializeApp } from "firebase/app";
@@ -39,8 +42,6 @@ const BlogCard = ({
   title,
   borderColor,
 }: BlogCardProps) => {
-  // Create a reference with an initial file path and name
-
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,81 +57,47 @@ const BlogCard = ({
   }, [slug, imageId]);
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 500 }}>
       <CardActionArea>
-        {imageUrl ? (
-          <CardMedia
-            component="img"
-            height="140"
-            image={imageUrl}
-            alt={imageId}
-          />
-        ) : (
-          <Skeleton variant="rectangular" width={210} height={118} />
-        )}
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {summary}
-          </Typography>
-        </CardContent>
+        <CardHeader
+          title={title}
+          sx={{
+            height: 50,
+            overflow: "hidden",
+          }}
+        />
+        <Stack direction="row">
+          <CardContent>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                width: 250,
+                height: 140,
+                textAlign: "justify",
+                overflow: "scroll",
+              }}
+            >
+              {summary}
+            </Typography>
+          </CardContent>
+          {imageUrl ? (
+            <CardMedia
+              component="img"
+              height={140}
+              image={imageUrl}
+              alt={imageId}
+              sx={{ pt: 2 }}
+            />
+          ) : (
+            <Skeleton variant="rectangular" width={345} height={140} />
+          )}
+        </Stack>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          {tags}
-        </Button>
+        <Chip label={tags} variant="outlined" color="primary" />
       </CardActions>
     </Card>
-
-    // <Box
-    //   sx={{
-    //     display: "flex",
-    //     mx: "10px",
-    //     px: "20px",
-    //     py: "50px",
-    //     justifyContent: "space-between",
-    //     borderBottom: `1px solid ${borderColor}`,
-    //     "&:hover": {
-    //       cursor: "pointer",
-    //     },
-    //   }}
-    // >
-    //   <Box>
-    //     <Box id={slug} sx={{ display: "flex", gap: 1 }}>
-    //       <Typography fontSize={14} fontWeight={400}>
-    //         {author}
-    //       </Typography>
-    //       <Typography fontSize={14}>|</Typography>
-    //       <Typography
-    //         fontSize={14}
-    //         fontWeight={400}
-    //         sx={{ color: "rgb(107, 107, 107)" }}
-    //       >
-    //         {created}
-    //       </Typography>
-    //     </Box>
-    //     <Typography variant="h5" fontWeight={700} fontSize={20}>
-    //       {title}
-    //     </Typography>
-    //     <Typography>{summary}</Typography>
-    //     <Box sx={{ display: "flex", mt: "20px", gap: 1 }}>
-    //       <Typography
-    //         fontSize={13}
-    //         fontWeight={400}
-    //         sx={{
-    //           backgroundColor: "lightgrey",
-    //           py: "1px",
-    //           px: "6px",
-    //           borderRadius: "16px",
-    //         }}
-    //       >
-    //         {tags}
-    //       </Typography>
-    //     </Box>
-    //   </Box>
-    // </Box>
   );
 };
 

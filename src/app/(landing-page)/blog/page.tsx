@@ -14,7 +14,7 @@ const BlogPage = () => {
   if (posts !== undefined) {
     return (
       <Container
-        maxWidth="md"
+        maxWidth="lg"
         sx={{
           borderRight: `1px solid ${borderColor}`,
           borderLeft: `1px solid ${borderColor}`,
@@ -24,7 +24,7 @@ const BlogPage = () => {
       >
         <Grid
           container
-          rowSpacing={0}
+          rowSpacing={2}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           sx={{ justifyContent: "space-around" }}
         >
