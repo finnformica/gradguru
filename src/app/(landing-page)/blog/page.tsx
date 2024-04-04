@@ -1,8 +1,8 @@
 "use client";
+import { Container, Grid } from "@mui/material";
 import { useBlogs } from "api/blog";
 import BlogCard from "components/BlogPage/Cards/BlogCard";
 import { LoadingScreen } from "components/global-components";
-import { Container, Grid, useTheme } from "@mui/material";
 
 const borderColor = "lightgrey";
 
@@ -24,18 +24,13 @@ const BlogPage = () => {
       >
         <Grid
           container
-          rowSpacing={2}
+          rowSpacing={3}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           sx={{ justifyContent: "space-around" }}
         >
           {posts.map((post) => (
             <Grid key={post.slug} item>
-              <BlogCard
-                key={post.slug}
-                id={post.slug}
-                borderColor={borderColor}
-                {...post}
-              />
+              <BlogCard key={post.slug} id={post.slug} {...post} />
             </Grid>
           ))}
         </Grid>

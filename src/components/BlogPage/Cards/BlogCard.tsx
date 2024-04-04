@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardActionArea,
   CardActions,
@@ -7,6 +6,7 @@ import {
   CardHeader,
   CardMedia,
   Chip,
+  Link,
   Skeleton,
   Stack,
   Typography,
@@ -16,31 +16,28 @@ import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { config } from "lib/firebase/config";
 import { useEffect, useState } from "react";
+import { inherits } from "util";
 
-const app = initializeApp(config);
+initializeApp(config);
 
 type BlogCardProps = {
   author: string;
-  content: string;
   created: number;
   imageId: string;
   slug: string;
   summary: string;
   tags: string;
   title: string;
-  borderColor: string;
 };
 
 const BlogCard = ({
   author,
-  content,
   created,
   imageId,
   slug,
   summary,
   tags,
   title,
-  borderColor,
 }: BlogCardProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -56,47 +53,55 @@ const BlogCard = ({
       });
   }, [slug, imageId]);
 
+  const date = new Date(created).toDateString();
+
   return (
     <Card sx={{ width: 500 }}>
-      <CardActionArea>
-        <CardHeader
-          title={title}
-          sx={{
-            height: 50,
-            overflow: "hidden",
-          }}
-        />
-        <Stack direction="row">
-          <CardContent>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                width: 250,
-                height: 140,
-                textAlign: "justify",
-                overflow: "scroll",
-              }}
-            >
-              {summary}
-            </Typography>
-          </CardContent>
-          {imageUrl ? (
-            <CardMedia
-              component="img"
-              height={140}
-              image={imageUrl}
-              alt={imageId}
-              sx={{ pt: 2 }}
-            />
-          ) : (
-            <Skeleton variant="rectangular" width={345} height={140} />
-          )}
-        </Stack>
-      </CardActionArea>
-      <CardActions>
-        <Chip label={tags} variant="outlined" color="primary" />
-      </CardActions>
+      <Link color="inherit" underline="none">
+        <CardActionArea>
+          <CardHeader
+            title={title}
+            sx={{
+              height: 50,
+              overflow: "hidden",
+            }}
+          />
+          <Stack direction="row">
+            <CardContent>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  width: 250,
+                  height: 140,
+                  textAlign: "justify",
+                  overflow: "scroll",
+                }}
+              >
+                {summary}
+              </Typography>
+            </CardContent>
+            {imageUrl ? (
+              <CardMedia
+                component="img"
+                height={140}
+                image={imageUrl}
+                alt={imageId}
+                sx={{ pt: 2 }}
+              />
+            ) : (
+              <Skeleton variant="rectangular" width={345} height={140} />
+            )}
+          </Stack>
+        </CardActionArea>
+        <CardActions>
+          <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
+            <Chip label={author} variant="outlined" color="primary"></Chip>
+            <Chip label={tags} variant="outlined" color="primary" />
+            <Chip label={date} variant="outlined" color="primary"></Chip>
+          </Stack>
+        </CardActions>
+      </Link>
     </Card>
   );
 };
