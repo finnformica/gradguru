@@ -47,7 +47,7 @@ const AddSJTTest = () => {
       .then((id) => {
         // add testId to each question
         uniqueQuestions.forEach((question) =>
-          patchQuestion(question, "situational-judgement", { testId: id })
+          patchQuestion("situational-judgement", question, { testId: id })
         );
       })
       .then(() => enqueueSnackbar("Test created successfully"))

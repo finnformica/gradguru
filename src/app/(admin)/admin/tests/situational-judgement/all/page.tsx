@@ -62,7 +62,7 @@ const AllSJTTests = () => {
     // delete reference to testId from each question
     const questionsUpdated = await testToDelete.questions.forEach(
       (question: string) =>
-        patchQuestion(question, "situational-judgement", { testId: null })
+        patchQuestion("situational-judgement", question, { testId: null })
     );
 
     // delete the test

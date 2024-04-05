@@ -67,7 +67,7 @@ const AllNRTests = () => {
 
     // delete reference to testId from each question
     const questionsUpdated = await flattenedQuestions.forEach((question) =>
-      patchQuestion(question, "numerical-reasoning", { testId: null })
+      patchQuestion("numerical-reasoning", question, { testId: null })
     );
 
     // delete the test

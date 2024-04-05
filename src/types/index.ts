@@ -65,6 +65,11 @@ export type ITest = {
   testId?: string;
 };
 
+export type AptitudeTestType =
+  | "numerical-reasoning"
+  | "situational-judgement"
+  | "logical-reasoning";
+
 export type ITestRecord = IFirestoreData & {
   testId: string;
   score: number;

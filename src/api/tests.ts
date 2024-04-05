@@ -13,11 +13,12 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "lib/firebase/config";
+import { AptitudeTestType } from "types";
 
 // ---- Tests ----
 
 export const getTests = (
-  testType: string,
+  testType: AptitudeTestType,
   setState: (state: any[]) => void
 ) => {
   const ref = collection(
@@ -37,7 +38,10 @@ export const getTests = (
   });
 };
 
-export const getTestById = async (testType: string, testId: string) => {
+export const getTestById = async (
+  testType: AptitudeTestType,
+  testId: string
+) => {
   const ref = doc(
     db,
     "courses",
@@ -57,7 +61,7 @@ export const getTestById = async (testType: string, testId: string) => {
   );
 };
 
-export const getTestIds = async (testType: string) => {
+export const getTestIds = async (testType: AptitudeTestType) => {
   const ref = collection(
     db,
     "courses",
@@ -70,7 +74,7 @@ export const getTestIds = async (testType: string) => {
   return getDocs(ref).then((snapshot) => snapshot.docs.map((doc) => doc.id));
 };
 
-export const createTest = async (testType: string, data: any) => {
+export const createTest = async (testType: AptitudeTestType, data: any) => {
   const ref = collection(
     db,
     "courses",
@@ -86,7 +90,10 @@ export const createTest = async (testType: string, data: any) => {
   return addDoc(ref, payload).then((docRef) => docRef.id);
 };
 
-export const deleteTest = async (testType: string, testId: string) => {
+export const deleteTest = async (
+  testType: AptitudeTestType,
+  testId: string
+) => {
   const ref = doc(
     db,
     "courses",
@@ -103,7 +110,7 @@ export const deleteTest = async (testType: string, testId: string) => {
 // ---- Questions ----
 
 export const getQuestions = (
-  testType: string,
+  testType: AptitudeTestType,
   setState: (state: any[]) => void
 ) => {
   const ref = collection(
@@ -124,7 +131,7 @@ export const getQuestions = (
 };
 
 export const getQuestionsById = (
-  testType: string,
+  testType: AptitudeTestType,
   questionIds: string[],
   setState: (state: any[]) => void
 ) => {
@@ -145,7 +152,7 @@ export const getQuestionsById = (
   });
 };
 
-export const createQuestion = async (testType: string, data: any) => {
+export const createQuestion = async (testType: AptitudeTestType, data: any) => {
   const ref = collection(
     db,
     "courses",
@@ -157,13 +164,15 @@ export const createQuestion = async (testType: string, data: any) => {
 
   const payload = { ...data, created: Date.now() };
 
+  console.log("payload", payload);
+
   // TODO: add created and updated timestamps
   return addDoc(ref, payload).then((docRef) => docRef.id);
 };
 
 export const patchQuestion = async (
+  testType: AptitudeTestType,
   questionId: string,
-  testType: string,
   data: any
 ) => {
   const ref = doc(
@@ -180,7 +189,10 @@ export const patchQuestion = async (
   return setDoc(ref, data, { merge: true });
 };
 
-export const deleteQuestion = async (testType: string, questionId: string) => {
+export const deleteQuestion = async (
+  testType: AptitudeTestType,
+  questionId: string
+) => {
   const ref = doc(
     db,
     "courses",
@@ -197,7 +209,7 @@ export const deleteQuestion = async (testType: string, questionId: string) => {
 // ---- User ----
 
 export const createTestRecord = (
-  testType: string,
+  testType: AptitudeTestType,
   userId: string,
   testId: string,
   data: any
@@ -217,7 +229,7 @@ export const createTestRecord = (
 };
 
 export const getTestRecords = (
-  testType: string,
+  testType: AptitudeTestType,
   userId: string,
   setState: (state: any[]) => void
 ) => {
