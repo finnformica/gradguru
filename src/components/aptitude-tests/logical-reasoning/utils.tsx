@@ -22,81 +22,82 @@ import {
   Water,
   WbSunny,
 } from "@mui/icons-material";
-import { SvgIconOwnProps, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import _ from "lodash";
 
 import { CellData, Grid } from "types";
-import { fontSizeMapping, gridDefaultCell } from "./constants";
+import { gridDefaultCell } from "./constants";
 
 export const mapIcon = ({
   value,
   color = "black",
   rotation = 0,
-  size = "large",
+  size,
 }: {
   value: string;
   color: string;
   rotation: number;
-  size?: SvgIconOwnProps["fontSize"];
+  size: number;
 }) => {
-  const sx = { color, transform: `rotate(${rotation}deg)` };
-  const fontSize = size;
+  const sx = { color, transform: `rotate(${rotation}deg)`, fontSize: size };
 
   if (!value) return null;
 
   switch (value.toLowerCase()) {
     case "plane":
-      return <AirplanemodeActive sx={sx} fontSize={fontSize} />;
+      return <AirplanemodeActive sx={sx} />;
     case "face":
-      return <Face sx={sx} fontSize={fontSize} />;
+      return <Face sx={sx} />;
     case "tree":
-      return <Park sx={sx} fontSize={fontSize} />;
+      return <Park sx={sx} />;
     case "circle":
-      return <Circle sx={sx} fontSize={fontSize} />;
+      return <Circle sx={sx} />;
     case "square":
-      return <Square sx={sx} fontSize={fontSize} />;
+      return <Square sx={sx} />;
     case "pentagon":
-      return <Pentagon sx={sx} fontSize={fontSize} />;
+      return <Pentagon sx={sx} />;
     case "hexagon":
-      return <Hexagon sx={sx} fontSize={fontSize} />;
+      return <Hexagon sx={sx} />;
     case "star":
-      return <Star sx={sx} fontSize={fontSize} />;
+      return <Star sx={sx} />;
     case "clock":
-      return <AccessAlarm sx={sx} fontSize={fontSize} />;
+      return <AccessAlarm sx={sx} />;
     case "person":
-      return <Person sx={sx} fontSize={fontSize} />;
+      return <Person sx={sx} />;
     case "cookie":
-      return <Cookie sx={sx} fontSize={fontSize} />;
+      return <Cookie sx={sx} />;
     case "grass":
-      return <Grass sx={sx} fontSize={fontSize} />;
+      return <Grass sx={sx} />;
     case "anchor":
-      return <Anchor sx={sx} fontSize={fontSize} />;
+      return <Anchor sx={sx} />;
     case "boat":
-      return <Sailing sx={sx} fontSize={fontSize} />;
+      return <Sailing sx={sx} />;
     case "house":
-      return <Home sx={sx} fontSize={fontSize} />;
+      return <Home sx={sx} />;
     case "water":
-      return <Water sx={sx} fontSize={fontSize} />;
+      return <Water sx={sx} />;
     case "mountain":
-      return <Landscape sx={sx} fontSize={fontSize} />;
+      return <Landscape sx={sx} />;
     case "castle":
-      return <Fort sx={sx} fontSize={fontSize} />;
+      return <Fort sx={sx} />;
     case "sun":
-      return <WbSunny sx={sx} fontSize={fontSize} />;
+      return <WbSunny sx={sx} />;
     case "forest":
-      return <Forest sx={sx} fontSize={fontSize} />;
+      return <Forest sx={sx} />;
     case "moon":
-      return <Brightness2 sx={sx} fontSize={fontSize} />;
+      return <Brightness2 sx={sx} />;
     case "triangle":
-      return <ChangeHistory sx={sx} fontSize={fontSize} />;
+      return <ChangeHistory sx={sx} />;
     default:
       return null;
   }
 };
 
 export const initialiseSquareGrid = (numRows: number): Grid => {
-  const emptyRow = _.range(1, numRows + 1).map((row) => gridDefaultCell());
+  const emptyRow = _.range(1, numRows + 1).map((row) =>
+    gridDefaultCell(numRows, "square")
+  );
   const grid = _.range(1, numRows + 1).map((r) => emptyRow);
 
   return grid;
@@ -105,7 +106,7 @@ export const initialiseSquareGrid = (numRows: number): Grid => {
 export const initialiseTriangleGrid = (numRows: number) => {
   const rows = _.range(1, numRows + 1).map((row) => row);
   const grid = rows.map((row) =>
-    _.range(row * 2 - 1).map((num) => gridDefaultCell("small"))
+    _.range(row * 2 - 1).map((num) => gridDefaultCell(numRows, "triangle"))
   );
 
   return grid;
@@ -120,7 +121,7 @@ export const renderCell = (cell: CellData) => {
         <Typography
           sx={{
             color: cell.color,
-            fontSize: fontSizeMapping(cell.size),
+            fontSize: cell.size,
             fontWeight: 500,
             transform: `rotate(${cell.rotation}deg)`,
           }}

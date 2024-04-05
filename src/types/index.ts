@@ -1,5 +1,3 @@
-import { SvgIconOwnProps } from "@mui/material";
-
 // ---- Videos ----
 
 export type CourseType = {
@@ -199,7 +197,7 @@ export type CellData = {
   color: string;
   rotation: number;
   backgroundColor: string;
-  size: SvgIconOwnProps["fontSize"];
+  size: number;
 };
 
 export type Grid = CellData[][];

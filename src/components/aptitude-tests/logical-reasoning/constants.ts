@@ -1,4 +1,3 @@
-import { SvgIconOwnProps } from "@mui/material";
 import { CellData } from "types";
 
 export const icons = [
@@ -35,14 +34,15 @@ export const colors = [
 ];
 
 export const gridDefaultCell = (
-  size: SvgIconOwnProps["fontSize"] = "large"
+  numRows: number = 4,
+  gridType: string
 ): CellData => ({
   type: "text",
   value: "",
   color: "#000",
   rotation: 0,
   backgroundColor: "#FFF",
-  size,
+  size: fontSizeMapping(numRows, gridType),
 });
 
 export const squareSizeMapping: { [key: number]: string } = {
@@ -78,15 +78,23 @@ export const alphaToNumericMapping: { [key: string]: number } = {
   J: 9,
 };
 
-export const fontSizeMapping = (fontSize: SvgIconOwnProps["fontSize"]) => {
-  switch (fontSize) {
-    case "small":
-      return 20;
-    case "medium":
-      return 24;
-    case "large":
-      return 28;
-    default:
-      return 28;
+export const fontSizeMapping = (numRows: number, gridType: string) => {
+  if (gridType === "square") {
+    switch (numRows) {
+      case 4:
+        return 28;
+      case 3:
+        return 44;
+      case 2:
+        return 60;
+      case 1:
+        return 90;
+      default:
+        return 28;
+    }
+  } else if (gridType === "triangle") {
+    return 20;
+  } else {
+    throw new Error("Invalid grid type");
   }
 };

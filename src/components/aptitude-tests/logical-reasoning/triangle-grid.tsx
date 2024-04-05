@@ -109,7 +109,12 @@ const TriangleGrid = ({ numRows = 4, grid, setGrid }: TriangleGridProps) => {
       </Stack>
       {setGrid && (
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuContent grid={grid} setGrid={setGrid} coord={coord} />
+          <MenuContent
+            grid={grid}
+            setGrid={setGrid}
+            coord={coord}
+            type="triangle"
+          />
         </Menu>
       )}
     </Box>

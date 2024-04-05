@@ -41,8 +41,8 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: defaultValues || {
       type: "complete-the-sequence",
-      question: "test",
-      explanation: "test",
+      question: "",
+      explanation: "",
       answer: "A",
       grid: {
         border: { inner: true, outer: true },

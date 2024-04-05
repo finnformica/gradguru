@@ -113,9 +113,14 @@ const IconMenu = ({ grid, setGrid, coord }: InputProps) => {
   );
 };
 
-export const MenuContent = ({ grid, setGrid, coord }: InputProps) => {
+export const MenuContent = ({
+  grid,
+  setGrid,
+  coord,
+  type,
+}: InputProps & { type: "square" | "triangle" }) => {
   const [menuDisplay, setMenuDisplay] = useState("menu");
-  const { size } = grid[0][0];
+  const numRows = grid.length;
 
   switch (menuDisplay) {
     case "text":
@@ -180,7 +185,7 @@ export const MenuContent = ({ grid, setGrid, coord }: InputProps) => {
           <Divider />
           <MenuItem
             onClick={() =>
-              updateGrid(grid, setGrid, coord, gridDefaultCell(size))
+              updateGrid(grid, setGrid, coord, gridDefaultCell(numRows, type))
             }
           >
             <ListItemText secondary="Clear cell" />
