@@ -23,7 +23,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { modules } from "./modulesRQ";
-import { BlogFormType } from "./types";
+import { IBlogForm } from "./types";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 
@@ -58,7 +58,7 @@ const AddBlog = () => {
   }
   const { user } = session;
 
-  const onSubmit = (data: BlogFormType) => {
+  const onSubmit = (data: IBlogForm) => {
     if (!heroPhoto) {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }

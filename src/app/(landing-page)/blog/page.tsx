@@ -1,7 +1,7 @@
 "use client";
 import { Container, Grid } from "@mui/material";
 import { useBlogs } from "api/blog";
-import BlogCard from "components/BlogPage/Cards/BlogCard";
+import BlogCard from "components/BlogPage/BlogCard";
 import { LoadingScreen } from "components/global-components";
 
 const borderColor = "lightgrey";

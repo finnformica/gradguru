@@ -1,4 +1,4 @@
-export interface BlogsInterface {
+export interface IBlog {
   author: string;
   content: string;
   created: number;
@@ -7,5 +7,4 @@ export interface BlogsInterface {
   summary: string;
   tags: string;
   title: string;
-  borderColor: string;
 }

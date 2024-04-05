@@ -16,19 +16,9 @@ import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { config } from "lib/firebase/config";
 import { useEffect, useState } from "react";
-import { inherits } from "util";
+import { IBlog } from "./types";
 
 initializeApp(config);
-
-type BlogCardProps = {
-  author: string;
-  created: number;
-  imageId: string;
-  slug: string;
-  summary: string;
-  tags: string;
-  title: string;
-};
 
 const BlogCard = ({
   author,
@@ -38,7 +28,7 @@ const BlogCard = ({
   summary,
   tags,
   title,
-}: BlogCardProps) => {
+}: IBlog) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -57,7 +47,7 @@ const BlogCard = ({
 
   return (
     <Card sx={{ width: 500 }}>
-      <Link color="inherit" underline="none">
+      <Link color="inherit" underline="none" href={`/blog/${slug}`}>
         <CardActionArea>
           <CardHeader
             title={title}
@@ -72,7 +62,7 @@ const BlogCard = ({
                 variant="body2"
                 color="text.secondary"
                 sx={{
-                  width: 250,
+                  width: 230,
                   height: 140,
                   textAlign: "justify",
                   overflow: "scroll",
@@ -87,7 +77,7 @@ const BlogCard = ({
                 height={140}
                 image={imageUrl}
                 alt={imageId}
-                sx={{ pt: 2 }}
+                sx={{ pt: 2, pr: 2 }}
               />
             ) : (
               <Skeleton variant="rectangular" width={345} height={140} />
