@@ -1,7 +1,7 @@
 "use client";
 
 import _ from "lodash";
-import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
+import { Controller, useFieldArray, useWatch } from "react-hook-form";
 
 import { AddCircleOutline, Clear, Delete } from "@mui/icons-material";
 import {
@@ -26,9 +26,11 @@ import { initialiseSquareGrid, initialiseTriangleGrid } from "./utils";
 type LRQuestionFormProps = {
   onSubmit: (data: any) => void;
   defaultValues?: any;
+  control: any;
+  watch: any;
+  setValue: any;
+  handleSubmit: any;
 };
-
-const INIT_NUM_ROWS = 4;
 
 const returnDefaultCell = (type: string, numRows: number) => {
   const initialiseGrid =
@@ -37,24 +39,13 @@ const returnDefaultCell = (type: string, numRows: number) => {
   return initialiseGrid(numRows);
 };
 
-const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
-  const { control, handleSubmit, setValue, watch } = useForm({
-    defaultValues: defaultValues || {
-      type: "complete-the-sequence",
-      question: "",
-      explanation: "",
-      answer: "A",
-      grid: {
-        border: { inner: true, outer: true },
-        template: "linear",
-        type: "square",
-        rows: INIT_NUM_ROWS,
-        data: _.range(4).map(() => initialiseSquareGrid(INIT_NUM_ROWS)),
-        options: _.range(4).map(() => initialiseSquareGrid(INIT_NUM_ROWS)),
-      },
-    },
-  });
-
+const LRQuestionForm = ({
+  onSubmit,
+  control,
+  watch,
+  setValue,
+  handleSubmit,
+}: LRQuestionFormProps) => {
   // question data
   const { fields, append, remove } = useFieldArray({
     control,
@@ -314,6 +305,7 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
           </>
         )}
       </Stack>
+
       <Stack direction="row" spacing={1} pt={2} alignItems="center">
         <Typography variant="h5">Question data</Typography>
         <Tooltip title="Add element">
