@@ -1,7 +1,7 @@
+import React from "react";
 import { Box, Skeleton, Stack, Typography } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
-import Markdown from "markdown-to-jsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IBlog } from "./types";
@@ -34,7 +34,7 @@ const BlogPost = ({
       sx={{
         display: "flex",
         flexDirection: "column",
-        border: "1px solid red",
+
         gap: 4,
         px: 8,
         textAlign: "left",
@@ -68,7 +68,12 @@ const BlogPost = ({
       ) : (
         <Skeleton variant="rectangular" width={400} height={300} />
       )}
-      <Markdown key={slug}>{content}</Markdown>
+
+      {content ? (
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      ) : (
+        <Typography>No Content Found</Typography>
+      )}
     </Box>
   );
 };
