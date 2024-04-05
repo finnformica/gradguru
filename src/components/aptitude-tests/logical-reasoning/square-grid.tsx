@@ -87,7 +87,9 @@ const SquareGrid = ({
           sx={{
             display: "grid",
             gridTemplateColumns: `repeat(${numRows}, ${size})`,
-            border: showBorders ? "1px solid black" : "none",
+            border: showBorders
+              ? `${innerGrid ? "1px" : "2px"} solid black`
+              : "none",
           }}
         >
           {grid.map((row, rowIndex) =>
@@ -109,7 +111,12 @@ const SquareGrid = ({
       </Stack>
       {setGrid && (
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuContent grid={grid} setGrid={setGrid} coord={coord} />
+          <MenuContent
+            grid={grid}
+            setGrid={setGrid}
+            coord={coord}
+            type="square"
+          />
         </Menu>
       )}
     </>

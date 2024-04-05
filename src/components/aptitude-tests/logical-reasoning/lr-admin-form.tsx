@@ -6,9 +6,11 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { AddCircleOutline, Clear, Delete } from "@mui/icons-material";
 import {
   Button,
+  FormControlLabel,
   IconButton,
   MenuItem,
   Stack,
+  Switch,
   TextField,
   Tooltip,
   Typography,
@@ -16,10 +18,10 @@ import {
 
 import { Grid } from "types";
 
+import { alphaToNumericMapping, numericToAlphaMapping } from "./constants";
 import SquareGrid from "./square-grid";
 import TriangleGrid from "./triangle-grid";
 import { initialiseSquareGrid, initialiseTriangleGrid } from "./utils";
-import { alphaToNumericMapping, numericToAlphaMapping } from "./constants";
 
 type LRQuestionFormProps = {
   onSubmit: (data: any) => void;
@@ -39,10 +41,11 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: defaultValues || {
       type: "complete-the-sequence",
-      question: "",
-      explanation: "",
+      question: "test",
+      explanation: "test",
       answer: "A",
       grid: {
+        border: { inner: true, outer: true },
         template: "linear",
         type: "square",
         rows: INIT_NUM_ROWS,
@@ -68,10 +71,12 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
     name: "grid.options",
   });
 
-  const [gridType, numRows, questionType] = watch([
+  const [gridType, numRows, questionType, innerGrid, outerGrid] = watch([
     "grid.type",
     "grid.rows",
     "type",
+    "grid.border.inner",
+    "grid.border.outer",
   ]);
 
   const templateType = useWatch({ control, name: "grid.template" });
@@ -264,6 +269,50 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
             </TextField>
           )}
         />
+
+        {gridType === "square" && (
+          <>
+            <Controller
+              name="grid.border.inner"
+              control={control}
+              render={({ field: { value } }) => (
+                <FormControlLabel
+                  slotProps={{ typography: { fontSize: 14 } }}
+                  label="Inner grid"
+                  control={
+                    <Switch
+                      value={value}
+                      defaultChecked
+                      onChange={(e, checked: boolean) =>
+                        setValue("grid.border.inner", checked)
+                      }
+                    />
+                  }
+                />
+              )}
+            />
+
+            <Controller
+              name="grid.border.outer"
+              control={control}
+              render={({ field: { value } }) => (
+                <FormControlLabel
+                  slotProps={{ typography: { fontSize: 14 } }}
+                  label="Outer border"
+                  control={
+                    <Switch
+                      value={value}
+                      defaultChecked
+                      onChange={(e, checked: boolean) =>
+                        setValue("grid.border.outer", checked)
+                      }
+                    />
+                  }
+                />
+              )}
+            />
+          </>
+        )}
       </Stack>
       <Stack direction="row" spacing={1} pt={2} alignItems="center">
         <Typography variant="h5">Question data</Typography>
@@ -304,6 +353,8 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
                   />
                 ) : (
                   <SquareGrid
+                    innerGrid={innerGrid}
+                    showBorders={outerGrid}
                     numRows={numRows}
                     grid={value}
                     setGrid={(grid: Grid) =>
@@ -390,6 +441,8 @@ const LRQuestionForm = ({ onSubmit, defaultValues }: LRQuestionFormProps) => {
                       />
                     ) : (
                       <SquareGrid
+                        innerGrid={innerGrid}
+                        showBorders={outerGrid}
                         numRows={numRows}
                         grid={value}
                         setGrid={(grid: Grid) =>
