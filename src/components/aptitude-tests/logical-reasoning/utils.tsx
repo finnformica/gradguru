@@ -137,3 +137,33 @@ export const renderCell = (cell: CellData) => {
       return cell.value;
   }
 };
+
+export const mapNestedArrayToObject = (array: any[]) => {
+  const obj: any = {};
+
+  array.forEach((item, index) => {
+    const subObj: any = {};
+    item.forEach((subItem: any, subIndex: number) => {
+      subObj[subIndex] = subItem;
+    });
+
+    obj[index] = subObj;
+  });
+
+  return obj;
+};
+
+export const mapObjectToNestedArray = (obj: any) => {
+  const array: any[] = [];
+
+  Object.keys(obj).forEach((key) => {
+    const subArray: any[] = [];
+    Object.keys(obj[key]).forEach((subKey) => {
+      subArray.push(obj[key][subKey]);
+    });
+
+    array.push(subArray);
+  });
+
+  return array;
+};
