@@ -23,12 +23,6 @@ function useBlogs() {
   );
 }
 
-function useBlog() {
-  const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.blogs.all
-  );
-}
-
 function postBlog(id: string | null, data: any) {
   const URL = endpoints.admin.blogs.blog(id);
   return postFetcher([URL, {}, data]);

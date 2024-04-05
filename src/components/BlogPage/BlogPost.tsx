@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Skeleton, Stack, Typography } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
