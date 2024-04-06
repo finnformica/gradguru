@@ -24,8 +24,6 @@ const LRModal = ({
     data.grid.data = mapNestedArrayToObject(data.grid.data);
     data.grid.options = mapNestedArrayToObject(data.grid.options);
 
-    console.log("patch lr question", data);
-
     const { id, ...payload } = data;
 
     patchQuestion("logical-reasoning", id, payload)
