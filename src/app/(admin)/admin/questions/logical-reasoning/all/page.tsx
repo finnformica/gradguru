@@ -58,7 +58,25 @@ const AllLRQuestions = () => {
       field: "type",
       headerName: "Type",
       width: 200,
-      renderCell: (params) => _.startCase(params.value as string),
+      renderCell: (params) => _.startCase(params.value),
+    },
+    {
+      field: "gridType",
+      headerName: "Grid",
+      width: 100,
+      renderCell: (params) => _.startCase(params.row.grid.type),
+    },
+    {
+      field: "rows",
+      headerName: "Rows",
+      width: 70,
+      renderCell: (params) => params.row.grid.rows,
+    },
+    {
+      field: "templateType",
+      headerName: "Template",
+      width: 100,
+      renderCell: (params) => _.startCase(params.row.grid.template),
     },
     {
       field: "created",
@@ -72,25 +90,23 @@ const AllLRQuestions = () => {
       field: "actions",
       headerName: "Actions",
       width: 100,
-      renderCell: (params) => {
-        return (
-          <EditDeleteActions
-            session={session}
-            onEditClick={() => {
-              const question = params.row;
+      renderCell: (params) => (
+        <EditDeleteActions
+          session={session}
+          onEditClick={() => {
+            const question = params.row;
 
-              question.grid.data = mapObjectToNestedArray(question.grid.data);
-              question.grid.options = mapObjectToNestedArray(
-                question.grid.options
-              );
-              setQuestionToEdit(question);
-            }}
-            onDeleteClick={() => {
-              setQuestionToDelete(params.row.id as string);
-            }}
-          />
-        );
-      },
+            question.grid.data = mapObjectToNestedArray(question.grid.data);
+            question.grid.options = mapObjectToNestedArray(
+              question.grid.options
+            );
+            setQuestionToEdit(question);
+          }}
+          onDeleteClick={() => {
+            setQuestionToDelete(params.row.id as string);
+          }}
+        />
+      ),
     },
   ];
 
