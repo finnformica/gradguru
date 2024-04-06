@@ -364,7 +364,7 @@ const LRQuestionForm = ({
                     <IconButton
                       onClick={() =>
                         setValue(
-                          `grid.options.${index}`,
+                          `grid.data.${index}`,
                           returnDefaultCell(gridType, numRows)
                         )
                       }
