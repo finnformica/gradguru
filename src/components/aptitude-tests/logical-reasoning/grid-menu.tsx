@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 import { icons, gridDefaultCell, colors } from "./constants";
-import { Grid, GridCoord } from "types";
+import { Grid, GridCoord, GridType } from "types";
 
 const updateGrid = (
   grid: Grid,
@@ -118,7 +118,7 @@ export const MenuContent = ({
   setGrid,
   coord,
   type,
-}: InputProps & { type: "square" | "triangle" }) => {
+}: InputProps & { type: GridType }) => {
   const [menuDisplay, setMenuDisplay] = useState("menu");
   const numRows = grid.length;
 

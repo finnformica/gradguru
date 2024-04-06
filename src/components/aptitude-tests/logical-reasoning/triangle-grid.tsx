@@ -18,7 +18,7 @@ const TriangleCell = ({
 }: {
   children: React.ReactNode;
   index: number;
-  onClick?: any;
+  onClick?: (e: any) => void;
   cell: CellData;
 }) => (
   <Box
@@ -60,12 +60,11 @@ const TriangleCell = ({
 );
 
 type TriangleGridProps = {
-  numRows?: number;
   grid: Grid;
   setGrid?: (grid: Grid) => void;
 };
 
-const TriangleGrid = ({ numRows = 4, grid, setGrid }: TriangleGridProps) => {
+const TriangleGrid = ({ grid, setGrid }: TriangleGridProps) => {
   const [coord, setCoord] = useState<GridCoord>({
     row: 0,
     col: 0,

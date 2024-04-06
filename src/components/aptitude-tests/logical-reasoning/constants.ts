@@ -1,4 +1,4 @@
-import { CellData } from "types";
+import { CellData, GridType } from "types";
 
 export const icons = [
   "Circle",
@@ -36,7 +36,7 @@ export const colors = [
 
 export const gridDefaultCell = (
   numRows: number = 4,
-  gridType: string
+  gridType: GridType
 ): CellData => ({
   type: "text",
   value: "",
@@ -79,7 +79,7 @@ export const alphaToNumericMapping: { [key: string]: number } = {
   J: 9,
 };
 
-export const fontSizeMapping = (numRows: number, gridType: string) => {
+export const fontSizeMapping = (numRows: number, gridType: GridType) => {
   if (gridType === "square") {
     switch (numRows) {
       case 4:

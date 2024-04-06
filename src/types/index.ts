@@ -207,7 +207,29 @@ export type CellData = {
 
 export type Grid = CellData[][];
 
+export type GridType = "triangle" | "square";
+
 export type GridCoord = {
   row: number;
   col: number;
 };
+
+export type ILRQuestion = {
+  answer: number | string;
+  explanation: string;
+  question: string;
+  type: "complete-the-sequence" | "odd-one-out";
+  grid: {
+    data: Grid[];
+    options: Grid[];
+    rows: number;
+    template: "linear" | "grid";
+    type: "square" | "triangle";
+    questionMark: number | string;
+    border: {
+      inner: boolean;
+      outer: boolean;
+    };
+  };
+} & IFirestoreData &
+  ITest;

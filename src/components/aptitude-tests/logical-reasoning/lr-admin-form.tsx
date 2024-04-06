@@ -1,7 +1,16 @@
 "use client";
 
 import _ from "lodash";
-import { Controller, useFieldArray } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  SubmitHandler,
+  UseFieldArrayRemove,
+  UseFormHandleSubmit,
+  UseFormSetValue,
+  UseFormWatch,
+  useFieldArray,
+} from "react-hook-form";
 
 import { AddCircleOutline, Clear, Delete } from "@mui/icons-material";
 import {
@@ -16,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Grid } from "types";
+import { Grid, GridType, ILRQuestion } from "types";
 
 import { alphaToNumericMapping, numericToAlphaMapping } from "./constants";
 import QuestionGrid from "./question-grid";
@@ -25,15 +34,15 @@ import TriangleGrid from "./triangle-grid";
 import { initialiseSquareGrid, initialiseTriangleGrid } from "./utils";
 
 type LRQuestionFormProps = {
-  onSubmit: (data: any) => void;
-  defaultValues?: any;
-  control: any;
-  watch: any;
-  setValue: any;
-  handleSubmit: any;
+  onSubmit: SubmitHandler<ILRQuestion>;
+  defaultValues?: ILRQuestion;
+  control: Control<ILRQuestion>;
+  watch: UseFormWatch<ILRQuestion>;
+  setValue: UseFormSetValue<ILRQuestion>;
+  handleSubmit: UseFormHandleSubmit<ILRQuestion>;
 };
 
-const returnDefaultCell = (type: string, numRows: number) => {
+const returnDefaultCell = (type: GridType, numRows: number) => {
   const initialiseGrid =
     type === "triangle" ? initialiseTriangleGrid : initialiseSquareGrid;
 
@@ -342,7 +351,7 @@ const LRQuestionForm = ({
     </>
   );
 
-  const renderGridControls = (remove: any, index: number) => (
+  const renderGridControls = (remove: UseFieldArrayRemove, index: number) => (
     <Stack
       direction={templateType !== "grid" ? "row" : "column"}
       spacing={2}
@@ -406,7 +415,6 @@ const LRQuestionForm = ({
                   <QuestionGrid numRows={numRows} />
                 ) : gridType === "triangle" ? (
                   <TriangleGrid
-                    numRows={numRows}
                     grid={value}
                     setGrid={(grid: Grid) =>
                       setValue(`grid.data.${index}`, grid)
@@ -468,7 +476,6 @@ const LRQuestionForm = ({
                   >
                     {gridType === "triangle" ? (
                       <TriangleGrid
-                        numRows={numRows}
                         grid={value}
                         setGrid={(grid: Grid) =>
                           setValue(`grid.options.${index}`, grid)

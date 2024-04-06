@@ -141,7 +141,7 @@ export const renderCell = (cell: CellData) => {
   }
 };
 
-export const mapNestedArrayToObject = (array: any[]) => {
+export const mapNestedArrayToObject = (array: Grid[]) => {
   const obj: any = {};
 
   array.forEach((item, index) => {
@@ -157,7 +157,7 @@ export const mapNestedArrayToObject = (array: any[]) => {
 };
 
 export const mapObjectToNestedArray = (obj: any) => {
-  const array: any[] = [];
+  const array: Grid[] = [];
 
   Object.keys(obj).forEach((key) => {
     const subArray: any[] = [];

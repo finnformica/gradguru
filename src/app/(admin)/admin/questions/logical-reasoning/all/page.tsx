@@ -18,13 +18,13 @@ import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import { INRQuestion } from "types";
+import { ILRQuestion } from "types";
 
 const AllLRQuestions = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [questions, setQuestions] = useState<any[] | null>(null);
-  const [questionToEdit, setQuestionToEdit] = useState<INRQuestion | null>(
+  const [questions, setQuestions] = useState<ILRQuestion[] | null>(null);
+  const [questionToEdit, setQuestionToEdit] = useState<ILRQuestion | null>(
     null
   );
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);

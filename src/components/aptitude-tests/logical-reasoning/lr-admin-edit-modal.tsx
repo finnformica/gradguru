@@ -6,13 +6,14 @@ import FormModalWrapper from "../../global-components/FormModalWrapper";
 import LRQuestionForm from "./lr-admin-form";
 import { useForm } from "react-hook-form";
 import { mapNestedArrayToObject } from "./utils";
+import { ILRQuestion } from "types";
 
 const LRModal = ({
   setQuestion,
   question,
 }: {
-  setQuestion: (question: any) => void;
-  question: any;
+  setQuestion: (question: ILRQuestion | null) => void;
+  question: ILRQuestion;
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -20,7 +21,9 @@ const LRModal = ({
     defaultValues: question,
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ILRQuestion) => {
+    if (!data.id) return;
+
     data.grid.data = mapNestedArrayToObject(data.grid.data);
     data.grid.options = mapNestedArrayToObject(data.grid.options);
 
