@@ -272,26 +272,28 @@ const LRQuestionForm = ({
           )}
         />
 
-        <Controller
-          name="grid.questionMark"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              select
-              {...field}
-              sx={{ width: 80 }}
-              label="?"
-              size="small"
-            >
-              <MenuItem value="">None</MenuItem>
-              {Object.keys(alphaToNumericMapping).map((key) => (
-                <MenuItem key={key} value={alphaToNumericMapping[key]}>
-                  {key}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
+        {questionType === "complete-the-sequence" && (
+          <Controller
+            name="grid.questionMark"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                select
+                {...field}
+                sx={{ width: 80 }}
+                label="?"
+                size="small"
+              >
+                <MenuItem value="">None</MenuItem>
+                {Object.keys(alphaToNumericMapping).map((key) => (
+                  <MenuItem key={key} value={alphaToNumericMapping[key]}>
+                    {key}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+        )}
 
         {gridType === "square" && (
           <>
@@ -399,7 +401,8 @@ const LRQuestionForm = ({
                 direction={templateType === "grid" ? "row" : "column"}
                 spacing={0.5}
               >
-                {questionMark === index ? (
+                {questionMark === index &&
+                questionType === "complete-the-sequence" ? (
                   <QuestionGrid numRows={numRows} />
                 ) : gridType === "triangle" ? (
                   <TriangleGrid
