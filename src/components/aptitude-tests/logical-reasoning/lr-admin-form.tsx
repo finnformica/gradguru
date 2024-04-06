@@ -1,7 +1,7 @@
 "use client";
 
 import _ from "lodash";
-import { Controller, useFieldArray, useWatch } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 
 import { AddCircleOutline, Clear, Delete } from "@mui/icons-material";
 import {
@@ -19,6 +19,7 @@ import {
 import { Grid } from "types";
 
 import { alphaToNumericMapping, numericToAlphaMapping } from "./constants";
+import QuestionGrid from "./question-grid";
 import SquareGrid from "./square-grid";
 import TriangleGrid from "./triangle-grid";
 import { initialiseSquareGrid, initialiseTriangleGrid } from "./utils";
@@ -62,15 +63,23 @@ const LRQuestionForm = ({
     name: "grid.options",
   });
 
-  const [gridType, numRows, questionType, innerGrid, outerGrid] = watch([
+  const [
+    gridType,
+    numRows,
+    questionType,
+    templateType,
+    innerGrid,
+    outerGrid,
+    questionMark,
+  ] = watch([
     "grid.type",
     "grid.rows",
     "type",
+    "grid.template",
     "grid.border.inner",
     "grid.border.outer",
+    "grid.questionMark",
   ]);
-
-  const templateType = useWatch({ control, name: "grid.template" });
 
   const updateFormGrid = (
     type: string,
@@ -96,65 +105,67 @@ const LRQuestionForm = ({
     );
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack direction="column" spacing={2} pb={4}>
-        <Controller
-          name="question"
-          control={control}
-          rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              {...field}
-              fullWidth
-              multiline
-              label="Question"
-              size="small"
-              error={!!error}
-              helperText={!!error && "Question is required"}
-            />
-          )}
-        />
+  const renderQuestionContext = () => (
+    <Stack direction="column" spacing={2} pb={4}>
+      <Controller
+        name="question"
+        control={control}
+        rules={{ required: true }}
+        render={({ field, fieldState: { error } }) => (
+          <TextField
+            {...field}
+            fullWidth
+            multiline
+            label="Question"
+            size="small"
+            error={!!error}
+            helperText={!!error && "Question is required"}
+          />
+        )}
+      />
 
-        <Controller
-          name="explanation"
-          control={control}
-          rules={{ required: true }}
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              {...field}
-              fullWidth
-              multiline
-              label="Explanation"
-              size="small"
-              error={!!error}
-              helperText={!!error && "Explanation is required"}
-            />
-          )}
-        />
+      <Controller
+        name="explanation"
+        control={control}
+        rules={{ required: true }}
+        render={({ field, fieldState: { error } }) => (
+          <TextField
+            {...field}
+            fullWidth
+            multiline
+            label="Explanation"
+            size="small"
+            error={!!error}
+            helperText={!!error && "Explanation is required"}
+          />
+        )}
+      />
 
-        <Controller
-          name="answer"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              select
-              {...field}
-              sx={{ width: 100 }}
-              label="Answer"
-              size="small"
-            >
-              {Object.keys(alphaToNumericMapping).map((key) => (
-                <MenuItem key={key} value={key}>
-                  {key}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
-      </Stack>
+      <Controller
+        name="answer"
+        control={control}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <TextField
+            select
+            {...field}
+            sx={{ width: 100 }}
+            label="Answer"
+            size="small"
+          >
+            {Object.keys(alphaToNumericMapping).map((key) => (
+              <MenuItem key={key} value={alphaToNumericMapping[key]}>
+                {key}
+              </MenuItem>
+            ))}
+          </TextField>
+        )}
+      />
+    </Stack>
+  );
 
+  const renderQuestionConfig = () => (
+    <>
       <Typography variant="h5" pb={2}>
         Question configuration
       </Typography>
@@ -261,6 +272,26 @@ const LRQuestionForm = ({
           )}
         />
 
+        <Controller
+          name="grid.questionMark"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              select
+              {...field}
+              sx={{ width: 80 }}
+              label="?"
+              size="small"
+            >
+              {Object.keys(alphaToNumericMapping).map((key) => (
+                <MenuItem key={key} value={alphaToNumericMapping[key]}>
+                  {key}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+
         {gridType === "square" && (
           <>
             <Controller
@@ -305,6 +336,38 @@ const LRQuestionForm = ({
           </>
         )}
       </Stack>
+    </>
+  );
+
+  const renderGridControls = (remove: any, index: number) => (
+    <Stack
+      direction={templateType !== "grid" ? "row" : "column"}
+      spacing={2}
+      justifyContent="space-evenly"
+      alignItems="center"
+    >
+      <Tooltip title="Clear grid">
+        <IconButton
+          onClick={() =>
+            setValue(`grid.data.${index}`, returnDefaultCell(gridType, numRows))
+          }
+        >
+          <Clear fontSize="small" />
+        </IconButton>
+      </Tooltip>
+      <Typography variant="h5">{numericToAlphaMapping[index]}</Typography>
+      <Tooltip title="Delete grid">
+        <IconButton onClick={() => remove(index)}>
+          <Delete fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </Stack>
+  );
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {renderQuestionContext()}
+      {renderQuestionConfig()}
 
       <Stack direction="row" spacing={1} pt={2} alignItems="center">
         <Typography variant="h5">Question data</Typography>
@@ -335,7 +398,9 @@ const LRQuestionForm = ({
                 direction={templateType === "grid" ? "row" : "column"}
                 spacing={0.5}
               >
-                {gridType === "triangle" ? (
+                {questionMark === index ? (
+                  <QuestionGrid numRows={numRows} />
+                ) : gridType === "triangle" ? (
                   <TriangleGrid
                     numRows={numRows}
                     grid={value}
@@ -354,33 +419,7 @@ const LRQuestionForm = ({
                     }
                   />
                 )}
-                <Stack
-                  direction={templateType !== "grid" ? "row" : "column"}
-                  spacing={2}
-                  justifyContent="space-evenly"
-                  alignItems="center"
-                >
-                  <Tooltip title="Clear grid">
-                    <IconButton
-                      onClick={() =>
-                        setValue(
-                          `grid.data.${index}`,
-                          returnDefaultCell(gridType, numRows)
-                        )
-                      }
-                    >
-                      <Clear fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography variant="h5">
-                    {numericToAlphaMapping[index]}
-                  </Typography>
-                  <Tooltip title="Delete grid">
-                    <IconButton onClick={() => remove(index)}>
-                      <Delete fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </Stack>
+                {renderGridControls(remove, index)}
               </Stack>
             )}
           />
@@ -442,33 +481,7 @@ const LRQuestionForm = ({
                         }
                       />
                     )}
-                    <Stack
-                      direction={templateType !== "grid" ? "row" : "column"}
-                      spacing={2}
-                      justifyContent="space-evenly"
-                      alignItems="center"
-                    >
-                      <Tooltip title="Clear grid">
-                        <IconButton
-                          onClick={() =>
-                            setValue(
-                              `grid.options.${index}`,
-                              returnDefaultCell(gridType, numRows)
-                            )
-                          }
-                        >
-                          <Clear fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      <Typography variant="h5">
-                        {numericToAlphaMapping[index]}
-                      </Typography>
-                      <Tooltip title="Delete grid">
-                        <IconButton onClick={() => removeAnswer(index)}>
-                          <Delete fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </Stack>
+                    {renderGridControls(removeAnswer, index)}
                   </Stack>
                 )}
               />
