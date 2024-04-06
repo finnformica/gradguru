@@ -209,6 +209,8 @@ export type Grid = CellData[][];
 
 export type GridType = "triangle" | "square";
 
+export type GridTemplate = "linear" | "grid";
+
 export type GridCoord = {
   row: number;
   col: number;
@@ -223,8 +225,8 @@ export type ILRQuestion = {
     data: Grid[];
     options: Grid[];
     rows: number;
-    template: "linear" | "grid";
-    type: "square" | "triangle";
+    template: GridTemplate;
+    type: GridType;
     questionMark: number | string;
     border: {
       inner: boolean;
