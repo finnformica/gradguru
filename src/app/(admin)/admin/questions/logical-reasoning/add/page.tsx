@@ -23,9 +23,10 @@ const AddLRQuestion = () => {
       type: "complete-the-sequence",
       question: "",
       explanation: "",
-      answer: "A",
+      answer: "",
       grid: {
         border: { inner: true, outer: true },
+        questionMark: "",
         template: "linear",
         type: "square",
         rows: INIT_NUM_ROWS,
