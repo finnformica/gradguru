@@ -23,6 +23,7 @@ export const icons = [
   "Water",
   "House",
   "Castle",
+  "Arrow",
 ];
 
 export const colors = [

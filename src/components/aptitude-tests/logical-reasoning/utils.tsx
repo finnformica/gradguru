@@ -21,6 +21,7 @@ import {
   Star,
   Water,
   WbSunny,
+  North,
 } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 
@@ -45,6 +46,8 @@ export const mapIcon = ({
   if (!value) return null;
 
   switch (value.toLowerCase()) {
+    case "arrow":
+      return <North sx={sx} />;
     case "plane":
       return <AirplanemodeActive sx={sx} />;
     case "face":
