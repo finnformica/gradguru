@@ -6,12 +6,13 @@ import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import { SJTModal } from "components/aptitude-tests/situational-judgement";
 import { EditDeleteActions } from "components/data-grid-custom";
 import {
+  AdminDataGrid,
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
@@ -46,9 +47,8 @@ const AllSJTQuestions = () => {
       field: "created",
       headerName: "Created",
       width: 150,
-      renderCell: (params) => {
-        return new Date(params.value as number).toLocaleString();
-      },
+      renderCell: (params) => new Date(params.value).toLocaleString(),
+      valueGetter: (params) => new Date(params.value).toLocaleString(),
     },
     {
       field: "actions",
@@ -89,27 +89,9 @@ const AllSJTQuestions = () => {
       <Typography variant="h4" pb={2}>
         All SJT questions
       </Typography>
-      <DataGrid
-        rows={questions}
-        columns={columns}
-        disableDensitySelector
-        disableRowSelectionOnClick
-        rowHeight={40}
-        autoHeight
-        pageSizeOptions={[15, 25, 50, 100]}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 15 } },
-          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
-        }}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-            printOptions: { disableToolbarButton: true },
-            csvOptions: { disableToolbarButton: true },
-          },
-        }}
-      />
+
+      <AdminDataGrid columns={columns} rows={questions} />
+
       {questionToEdit && (
         <SJTModal
           open={!!questionToEdit}

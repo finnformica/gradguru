@@ -7,17 +7,18 @@ import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
+import LRModal from "components/aptitude-tests/logical-reasoning/lr-admin-edit-modal";
+import { mapObjectToNestedArray } from "components/aptitude-tests/logical-reasoning/utils";
 import { EditDeleteActions } from "components/data-grid-custom";
 import {
+  AdminDataGrid,
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
 import { INRQuestion } from "types";
-import LRModal from "components/aptitude-tests/logical-reasoning/lr-admin-edit-modal";
-import { mapObjectToNestedArray } from "components/aptitude-tests/logical-reasoning/utils";
 
 const AllLRQuestions = () => {
   const { data: session } = useSession();
@@ -65,18 +66,21 @@ const AllLRQuestions = () => {
       headerName: "Grid",
       width: 100,
       renderCell: (params) => _.startCase(params.row.grid.type),
+      valueGetter: (params) => params.row.grid.type,
     },
     {
       field: "rows",
       headerName: "Rows",
       width: 70,
       renderCell: (params) => params.row.grid.rows,
+      valueGetter: (params) => params.row.grid.rows,
     },
     {
       field: "templateType",
       headerName: "Template",
       width: 100,
       renderCell: (params) => _.startCase(params.row.grid.template),
+      valueGetter: (params) => params.row.grid.template,
     },
     {
       field: "created",
@@ -134,30 +138,12 @@ const AllLRQuestions = () => {
         All LR questions
       </Typography>
 
-      <DataGrid
-        rows={questions}
-        columns={columns}
-        disableDensitySelector
-        disableRowSelectionOnClick
-        rowHeight={40}
-        autoHeight
-        pageSizeOptions={[15, 25, 50, 100]}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 15 } },
-          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
-        }}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-            printOptions: { disableToolbarButton: true },
-            csvOptions: { disableToolbarButton: true },
-          },
-        }}
-      />
+      <AdminDataGrid columns={columns} rows={questions} />
+
       {questionToEdit && (
         <LRModal question={questionToEdit} setQuestion={setQuestionToEdit} />
       )}
+
       {questionToDelete && (
         <ConfirmationDialog
           title="Are you sure you want to delete this question?"
