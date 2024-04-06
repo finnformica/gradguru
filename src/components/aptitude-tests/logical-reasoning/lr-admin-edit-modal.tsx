@@ -29,7 +29,7 @@ const LRModal = ({
     const { id, ...payload } = data;
 
     patchQuestion("logical-reasoning", id, payload)
-      .then(() => enqueueSnackbar("NR question updated"))
+      .then(() => enqueueSnackbar("LR question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
