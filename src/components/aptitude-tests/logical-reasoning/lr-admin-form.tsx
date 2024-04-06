@@ -283,6 +283,7 @@ const LRQuestionForm = ({
               label="?"
               size="small"
             >
+              <MenuItem value="">None</MenuItem>
               {Object.keys(alphaToNumericMapping).map((key) => (
                 <MenuItem key={key} value={alphaToNumericMapping[key]}>
                   {key}
