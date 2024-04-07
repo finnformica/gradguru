@@ -164,8 +164,6 @@ export const createQuestion = async (testType: AptitudeTestType, data: any) => {
 
   const payload = { ...data, created: Date.now() };
 
-  console.log("payload", payload);
-
   // TODO: add created and updated timestamps
   return addDoc(ref, payload).then((docRef) => docRef.id);
 };
