@@ -28,7 +28,9 @@ const NRModal = ({
       return;
     }
 
-    patchQuestion("numerical-reasoning", form.id, form)
+    const { id, ...payload } = form;
+
+    patchQuestion("numerical-reasoning", id, payload)
       .then(() => enqueueSnackbar("NR question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {

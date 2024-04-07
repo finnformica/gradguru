@@ -68,41 +68,39 @@ export const deleteFetcher = async (
 };
 
 export const endpoints = {
-  admin: {
-    users: {
-      all: `${BASE_URL}/firebase/document?collection=users`,
-      user: (id: string) =>
-        `${BASE_URL}/firebase/document?collection=users&document=${id}`,
+  users: {
+    all: `${BASE_URL}/firebase/document?collection=users`,
+    user: (id: string) =>
+      `${BASE_URL}/firebase/document?collection=users&document=${id}`,
+  },
+  blogs: {
+    all: `${BASE_URL}/firebase/document?collection=blogs`,
+    blog: (id: string | null) =>
+      `${BASE_URL}/firebase/document?collection=blogs${id ? `&document=${id}` : ""}`,
+  },
+  storage: { blog: "blog", aptitudeTests: "aptitude-tests" },
+  tests: {
+    nr: {
+      all: `${BASE_URL}/firebase/document?collection=nr-consulting`,
+      test: (id: string | null) =>
+        `${BASE_URL}/firebase/document?collection=nr-consulting${id ? `&document=${id}` : ""}`,
     },
-    blogs: {
-      all: `${BASE_URL}/firebase/document?collection=blogs`,
-      blog: (id: string | null) =>
-        `${BASE_URL}/firebase/document?collection=blogs${id ? `&document=${id}` : ""}`,
+    sjt: {
+      all: `${BASE_URL}/firebase/document?collection=sjt-consulting`,
+      test: (id: string | null) =>
+        `${BASE_URL}/firebase/document?collection=sjt-consulting${id ? `&document=${id}` : ""}`,
     },
-    storage: { blog: "blog", test: "test" },
-    tests: {
-      nr: {
-        all: `${BASE_URL}/firebase/document?collection=nr-consulting`,
-        test: (id: string | null) =>
-          `${BASE_URL}/firebase/document?collection=nr-consulting${id ? `&document=${id}` : ""}`,
-      },
-      sjt: {
-        all: `${BASE_URL}/firebase/document?collection=sjt-consulting`,
-        test: (id: string | null) =>
-          `${BASE_URL}/firebase/document?collection=sjt-consulting${id ? `&document=${id}` : ""}`,
-      },
-      lr: {},
-    },
-    courses: {
-      all: `${BASE_URL}/firebase/document?collection=courses`,
-      course: (id: string | null) =>
-        `${BASE_URL}/firebase/document?collection=courses${id ? `&document=${id}` : ""}`,
-    },
-    subscribe: {
-      convertkit: `${BASE_URL}/convertkit/subscribe`,
-    },
-    support: {
-      firebase: `${BASE_URL}/firebase/support`,
-    },
+    lr: {},
+  },
+  courses: {
+    all: `${BASE_URL}/firebase/document?collection=courses`,
+    course: (id: string | null) =>
+      `${BASE_URL}/firebase/document?collection=courses${id ? `&document=${id}` : ""}`,
+  },
+  subscribe: {
+    convertkit: `${BASE_URL}/convertkit/subscribe`,
+  },
+  support: {
+    firebase: `${BASE_URL}/firebase/support`,
   },
 };

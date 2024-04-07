@@ -15,7 +15,7 @@ import { ISJTest } from "types";
 const AllSJTTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [tests, setTests] = useState<any[]>([]);
+  const [tests, setTests] = useState<ISJTest[]>([]);
   const [testToDelete, setTestToDelete] = useState<ISJTest | null>(null);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const AllSJTTests = () => {
     // delete reference to testId from each question
     const questionsUpdated = await testToDelete.questions.forEach(
       (question: string) =>
-        patchQuestion(question, "situational-judgement", { testId: null })
+        patchQuestion("situational-judgement", question, { testId: null })
     );
 
     // delete the test

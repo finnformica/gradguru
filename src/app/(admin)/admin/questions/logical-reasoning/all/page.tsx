@@ -10,26 +10,27 @@ import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
-import { NRModal } from "components/aptitude-tests/numerical-reasoning";
-import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
+import LRModal from "components/aptitude-tests/logical-reasoning/lr-admin-edit-modal";
+import { mapObjectToNestedArray } from "components/aptitude-tests/logical-reasoning/utils";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import { INRQuestion } from "types";
+import { ILRQuestion } from "types";
 
-const AllNRQuestions = () => {
+const AllLRQuestions = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [questions, setQuestions] = useState<any[] | null>(null);
-  const [questionToEdit, setQuestionToEdit] = useState<INRQuestion | null>(
+  const [questions, setQuestions] = useState<ILRQuestion[] | null>(null);
+  const [questionToEdit, setQuestionToEdit] = useState<ILRQuestion | null>(
     null
   );
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection
-    const unsubscribe = getQuestions("numerical-reasoning", setQuestions);
+    const unsubscribe = getQuestions("logical-reasoning", setQuestions);
 
     // remove event listener on unmount
     return () => unsubscribe();
@@ -52,47 +53,63 @@ const AllNRQuestions = () => {
             return params.value;
         }
       },
-      valueGetter: (params) => {
-        switch (params.row.type) {
-          case "table":
-            return params.row.questions[0].question;
-          case "graph":
-            return params.row.scenario;
-          default:
-            return params.value;
-        }
-      },
     },
     {
       field: "type",
       headerName: "Type",
-      width: 80,
+      width: 200,
       renderCell: (params) => _.startCase(params.value),
+    },
+    {
+      field: "gridType",
+      headerName: "Grid",
+      width: 100,
+      renderCell: (params) => _.startCase(params.row.grid.type),
+      valueGetter: (params) => params.row.grid.type,
+    },
+    {
+      field: "rows",
+      headerName: "Rows",
+      width: 70,
+      renderCell: (params) => params.row.grid.rows,
+      valueGetter: (params) => params.row.grid.rows,
+    },
+    {
+      field: "templateType",
+      headerName: "Template",
+      width: 100,
+      renderCell: (params) => _.startCase(params.row.grid.template),
+      valueGetter: (params) => params.row.grid.template,
     },
     {
       field: "created",
       headerName: "Created",
       width: 150,
-      renderCell: (params) => new Date(params.value).toLocaleString(),
-      valueGetter: (params) => new Date(params.value).toLocaleString(),
+      renderCell: (params) => {
+        return new Date(params.value as number).toLocaleString();
+      },
     },
     {
       field: "actions",
       headerName: "Actions",
       width: 100,
-      renderCell: (params) => {
-        return (
-          <EditDeleteActions
-            session={session}
-            onEditClick={() => {
-              setQuestionToEdit(params.row as INRQuestion);
-            }}
-            onDeleteClick={() => {
-              setQuestionToDelete(params.row.id as string);
-            }}
-          />
-        );
-      },
+      renderCell: (params) => (
+        <EditDeleteActions
+          session={session}
+          onEditClick={() => {
+            const question = params.row;
+
+            question.grid.data = mapObjectToNestedArray(question.grid.data);
+            question.grid.options = mapObjectToNestedArray(
+              question.grid.options
+            );
+            setQuestionToEdit(question);
+          }}
+          onDeleteClick={() => {
+            setQuestionToDelete(params.row.id as string);
+          }}
+        />
+      ),
     },
   ];
 
@@ -104,7 +121,7 @@ const AllNRQuestions = () => {
       return;
     }
 
-    deleteQuestion("numerical-reasoning", questionToDelete)
+    deleteQuestion("logical-reasoning", questionToDelete)
       .then(() => enqueueSnackbar("NR question deleted"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
@@ -117,18 +134,15 @@ const AllNRQuestions = () => {
   return (
     <>
       <Typography variant="h4" pb={2}>
-        All NR questions
+        All LR questions
       </Typography>
 
       <AdminDataGrid columns={columns} rows={questions} />
 
       {questionToEdit && (
-        <NRModal
-          question={questionToEdit}
-          setQuestion={setQuestionToEdit}
-          handleDelete={handleDelete}
-        />
+        <LRModal question={questionToEdit} setQuestion={setQuestionToEdit} />
       )}
+
       {questionToDelete && (
         <ConfirmationDialog
           title="Are you sure you want to delete this question?"
@@ -142,4 +156,4 @@ const AllNRQuestions = () => {
   );
 };
 
-export default AllNRQuestions;
+export default AllLRQuestions;

@@ -31,7 +31,9 @@ const SJTModal = ({
       return;
     }
 
-    patchQuestion(form.id, "situational-judgement", form)
+    const { id, ...payload } = form;
+
+    patchQuestion("situational-judgement", id, payload)
       .then(() => enqueueSnackbar("SJT question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {

@@ -65,6 +65,11 @@ export type ITest = {
   testId?: string;
 };
 
+export type AptitudeTestType =
+  | "numerical-reasoning"
+  | "situational-judgement"
+  | "logical-reasoning";
+
 export type ITestRecord = IFirestoreData & {
   testId: string;
   score: number;
@@ -190,3 +195,48 @@ export type SJQuestionFlat = {
 };
 
 // -- Logical Reasoning --
+
+export type CellData = {
+  type: string;
+  value: string;
+  color: string;
+  rotation: number;
+  backgroundColor: string;
+  size: number;
+};
+
+export type Grid = CellData[][];
+
+export type GridType = "triangle" | "square";
+
+export type GridTemplate = "linear" | "grid";
+
+export type GridCoord = {
+  row: number;
+  col: number;
+};
+
+export type ILRQuestion = {
+  answer: number | string;
+  explanation: string;
+  question: string;
+  type: "complete-the-sequence" | "odd-one-out";
+  grid: {
+    data: Grid[];
+    options: Grid[];
+    rows: number;
+    template: GridTemplate;
+    type: GridType;
+    questionMark: number | string;
+    border: {
+      inner: boolean;
+      outer: boolean;
+    };
+  };
+} & IFirestoreData &
+  ITest;
+
+export type ILRTest = IFirestoreData & {
+  name: string;
+  questions: string[];
+};
