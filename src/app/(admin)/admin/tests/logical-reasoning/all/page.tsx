@@ -10,13 +10,13 @@ import { GridColDef } from "@mui/x-data-grid";
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog } from "components/global-components";
-import { ISJTest } from "types";
+import { ILRTest } from "types";
 
 const AllLRTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [tests, setTests] = useState<any[]>([]);
-  const [testToDelete, setTestToDelete] = useState<ISJTest | null>(null);
+  const [tests, setTests] = useState<ILRTest[]>([]);
+  const [testToDelete, setTestToDelete] = useState<ILRTest | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection

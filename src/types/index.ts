@@ -235,3 +235,8 @@ export type ILRQuestion = {
   };
 } & IFirestoreData &
   ITest;
+
+export type ILRTest = IFirestoreData & {
+  name: string;
+  questions: string[];
+};
