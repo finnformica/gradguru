@@ -10,9 +10,8 @@ import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import { SJTModal } from "components/aptitude-tests/situational-judgement";
-import { EditDeleteActions } from "components/data-grid-custom";
+import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
 import {
-  AdminDataGrid,
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";

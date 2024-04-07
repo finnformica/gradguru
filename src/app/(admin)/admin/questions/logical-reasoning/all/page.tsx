@@ -12,9 +12,8 @@ import { GridColDef } from "@mui/x-data-grid";
 import { deleteQuestion, getQuestions } from "api/tests";
 import LRModal from "components/aptitude-tests/logical-reasoning/lr-admin-edit-modal";
 import { mapObjectToNestedArray } from "components/aptitude-tests/logical-reasoning/utils";
-import { EditDeleteActions } from "components/data-grid-custom";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
-  AdminDataGrid,
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
