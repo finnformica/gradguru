@@ -140,7 +140,7 @@ export const sidebarSections = [
           {
             name: "All tests",
             icon: <AllInclusive />,
-            route: "/admin/tests/logical-reasoning/add",
+            route: "/admin/tests/logical-reasoning/all",
             active: true,
           },
           {
