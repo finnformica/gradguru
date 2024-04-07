@@ -15,7 +15,7 @@ import { ISJTest } from "types";
 const AllSJTTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [tests, setTests] = useState<any[]>([]);
+  const [tests, setTests] = useState<ISJTest[]>([]);
   const [testToDelete, setTestToDelete] = useState<ISJTest | null>(null);
 
   useEffect(() => {
