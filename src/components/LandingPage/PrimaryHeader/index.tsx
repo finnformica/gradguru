@@ -3,20 +3,20 @@
 import {
   AppBar,
   Box,
+  Button,
   Container,
   Toolbar,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Link from "next/link";
-
-import SquareButton from "components/LandingPage/Buttons/SquareButton";
 
 import MenuButton from "./MenuButton";
 import NavLinks from "./NavLinks";
 import NavbarLogo from "./NavbarLogo";
+import { useRouter } from "next/navigation";
 
 const PrimaryHeader = () => {
+  const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -45,9 +45,14 @@ const PrimaryHeader = () => {
 
           {isMobile && <MenuButton />}
           {!isMobile && (
-            <Link href="/sign-in">
-              <SquareButton>Login</SquareButton>
-            </Link>
+            <Button
+              variant="contained"
+              sx={{ px: 4 }}
+              onClick={() => router.push("/sign-in")}
+              disabled={process.env.NEXT_PUBLIC_VERCEL_ENV === "production"}
+            >
+              Sign in
+            </Button>
           )}
         </Toolbar>
       </Container>
