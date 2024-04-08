@@ -7,7 +7,7 @@ import _ from "lodash";
 // list of blogs
 function useBlogs() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.blogs.all,
+    endpoints.blogs.all,
     getFetcher
   );
 
@@ -24,13 +24,13 @@ function useBlogs() {
 }
 
 function postBlog(id: string | null, data: any) {
-  const URL = endpoints.admin.blogs.blog(id);
+  const URL = endpoints.blogs.blog(id);
   return postFetcher([URL, {}, data]);
 }
 
 function blogStorage(file: File, blogName: string) {
   const blogSlug = _.kebabCase(blogName);
-  return fileStorage(file, endpoints.admin.storage.blog, blogSlug).then(
+  return fileStorage(file, endpoints.storage.blog, blogSlug).then(
     (imageId) => ({ imageId, blogSlug })
   );
 }

@@ -5,23 +5,22 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 import { Chip, Typography } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteTest, getTests, patchQuestion } from "api/tests";
-import { EditDeleteActions } from "components/data-grid-custom";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog } from "components/global-components";
-import { INRTest } from "types";
+import { ILRTest } from "types";
 
-const AllNRTests = () => {
+const AllLRTests = () => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-
-  const [tests, setTests] = useState<INRTest[]>([]);
-  const [testToDelete, setTestToDelete] = useState<INRTest | null>(null);
+  const [tests, setTests] = useState<ILRTest[]>([]);
+  const [testToDelete, setTestToDelete] = useState<ILRTest | null>(null);
 
   useEffect(() => {
     // add event listener on firestore collection
-    const unsubscribe = getTests("numerical-reasoning", setTests);
+    const unsubscribe = getTests("logical-reasoning", setTests);
 
     // remove event listener on unmount
     return () => unsubscribe();
@@ -35,7 +34,7 @@ const AllNRTests = () => {
       flex: 1,
       width: 200,
       renderCell: (params) =>
-        (Object.values(params.value).flat() as string[]).map((q) => (
+        params.value.map((q: string) => (
           <Chip key={q} label={q} sx={{ mx: 0.5 }} />
         )),
     },
@@ -60,19 +59,15 @@ const AllNRTests = () => {
 
   const handleDeleteTest = async () => {
     if (!testToDelete) return;
-
-    const flattenedQuestions = Object.values(
-      testToDelete.questions
-    ).flat() as string[];
-
     // delete reference to testId from each question
-    const questionsUpdated = await flattenedQuestions.forEach((question) =>
-      patchQuestion("numerical-reasoning", question, { testId: null })
+    const questionsUpdated = await testToDelete.questions.forEach(
+      (question: string) =>
+        patchQuestion("logical-reasoning", question, { testId: null })
     );
 
     // delete the test
     const testDeleted = await deleteTest(
-      "numerical-reasoning",
+      "logical-reasoning",
       testToDelete.id || ""
     );
 
@@ -86,18 +81,11 @@ const AllNRTests = () => {
   return (
     <>
       <Typography variant="h4" pb={4}>
-        All Numerical Reasoning Tests
+        All Logical Reasoning Tests
       </Typography>
-      <DataGrid
-        rows={tests}
-        columns={columns}
-        autoHeight
-        pageSizeOptions={[15, 25, 50, 100]}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 15 } },
-          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
-        }}
-      />
+
+      <AdminDataGrid columns={columns} rows={tests} />
+
       {testToDelete && (
         <ConfirmationDialog
           open={!!testToDelete}
@@ -111,4 +99,4 @@ const AllNRTests = () => {
   );
 };
 
-export default AllNRTests;
+export default AllLRTests;

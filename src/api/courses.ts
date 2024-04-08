@@ -7,7 +7,7 @@ import { db } from "lib/firebase/config";
 
 // list of course ids
 export function useCourseIds() {
-  const URL = endpoints.admin.courses.all;
+  const URL = endpoints.courses.all;
   const { data, isLoading, error, isValidating, mutate } = useSWR(
     URL,
     getFetcher
@@ -41,7 +41,7 @@ export async function getCourses() {
 // single course
 export function useCourse(id: string) {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.courses.course(id),
+    endpoints.courses.course(id),
     getFetcher
   );
 
@@ -58,6 +58,6 @@ export function useCourse(id: string) {
 }
 
 export function postCourse(id: string, data: any) {
-  const URL = endpoints.admin.courses.course(id);
+  const URL = endpoints.courses.course(id);
   return postFetcher([URL, {}, data]);
 }

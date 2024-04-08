@@ -7,7 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 export function useUsers() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
-    endpoints.admin.users.all,
+    endpoints.users.all,
     getFetcher
   );
 
@@ -24,12 +24,12 @@ export function useUsers() {
 }
 
 export function postUser(id: string, data: any) {
-  const URL = endpoints.admin.users.user(id);
+  const URL = endpoints.users.user(id);
   return postFetcher([URL, {}, data]);
 }
 
 export function deleteUser(id: string) {
-  const URL = endpoints.admin.users.user(id);
+  const URL = endpoints.users.user(id);
   return deleteFetcher(URL);
 }
 
