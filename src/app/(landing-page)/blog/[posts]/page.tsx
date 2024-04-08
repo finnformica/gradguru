@@ -1,11 +1,13 @@
 "use client";
 
 import { Container } from "@mui/material";
+import BlogBack from "components/BlogPage/BlogBack";
 import BlogPost from "components/BlogPage/BlogPost";
 import { IBlog } from "components/BlogPage/types";
 import { LoadingScreen } from "components/global-components";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "lib/firebase/config";
+
 import { notFound } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 
@@ -32,7 +34,8 @@ const Post: FC<pageProps> = ({ params }) => {
 
   if (loadedDoc) {
     return (
-      <Container maxWidth="md" sx={{ my: 8 }}>
+      <Container maxWidth="md" sx={{ my: 2 }}>
+        <BlogBack />
         <BlogPost {...loadedDoc} />
       </Container>
     );
