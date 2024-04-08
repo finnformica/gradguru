@@ -33,7 +33,6 @@ const BlogPost = ({
       sx={{
         display: "flex",
         flexDirection: "column",
-
         gap: 4,
         px: 8,
         textAlign: "left",

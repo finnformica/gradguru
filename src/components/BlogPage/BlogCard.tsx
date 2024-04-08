@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardActionArea,
   CardActions,
@@ -46,52 +47,58 @@ const BlogCard = ({
   const date = new Date(created).toDateString();
 
   return (
-    <Card sx={{ width: 500 }}>
+    <Card sx={{ width: 800 }}>
       <Link color="inherit" underline="none" href={`/blog/${slug}`}>
-        <CardActionArea>
+        <CardActionArea sx={{ p: 2 }}>
           <CardHeader
-            title={title}
-            sx={{
-              height: 50,
-              overflow: "hidden",
-            }}
+            title={
+              <Stack direction={"row"} gap={1}>
+                <Typography variant="body2">{author}</Typography>
+                <Typography variant="body2">·</Typography>
+                <Typography variant="body2" color={"grey"}>
+                  {date}
+                </Typography>
+              </Stack>
+            }
           />
           <Stack direction="row">
             <CardContent>
-              <Typography
-                variant="body2"
-                color="text.secondary"
+              <Typography variant="h6">{title}</Typography>
+              <Box
                 sx={{
-                  width: 230,
-                  height: 140,
+                  width: 500,
+                  display: "-webkit-box",
                   textAlign: "justify",
-                  overflow: "scroll",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
                 }}
               >
-                {summary}
-              </Typography>
+                <Typography variant="body1">{summary}</Typography>
+              </Box>
             </CardContent>
             {imageUrl ? (
               <CardMedia
                 component="img"
-                height={140}
+                height={150}
+                width={200}
                 image={imageUrl}
                 alt={imageId}
                 sx={{ pt: 2, pr: 2 }}
               />
             ) : (
-              <Skeleton variant="rectangular" width={345} height={140} />
+              <Skeleton variant="rectangular" width={200} height={150} />
             )}
           </Stack>
         </CardActionArea>
-        <CardActions>
-          <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
-            <Chip label={author} variant="outlined" color="primary"></Chip>
-            <Chip label={tags} variant="outlined" color="primary" />
-            <Chip label={date} variant="outlined" color="primary"></Chip>
-          </Stack>
-        </CardActions>
       </Link>
+      <CardActions sx={{ p: 2 }}>
+        <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
+          <Chip label={tags} variant="outlined" color="primary" />
+          <Chip label={date} variant="outlined" color="primary"></Chip>
+        </Stack>
+      </CardActions>
     </Card>
   );
 };
