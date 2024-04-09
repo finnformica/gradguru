@@ -3,7 +3,7 @@
 import { Container } from "@mui/material";
 import BlogBack from "components/BlogPage/BlogBack";
 import BlogPost from "components/BlogPage/BlogPost";
-import { IBlog } from "components/BlogPage/types";
+import { IBlogPage } from "components/BlogPage/types";
 import { LoadingScreen } from "components/global-components";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "lib/firebase/config";
@@ -16,14 +16,14 @@ interface pageProps {
 }
 
 const Post: FC<pageProps> = ({ params }) => {
-  const [loadedDoc, setLoadedDoc] = useState<IBlog | null>(null);
+  const [loadedDoc, setLoadedDoc] = useState<IBlogPage | null>(null);
 
   useEffect(() => {
     const getBlog = async () => {
       const docRef = doc(db, "blogs", params.posts);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setLoadedDoc(docSnap.data() as IBlog);
+        setLoadedDoc(docSnap.data() as IBlogPage);
       } else {
         notFound();
       }

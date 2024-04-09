@@ -3,19 +3,19 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { IBlog } from "./types";
+import { IBlogPage } from "./types";
 
 const DEFAULT_FONT_SIZE = 14;
 
 const BlogPost = ({
+  content,
   author,
   created,
   imageId,
   slug,
-  content,
   tags,
   title,
-}: IBlog) => {
+}: IBlogPage) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   useEffect(() => {
     const pathReference = ref(storage, `blog/${slug}/${imageId}`);

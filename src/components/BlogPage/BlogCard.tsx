@@ -17,7 +17,7 @@ import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { config } from "lib/firebase/config";
 import { useEffect, useState } from "react";
-import { IBlog } from "./types";
+import { IBlogCard } from "./types";
 
 initializeApp(config);
 
@@ -29,7 +29,7 @@ const BlogCard = ({
   summary,
   tags,
   title,
-}: IBlog) => {
+}: IBlogCard) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {

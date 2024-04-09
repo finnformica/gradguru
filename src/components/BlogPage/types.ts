@@ -1,10 +1,13 @@
-export interface IBlog {
+export interface IBlogCard {
   author: string;
-  content?: string;
   created: number;
   imageId: string;
   slug: string;
-  summary?: string;
+  summary: string;
   tags: string;
   title: string;
+}
+
+export interface IBlogPage extends IBlogCard {
+  content: string;
 }
