@@ -1,36 +1,36 @@
 "use client";
+import { Container, Grid, Stack } from "@mui/material";
 import { useBlogs } from "api/blog";
-import BlogCard from "components/BlogPage/Cards/BlogCard";
+import BlogCard from "components/blog/BlogCard";
 import { LoadingScreen } from "components/global-components";
-import { Container } from "@mui/material";
 
 const borderColor = "lightgrey";
 
 const BlogPage = () => {
   const { blogs: posts } = useBlogs();
 
-  if (posts === undefined) return <LoadingScreen />;
+  if (!posts) return <LoadingScreen />;
 
-  if (posts !== undefined) {
-    return (
-      <Container
-        maxWidth="md"
-        sx={{
-          borderRight: `1px solid ${borderColor}`,
-          borderLeft: `1px solid ${borderColor}`,
-        }}
-      >
+  return (
+    <Container
+      maxWidth="lg"
+      sx={{
+        borderRight: `1px solid ${borderColor}`,
+        borderLeft: `1px solid ${borderColor}`,
+
+        my: 4,
+        py: 2,
+      }}
+    >
+      <Stack direction={"column"} gap={2} alignItems={"center"}>
         {posts.map((post) => (
-          <BlogCard
-            borderColor={borderColor}
-            {...post}
-            id={post.id}
-            key={post.id}
-          />
+          <Grid key={post.slug} item>
+            <BlogCard key={post.slug} id={post.slug} {...post} />
+          </Grid>
         ))}
-      </Container>
-    );
-  }
+      </Stack>
+    </Container>
+  );
 };
 
 export default BlogPage;
