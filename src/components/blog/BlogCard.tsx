@@ -68,10 +68,10 @@ const BlogCard = ({
                 sx={{
                   width: 500,
                   display: "-webkit-box",
-                  textAlign: "justify",
+                  textAlign: "left",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  WebkitLineClamp: 3,
+                  WebkitLineClamp: 4,
                   WebkitBoxOrient: "vertical",
                 }}
               >

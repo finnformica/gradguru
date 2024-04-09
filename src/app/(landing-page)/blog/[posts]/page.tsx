@@ -1,9 +1,9 @@
 "use client";
 
 import { Container } from "@mui/material";
-import BlogBack from "components/BlogPage/BlogBack";
-import BlogPost from "components/BlogPage/BlogPost";
-import { IBlogPage } from "components/BlogPage/types";
+import BlogBack from "components/blog/BlogBack";
+import BlogPost from "components/blog/BlogPost";
+import { IBlogPage } from "components/blog/types";
 import { LoadingScreen } from "components/global-components";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "lib/firebase/config";

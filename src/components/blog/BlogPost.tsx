@@ -13,6 +13,7 @@ const BlogPost = ({
   created,
   imageId,
   slug,
+  summary,
   tags,
   title,
 }: IBlogPage) => {
@@ -34,11 +35,14 @@ const BlogPost = ({
         display: "flex",
         flexDirection: "column",
         gap: 4,
-        px: 8,
         textAlign: "left",
       }}
     >
       <Typography variant="h3">{title}</Typography>
+      <Typography variant="body1" sx={{ textAlign: "justify" }}>
+        {summary}
+      </Typography>
+
       <Stack direction={"row"}>
         <Stack direction={"column"}>
           <Typography>{author}</Typography>
@@ -53,6 +57,7 @@ const BlogPost = ({
           </Stack>
         </Stack>
       </Stack>
+
       {imageUrl ? (
         <Box sx={{ textAlign: "center" }}>
           <Image
@@ -68,7 +73,10 @@ const BlogPost = ({
       )}
 
       {content ? (
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: content }}
+          style={{ textAlign: "justify" }}
+        />
       ) : (
         <Typography>No Content Found</Typography>
       )}

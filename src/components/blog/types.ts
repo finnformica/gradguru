@@ -1,3 +1,9 @@
+export type BlogForm = {
+  title: string;
+  summary: string;
+  tags: string | null;
+};
+
 export interface IBlogCard {
   author: string;
   created: number;
