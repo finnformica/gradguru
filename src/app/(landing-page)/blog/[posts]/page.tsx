@@ -32,15 +32,15 @@ const Post: FC<pageProps> = ({ params }) => {
     getBlog();
   }, [params.posts]);
 
-  if (loadedDoc) {
-    return (
-      <Container maxWidth="md" sx={{ my: 2 }}>
-        <BlogBack />
-        <BlogPost {...loadedDoc} />
-      </Container>
-    );
+  if (!loadedDoc) {
+    return <LoadingScreen />;
   }
-  return <LoadingScreen />;
+  return (
+    <Container maxWidth="md" sx={{ my: 2 }}>
+      <BlogBack />
+      <BlogPost {...loadedDoc} />
+    </Container>
+  );
 };
 
 export default Post;

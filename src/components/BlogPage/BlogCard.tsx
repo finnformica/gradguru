@@ -55,7 +55,7 @@ const BlogCard = ({
               <Stack direction={"row"} gap={1}>
                 <Typography variant="body2">{author}</Typography>
                 <Typography variant="body2">·</Typography>
-                <Typography variant="body2" color={"grey"}>
+                <Typography variant="body2" color={"text.secondary"}>
                   {date}
                 </Typography>
               </Stack>
@@ -96,7 +96,7 @@ const BlogCard = ({
       <CardActions sx={{ p: 2 }}>
         <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
           <Chip label={tags} variant="outlined" color="primary" />
-          <Chip label={date} variant="outlined" color="primary"></Chip>
+          <Chip label={date} variant="outlined" color="primary" />
         </Stack>
       </CardActions>
     </Card>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IBlog } from "./types";
 
-const chosenFontSize = 14;
+const DEFAULT_FONT_SIZE = 14;
 
 const BlogPost = ({
   author,
@@ -43,11 +43,11 @@ const BlogPost = ({
         <Stack direction={"column"}>
           <Typography>{author}</Typography>
           <Stack direction={"row"} gap={1} sx={{ color: "rgb(107, 107, 107)" }}>
-            <Typography fontSize={chosenFontSize}>{tags}</Typography>
-            <Typography fontSize={chosenFontSize}>·</Typography>
-            <Typography fontSize={chosenFontSize}>5 min read</Typography>
-            <Typography fontSize={chosenFontSize}>·</Typography>
-            <Typography fontSize={chosenFontSize}>
+            <Typography fontSize={DEFAULT_FONT_SIZE}>{tags}</Typography>
+            <Typography fontSize={DEFAULT_FONT_SIZE}>·</Typography>
+            <Typography fontSize={DEFAULT_FONT_SIZE}>5 min read</Typography>
+            <Typography fontSize={DEFAULT_FONT_SIZE}>·</Typography>
+            <Typography fontSize={DEFAULT_FONT_SIZE}>
               {new Date(created).toDateString()}
             </Typography>
           </Stack>
