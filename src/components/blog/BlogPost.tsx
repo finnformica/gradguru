@@ -3,7 +3,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { IBlogPage } from "./types";
+import { IBlogPage } from "../../types/blog";
 
 const DEFAULT_FONT_SIZE = 14;
 

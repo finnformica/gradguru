@@ -12,14 +12,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { initializeApp } from "firebase/app";
 
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { config } from "lib/firebase/config";
-import { useEffect, useState } from "react";
-import { IBlogCard } from "./types";
 
-initializeApp(config);
+import { useEffect, useState } from "react";
+import { IBlogCard } from "../../types/blog";
 
 const BlogCard = ({
   author,

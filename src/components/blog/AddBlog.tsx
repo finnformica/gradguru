@@ -23,7 +23,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { modules } from "./constants";
-import { BlogForm } from "./types";
+import { BlogForm } from "../../types/blog";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 

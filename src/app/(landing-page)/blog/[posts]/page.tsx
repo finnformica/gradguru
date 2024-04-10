@@ -3,7 +3,7 @@
 import { Container } from "@mui/material";
 import BlogBack from "components/blog/BlogBack";
 import BlogPost from "components/blog/BlogPost";
-import { IBlogPage } from "components/blog/types";
+import { IBlogPage } from "types/blog";
 import { LoadingScreen } from "components/global-components";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "lib/firebase/config";

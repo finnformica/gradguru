@@ -3,11 +3,14 @@ import { Container, Grid, Stack } from "@mui/material";
 import { useBlogs } from "api/blog";
 import BlogCard from "components/blog/BlogCard";
 import { LoadingScreen } from "components/global-components";
+import { config } from "lib/firebase/config";
+import { initializeApp } from "firebase/app";
 
 const borderColor = "lightgrey";
 
 const BlogPage = () => {
   const { blogs: posts } = useBlogs();
+  initializeApp(config);
 
   if (!posts) return <LoadingScreen />;
 
