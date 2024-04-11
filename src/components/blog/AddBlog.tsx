@@ -17,26 +17,56 @@ import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { modules } from "./constants";
-import { BlogForm } from "../../types/blog";
+import { BlogForm, IBlogPage } from "../../types/blog";
+import { getDownloadURL, ref } from "firebase/storage";
+import { set } from "lodash";
+import { storage } from "lib/firebase/config";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 
-const AddBlog = () => {
+type addBlogProps = {
+  storedBlog?: IBlogPage;
+};
+
+const AddBlog = ({ storedBlog }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
   const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const deafultText = storedBlog ? storedBlog.content : "";
+    setContent(deafultText);
+    if (!storedBlog) return;
+    const pathReference = ref(
+      storage,
+      `blog/${storedBlog.slug}/${storedBlog.imageId}`
+    );
+    getDownloadURL(pathReference)
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        setImageUrl(null);
+      });
+  }, []);
+
+  const deafultTitle = storedBlog ? storedBlog.title : "";
+  const deafultSummary = storedBlog ? storedBlog.summary : "";
+  const deafulTags = storedBlog ? storedBlog.tags : "";
+
   const { control, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
-      title: "",
-      summary: "",
-      tags: null,
+      title: deafultTitle,
+      summary: deafultSummary,
+      tags: deafulTags,
     },
   });
 

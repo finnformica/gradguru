@@ -95,6 +95,7 @@ const BlogEditTable = () => {
           onClose={() => setEditBlog(null)}
           onSubmit={handleEditBlog}
           open={!!editBlog}
+          chosenRow={editBlog}
         />
       )}
     </Container>
