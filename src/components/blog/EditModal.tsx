@@ -1,4 +1,11 @@
 import { Box, Modal, Typography } from "@mui/material";
+import { getBlog } from "api/blog";
+import FormModalWrapper from "components/global-components/FormModalWrapper";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "lib/firebase/config";
+import { notFound } from "next/navigation";
+import { useEffect, useState } from "react";
+import { IBlogPage } from "types/blog";
 
 type EditModalProps = {
   slug: string;
@@ -8,22 +15,29 @@ type EditModalProps = {
 };
 
 const EditModal = ({ slug, onClose, onSubmit, open }: EditModalProps) => {
+  const [loadedDoc, setLoadedDoc] = useState<IBlogPage | null>(null);
+
+  useEffect(() => {
+    getBlog(slug).then((doc) => setLoadedDoc(doc as IBlogPage));
+  }, []);
+
+  if (!loadedDoc) return;
+
   return (
-    <Modal
+    <FormModalWrapper
+      title={loadedDoc.title}
       open={open}
-      onClose={onClose}
+      handleClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
-      </Box>
-    </Modal>
+      <Typography id="modal-modal-title" variant="h6" component="h2">
+        {loadedDoc.title}
+      </Typography>
+      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </Typography>
+    </FormModalWrapper>
   );
 };
 
