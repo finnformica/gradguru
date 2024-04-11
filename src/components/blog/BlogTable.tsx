@@ -1,21 +1,28 @@
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { getBlogs, useBlogs } from "api/blog";
-import { EditDeleteActions } from "components/data-grid-custom";
+import { GridColDef } from "@mui/x-data-grid";
+import { getBlogs } from "api/blog";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog } from "components/global-components";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "lib/firebase/config";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IBlogPage } from "types/blog";
 
 const BlogTable = () => {
   const [blogToDelete, setBlogToDelete] = useState<IBlogPage | null>(null);
+  const [blogs, setBlogs] = useState<IBlogPage[]>([]);
   const router = useRouter();
-  let { blogs: posts } = useBlogs();
   const { data: session } = useSession();
-  console.log(posts);
+
+  useEffect(() => {
+    // add event listener on firestore collectionxX
+    const unsubscribe = getBlogs(setBlogs);
+
+    // remove event listener on unmount
+    return () => unsubscribe();
+  }, []);
 
   const columns: GridColDef[] = [
     {
@@ -60,21 +67,10 @@ const BlogTable = () => {
       });
   };
 
-  if (posts)
+  if (blogs)
     return (
       <>
-        <DataGrid
-          rows={posts}
-          columns={columns}
-          autoHeight
-          pageSizeOptions={[15, 25, 50, 100]}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 15 } },
-            sorting: {
-              sortModel: [{ field: "created", sort: "desc" }],
-            },
-          }}
-        />
+        <AdminDataGrid rows={blogs} columns={columns} />
         {blogToDelete && (
           <ConfirmationDialog
             open={!!blogToDelete}
@@ -86,6 +82,7 @@ const BlogTable = () => {
         )}
       </>
     );
+  //   return <></>;
 };
 
 export default BlogTable;
