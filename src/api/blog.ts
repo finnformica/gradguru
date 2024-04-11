@@ -1,17 +1,10 @@
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "lib/firebase/config";
 import { fileStorage } from "lib/firebase/utils";
+import _ from "lodash";
 import { useMemo } from "react";
 import useSWR from "swr";
 import { endpoints, getFetcher, postFetcher } from "utils/axios";
-import _ from "lodash";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-} from "firebase/firestore";
-import { db } from "lib/firebase/config";
-import { IBlogCard } from "types/blog";
 
 // list of blogs
 function useBlogs() {
@@ -55,4 +48,4 @@ export function getBlogs(setState: (state: any[]) => void) {
   });
 }
 
-export { postBlog, useBlogs, blogStorage };
+export { blogStorage, postBlog, useBlogs };
