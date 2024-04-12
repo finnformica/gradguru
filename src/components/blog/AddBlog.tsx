@@ -8,12 +8,11 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { blogStorage, postBlog } from "api/blog";
+import { addBlog, blogStorage } from "api/blog";
 import { LoadingScreen } from "components/global-components";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -22,8 +21,8 @@ import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
 import { BlogForm, IBlogPage } from "../../types/blog";
 import AddingHeroImage from "./AddingHeroImage";
-import { modules } from "./constants";
 import HeroStringImage from "./HeroStringImage";
+import { modules } from "./constants";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 
@@ -91,15 +90,17 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
 
-    if (heroPhoto instanceof File) {
+    if (!update && heroPhoto instanceof File) {
       let imageId;
       let blogSlug;
 
+      const authorName = user.name ? user.name : "Error";
+
       blogStorage(heroPhoto, data.title).then((res) => {
         ({ imageId, blogSlug } = res);
-        postBlog(blogSlug, {
+        addBlog(blogSlug, {
           ...data,
-          author: user.name,
+          author: authorName,
           imageId: imageId,
           slug: blogSlug,
           content: content,
@@ -117,6 +118,10 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
           });
       });
     }
+
+    // if (update) {
+
+    // }
   };
 
   return (
@@ -165,7 +170,6 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
               />
             )}
           />
-
           <Controller
             name="summary"
             control={control}
@@ -185,7 +189,6 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
               />
             )}
           />
-
           {typeof heroPhoto === "string" ? (
             <HeroStringImage
               handleClearChange={handleClearChange}

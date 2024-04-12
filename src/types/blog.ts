@@ -4,16 +4,25 @@ export type BlogForm = {
   tags: string | null;
 };
 
-export interface IBlogCard {
-  author: string;
-  created: number;
+export interface FirebaseBlog {
   imageId: string;
   slug: string;
   summary: string;
-  tags: string;
+
   title: string;
+  author: string;
+}
+
+export interface IBlogCard extends FirebaseBlog {
+  created: number;
+  tags: string;
 }
 
 export interface IBlogPage extends IBlogCard {
   content: string;
+}
+
+export interface IAddBlogPost extends FirebaseBlog {
+  content: string;
+  tags: string | null;
 }
