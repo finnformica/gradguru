@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { addBlog, blogStorage, deleteblogStorage } from "api/blog";
+import { addBlog, blogStorage, deleteBlogStorage } from "api/blog";
 import { LoadingScreen } from "components/global-components";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
@@ -116,7 +116,7 @@ const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
       if (heroPhoto instanceof File) {
         let imageId;
         let blogSlug;
-        deleteblogStorage(storedBlog.imageId, storedBlog.slug).then(() =>
+        deleteBlogStorage(storedBlog.imageId, storedBlog.slug).then(() =>
           blogStorage(heroPhoto, data.title).then((res) => {
             ({ imageId, blogSlug } = res);
             addBlog(blogSlug, {

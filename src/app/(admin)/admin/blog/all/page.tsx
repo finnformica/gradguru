@@ -1,16 +1,13 @@
 "use client";
 import { Container, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import { getBlogs } from "api/blog";
+import { deleteBlogDB, deleteBlogStorage, getBlogs } from "api/blog";
 import EditModal from "components/blog/EditModal";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import { deleteDoc, doc } from "firebase/firestore";
-import { deleteObject, ref } from "firebase/storage";
-import { db, storage } from "lib/firebase/config";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -61,15 +58,11 @@ const BlogEditTable = () => {
 
   const handleDeleteblog = async () => {
     if (!blogToDelete) return;
-    const dbRef = doc(db, "blogs", blogToDelete.slug);
-    const storageRef = ref(
-      storage,
-      `blog/${blogToDelete.slug}/${blogToDelete.imageId}`
-    );
-    deleteObject(storageRef).catch(() =>
+
+    deleteBlogStorage(blogToDelete.imageId, blogToDelete.slug).catch(() =>
       enqueueSnackbar("Error deleting hero image")
     );
-    deleteDoc(dbRef)
+    deleteBlogDB(blogToDelete.slug)
       .then(() => {
         enqueueSnackbar("Blog post deleted");
       })

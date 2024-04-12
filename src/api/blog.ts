@@ -1,5 +1,6 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   onSnapshot,
@@ -26,9 +27,14 @@ export function blogStorage(file: File, blogName: string) {
   );
 }
 
-export function deleteblogStorage(fileName: string, folderName: string) {
+export function deleteBlogStorage(fileName: string, folderName: string) {
   const objRef = ref(storage, `blog/${folderName}/${fileName}`);
   return deleteObject(objRef);
+}
+
+export function deleteBlogDB(docName: string) {
+  const dbRef = doc(db, "blogs", docName);
+  return deleteDoc(dbRef);
 }
 
 export function getBlogs(setState: (state: any[]) => void) {
