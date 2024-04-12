@@ -28,7 +28,7 @@ const tagOptions = ["Finance", "Jobs", "Education"];
 
 type addBlogProps = {
   storedBlog?: IBlogPage;
-  handleClose: () => void;
+  handleClose?: () => void;
 };
 
 const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
@@ -92,7 +92,7 @@ const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
 
     const authorName = user.name ? user.name : "Error";
 
-    if (storedBlog) {
+    if (storedBlog && handleClose) {
       if (typeof heroPhoto === "string") {
         addBlog(storedBlog.slug, {
           ...data,
