@@ -5,11 +5,13 @@ import Image from "next/image";
 type HeroImageStringProps = {
   ImageUrl: string;
   handleClearChange: () => void;
+  blogSlug?: string;
 };
 
 const HeroStringImage = ({
   ImageUrl,
   handleClearChange,
+  blogSlug,
 }: HeroImageStringProps) => {
   return (
     <Box
@@ -29,7 +31,7 @@ const HeroStringImage = ({
           borderRadius: "12px",
         }}
       />
-      <Typography variant="body1">{ImageUrl}</Typography>
+      <Typography variant="body1">{blogSlug}</Typography>
       <Tooltip title="Clear Image">
         <IconButton onClick={handleClearChange}>
           <Delete />

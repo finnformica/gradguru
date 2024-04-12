@@ -9,7 +9,8 @@ import {
   LoadingScreen,
 } from "components/global-components";
 import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "lib/firebase/config";
+import { deleteObject, ref } from "firebase/storage";
+import { db, storage } from "lib/firebase/config";
 import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -60,8 +61,15 @@ const BlogEditTable = () => {
 
   const handleDeleteblog = async () => {
     if (!blogToDelete) return;
-    const ref = doc(db, "blogs", blogToDelete.slug);
-    deleteDoc(ref)
+    const dbRef = doc(db, "blogs", blogToDelete.slug);
+    const storageRef = ref(
+      storage,
+      `blog/${blogToDelete.slug}/${blogToDelete.imageId}`
+    );
+    deleteObject(storageRef).catch(() =>
+      enqueueSnackbar("Error deleting hero image")
+    );
+    deleteDoc(dbRef)
       .then(() => {
         enqueueSnackbar("Blog post deleted");
       })

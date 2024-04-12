@@ -8,7 +8,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { addBlog, blogStorage } from "api/blog";
+import { addBlog, blogStorage, deleteblogStorage } from "api/blog";
 import { LoadingScreen } from "components/global-components";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
@@ -91,7 +91,58 @@ const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
     }
 
     const authorName = user.name ? user.name : "Error";
-    if (heroPhoto instanceof File) {
+
+    if (storedBlog) {
+      if (typeof heroPhoto === "string") {
+        addBlog(storedBlog.slug, {
+          ...data,
+          author: authorName,
+          imageId: storedBlog.imageId,
+          slug: storedBlog.slug,
+          content: content,
+        })
+          .then(() => enqueueSnackbar("Blog card has been updated"))
+          .catch((e) =>
+            enqueueSnackbar(`Error updating the blog card: ${e.message}`, {
+              variant: "error",
+            })
+          )
+          .finally(() => {
+            handleClose();
+            setHeroPhoto(null);
+            setContent("");
+          });
+      }
+      if (heroPhoto instanceof File) {
+        let imageId;
+        let blogSlug;
+        deleteblogStorage(storedBlog.imageId, storedBlog.slug).then(() =>
+          blogStorage(heroPhoto, data.title).then((res) => {
+            ({ imageId, blogSlug } = res);
+            addBlog(blogSlug, {
+              ...data,
+              author: authorName,
+              imageId: imageId,
+              slug: blogSlug,
+              content: content,
+            })
+              .then(() => enqueueSnackbar("Blog card has been updated"))
+              .catch((e) =>
+                enqueueSnackbar(`Error updating the blog card: ${e.message}`, {
+                  variant: "error",
+                })
+              )
+              .finally(() => {
+                handleClose();
+                setHeroPhoto(null);
+                setContent("");
+              });
+          })
+        );
+      }
+    }
+
+    if (heroPhoto instanceof File && !storedBlog) {
       let imageId;
       let blogSlug;
 
@@ -116,27 +167,6 @@ const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
             setContent("");
           });
       });
-    }
-
-    if (typeof heroPhoto === "string" && storedBlog) {
-      addBlog(storedBlog.slug, {
-        ...data,
-        author: authorName,
-        imageId: storedBlog.imageId,
-        slug: storedBlog.slug,
-        content: content,
-      })
-        .then(() => enqueueSnackbar("Blog card has been updated"))
-        .catch((e) =>
-          enqueueSnackbar(`Error updating the blog card: ${e.message}`, {
-            variant: "error",
-          })
-        )
-        .finally(() => {
-          handleClose();
-          setHeroPhoto(null);
-          setContent("");
-        });
     }
   };
 
@@ -209,6 +239,7 @@ const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
             <HeroStringImage
               handleClearChange={handleClearChange}
               ImageUrl={heroPhoto}
+              blogSlug={storedBlog?.slug}
             />
           ) : heroPhoto instanceof File ? (
             <AddingHeroImage

@@ -6,7 +6,8 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { db } from "lib/firebase/config";
+import { deleteObject, ref } from "firebase/storage";
+import { db, storage } from "lib/firebase/config";
 import { fileStorage } from "lib/firebase/utils";
 import _ from "lodash";
 import { IAddBlogPost } from "types/blog";
@@ -20,9 +21,14 @@ export function addBlog(slug: string, data: IAddBlogPost) {
 
 export function blogStorage(file: File, blogName: string) {
   const blogSlug = _.kebabCase(blogName);
-  return fileStorage(file, endpoints.storage.blog, blogSlug).then(
+  return fileStorage(file, `${endpoints.storage.blog}/${blogSlug}`).then(
     (imageId) => ({ imageId, blogSlug })
   );
+}
+
+export function deleteblogStorage(fileName: string, folderName: string) {
+  const objRef = ref(storage, `blog/${folderName}/${fileName}`);
+  return deleteObject(objRef);
 }
 
 export function getBlogs(setState: (state: any[]) => void) {

@@ -1,7 +1,6 @@
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 import { IBlogPage } from "types/blog";
 import AddBlog from "./AddBlog";
-import { useState } from "react";
 
 type EditModalProps = {
   onClose: () => void;
@@ -10,7 +9,6 @@ type EditModalProps = {
 };
 
 const EditModal = ({ onClose, chosenRow }: EditModalProps) => {
-  // const [open, setOpen] = useState(true);
   const open = true;
   return (
     <FormModalWrapper
