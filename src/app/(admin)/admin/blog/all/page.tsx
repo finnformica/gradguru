@@ -50,7 +50,9 @@ const BlogEditTable = () => {
         <EditDeleteActions
           session={session}
           onDeleteClick={() => setBlogToDelete(params.row)}
-          onEditClick={() => setEditBlog(params.row)}
+          onEditClick={() => {
+            setEditBlog(params.row);
+          }}
         />
       ),
     },
@@ -68,8 +70,6 @@ const BlogEditTable = () => {
         setBlogToDelete(null);
       });
   };
-
-  const handleEditBlog = () => console.log("blog edited");
 
   if (!session) return <LoadingScreen />;
 
@@ -89,13 +89,7 @@ const BlogEditTable = () => {
         />
       )}
       {editBlog && (
-        <EditModal
-          slug={editBlog.slug}
-          onClose={() => setEditBlog(null)}
-          onSubmit={handleEditBlog}
-          open={!!editBlog}
-          chosenRow={editBlog}
-        />
+        <EditModal onClose={() => setEditBlog(null)} chosenRow={editBlog} />
       )}
     </Container>
   );

@@ -1,22 +1,17 @@
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 import { IBlogPage } from "types/blog";
 import AddBlog from "./AddBlog";
+import { useState } from "react";
 
 type EditModalProps = {
-  slug: string;
   onClose: () => void;
-  onSubmit: () => void;
+
   chosenRow: IBlogPage;
-  open: boolean;
 };
 
-const EditModal = ({
-  slug,
-  onClose,
-  onSubmit,
-  open,
-  chosenRow,
-}: EditModalProps) => {
+const EditModal = ({ onClose, chosenRow }: EditModalProps) => {
+  // const [open, setOpen] = useState(true);
+  const open = true;
   return (
     <FormModalWrapper
       title={chosenRow.title}
@@ -25,7 +20,7 @@ const EditModal = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <AddBlog storedBlog={chosenRow} />
+      <AddBlog storedBlog={chosenRow} handleClose={onClose} />
     </FormModalWrapper>
   );
 };

@@ -23,15 +23,15 @@ import { BlogForm, IBlogPage } from "../../types/blog";
 import AddingHeroImage from "./AddingHeroImage";
 import HeroStringImage from "./HeroStringImage";
 import { modules } from "./constants";
-import { serverTimestamp } from "firebase/firestore";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 
 type addBlogProps = {
   storedBlog?: IBlogPage;
+  handleClose: () => void;
 };
 
-const AddBlog = ({ storedBlog }: addBlogProps) => {
+const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
@@ -90,11 +90,10 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
 
+    const authorName = user.name ? user.name : "Error";
     if (heroPhoto instanceof File) {
       let imageId;
       let blogSlug;
-
-      const authorName = user.name ? user.name : "Error";
 
       blogStorage(heroPhoto, data.title).then((res) => {
         ({ imageId, blogSlug } = res);
@@ -119,9 +118,26 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
       });
     }
 
-    // if (update) {
-
-    // }
+    if (typeof heroPhoto === "string" && storedBlog) {
+      addBlog(storedBlog.slug, {
+        ...data,
+        author: authorName,
+        imageId: storedBlog.imageId,
+        slug: storedBlog.slug,
+        content: content,
+      })
+        .then(() => enqueueSnackbar("Blog card has been updated"))
+        .catch((e) =>
+          enqueueSnackbar(`Error updating the blog card: ${e.message}`, {
+            variant: "error",
+          })
+        )
+        .finally(() => {
+          handleClose();
+          setHeroPhoto(null);
+          setContent("");
+        });
+    }
   };
 
   return (
