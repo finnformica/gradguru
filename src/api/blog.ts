@@ -4,7 +4,6 @@ import { fileStorage } from "lib/firebase/utils";
 import _ from "lodash";
 import { useMemo } from "react";
 import useSWR from "swr";
-import { IBlogPage } from "types/blog";
 import { endpoints, getFetcher, postFetcher } from "utils/axios";
 
 // list of blogs
@@ -54,14 +53,5 @@ export const getBlog = async (slug: string) => {
     return docSnap.data();
   }
 };
-
-// export function  getBlog(slug:string, setState: (state: any[] => void)) => {
-//   const docRef = doc(db, "blogs", slug);
-//   const docSnap = await getDoc(docRef);
-//   if (docSnap.exists()) {
-//     setLoadedDoc(docSnap.data() as IBlogPage);
-//   }
-//   }
-// };
 
 export { blogStorage, postBlog, useBlogs };

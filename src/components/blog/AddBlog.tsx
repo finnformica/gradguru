@@ -1,19 +1,17 @@
 "use client";
 
-import { Delete } from "@mui/icons-material";
 import {
   Autocomplete,
   Box,
   Button,
   Container,
-  IconButton,
   Stack,
   TextField,
-  Tooltip,
-  Typography,
 } from "@mui/material";
 import { blogStorage, postBlog } from "api/blog";
 import { LoadingScreen } from "components/global-components";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "lib/firebase/config";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
@@ -22,11 +20,10 @@ import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
-import { modules } from "./constants";
 import { BlogForm, IBlogPage } from "../../types/blog";
-import { getDownloadURL, ref } from "firebase/storage";
-import { set } from "lodash";
-import { storage } from "lib/firebase/config";
+import AddingHeroImage from "./AddingHeroImage";
+import { modules } from "./constants";
+import HeroStringImage from "./HeroStringImage";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 
@@ -38,23 +35,24 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
-  const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [heroPhoto, setHeroPhoto] = useState<File | string | null>(null);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const deafultText = storedBlog ? storedBlog.content : "";
     setContent(deafultText);
     if (!storedBlog) return;
+    setUpdate(true);
     const pathReference = ref(
       storage,
       `blog/${storedBlog.slug}/${storedBlog.imageId}`
     );
     getDownloadURL(pathReference)
       .then((url) => {
-        setImageUrl(url);
+        setHeroPhoto(url);
       })
       .catch((error) => {
-        setImageUrl(null);
+        setHeroPhoto(null);
       });
   }, []);
 
@@ -92,30 +90,33 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
     if (!heroPhoto) {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
-    let imageId;
-    let blogSlug;
 
-    blogStorage(heroPhoto, data.title).then((res) => {
-      ({ imageId, blogSlug } = res);
-      postBlog(blogSlug, {
-        ...data,
-        author: user.name,
-        imageId: imageId,
-        slug: blogSlug,
-        content: content,
-      })
-        .then(() => enqueueSnackbar("Blog card has been added"))
-        .catch((e) =>
-          enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
-            variant: "error",
-          })
-        )
-        .finally(() => {
-          reset();
-          setHeroPhoto(null);
-          setContent("");
-        });
-    });
+    if (heroPhoto instanceof File) {
+      let imageId;
+      let blogSlug;
+
+      blogStorage(heroPhoto, data.title).then((res) => {
+        ({ imageId, blogSlug } = res);
+        postBlog(blogSlug, {
+          ...data,
+          author: user.name,
+          imageId: imageId,
+          slug: blogSlug,
+          content: content,
+        })
+          .then(() => enqueueSnackbar("Blog card has been added"))
+          .catch((e) =>
+            enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
+              variant: "error",
+            })
+          )
+          .finally(() => {
+            reset();
+            setHeroPhoto(null);
+            setContent("");
+          });
+      });
+    }
   };
 
   return (
@@ -185,31 +186,16 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
             )}
           />
 
-          {heroPhoto ? (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <Image
-                src={URL.createObjectURL(heroPhoto)}
-                width={400}
-                height={300}
-                alt="Selected hero photo"
-                style={{
-                  borderRadius: "12px",
-                }}
-              />
-              <Typography variant="body1">{heroPhoto.name}</Typography>
-              <Tooltip title="Clear Image">
-                <IconButton onClick={handleClearChange}>
-                  <Delete />
-                </IconButton>
-              </Tooltip>
-            </Box>
+          {typeof heroPhoto === "string" ? (
+            <HeroStringImage
+              handleClearChange={handleClearChange}
+              ImageUrl={heroPhoto}
+            />
+          ) : heroPhoto instanceof File ? (
+            <AddingHeroImage
+              handleClearChange={handleClearChange}
+              photoFile={heroPhoto}
+            />
           ) : (
             <TextField
               type={"file"}
