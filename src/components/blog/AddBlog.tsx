@@ -23,6 +23,7 @@ import { BlogForm, IBlogPage } from "../../types/blog";
 import AddingHeroImage from "./AddingHeroImage";
 import HeroStringImage from "./HeroStringImage";
 import { modules } from "./constants";
+import { serverTimestamp } from "firebase/firestore";
 
 const tagOptions = ["Finance", "Jobs", "Education"];
 
@@ -35,13 +36,12 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
   const [heroPhoto, setHeroPhoto] = useState<File | string | null>(null);
-  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const deafultText = storedBlog ? storedBlog.content : "";
     setContent(deafultText);
     if (!storedBlog) return;
-    setUpdate(true);
+
     const pathReference = ref(
       storage,
       `blog/${storedBlog.slug}/${storedBlog.imageId}`
@@ -90,7 +90,7 @@ const AddBlog = ({ storedBlog }: addBlogProps) => {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
 
-    if (!update && heroPhoto instanceof File) {
+    if (heroPhoto instanceof File) {
       let imageId;
       let blogSlug;
 

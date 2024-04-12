@@ -51,7 +51,6 @@ const BlogEditTable = () => {
           session={session}
           onDeleteClick={() => setBlogToDelete(params.row)}
           onEditClick={() => setEditBlog(params.row)}
-          // onEditClick={() => console.log(params.row.slug)}
         />
       ),
     },

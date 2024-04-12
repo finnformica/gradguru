@@ -8,7 +8,6 @@ export interface FirebaseBlog {
   imageId: string;
   slug: string;
   summary: string;
-
   title: string;
   author: string;
 }
