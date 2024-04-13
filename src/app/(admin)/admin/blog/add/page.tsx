@@ -1,7 +1,7 @@
-import AddBlog from "components/blog/AddBlog";
+import CreateBlog from "components/blog/CreateBlog";
 
 const BlogForm = () => {
-  return <AddBlog />;
+  return <CreateBlog />;
 };
 
 export default BlogForm;

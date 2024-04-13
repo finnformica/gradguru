@@ -31,7 +31,7 @@ type addBlogProps = {
   handleClose?: () => void;
 };
 
-const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
+const CreateBlog = ({ storedBlog, handleClose }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [content, setContent] = useState("");
@@ -271,4 +271,4 @@ const AddBlog = ({ storedBlog, handleClose }: addBlogProps) => {
   );
 };
 
-export default AddBlog;
+export default CreateBlog;

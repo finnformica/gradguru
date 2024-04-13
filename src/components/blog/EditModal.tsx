@@ -1,6 +1,6 @@
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 import { IBlogPage } from "types/blog";
-import AddBlog from "./AddBlog";
+import CreateBlog from "./CreateBlog";
 
 type EditModalProps = {
   onClose: () => void;
@@ -18,7 +18,7 @@ const EditModal = ({ onClose, chosenRow }: EditModalProps) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <AddBlog storedBlog={chosenRow} handleClose={onClose} />
+      <CreateBlog storedBlog={chosenRow} handleClose={onClose} />
     </FormModalWrapper>
   );
 };
