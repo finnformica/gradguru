@@ -4,23 +4,22 @@ import CreateBlog from "./CreateBlog";
 
 type EditModalProps = {
   onClose: () => void;
-
-  chosenRow: IBlogPage;
+  blogObject: IBlogPage;
 };
 
-const EditModal = ({ onClose, chosenRow }: EditModalProps) => {
+const BlogEditModal = ({ onClose, blogObject }: EditModalProps) => {
   const open = true;
   return (
     <FormModalWrapper
-      title={chosenRow.title}
+      title={blogObject.title}
       open={open}
       handleClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <CreateBlog storedBlog={chosenRow} handleClose={onClose} />
+      <CreateBlog storedBlog={blogObject} handleClose={onClose} />
     </FormModalWrapper>
   );
 };
 
-export default EditModal;
+export default BlogEditModal;
