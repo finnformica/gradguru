@@ -17,7 +17,7 @@ import { db, storage } from "lib/firebase/config";
 import { Grid, ILRQuestion } from "types";
 import { endpoints } from "utils/axios";
 
-const INIT_NUM_ROWS = 1;
+const INIT_NUM_ROWS = 4;
 
 const uploadImagesToStorage = async (data: Grid[], folder: string) => {
   // iterate over each grid cell and upload any images to storage, store the id
