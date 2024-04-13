@@ -1,3 +1,6 @@
+import Image from "next/image";
+import _ from "lodash";
+
 import {
   AccessAlarm,
   AirplanemodeActive,
@@ -13,6 +16,7 @@ import {
   Hexagon,
   Home,
   Landscape,
+  North,
   Park,
   Pentagon,
   Person,
@@ -21,11 +25,8 @@ import {
   Star,
   Water,
   WbSunny,
-  North,
 } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-
-import _ from "lodash";
 
 import { CellData, Grid } from "types";
 import { gridDefaultCell } from "./constants";
@@ -135,7 +136,20 @@ export const renderCell = (cell: CellData) => {
     case "icon":
       return mapIcon({ ...cell });
     case "image":
-      return null; // TODO: Implement image rendering
+      return (
+        <Image
+          src={URL.createObjectURL(cell.value as File)}
+          width={0}
+          height={0}
+          alt={cell.value.name}
+          style={{
+            width: `${cell.size}%`,
+            height: `${cell.size}%`,
+            overflow: "hidden",
+            transform: `rotate(${cell.rotation}deg)`,
+          }}
+        />
+      );
     default:
       return cell.value;
   }
