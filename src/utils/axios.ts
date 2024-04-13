@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { AptitudeTestType } from "types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -78,7 +79,10 @@ export const endpoints = {
     blog: (id: string | null) =>
       `${BASE_URL}/firebase/document?collection=blogs${id ? `&document=${id}` : ""}`,
   },
-  storage: { blog: "blog", aptitudeTests: "aptitude-tests" },
+  storage: {
+    blog: "blog",
+    aptitudeTests: (type: AptitudeTestType) => `aptitude-tests/${type}`,
+  },
   tests: {
     nr: {
       all: `${BASE_URL}/firebase/document?collection=nr-consulting`,

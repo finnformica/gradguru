@@ -4,17 +4,41 @@ import { Typography } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-import { createQuestion } from "api/tests";
+import { v4 as uuid } from "uuid";
 
 import { LRQuestionForm } from "components/aptitude-tests/logical-reasoning";
 import {
   initialiseSquareGrid,
   mapNestedArrayToObject,
 } from "components/aptitude-tests/logical-reasoning/utils";
-import { ILRQuestion } from "types";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "lib/firebase/config";
+import { Grid, ILRQuestion } from "types";
+import { endpoints } from "utils/axios";
 
-const INIT_NUM_ROWS = 4;
+const INIT_NUM_ROWS = 1;
+
+const uploadImagesToStorage = async (data: Grid[], folder: string) => {
+  // iterate over each grid cell and upload any images to storage, store the id
+  data.forEach((grid) => {
+    grid.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.type === "image") {
+          const path = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${folder}/${uuid()}`;
+
+          const _ref = ref(storage, path);
+
+          uploadBytes(_ref, cell.value as any);
+
+          cell.value = path;
+        }
+      });
+    });
+  });
+
+  return data;
+};
 
 const AddLRQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -39,13 +63,41 @@ const AddLRQuestion = () => {
     });
 
   const onSubmit: SubmitHandler<ILRQuestion> = (data: ILRQuestion) => {
-    data.grid.data = mapNestedArrayToObject(data.grid.data);
-    data.grid.options = mapNestedArrayToObject(data.grid.options);
+    const ref = doc(
+      collection(
+        db,
+        "courses",
+        "consulting",
+        "tests",
+        "questions",
+        "logical-reasoning"
+      )
+    );
 
-    createQuestion("logical-reasoning", data)
-      .then(() => enqueueSnackbar("LR question added"))
-      .catch((err) => console.log(err))
-      .finally(() => reset());
+    const dataPromise = uploadImagesToStorage(data.grid.data, ref.id);
+    const optionsPromise = uploadImagesToStorage(data.grid.options, ref.id);
+
+    Promise.all([dataPromise, optionsPromise]).then(
+      ([dataGrid, optionsGrid]) => {
+        console.log("dataGrid", dataGrid);
+        console.log("optionsGrid", optionsGrid);
+
+        const payload = {
+          ...data,
+          grid: {
+            ...data.grid,
+            data: mapNestedArrayToObject(dataGrid),
+            options: mapNestedArrayToObject(optionsGrid),
+          },
+          created: Date.now(),
+        };
+
+        setDoc(ref, payload)
+          .then(() => enqueueSnackbar("LR question added"))
+          .catch((err) => console.log(err))
+          .finally(() => reset());
+      }
+    );
   };
 
   return (
