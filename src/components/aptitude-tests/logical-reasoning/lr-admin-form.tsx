@@ -154,13 +154,15 @@ const LRQuestionForm = ({
         name="answer"
         control={control}
         rules={{ required: true }}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
           <TextField
             select
             {...field}
             sx={{ width: 100 }}
             label="Answer"
             size="small"
+            error={!!error}
+            helperText={!!error && "Answer is required"}
           >
             {Object.keys(alphaToNumericMapping).map((key) => (
               <MenuItem key={key} value={alphaToNumericMapping[key]}>
