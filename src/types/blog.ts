@@ -9,7 +9,7 @@ export interface FirebaseBlog {
   slug: string;
   summary: string;
   title: string;
-  author: string;
+  author: string | null;
 }
 
 export interface IBlogCard extends FirebaseBlog {

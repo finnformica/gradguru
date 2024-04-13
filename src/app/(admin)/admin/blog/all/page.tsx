@@ -2,7 +2,7 @@
 import { Container, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { deleteBlogDB, deleteBlogStorage, getBlogs } from "api/blog";
-import EditModal from "components/blog/EditModal";
+import BlogEditModal from "components/blog/BlogEditModal";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,
@@ -38,6 +38,7 @@ const BlogEditTable = () => {
       headerName: "Created",
       width: 200,
       renderCell: (params) => new Date(params.value).toLocaleString(),
+      valueGetter: (params) => params.row.grid.type,
     },
 
     {
@@ -72,9 +73,7 @@ const BlogEditTable = () => {
       });
   };
 
-  if (!session) return <LoadingScreen />;
-
-  if (!blogs) return <LoadingScreen />;
+  if (!session && !blogs) return <LoadingScreen />;
 
   return (
     <Container maxWidth="lg" sx={{ gap: 4 }}>
@@ -90,7 +89,10 @@ const BlogEditTable = () => {
         />
       )}
       {editBlog && (
-        <EditModal onClose={() => setEditBlog(null)} chosenRow={editBlog} />
+        <BlogEditModal
+          onClose={() => setEditBlog(null)}
+          blogObject={editBlog}
+        />
       )}
     </Container>
   );

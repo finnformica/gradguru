@@ -38,8 +38,8 @@ const CreateBlog = ({ storedBlog, handleClose }: addBlogProps) => {
   const [heroPhoto, setHeroPhoto] = useState<File | string | null>(null);
 
   useEffect(() => {
-    const deafultText = storedBlog ? storedBlog.content : "";
-    setContent(deafultText);
+    const defaultText = storedBlog ? storedBlog.content : "";
+    setContent(defaultText);
     if (!storedBlog) return;
 
     const pathReference = ref(
@@ -55,15 +55,15 @@ const CreateBlog = ({ storedBlog, handleClose }: addBlogProps) => {
       });
   }, []);
 
-  const deafultTitle = storedBlog ? storedBlog.title : "";
-  const deafultSummary = storedBlog ? storedBlog.summary : "";
-  const deafulTags = storedBlog ? storedBlog.tags : "";
+  const defaultTitle = storedBlog ? storedBlog.title : "";
+  const defaultSummary = storedBlog ? storedBlog.summary : "";
+  const defaulTags = storedBlog ? storedBlog.tags : "";
 
   const { control, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
-      title: deafultTitle,
-      summary: deafultSummary,
-      tags: deafulTags,
+      title: defaultTitle,
+      summary: defaultSummary,
+      tags: defaulTags,
     },
   });
 
@@ -90,7 +90,7 @@ const CreateBlog = ({ storedBlog, handleClose }: addBlogProps) => {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
 
-    const authorName = user.name ? user.name : "Error";
+    const authorName = user.name ? user.name : null;
 
     if (storedBlog && handleClose) {
       if (typeof heroPhoto === "string") {
