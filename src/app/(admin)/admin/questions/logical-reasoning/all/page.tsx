@@ -18,6 +18,8 @@ import {
   LoadingScreen,
 } from "components/global-components";
 import { ILRQuestion } from "types";
+import { deleteStorageFolder } from "lib/firebase/utils";
+import { endpoints } from "utils/axios";
 
 const AllLRQuestions = () => {
   const { data: session } = useSession();
@@ -121,8 +123,16 @@ const AllLRQuestions = () => {
       return;
     }
 
-    deleteQuestion("logical-reasoning", questionToDelete)
-      .then(() => enqueueSnackbar("NR question deleted"))
+    const pathToFolder = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${questionToDelete}`;
+
+    const storageDeletePromise = deleteStorageFolder(pathToFolder); // delete images from storage
+    const questionDeletePromise = deleteQuestion(
+      "logical-reasoning",
+      questionToDelete
+    );
+
+    Promise.all([storageDeletePromise, questionDeletePromise])
+      .then(() => enqueueSnackbar("LR question deleted"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
