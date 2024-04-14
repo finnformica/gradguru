@@ -87,8 +87,6 @@ export async function fileStorage(
 }
 
 export async function deleteStorageFolder(pathToFolder: string) {
-  console.log("deleting items at", pathToFolder);
-
   const _ref = storageRef(storage, pathToFolder);
   return listAll(_ref).then((res) => {
     res.items.forEach((itemRef) => {
