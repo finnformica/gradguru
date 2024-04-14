@@ -79,9 +79,6 @@ const AddLRQuestion = () => {
 
     Promise.all([dataPromise, optionsPromise]).then(
       ([dataGrid, optionsGrid]) => {
-        console.log("dataGrid", dataGrid);
-        console.log("optionsGrid", optionsGrid);
-
         const payload = {
           ...data,
           grid: {
