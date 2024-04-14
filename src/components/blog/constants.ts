@@ -1,3 +1,5 @@
+export const tagOptions = ["Finance", "Jobs", "Education"];
+
 export const modules = {
   toolbar: [
     [{ font: [] }],

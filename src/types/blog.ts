@@ -1,7 +1,9 @@
-export type BlogForm = {
+export type blogForm = {
   title: string;
   summary: string;
   tags: string | null;
+  blogHeroPhoto: File | null;
+  content: string;
 };
 
 export interface FirebaseBlog {

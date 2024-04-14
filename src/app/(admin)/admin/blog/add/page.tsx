@@ -1,7 +1,15 @@
+"use client";
 import CreateBlog from "components/blog/CreateBlog";
+import AddBlog from "components/blog/AddBlog";
+import { blogForm } from "types/blog";
 
-const BlogForm = () => {
-  return <CreateBlog />;
+const onSubmit = (data: blogForm) => {
+  console.log(data);
 };
 
-export default BlogForm;
+const AddBlogForm = () => {
+  // return <CreateBlog />
+  return <AddBlog onSubmitBlog={onSubmit} />;
+};
+
+export default AddBlogForm;

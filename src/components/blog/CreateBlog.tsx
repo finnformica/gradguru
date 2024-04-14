@@ -19,7 +19,7 @@ import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
-import { BlogForm, IBlogPage } from "../../types/blog";
+import { blogForm, IBlogPage } from "../../types/blog";
 import AddingHeroImage from "./AddingHeroImage";
 import HeroStringImage from "./HeroStringImage";
 import { modules } from "./constants";
@@ -85,7 +85,7 @@ const CreateBlog = ({ storedBlog, handleClose }: addBlogProps) => {
   }
   const { user } = session;
 
-  const onSubmit = (data: BlogForm) => {
+  const onSubmit = (data: blogForm) => {
     if (!heroPhoto) {
       return enqueueSnackbar("No here image selected.", { variant: "error" });
     }
