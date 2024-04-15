@@ -1,5 +1,6 @@
 import Image from "next/image";
 import _ from "lodash";
+import { v4 as uuid } from "uuid";
 
 import {
   AccessAlarm,
@@ -30,6 +31,9 @@ import { Typography } from "@mui/material";
 
 import { CellData, Grid } from "types";
 import { gridDefaultCell } from "./constants";
+import { endpoints } from "utils/axios";
+import { getBytes, ref, uploadBytes } from "firebase/storage";
+import { storage } from "lib/firebase/config";
 
 export const mapIcon = ({
   value,
@@ -183,4 +187,55 @@ export const mapObjectToNestedArray = (obj: any) => {
   });
 
   return array;
+};
+
+export const uploadImagesToStorage = async (data: Grid[], folder: string) => {
+  // iterate over each grid cell and upload any images to storage, store the id
+  data.forEach((grid) => {
+    grid.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.type === "image") {
+          const path = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${folder}/${uuid()}`;
+
+          const _ref = ref(storage, path);
+
+          uploadBytes(_ref, cell.value as any);
+
+          cell.value = path;
+        }
+      });
+    });
+  });
+
+  return data;
+};
+
+export const downloadImagesFromStorage = async (data: Grid[]) => {
+  // iterate over each grid cell and upload any images to storage, store the id
+  const res = await Promise.all(
+    data.map(async (grid) => {
+      return await Promise.all(
+        grid.map(async (row) => {
+          return await Promise.all(
+            row.map((cell) => {
+              if (cell.type === "image") {
+                const path = cell.value as string;
+
+                const _ref = ref(storage, path);
+
+                return getBytes(_ref).then((bytes) => ({
+                  ...cell,
+                  value: new File([bytes], path),
+                }));
+              }
+
+              return cell;
+            })
+          );
+        })
+      );
+    })
+  );
+
+  return res;
 };

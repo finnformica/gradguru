@@ -11,7 +11,10 @@ import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import LRModal from "components/aptitude-tests/logical-reasoning/lr-admin-edit-modal";
-import { mapObjectToNestedArray } from "components/aptitude-tests/logical-reasoning/utils";
+import {
+  downloadImagesFromStorage,
+  mapObjectToNestedArray,
+} from "components/aptitude-tests/logical-reasoning/utils";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,
@@ -105,7 +108,20 @@ const AllLRQuestions = () => {
             question.grid.options = mapObjectToNestedArray(
               question.grid.options
             );
-            setQuestionToEdit(question);
+
+            const dataPromise = downloadImagesFromStorage(question.grid.data);
+            const optionsPromise = downloadImagesFromStorage(
+              question.grid.options
+            );
+
+            Promise.all([dataPromise, optionsPromise]).then(
+              ([dataGrid, optionsGrid]) => {
+                question.grid.data = dataGrid;
+                question.grid.options = optionsGrid;
+
+                setQuestionToEdit(question);
+              }
+            );
           }}
           onDeleteClick={() => {
             setQuestionToDelete(params.row.id as string);

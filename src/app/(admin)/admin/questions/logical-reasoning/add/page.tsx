@@ -4,41 +4,18 @@ import { Typography } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { v4 as uuid } from "uuid";
 
 import { LRQuestionForm } from "components/aptitude-tests/logical-reasoning";
 import {
   initialiseSquareGrid,
   mapNestedArrayToObject,
+  uploadImagesToStorage,
 } from "components/aptitude-tests/logical-reasoning/utils";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "lib/firebase/config";
-import { Grid, ILRQuestion } from "types";
-import { endpoints } from "utils/axios";
+import { db } from "lib/firebase/config";
+import { ILRQuestion } from "types";
 
 const INIT_NUM_ROWS = 4;
-
-const uploadImagesToStorage = async (data: Grid[], folder: string) => {
-  // iterate over each grid cell and upload any images to storage, store the id
-  data.forEach((grid) => {
-    grid.forEach((row) => {
-      row.forEach((cell) => {
-        if (cell.type === "image") {
-          const path = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${folder}/${uuid()}`;
-
-          const _ref = ref(storage, path);
-
-          uploadBytes(_ref, cell.value as any);
-
-          cell.value = path;
-        }
-      });
-    });
-  });
-
-  return data;
-};
 
 const AddLRQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -91,7 +68,11 @@ const AddLRQuestion = () => {
 
         setDoc(ref, payload)
           .then(() => enqueueSnackbar("LR question added"))
-          .catch((err) => console.log(err))
+          .catch((err) =>
+            enqueueSnackbar(`Something went wrong - ${err}`, {
+              variant: "error",
+            })
+          )
           .finally(() => reset());
       }
     );
