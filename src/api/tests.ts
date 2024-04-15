@@ -183,8 +183,10 @@ export const patchQuestion = async (
     questionId
   );
 
+  const payload = { ...data, created: Date.now() };
+
   // TODO: add updated timestamps
-  return setDoc(ref, data, { merge: true });
+  return setDoc(ref, payload, { merge: true });
 };
 
 export const deleteQuestion = async (
