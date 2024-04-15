@@ -116,10 +116,16 @@ const AllLRQuestions = () => {
 
             Promise.all([dataPromise, optionsPromise]).then(
               ([dataGrid, optionsGrid]) => {
-                question.grid.data = dataGrid;
-                question.grid.options = optionsGrid;
+                const questionWithImageFiles = {
+                  ...question,
+                  grid: {
+                    ...question.grid,
+                    data: dataGrid,
+                    options: optionsGrid,
+                  },
+                };
 
-                setQuestionToEdit(question);
+                setQuestionToEdit(questionWithImageFiles);
               }
             );
           }}
