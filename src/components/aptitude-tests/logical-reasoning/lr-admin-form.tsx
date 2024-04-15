@@ -353,7 +353,11 @@ const LRQuestionForm = ({
     </>
   );
 
-  const renderGridControls = (remove: UseFieldArrayRemove, index: number) => (
+  const renderGridControls = (
+    remove: UseFieldArrayRemove,
+    index: number,
+    flag: "data" | "options"
+  ) => (
     <Stack
       direction={templateType !== "grid" ? "row" : "column"}
       spacing={2}
@@ -363,7 +367,10 @@ const LRQuestionForm = ({
       <Tooltip title="Clear grid">
         <IconButton
           onClick={() =>
-            setValue(`grid.data.${index}`, returnDefaultCell(gridType, numRows))
+            setValue(
+              `grid.${flag}.${index}`,
+              returnDefaultCell(gridType, numRows)
+            )
           }
         >
           <Clear fontSize="small" />
@@ -433,7 +440,7 @@ const LRQuestionForm = ({
                     }
                   />
                 )}
-                {renderGridControls(remove, index)}
+                {renderGridControls(remove, index, "data")}
               </Stack>
             )}
           />
@@ -494,7 +501,7 @@ const LRQuestionForm = ({
                         }
                       />
                     )}
-                    {renderGridControls(removeAnswer, index)}
+                    {renderGridControls(removeAnswer, index, "options")}
                   </Stack>
                 )}
               />
