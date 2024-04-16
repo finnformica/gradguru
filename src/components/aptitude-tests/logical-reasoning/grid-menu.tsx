@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import _ from "lodash";
+
 import {
   Autocomplete,
   Divider,
@@ -17,7 +19,7 @@ import {
 
 import { Clear } from "@mui/icons-material";
 import { Grid, GridCoord, GridType } from "types";
-import { colors, gridDefaultCell, icons } from "./constants";
+import { colors, gridDefaultCell, iconToComponentMapping } from "./constants";
 
 const updateGrid = (
   grid: Grid,
@@ -104,12 +106,13 @@ const TextInput = ({ grid, setGrid, coord }: InputProps) => {
 const IconMenu = ({ grid, setGrid, coord }: InputProps) => {
   return (
     <Autocomplete
-      options={icons}
+      options={Object.keys(iconToComponentMapping)}
       value={grid[coord.row][coord.col].value}
       onChange={(e, value) =>
         updateGrid(grid, setGrid, coord, { type: "icon", value })
       }
       isOptionEqualToValue={(option, value) => option === value}
+      getOptionLabel={(option) => _.startCase(option)}
       renderInput={(params) => (
         <TextField {...params} label="Icon" size="small" sx={{ width: 200 }} />
       )}

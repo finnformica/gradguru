@@ -3,38 +3,15 @@ import { getBytes, ref, uploadBytes } from "firebase/storage";
 import _ from "lodash";
 import Image from "next/image";
 
-import {
-  AccessAlarm,
-  AirplanemodeActive,
-  Anchor,
-  Brightness2,
-  ChangeHistory,
-  Circle,
-  Cookie,
-  Face,
-  Forest,
-  Fort,
-  Grass,
-  Hexagon,
-  Home,
-  Landscape,
-  North,
-  Park,
-  Pentagon,
-  Person,
-  Sailing,
-  Square,
-  Star,
-  Water,
-  WbSunny,
-} from "@mui/icons-material";
 import { Typography } from "@mui/material";
 
+import { Iconify } from "components/global-components";
 import { storage } from "lib/firebase/config";
 import { CellData, Grid } from "types";
 import { endpoints } from "utils/axios";
 import { getFileExtension } from "utils/format-string";
-import { gridDefaultCell } from "./constants";
+
+import { gridDefaultCell, iconToComponentMapping } from "./constants";
 
 export const mapIcon = ({
   value,
@@ -47,59 +24,24 @@ export const mapIcon = ({
   rotation: number;
   size: number;
 }) => {
-  const sx = { color, transform: `rotate(${rotation}deg)`, fontSize: size };
+  const sx = {
+    color,
+    transform: `rotate(${rotation}deg)`,
+    width: size,
+    height: size,
+  };
 
   if (!value) return null;
 
-  switch (value.toLowerCase()) {
-    case "arrow":
-      return <North sx={sx} />;
-    case "plane":
-      return <AirplanemodeActive sx={sx} />;
-    case "face":
-      return <Face sx={sx} />;
-    case "tree":
-      return <Park sx={sx} />;
-    case "circle":
-      return <Circle sx={sx} />;
-    case "square":
-      return <Square sx={sx} />;
-    case "pentagon":
-      return <Pentagon sx={sx} />;
-    case "hexagon":
-      return <Hexagon sx={sx} />;
-    case "star":
-      return <Star sx={sx} />;
-    case "clock":
-      return <AccessAlarm sx={sx} />;
-    case "person":
-      return <Person sx={sx} />;
-    case "cookie":
-      return <Cookie sx={sx} />;
-    case "grass":
-      return <Grass sx={sx} />;
-    case "anchor":
-      return <Anchor sx={sx} />;
-    case "boat":
-      return <Sailing sx={sx} />;
-    case "house":
-      return <Home sx={sx} />;
-    case "water":
-      return <Water sx={sx} />;
-    case "mountain":
-      return <Landscape sx={sx} />;
-    case "castle":
-      return <Fort sx={sx} />;
-    case "sun":
-      return <WbSunny sx={sx} />;
-    case "forest":
-      return <Forest sx={sx} />;
-    case "moon":
-      return <Brightness2 sx={sx} />;
-    case "triangle":
-      return <ChangeHistory sx={sx} />;
-    default:
-      return null;
+  const lValue = value.toLowerCase();
+
+  console.log(lValue);
+
+  if (iconToComponentMapping[lValue]) {
+    const icon = iconToComponentMapping[lValue];
+    return <Iconify icon={icon} sx={sx} />;
+  } else {
+    return <Typography>{value}</Typography>;
   }
 };
 
@@ -229,7 +171,7 @@ export const downloadImagesFromStorage = async (data: Grid[]) => {
 
                 return getBytes(_ref).then((bytes) => ({
                   ...cell,
-                  value: new File([bytes], path),
+                  value: new File([bytes], path.split("/").pop() as string),
                 }));
               }
 
