@@ -2,12 +2,12 @@
 
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { doc, setDoc } from "firebase/firestore";
 
-import { db } from "lib/firebase/config";
-
-import { ILRQuestion } from "types";
+import { patchQuestion } from "api/tests";
 import FormModalWrapper from "components/global-components/FormModalWrapper";
+import { deleteStorageFolder } from "lib/firebase/utils";
+import { ILRQuestion } from "types";
+import { endpoints } from "utils/axios";
 
 import LRQuestionForm from "./lr-admin-form";
 import { mapNestedArrayToObject, uploadImagesToStorage } from "./utils";
@@ -30,41 +30,35 @@ const LRModal = ({
 
     const { id, ...strippedId } = data;
 
-    const ref = doc(
-      db,
-      "courses",
-      "consulting",
-      "tests",
-      "questions",
-      "logical-reasoning",
-      id
-    );
+    deleteStorageFolder(
+      `${endpoints.storage.aptitudeTests("logical-reasoning")}/${id}`
+    ).then(() => {
+      const dataPromise = uploadImagesToStorage(data.grid.data, id);
+      const optionsPromise = uploadImagesToStorage(data.grid.options, id);
 
-    const dataPromise = uploadImagesToStorage(data.grid.data, id);
-    const optionsPromise = uploadImagesToStorage(data.grid.options, id);
+      Promise.all([dataPromise, optionsPromise]).then(
+        ([dataGrid, optionsGrid]) => {
+          const payload = {
+            ...strippedId,
+            grid: {
+              ...data.grid,
+              data: mapNestedArrayToObject(dataGrid),
+              options: mapNestedArrayToObject(optionsGrid),
+            },
+            created: Date.now(),
+          };
 
-    Promise.all([dataPromise, optionsPromise]).then(
-      ([dataGrid, optionsGrid]) => {
-        const payload = {
-          ...strippedId,
-          grid: {
-            ...data.grid,
-            data: mapNestedArrayToObject(dataGrid),
-            options: mapNestedArrayToObject(optionsGrid),
-          },
-          created: Date.now(),
-        };
-
-        setDoc(ref, payload, { merge: true })
-          .then(() => enqueueSnackbar("LR question updated"))
-          .catch((err) =>
-            enqueueSnackbar(`Something went wrong - ${err}`, {
-              variant: "error",
-            })
-          )
-          .finally(() => setQuestion(null));
-      }
-    );
+          patchQuestion("logical-reasoning", id, payload)
+            .then(() => enqueueSnackbar("LR question updated"))
+            .catch((err) =>
+              enqueueSnackbar(`Something went wrong - ${err}`, {
+                variant: "error",
+              })
+            )
+            .finally(() => setQuestion(null));
+        }
+      );
+    });
   };
 
   return (
