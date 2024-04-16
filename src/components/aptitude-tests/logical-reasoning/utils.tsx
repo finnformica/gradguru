@@ -1,6 +1,7 @@
-import Image from "next/image";
+import crypto from "crypto";
+import { getBytes, ref, uploadBytes } from "firebase/storage";
 import _ from "lodash";
-import { v4 as uuid } from "uuid";
+import Image from "next/image";
 
 import {
   AccessAlarm,
@@ -29,11 +30,11 @@ import {
 } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 
-import { CellData, Grid } from "types";
-import { gridDefaultCell } from "./constants";
-import { endpoints } from "utils/axios";
-import { getBytes, ref, uploadBytes } from "firebase/storage";
 import { storage } from "lib/firebase/config";
+import { CellData, Grid } from "types";
+import { endpoints } from "utils/axios";
+import { getFileExtension } from "utils/format-string";
+import { gridDefaultCell } from "./constants";
 
 export const mapIcon = ({
   value,
@@ -195,11 +196,14 @@ export const uploadImagesToStorage = async (data: Grid[], folder: string) => {
     grid.forEach((row) => {
       row.forEach((cell) => {
         if (cell.type === "image") {
-          const path = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${folder}/${uuid()}`;
+          const randomId = crypto.randomBytes(8).toString("hex");
+          const extension = getFileExtension(cell.value.name);
+          const filename = randomId + (extension ? `.${extension}` : "");
 
+          const path = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${folder}/${filename}`;
           const _ref = ref(storage, path);
 
-          uploadBytes(_ref, cell.value as any);
+          uploadBytes(_ref, cell.value as File);
 
           cell.value = path;
         }
