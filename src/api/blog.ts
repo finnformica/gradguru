@@ -7,7 +7,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { deleteObject, ref } from "firebase/storage";
+import { deleteObject, getBlob, getBytes, ref } from "firebase/storage";
 import { db, storage } from "lib/firebase/config";
 import { fileStorage } from "lib/firebase/utils";
 import _ from "lodash";
@@ -52,4 +52,18 @@ export const getBlog = async (slug: string) => {
   if (docSnap.exists()) {
     return docSnap.data();
   }
+};
+
+export const getHeroPhotoFile = async (
+  slug: string,
+  imageId: string
+): Promise<File | null> => {
+  const heroRef = ref(storage, `blog/${slug}/${imageId}`);
+  const fileBytes = await getBytes(heroRef);
+  if (!fileBytes) {
+    return Promise.resolve(null);
+  }
+  const heroPhotoFile = new File([fileBytes], imageId);
+  console.log(heroPhotoFile);
+  return Promise.resolve(heroPhotoFile);
 };

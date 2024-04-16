@@ -21,19 +21,28 @@ import { IBlog } from "types/blog";
 
 type addBlogProps = {
   onSubmitBlog: (data: IBlog) => Promise<void>;
+  defaultValues?: IBlog;
 };
 
-const AddBlog = ({ onSubmitBlog }: addBlogProps) => {
+const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
 
+  const setDefaultTitle = defaultValues ? defaultValues.title : "";
+  const setDefaultSummary = defaultValues ? defaultValues.summary : "";
+  const setDefaultTags = defaultValues ? defaultValues.tags : "";
+  const setDefaultContent = defaultValues ? defaultValues.content : "";
+  const setDefaultBlogHeroPhoto = defaultValues
+    ? defaultValues.blogHeroPhoto
+    : null;
+
   const { control, handleSubmit, reset, setValue } = useForm<IBlog>({
     defaultValues: {
-      title: "",
-      summary: "",
-      tags: "",
-      content: "",
+      title: setDefaultTitle,
+      summary: setDefaultSummary,
+      tags: setDefaultTags,
+      content: setDefaultContent,
       blogHeroPhoto: null,
     },
   });
@@ -109,7 +118,12 @@ const AddBlog = ({ onSubmitBlog }: addBlogProps) => {
             )}
           />
 
-          {heroPhoto ? (
+          {setDefaultBlogHeroPhoto ? (
+            <AddingHeroImage
+              handleClearChange={handleClearChange}
+              photoFile={setDefaultBlogHeroPhoto}
+            />
+          ) : heroPhoto ? (
             <AddingHeroImage
               handleClearChange={handleClearChange}
               photoFile={heroPhoto}

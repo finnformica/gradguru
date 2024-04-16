@@ -1,6 +1,8 @@
+import { getHeroPhotoFile } from "api/blog";
 import FormModalWrapper from "components/global-components/FormModalWrapper";
-import { IBlogPage } from "types/blog";
-import CreateBlog from "./CreateBlog";
+import { useEffect, useState } from "react";
+import { IBlog, IBlogPage } from "types/blog";
+import AddBlog from "./AddBlog";
 
 type EditModalProps = {
   onClose: () => void;
@@ -8,7 +10,24 @@ type EditModalProps = {
 };
 
 const BlogEditModal = ({ onClose, blogObject }: EditModalProps) => {
+  const [blogHeroPhotoFile, setBlogHeroPhotoFile] = useState<File | null>(null);
+  useEffect(() => {
+    getHeroPhotoFile(blogObject.slug, blogObject.imageId)
+      .then((file) => setBlogHeroPhotoFile(file))
+      .catch((e) => console.log(e));
+  }, []);
+
   const open = true;
+  const { created, slug, ...blogValues } = blogObject;
+  const defaultValues = {
+    ...blogValues,
+    blogHeroPhoto: blogHeroPhotoFile,
+  };
+
+  const onSubmit = (data: IBlog): Promise<void> => {
+    console.log(data);
+    return Promise.resolve();
+  };
   return (
     <FormModalWrapper
       title={blogObject.title}
@@ -17,7 +36,7 @@ const BlogEditModal = ({ onClose, blogObject }: EditModalProps) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <CreateBlog storedBlog={blogObject} handleClose={onClose} />
+      <AddBlog onSubmitBlog={onSubmit} defaultValues={defaultValues} />
     </FormModalWrapper>
   );
 };
