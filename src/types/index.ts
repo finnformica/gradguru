@@ -198,7 +198,7 @@ export type SJQuestionFlat = {
 
 export type CellData = {
   type: string;
-  value: string;
+  value: any;
   color: string;
   rotation: number;
   backgroundColor: string;

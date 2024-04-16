@@ -2,18 +2,24 @@
 
 import { useState } from "react";
 
+import _ from "lodash";
+
 import {
   Autocomplete,
   Divider,
+  IconButton,
   InputAdornment,
   ListItemText,
   MenuItem,
   Stack,
   TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 
-import { icons, gridDefaultCell, colors } from "./constants";
+import { Clear } from "@mui/icons-material";
 import { Grid, GridCoord, GridType } from "types";
+import { colors, gridDefaultCell, iconToComponentMapping } from "./constants";
 
 const updateGrid = (
   grid: Grid,
@@ -55,7 +61,7 @@ const RotationInput = ({ grid, setGrid, coord }: InputProps) => {
   );
 };
 
-const ColorDropdown = ({
+const ColorMenu = ({
   grid,
   setGrid,
   coord,
@@ -81,7 +87,7 @@ const ColorDropdown = ({
   );
 };
 
-const TextMenu = ({ grid, setGrid, coord }: InputProps) => {
+const TextInput = ({ grid, setGrid, coord }: InputProps) => {
   return (
     <TextField
       label="Text"
@@ -100,15 +106,71 @@ const TextMenu = ({ grid, setGrid, coord }: InputProps) => {
 const IconMenu = ({ grid, setGrid, coord }: InputProps) => {
   return (
     <Autocomplete
-      options={icons}
+      options={Object.keys(iconToComponentMapping)}
       value={grid[coord.row][coord.col].value}
       onChange={(e, value) =>
         updateGrid(grid, setGrid, coord, { type: "icon", value })
       }
       isOptionEqualToValue={(option, value) => option === value}
+      getOptionLabel={(option) => _.startCase(option)}
       renderInput={(params) => (
         <TextField {...params} label="Icon" size="small" sx={{ width: 200 }} />
       )}
+    />
+  );
+};
+
+const ImageInput = ({ grid, setGrid, coord }: InputProps) => {
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files && files.length > 0) {
+      updateGrid(grid, setGrid, coord, {
+        type: "image",
+        value: files[0],
+        size: 100, // 100% of cell size
+      });
+    }
+  };
+
+  const handleImageDelete = () => {
+    updateGrid(grid, setGrid, coord, { type: "file", value: null });
+  };
+
+  return grid[coord.row][coord.col].value ? (
+    <Stack
+      direction={"row"}
+      spacing={2}
+      width={250}
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Typography pl={1}>
+        {grid[coord.row][coord.col].value?.name || "Image name is empty"}
+      </Typography>
+      <Tooltip title="Clear image">
+        <IconButton onClick={handleImageDelete}>
+          <Clear />
+        </IconButton>
+      </Tooltip>
+    </Stack>
+  ) : (
+    <TextField type="file" size="small" onChange={handleImageChange} />
+  );
+};
+
+const SizeInput = ({ grid, setGrid, coord }: InputProps) => {
+  return (
+    <TextField
+      label="Size"
+      type="number"
+      size="small"
+      value={grid[coord.row][coord.col].size}
+      onChange={(e) =>
+        updateGrid(grid, setGrid, coord, { size: e.target.value })
+      }
+      InputProps={{
+        endAdornment: <InputAdornment position="end">%</InputAdornment>,
+      }}
     />
   );
 };
@@ -126,13 +188,8 @@ export const MenuContent = ({
     case "text":
       return (
         <Stack spacing={2} mx={1}>
-          <TextMenu grid={grid} setGrid={setGrid} coord={coord} />
-          <ColorDropdown
-            grid={grid}
-            setGrid={setGrid}
-            coord={coord}
-            type="color"
-          />
+          <TextInput grid={grid} setGrid={setGrid} coord={coord} />
+          <ColorMenu grid={grid} setGrid={setGrid} coord={coord} type="color" />
           <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
           <MenuItem onClick={() => setMenuDisplay("menu")}>
             <ListItemText secondary="View options" />
@@ -143,12 +200,7 @@ export const MenuContent = ({
       return (
         <Stack spacing={2} mx={1}>
           <IconMenu grid={grid} setGrid={setGrid} coord={coord} />
-          <ColorDropdown
-            grid={grid}
-            setGrid={setGrid}
-            coord={coord}
-            type="color"
-          />
+          <ColorMenu grid={grid} setGrid={setGrid} coord={coord} type="color" />
           <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
           <MenuItem onClick={() => setMenuDisplay("menu")}>
             <ListItemText secondary="View options" />
@@ -158,7 +210,7 @@ export const MenuContent = ({
     case "background":
       return (
         <Stack spacing={2} mx={1}>
-          <ColorDropdown
+          <ColorMenu
             grid={grid}
             setGrid={setGrid}
             coord={coord}
@@ -170,7 +222,16 @@ export const MenuContent = ({
         </Stack>
       );
     case "image":
-      return null; // TODO: Implement image rendering
+      return (
+        <Stack mx={1} spacing={2}>
+          <ImageInput grid={grid} setGrid={setGrid} coord={coord} />
+          <RotationInput grid={grid} setGrid={setGrid} coord={coord} />
+          <SizeInput grid={grid} setGrid={setGrid} coord={coord} />
+          <MenuItem onClick={() => setMenuDisplay("menu")}>
+            <ListItemText secondary="View options" />
+          </MenuItem>
+        </Stack>
+      );
     case "menu":
       return (
         <>
@@ -179,9 +240,7 @@ export const MenuContent = ({
           <MenuItem onClick={() => setMenuDisplay("background")}>
             Background
           </MenuItem>
-          <MenuItem onClick={() => setMenuDisplay("image")} disabled>
-            Image
-          </MenuItem>
+          <MenuItem onClick={() => setMenuDisplay("image")}>Image</MenuItem>
           <Divider />
           <MenuItem
             onClick={() =>

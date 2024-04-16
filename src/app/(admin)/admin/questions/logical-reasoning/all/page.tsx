@@ -11,13 +11,18 @@ import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import LRModal from "components/aptitude-tests/logical-reasoning/lr-admin-edit-modal";
-import { mapObjectToNestedArray } from "components/aptitude-tests/logical-reasoning/utils";
+import {
+  downloadImagesFromStorage,
+  mapObjectToNestedArray,
+} from "components/aptitude-tests/logical-reasoning/utils";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
 import { ILRQuestion } from "types";
+import { deleteStorageFolder } from "lib/firebase/utils";
+import { endpoints } from "utils/axios";
 
 const AllLRQuestions = () => {
   const { data: session } = useSession();
@@ -103,7 +108,26 @@ const AllLRQuestions = () => {
             question.grid.options = mapObjectToNestedArray(
               question.grid.options
             );
-            setQuestionToEdit(question);
+
+            const dataPromise = downloadImagesFromStorage(question.grid.data);
+            const optionsPromise = downloadImagesFromStorage(
+              question.grid.options
+            );
+
+            Promise.all([dataPromise, optionsPromise]).then(
+              ([dataGrid, optionsGrid]) => {
+                const questionWithImageFiles = {
+                  ...question,
+                  grid: {
+                    ...question.grid,
+                    data: dataGrid,
+                    options: optionsGrid,
+                  },
+                };
+
+                setQuestionToEdit(questionWithImageFiles);
+              }
+            );
           }}
           onDeleteClick={() => {
             setQuestionToDelete(params.row.id as string);
@@ -121,8 +145,16 @@ const AllLRQuestions = () => {
       return;
     }
 
-    deleteQuestion("logical-reasoning", questionToDelete)
-      .then(() => enqueueSnackbar("NR question deleted"))
+    const pathToFolder = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${questionToDelete}`;
+
+    const storageDeletePromise = deleteStorageFolder(pathToFolder); // delete images from storage
+    const questionDeletePromise = deleteQuestion(
+      "logical-reasoning",
+      questionToDelete
+    );
+
+    Promise.all([storageDeletePromise, questionDeletePromise])
+      .then(() => enqueueSnackbar("LR question deleted"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
           variant: "error",
