@@ -17,11 +17,10 @@ import "react-quill/dist/quill.snow.css";
 import AddingHeroImage from "./AddingHeroImage";
 import { modules, tagOptions } from "./constants";
 import { LoadingScreen } from "components/global-components";
-import { blogForm } from "types/blog";
+import { IBlog } from "types/blog";
 
 type addBlogProps = {
-  //   onSubmitBlog: (data: blogForm) => Promise<void>;
-  onSubmitBlog: (data: blogForm) => void;
+  onSubmitBlog: (data: IBlog) => Promise<void>;
 };
 
 const AddBlog = ({ onSubmitBlog }: addBlogProps) => {
@@ -29,31 +28,36 @@ const AddBlog = ({ onSubmitBlog }: addBlogProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
 
-  const { control, handleSubmit, reset, setValue } = useForm({
+  const { control, handleSubmit, reset, setValue } = useForm<IBlog>({
     defaultValues: {
       title: "",
       summary: "",
       tags: "",
       content: "",
-      blogHeroPhoto: heroPhoto,
+      blogHeroPhoto: null,
     },
   });
 
   const handleClearChange = () => {
     setHeroPhoto(null);
+    setValue("blogHeroPhoto", null);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
       setHeroPhoto(files[0]);
+      setValue("blogHeroPhoto", files[0]);
     } else {
       enqueueSnackbar("No file selected.", { variant: "error" });
     }
   };
 
-  const onSubmit = (data: blogForm) => {
-    onSubmitBlog(data);
+  const onSubmit = (data: IBlog) => {
+    onSubmitBlog(data).finally(() => {
+      reset();
+      setHeroPhoto(null);
+    });
   };
 
   if (!session) return <LoadingScreen />;
@@ -73,7 +77,7 @@ const AddBlog = ({ onSubmitBlog }: addBlogProps) => {
               <TextField
                 onChange={onChange}
                 value={value}
-                label={"Blog Title"}
+                label={"Title"}
                 error={!!error}
                 helperText={!!error && "A title is required"}
                 size="small"
@@ -111,10 +115,20 @@ const AddBlog = ({ onSubmitBlog }: addBlogProps) => {
               photoFile={heroPhoto}
             />
           ) : (
-            <TextField
-              type={"file"}
-              size="small"
-              onChange={handleImageChange}
+            <Controller
+              name="blogHeroPhoto"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value }, fieldState: { error } }: any) => (
+                <TextField
+                  type={"file"}
+                  value={value}
+                  error={!!error}
+                  helperText={!!error && "A hero image is required"}
+                  size="small"
+                  onChange={handleImageChange}
+                />
+              )}
             />
           )}
           <Controller

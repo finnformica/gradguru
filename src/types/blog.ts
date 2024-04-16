@@ -1,4 +1,4 @@
-export type blogForm = {
+export type IBlog = {
   title: string;
   summary: string;
   tags: string | null;
