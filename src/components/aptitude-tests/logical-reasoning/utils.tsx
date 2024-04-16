@@ -35,8 +35,6 @@ export const mapIcon = ({
 
   const lValue = value.toLowerCase();
 
-  console.log(lValue);
-
   if (iconToComponentMapping[lValue]) {
     const icon = iconToComponentMapping[lValue];
     return <Iconify icon={icon} sx={sx} />;
