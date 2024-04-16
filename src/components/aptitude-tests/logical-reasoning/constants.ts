@@ -57,7 +57,7 @@ export const fontSizeMapping = (numRows: number, gridType: GridType) => {
   if (gridType === "square") {
     switch (numRows) {
       case 4:
-        return 48;
+        return 40;
       case 3:
         return 44;
       case 2:
