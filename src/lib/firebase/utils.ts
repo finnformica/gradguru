@@ -86,6 +86,11 @@ export async function fileStorage(
   return uploadBytes(_ref, file).then(() => address);
 }
 
+export async function uploadToStorage(file: File, path: string) {
+  const _ref = storageRef(storage, path);
+  return uploadBytes(_ref, file);
+}
+
 export async function deleteStorageFolder(pathToFolder: string) {
   const _ref = storageRef(storage, pathToFolder);
   return listAll(_ref).then((res) => {
