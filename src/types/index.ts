@@ -59,6 +59,15 @@ export type IUserFormInput = IFirestoreData & {
   courses: string[];
 };
 
+// ---- Resources ----
+
+export type IResource = {
+  name: string;
+  description: string;
+  type: string;
+  file: File | null;
+} & IFirestoreData;
+
 // ---- Tests ----
 
 export type ITest = {
