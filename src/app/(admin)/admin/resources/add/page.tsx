@@ -1,6 +1,8 @@
 "use client";
 
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 import { Add, Delete } from "@mui/icons-material";
 import {
@@ -12,19 +14,11 @@ import {
   Typography,
 } from "@mui/material";
 
+import { getResourceTypes, createResource } from "api/resources";
 import { AddResourceTypeModal } from "components/resources";
-import { Controller, useForm } from "react-hook-form";
-import { getResourceTypes, postResource } from "api/resources";
-import { useSnackbar } from "notistack";
 import { uploadToStorage } from "lib/firebase/utils";
+import { IResource } from "types";
 import { generateRandomString, getFileExtension } from "utils/format-string";
-
-type IResource = {
-  name: string;
-  description: string;
-  type: string;
-  file: File | null;
-};
 
 const AddResource = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -52,12 +46,12 @@ const AddResource = () => {
     const filename = generateRandomString();
     const ext = getFileExtension(data.file.name);
 
-    const path = `courses/consulting/resources/${filename + ext}`;
+    const path = `courses/consulting/resources/${data.type.value}/${filename + ext}`;
     uploadToStorage(data.file, path);
 
     const payload = { ...data, file: path };
 
-    postResource("consulting", payload)
+    createResource("consulting", payload)
       .then(() => enqueueSnackbar("Resource added"))
       .catch(() =>
         enqueueSnackbar("Failed to add resource", { variant: "error" })
@@ -124,7 +118,7 @@ const AddResource = () => {
               <Autocomplete
                 size="small"
                 options={options}
-                onChange={(_, data) => setValue("type", data)}
+                onChange={(_, data) => setValue("type", data.value)}
                 isOptionEqualToValue={(option: any, value: any) =>
                   option.value === value.value
                 }

@@ -16,7 +16,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import { getResourceTypes, postResourceType } from "api/resources";
+import { getResourceTypes, createResourceType } from "api/resources";
 
 const AddResourceTypeModal = ({
   open,
@@ -54,7 +54,7 @@ const AddResourceTypeModal = ({
   const onSubmit = (data: any) => {
     const { types } = data;
 
-    postResourceType(
+    createResourceType(
       "consulting",
       types.map((type: string) => ({
         label: type.trim(),
