@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   onSnapshot,
@@ -63,5 +64,5 @@ export const createResource = async (course: string, data: any) => {
 export const deleteResource = async (course: string, id: string) => {
   const ref = doc(db, "courses", course, "resources", id);
 
-  await setDoc(ref, { deleted: true }, { merge: true });
+  return deleteDoc(ref);
 };

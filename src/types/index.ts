@@ -65,7 +65,7 @@ export type IResource = {
   name: string;
   description: string;
   type: string;
-  file: File | null;
+  file: File | string | null;
 } & IFirestoreData;
 
 // ---- Tests ----

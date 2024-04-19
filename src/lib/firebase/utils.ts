@@ -100,6 +100,11 @@ export async function deleteStorageFolder(pathToFolder: string) {
   });
 }
 
+export async function deleteStorageItem(path: string) {
+  const _ref = storageRef(storage, path);
+  return deleteStorage(_ref);
+}
+
 export {
   addData,
   deleteDocument,

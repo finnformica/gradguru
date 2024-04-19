@@ -15,6 +15,8 @@ import {
 } from "components/global-components";
 import { IResource } from "types";
 import { deleteResource, getResources } from "api/resources";
+import { deleteStorageItem } from "lib/firebase/utils";
+import { ResourceEditModal } from "components/resources";
 
 const AllResources = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -65,8 +67,8 @@ const AllResources = () => {
         return (
           <EditDeleteActions
             session={session}
-            onEditClick={() => setResourceToEdit(params.row as IResource)}
-            onDeleteClick={() => setResourceToDelete(params.row.id)}
+            onEditClick={() => setResourceToEdit(params.row)}
+            onDeleteClick={() => setResourceToDelete(params.row)}
           />
         );
       },
@@ -74,14 +76,14 @@ const AllResources = () => {
   ];
 
   const handleDelete = async () => {
-    if (!resourceToDelete?.id || !resourceToDelete) {
+    if (!resourceToDelete?.id || !resourceToDelete.file || !resourceToDelete) {
       enqueueSnackbar("Something went wrong - resource not found", {
         variant: "error",
       });
       return;
     }
 
-    // TODO: delete document from storage
+    deleteStorageItem(resourceToDelete.file as string);
 
     deleteResource("consulting", resourceToDelete.id)
       .then(() => enqueueSnackbar("Resource  deleted"))
@@ -101,13 +103,13 @@ const AllResources = () => {
 
       <AdminDataGrid columns={columns} rows={resources} />
 
-      {/* {resourceToEdit && (
-        <SJTModal
+      {resourceToEdit && (
+        <ResourceEditModal
           open={!!resourceToEdit}
-          question={resourceToEdit}
-          setQuestion={setResourceToEdit}
+          resource={resourceToEdit}
+          setResource={setResourceToEdit}
         />
-      )} */}
+      )}
       {resourceToDelete && (
         <ConfirmationDialog
           title="Are you sure you want to delete this resource?"
