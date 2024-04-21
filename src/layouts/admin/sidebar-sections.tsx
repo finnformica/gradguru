@@ -162,8 +162,21 @@ export const sidebarSections = [
   {
     name: "Resources",
     icon: <ViewInAr />,
-    active: false,
-    children: [],
+    active: true,
+    children: [
+      {
+        name: "All resources",
+        icon: <AllInclusive />,
+        route: "/admin/resources/all",
+        active: true,
+      },
+      {
+        name: "Add resources",
+        icon: <AddBox />,
+        route: "/admin/resources/add",
+        active: true,
+      },
+    ],
   },
   {
     name: "Users",
