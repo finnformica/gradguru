@@ -21,7 +21,7 @@ const AddResource = () => {
     const filename = generateRandomString();
     const ext = getFileExtension(data.file.name);
 
-    const path = `courses/consulting/resources/${data.type}/${filename + ext}`;
+    const path = `courses/consulting/resources/${data.type.value}/${filename + ext}`;
     uploadToStorage(data.file, path);
 
     const payload = { ...data, file: path };

@@ -22,7 +22,7 @@ const ResourceEditModal = ({
   const onSubmit = async (data: any) => {
     const filename = generateRandomString();
     const ext = getFileExtension(data.file.name);
-    const path = `courses/consulting/resources/${data.type}/`;
+    const path = `courses/consulting/resources/${data.type.value}/`;
 
     const oldFilePath = path + (resource.file as File).name;
     const newFilePath = path + filename + ext;
