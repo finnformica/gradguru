@@ -15,7 +15,7 @@ import {
 } from "components/global-components";
 import { IResource } from "types";
 import { deleteResource, getResources } from "api/resources";
-import { deleteStorageItem } from "lib/firebase/utils";
+import { deleteStorageItem, retrieveStorageItem } from "lib/firebase/utils";
 import { ResourceEditModal } from "components/resources";
 
 const AllResources = () => {
@@ -67,7 +67,12 @@ const AllResources = () => {
         return (
           <EditDeleteActions
             session={session}
-            onEditClick={() => setResourceToEdit(params.row)}
+            onEditClick={() => {
+              const { file: path } = params.row;
+              retrieveStorageItem(path).then((file) =>
+                setResourceToEdit({ ...params.row, file })
+              );
+            }}
             onDeleteClick={() => setResourceToDelete(params.row)}
           />
         );

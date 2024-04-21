@@ -66,3 +66,9 @@ export const deleteResource = async (course: string, id: string) => {
 
   return deleteDoc(ref);
 };
+
+export const patchResource = async (course: string, id: string, data: any) => {
+  const ref = doc(db, "courses", course, "resources", id);
+
+  await setDoc(ref, data, { merge: true });
+};
