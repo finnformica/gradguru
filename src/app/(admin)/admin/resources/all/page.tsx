@@ -52,6 +52,7 @@ const AllResources = () => {
       field: "type",
       headerName: "Type",
       width: 150,
+      valueGetter: (params) => params.value.label,
     },
     {
       field: "created",

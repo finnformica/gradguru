@@ -27,7 +27,10 @@ const ResourceAdminForm = ({
     defaultValues: defaultValues || {
       name: "",
       description: "",
-      type: "",
+      type: {
+        value: "",
+        label: "",
+      },
       file: null,
     },
   });
@@ -90,9 +93,12 @@ const ResourceAdminForm = ({
           rules={{ required: true }}
           render={({ field, fieldState: { error } }) => (
             <Autocomplete
+              {...field}
               size="small"
               options={options}
-              onChange={(_, data) => setValue("type", data.value)}
+              onChange={(_, data) =>
+                setValue("type", data || { value: "", label: "" })
+              }
               isOptionEqualToValue={(option: any, value: any) =>
                 option.value === value.value
               }

@@ -64,7 +64,10 @@ export type IUserFormInput = IFirestoreData & {
 export type IResource = {
   name: string;
   description: string;
-  type: string;
+  type: {
+    value: string;
+    label: string;
+  };
   file: File | string | null;
 } & IFirestoreData;
 
