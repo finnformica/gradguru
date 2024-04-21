@@ -21,6 +21,8 @@ const ResourceAdminForm = ({
   onSubmit,
   defaultValues,
 }: ResourceAdminFormProps) => {
+  console.log("component rendered");
+
   const [options, setOptions] = useState([]);
 
   const { control, handleSubmit, setValue, reset } = useForm<IResource>({
@@ -42,7 +44,7 @@ const ResourceAdminForm = ({
     };
 
     fetchTypes();
-  });
+  }, []);
 
   const handleFileChange = (e: any) => {
     if (!e.target.files[0]) return;
