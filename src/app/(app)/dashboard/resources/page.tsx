@@ -1,44 +1,77 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import _ from "lodash";
+import { useEffect, useRef, useState } from "react";
 
 import {
   Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 
 import { getResources } from "api/resources";
 import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
 
 import { IResource } from "types";
+import { useTruncatedElement } from "hooks";
+import { Download } from "@mui/icons-material";
 
 const ResourceCard = ({ resource }: { resource: IResource }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const ref = useRef(null);
+  const { isTruncated, isShowingMore, toggleIsShowingMore } =
+    useTruncatedElement({
+      ref,
+    });
+
   return (
-    <Card>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {resource.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {resource.description}
-        </Typography>
+    <Card sx={{ display: "flex", flexDirection: "column" }}>
+      <CardContent sx={{ display: "flex" }}>
+        {!isMobile && (
+          <CardMedia
+            component="img"
+            sx={{ height: 75, width: 75, mr: 2 }}
+            image="/icons/test-icons/lr-black.svg"
+            title={resource.name}
+          />
+        )}
+        <Box>
+          <Typography gutterBottom variant="h6" component="div">
+            {resource.name}
+          </Typography>
+          <Typography
+            ref={ref}
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              display: "-webkit-box",
+              overflow: "hidden",
+              WebkitLineClamp: isShowingMore ? "unset" : 3,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {resource.description}
+          </Typography>
+        </Box>
       </CardContent>
-      <CardActions>
-        <Button size="small">Download</Button>
+      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
+        {isTruncated && (
+          <Button onClick={toggleIsShowingMore} size="small">
+            {isShowingMore ? "Show less" : "Show more"}
+          </Button>
+        )}
+        <Button startIcon={<Download />} variant="contained" size="small">
+          Download
+        </Button>
       </CardActions>
     </Card>
   );
@@ -53,7 +86,7 @@ const ResourceSection = ({
 }) => {
   return (
     <Stack spacing={2} my={3}>
-      <Typography variant="h4">{title}</Typography>
+      <Typography variant="h5">{title}</Typography>
       <Box
         sx={{
           display: "grid",
@@ -81,10 +114,6 @@ const CourseResources = () => {
       ),
     []
   );
-
-  useEffect(() => {
-    console.log(resources);
-  }, [resources]);
 
   if (!resources) return <LoadingScreen />;
 
