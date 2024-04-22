@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Autocomplete,
   Box,
@@ -8,54 +7,46 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { IBlog } from "types/blog";
 import AddingHeroImage from "./AddingHeroImage";
 import { modules, tagOptions } from "./constants";
-import { LoadingScreen } from "components/global-components";
-import { IBlog } from "types/blog";
 
 type addBlogProps = {
-  onSubmitBlog: (data: IBlog) => Promise<void>;
+  onSubmitBlog: (data: IBlog) => void;
   defaultValues?: IBlog;
 };
 
 const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
 
-  const setDefaultTitle = defaultValues ? defaultValues.title : "";
-  const setDefaultSummary = defaultValues ? defaultValues.summary : "";
-  const setDefaultTags = defaultValues ? defaultValues.tags : "";
-  const setDefaultContent = defaultValues ? defaultValues.content : "";
-  const setDefaultBlogHeroPhoto = defaultValues
-    ? defaultValues.blogHeroPhoto
-    : null;
+  const dv2 = {
+    title: "",
+    summary: "",
+    tags: "",
+    content: "",
+    blogHeroPhoto: null,
+  };
 
-  const { control, handleSubmit, reset, setValue } = useForm<IBlog>({
-    defaultValues: {
-      title: setDefaultTitle,
-      summary: setDefaultSummary,
-      tags: setDefaultTags,
-      content: setDefaultContent,
-      blogHeroPhoto: null,
-    },
+  const { control, handleSubmit, reset, setValue, watch } = useForm<IBlog>({
+    defaultValues: defaultValues || dv2,
   });
 
+  const blogHeroPhoto = watch("blogHeroPhoto");
+
   const handleClearChange = () => {
-    setHeroPhoto(null);
     setValue("blogHeroPhoto", null);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
-      setHeroPhoto(files[0]);
       setValue("blogHeroPhoto", files[0]);
     } else {
       enqueueSnackbar("No file selected.", { variant: "error" });
@@ -63,10 +54,8 @@ const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   };
 
   const onSubmit = (data: IBlog) => {
-    onSubmitBlog(data).finally(() => {
-      reset();
-      setHeroPhoto(null);
-    });
+    onSubmitBlog(data);
+    reset();
   };
 
   if (!session) return <LoadingScreen />;
@@ -118,15 +107,10 @@ const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
             )}
           />
 
-          {setDefaultBlogHeroPhoto ? (
+          {blogHeroPhoto ? (
             <AddingHeroImage
               handleClearChange={handleClearChange}
-              photoFile={setDefaultBlogHeroPhoto}
-            />
-          ) : heroPhoto ? (
-            <AddingHeroImage
-              handleClearChange={handleClearChange}
-              photoFile={heroPhoto}
+              photoFile={blogHeroPhoto}
             />
           ) : (
             <Controller
@@ -136,7 +120,6 @@ const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
               render={({ field: { value }, fieldState: { error } }: any) => (
                 <TextField
                   type={"file"}
-                  value={value}
                   error={!!error}
                   helperText={!!error && "A hero image is required"}
                   size="small"
@@ -145,6 +128,7 @@ const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
               )}
             />
           )}
+
           <Controller
             name="summary"
             control={control}

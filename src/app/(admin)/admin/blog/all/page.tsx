@@ -37,7 +37,6 @@ const BlogEditTable = () => {
       field: "created",
       headerName: "Created",
       width: 200,
-      renderCell: (params) => new Date(params.value).toLocaleString(),
       valueGetter: (params) => new Date(params.value).toLocaleString(),
     },
 

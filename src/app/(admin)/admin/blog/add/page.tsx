@@ -10,31 +10,30 @@ const AddBlogForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
-  const onSubmit = (data: IBlog): Promise<void> => {
+  const onSubmit = (data: IBlog): void => {
     let imageId;
     let blogSlug;
-    if (!session?.user || !data.blogHeroPhoto) return Promise.resolve();
+    if (!session?.user?.name || !data.blogHeroPhoto) return;
 
-    const { user } = session;
-    const authorName = user.name ? user.name : "John Doe";
+    const { name } = session.user;
     const { blogHeroPhoto, ...dbUpload } = data;
 
     blogStorage(blogHeroPhoto, data.title).then((res) => {
       ({ imageId, blogSlug } = res);
       addBlog(blogSlug, {
         ...dbUpload,
-        author: authorName,
+        author: name,
         imageId: imageId,
         slug: blogSlug,
+        created: Date.now(),
       })
-        .then(() => enqueueSnackbar("Blog card has been added"))
+        .then(() => enqueueSnackbar("Blog has been added"))
         .catch((e) =>
-          enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
+          enqueueSnackbar(`Error adding the blog: ${e.message}`, {
             variant: "error",
           })
         );
     });
-    return Promise.resolve();
   };
 
   if (!session?.user) return <LoadingScreen />;

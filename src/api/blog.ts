@@ -7,7 +7,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { deleteObject, getBlob, getBytes, ref } from "firebase/storage";
+import { deleteObject, getBytes, ref } from "firebase/storage";
 import { db, storage } from "lib/firebase/config";
 import { fileStorage } from "lib/firebase/utils";
 import _ from "lodash";
@@ -61,9 +61,9 @@ export const getHeroPhotoFile = async (
   const heroRef = ref(storage, `blog/${slug}/${imageId}`);
   const fileBytes = await getBytes(heroRef);
   if (!fileBytes) {
-    return Promise.resolve(null);
+    return null;
+  } else {
+    const heroPhotoFile = new File([fileBytes], imageId);
+    return heroPhotoFile;
   }
-  const heroPhotoFile = new File([fileBytes], imageId);
-  console.log(heroPhotoFile);
-  return Promise.resolve(heroPhotoFile);
 };

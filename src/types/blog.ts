@@ -26,4 +26,5 @@ export interface IBlogPage extends IBlogCard {
 export interface ICreateBlogPost extends FirebaseBlog {
   content: string;
   tags: string | null;
+  created: number;
 }
