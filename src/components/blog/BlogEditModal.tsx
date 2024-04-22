@@ -7,7 +7,7 @@ import {
 import FormModalWrapper from "components/global-components/FormModalWrapper";
 import { useEffect, useState } from "react";
 import { IBlog, IBlogPage } from "types/blog";
-import AddBlog from "./AddBlog";
+import CrudBlog from "components/blog/CrudBlog";
 import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
@@ -71,7 +71,7 @@ const BlogEditModal = ({ onClose, blogObject }: EditModalProps) => {
       {!blogHeroPhotoFile ? (
         <LoadingScreen />
       ) : (
-        <AddBlog onSubmitBlog={onSubmit} defaultValues={defaultValues} />
+        <CrudBlog onSubmitBlog={onSubmit} defaultValues={defaultValues} />
       )}
     </FormModalWrapper>
   );

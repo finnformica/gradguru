@@ -22,7 +22,7 @@ type addBlogProps = {
   defaultValues?: IBlog;
 };
 
-const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
+const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -175,4 +175,4 @@ const AddBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   );
 };
 
-export default AddBlog;
+export default CrudBlog;

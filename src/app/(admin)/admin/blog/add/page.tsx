@@ -1,6 +1,6 @@
 "use client";
 import { addBlog, blogStorage } from "api/blog";
-import AddBlog from "components/blog/AddBlog";
+import CrudBlog from "components/blog/CrudBlog";
 import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
@@ -38,7 +38,7 @@ const AddBlogForm = () => {
 
   if (!session?.user) return <LoadingScreen />;
 
-  return <AddBlog onSubmitBlog={onSubmit} />;
+  return <CrudBlog onSubmitBlog={onSubmit} />;
 };
 
 export default AddBlogForm;
