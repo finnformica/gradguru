@@ -4,6 +4,7 @@ import { storage } from "lib/firebase/config";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IBlogPage } from "types/blog";
+import "./styles.css";
 
 const DEFAULT_FONT_SIZE = 14;
 
@@ -58,25 +59,38 @@ const BlogPost = ({
         </Stack>
       </Stack>
 
-      {imageUrl ? (
-        <Box sx={{ textAlign: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {imageUrl ? (
           <Image
             src={imageUrl}
             width={400}
             height={300}
             alt="blog image"
-            style={{ borderRadius: "16px" }}
+            style={{
+              borderRadius: "16px",
+              objectFit: "cover",
+            }}
           />
-        </Box>
-      ) : (
-        <Skeleton variant="rectangular" width={400} height={300} />
-      )}
+        ) : (
+          <Skeleton variant="rectangular" width={400} height={300} />
+        )}
+      </Box>
 
       {content ? (
-        <div
-          dangerouslySetInnerHTML={{ __html: content }}
-          style={{ textAlign: "justify" }}
-        />
+        <Box>
+          <div
+            // className={"blogImages blogText"}
+            className="blogText"
+            dangerouslySetInnerHTML={{ __html: content }}
+            style={{ textAlign: "justify", borderRadius: 16 }}
+          />
+        </Box>
       ) : (
         <Typography>No Content Found</Typography>
       )}
