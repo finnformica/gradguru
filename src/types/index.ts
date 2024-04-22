@@ -59,6 +59,18 @@ export type IUserFormInput = IFirestoreData & {
   courses: string[];
 };
 
+// ---- Resources ----
+
+export type IResource = {
+  name: string;
+  description: string;
+  type: {
+    value: string;
+    label: string;
+  };
+  file: File | string | null;
+} & IFirestoreData;
+
 // ---- Tests ----
 
 export type ITest = {
@@ -198,7 +210,7 @@ export type SJQuestionFlat = {
 
 export type CellData = {
   type: string;
-  value: string;
+  value: any;
   color: string;
   rotation: number;
   backgroundColor: string;

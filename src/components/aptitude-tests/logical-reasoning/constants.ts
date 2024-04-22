@@ -1,31 +1,5 @@
 import { CellData, GridType } from "types";
 
-export const icons = [
-  "Circle",
-  "Triangle",
-  "Square",
-  "Pentagon",
-  "Hexagon",
-  "Star",
-  "Plane",
-  "Face",
-  "Person",
-  "Tree",
-  "Forest",
-  "Grass",
-  "Mountain",
-  "Sun",
-  "Moon",
-  "Clock",
-  "Cookie",
-  "Anchor",
-  "Boat",
-  "Water",
-  "House",
-  "Castle",
-  "Arrow",
-];
-
 export const colors = [
   { label: "Black", value: "#000" },
   { label: "Red", value: "#ef5350" },
@@ -83,7 +57,7 @@ export const fontSizeMapping = (numRows: number, gridType: GridType) => {
   if (gridType === "square") {
     switch (numRows) {
       case 4:
-        return 28;
+        return 40;
       case 3:
         return 44;
       case 2:
@@ -98,4 +72,40 @@ export const fontSizeMapping = (numRows: number, gridType: GridType) => {
   } else {
     throw new Error("Invalid grid type");
   }
+};
+
+export const iconToComponentMapping: { [key: string]: any } = {
+  arrow: "mingcute:arrow-up-fill",
+  plane: "mdi:airplane",
+  face: "material-symbols:face",
+  tree: "fa-solid:tree",
+  palmtree: "mdi:palm-tree",
+  cactus: "tabler:cactus-filled",
+  acorn: "ph:acorn-fill",
+  circle: "ic:baseline-circle",
+  triangle: "icon-park-solid:triangle",
+  square: "ic:round-square",
+  diamond: "icon-park-solid:diamond-two",
+  pentagon: "ic:round-pentagon",
+  hexagon: "ic:round-hexagon",
+  ocatgon: "ph:octagon-fill",
+  star: "ic:round-star",
+  heart: "iconoir:heart-solid",
+  clock: "icon-park-outline:alarm-clock",
+  person: "material-symbols:person",
+  glasses: "fluent-mdl2:glasses",
+  cookie: "material-symbols:cookie",
+  grass: "ic:baseline-grass",
+  anchor: "material-symbols:anchor",
+  boat: "ic:round-sailing",
+  house: "ic:round-home",
+  water: "ic:baseline-water",
+  mountain: "ic:round-landscape",
+  castle: "ic:round-fort",
+  sun: "ion:sunny",
+  forest: "ic:round-forest",
+  moon: "solar:moon-bold",
+  club: "bi:suit-club-fill",
+  ant: "f7:ant-fill",
+  alien: "mdi:alien",
 };
