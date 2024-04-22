@@ -138,7 +138,7 @@ export const uploadImagesToStorage = async (data: Grid[], folder: string) => {
         if (cell.type === "image") {
           const randomId = crypto.randomBytes(8).toString("hex");
           const extension = getFileExtension(cell.value.name);
-          const filename = randomId + (extension ? `.${extension}` : "");
+          const filename = randomId + extension;
 
           const path = `${endpoints.storage.aptitudeTests("logical-reasoning")}/${folder}/${filename}`;
           const _ref = ref(storage, path);

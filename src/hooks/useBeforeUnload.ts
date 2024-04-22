@@ -12,5 +12,5 @@ export const useBeforeUnload = (truthy: boolean) => {
     window.addEventListener("beforeunload", onBeforeUnload);
 
     return () => window.removeEventListener("beforeunload", onBeforeUnload);
-  });
+  }, [truthy]);
 };

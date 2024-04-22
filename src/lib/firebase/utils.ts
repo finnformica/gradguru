@@ -13,6 +13,7 @@ import {
   uploadBytes,
   deleteObject as deleteStorage,
   listAll,
+  getBytes,
 } from "firebase/storage";
 
 import { v4 as uuid } from "uuid";
@@ -86,6 +87,19 @@ export async function fileStorage(
   return uploadBytes(_ref, file).then(() => address);
 }
 
+export async function uploadToStorage(file: File, path: string) {
+  const _ref = storageRef(storage, path);
+  return uploadBytes(_ref, file);
+}
+
+export async function retrieveStorageItem(path: string) {
+  const _ref = storageRef(storage, path);
+
+  return getBytes(_ref).then(
+    (bytes) => new File([bytes], path.split("/").pop() as string)
+  );
+}
+
 export async function deleteStorageFolder(pathToFolder: string) {
   const _ref = storageRef(storage, pathToFolder);
   return listAll(_ref).then((res) => {
@@ -93,6 +107,11 @@ export async function deleteStorageFolder(pathToFolder: string) {
       deleteStorage(itemRef);
     });
   });
+}
+
+export async function deleteStorageItem(path: string) {
+  const _ref = storageRef(storage, path);
+  return deleteStorage(_ref);
 }
 
 export {
