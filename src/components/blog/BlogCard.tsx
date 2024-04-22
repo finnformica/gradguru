@@ -48,6 +48,7 @@ const BlogCard = ({
       <Link color="inherit" underline="none" href={`/blog/${slug}`}>
         <CardActionArea sx={{ p: 2 }}>
           <CardHeader
+            sx={{ pl: 3 }}
             title={
               <Stack direction={"row"} gap={1}>
                 <Typography variant="body2">{author}</Typography>
@@ -58,9 +59,11 @@ const BlogCard = ({
               </Stack>
             }
           />
-          <Stack direction="row">
+          <Stack direction="row" justifyContent={"space-around"}>
             <CardContent>
-              <Typography variant="h6">{title}</Typography>
+              <Typography variant="h6" sx={{ pb: 1 }}>
+                {title}
+              </Typography>
               <Box
                 sx={{
                   width: 500,
@@ -78,11 +81,16 @@ const BlogCard = ({
             {imageUrl ? (
               <CardMedia
                 component="img"
-                height={150}
-                width={200}
                 image={imageUrl}
                 alt={imageId}
-                sx={{ pt: 2, pr: 2 }}
+                sx={{
+                  mr: 1,
+                  mt: 2,
+                  objectFit: "cover",
+                  width: 200,
+                  height: 150,
+                  borderRadius: "16px",
+                }}
               />
             ) : (
               <Skeleton variant="rectangular" width={200} height={150} />
@@ -90,10 +98,9 @@ const BlogCard = ({
           </Stack>
         </CardActionArea>
       </Link>
-      <CardActions sx={{ p: 2 }}>
+      <CardActions sx={{ p: 3, pl: 4 }}>
         <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
           <Chip label={tags} variant="outlined" color="primary" />
-          <Chip label={date} variant="outlined" color="primary" />
         </Stack>
       </CardActions>
     </Card>
