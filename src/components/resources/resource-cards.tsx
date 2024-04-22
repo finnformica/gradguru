@@ -18,6 +18,18 @@ import {
 import { Download } from "@mui/icons-material";
 import { useTruncatedElement } from "hooks";
 import { IResource } from "types";
+import { retrieveStorageItem } from "lib/firebase/utils";
+
+const downloadMedia = (path: string, filename: string) => {
+  retrieveStorageItem(path).then((file) => {
+    // Create a URL for the file and click on it to download
+    const url = URL.createObjectURL(file);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename; // Set the file name
+    a.click();
+  });
+};
 
 const resourceTypeToIcon = (type: string) => {
   switch (type) {
@@ -76,7 +88,12 @@ const ResourceCard = ({ resource }: { resource: IResource }) => {
             {isShowingMore ? "Show less" : "Show more"}
           </Button>
         )}
-        <Button startIcon={<Download />} variant="contained" size="small">
+        <Button
+          startIcon={<Download />}
+          variant="contained"
+          size="small"
+          onClick={() => downloadMedia(resource.file as string, resource.name)}
+        >
           Download
         </Button>
       </CardActions>
