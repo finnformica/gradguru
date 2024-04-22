@@ -53,8 +53,8 @@ const ResourceCard = ({ resource }: { resource: IResource }) => {
     });
 
   return (
-    <Card sx={{ display: "flex", flexDirection: "column" }}>
-      <CardContent sx={{ display: "flex", flexGrow: 1 }}>
+    <Card elevation={0} sx={{ display: "flex", flexDirection: "column" }}>
+      <CardContent sx={{ display: "flex" }}>
         {!isMobile && (
           <CardMedia
             component="img"
@@ -82,9 +82,19 @@ const ResourceCard = ({ resource }: { resource: IResource }) => {
           </Typography>
         </Box>
       </CardContent>
-      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <CardActions
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 1,
+        }}
+      >
         {isTruncated && (
-          <Button onClick={toggleIsShowingMore} size="small">
+          <Button
+            onClick={toggleIsShowingMore}
+            size="small"
+            sx={{ color: "grey.500" }}
+          >
             {isShowingMore ? "Show less" : "Show more"}
           </Button>
         )}
@@ -114,8 +124,8 @@ const ResourceSection = ({
       <Box
         sx={{
           display: "grid",
-          gap: 3,
-          gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+          gap: 5,
+          gridTemplateColumns: "repeat(auto-fill, minmax(450px, 1fr))",
         }}
       >
         {resources.map((resource) => (
