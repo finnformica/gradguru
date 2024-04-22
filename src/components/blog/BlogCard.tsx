@@ -4,7 +4,6 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Chip,
   Link,
@@ -47,18 +46,6 @@ const BlogCard = ({
     <Card sx={{ width: 800 }}>
       <Link color="inherit" underline="none" href={`/blog/${slug}`}>
         <CardActionArea sx={{ p: 2 }}>
-          <CardHeader
-            sx={{ pl: 3 }}
-            title={
-              <Stack direction={"row"} gap={1}>
-                <Typography variant="body2">{author}</Typography>
-                <Typography variant="body2">·</Typography>
-                <Typography variant="body2" color={"text.secondary"}>
-                  {date}
-                </Typography>
-              </Stack>
-            }
-          />
           <Stack direction="row" justifyContent={"space-around"}>
             <CardContent>
               <Typography variant="h6" sx={{ pb: 1 }}>
@@ -99,8 +86,23 @@ const BlogCard = ({
         </CardActionArea>
       </Link>
       <CardActions sx={{ p: 3, pl: 4 }}>
-        <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
-          <Chip label={tags} variant="outlined" color="primary" />
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Stack direction={"row"} gap={1}>
+            <Typography variant="body2">{author}</Typography>
+            <Typography variant="body2">·</Typography>
+            <Typography variant="body2" color={"text.secondary"}>
+              {date}
+            </Typography>
+          </Stack>
+          <Chip label={tags} variant="outlined" />
         </Stack>
       </CardActions>
     </Card>

@@ -85,8 +85,7 @@ const BlogPost = ({
       {content ? (
         <Box>
           <div
-            // className={"blogImages blogText"}
-            className="blogText"
+            className="blog"
             dangerouslySetInnerHTML={{ __html: content }}
             style={{ textAlign: "justify", borderRadius: 16 }}
           />

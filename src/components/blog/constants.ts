@@ -1,3 +1,11 @@
+import { Quill } from "react-quill";
+// @ts-ignore
+import ImageResize from "quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
+
+// export const quill = new Quill("#editor", { theme: "snow" });
+
 export const tagOptions = ["Finance", "Jobs", "Education"];
 
 export const modules = {
@@ -13,6 +21,10 @@ export const modules = {
 
     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
   ],
+  imageResize: {
+    parchment: Quill.import("parchment"),
+    modules: ["Resize", "DisplaySize"],
+  },
 };
 
 // toolbar: [
