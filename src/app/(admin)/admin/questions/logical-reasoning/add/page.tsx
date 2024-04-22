@@ -5,13 +5,14 @@ import _ from "lodash";
 import { useSnackbar } from "notistack";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { createQuestion } from "api/tests";
-
 import { LRQuestionForm } from "components/aptitude-tests/logical-reasoning";
 import {
   initialiseSquareGrid,
   mapNestedArrayToObject,
+  uploadImagesToStorage,
 } from "components/aptitude-tests/logical-reasoning/utils";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "lib/firebase/config";
 import { ILRQuestion } from "types";
 
 const INIT_NUM_ROWS = 4;
@@ -39,13 +40,42 @@ const AddLRQuestion = () => {
     });
 
   const onSubmit: SubmitHandler<ILRQuestion> = (data: ILRQuestion) => {
-    data.grid.data = mapNestedArrayToObject(data.grid.data);
-    data.grid.options = mapNestedArrayToObject(data.grid.options);
+    const ref = doc(
+      collection(
+        db,
+        "courses",
+        "consulting",
+        "tests",
+        "questions",
+        "logical-reasoning"
+      )
+    );
 
-    createQuestion("logical-reasoning", data)
-      .then(() => enqueueSnackbar("LR question added"))
-      .catch((err) => console.log(err))
-      .finally(() => reset());
+    const dataPromise = uploadImagesToStorage(data.grid.data, ref.id);
+    const optionsPromise = uploadImagesToStorage(data.grid.options, ref.id);
+
+    Promise.all([dataPromise, optionsPromise]).then(
+      ([dataGrid, optionsGrid]) => {
+        const payload = {
+          ...data,
+          grid: {
+            ...data.grid,
+            data: mapNestedArrayToObject(dataGrid),
+            options: mapNestedArrayToObject(optionsGrid),
+          },
+          created: Date.now(),
+        };
+
+        setDoc(ref, payload)
+          .then(() => enqueueSnackbar("LR question added"))
+          .catch((err) =>
+            enqueueSnackbar(`Something went wrong - ${err}`, {
+              variant: "error",
+            })
+          )
+          .finally(() => reset());
+      }
+    );
   };
 
   return (
