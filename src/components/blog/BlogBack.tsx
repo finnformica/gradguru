@@ -7,7 +7,7 @@ const BlogBack = () => {
 
   return (
     <Button
-      sx={{ my: 2 }}
+      sx={{ my: 2, color: "black" }}
       startIcon={<ArrowBackIcon />}
       onClick={() => router.push("/blog")}
     >
