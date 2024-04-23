@@ -25,6 +25,15 @@ const BlogPost = ({
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!heroPhoto) return;
+
+    if (typeof heroPhoto !== "string") {
+      const url = URL.createObjectURL(heroPhoto as File);
+      setImageUrl(url);
+
+      return;
+    }
+
     const pathReference = ref(storage, `blog/${slug}/${heroPhoto}`);
     getDownloadURL(pathReference)
       .then((url) => {
@@ -51,14 +60,16 @@ const BlogPost = ({
 
       <Stack direction={"row"}>
         <Stack direction={"column"}>
-          <Typography>{author}</Typography>
+          <Typography>{author || "John Smith"}</Typography>
           <Stack direction={"row"} gap={1}>
             <Typography variant="body2">{tags}</Typography>
             <Typography variant="body2">·</Typography>
-            <Typography variant="body2">{readTime} min read</Typography>
+            <Typography variant="body2">
+              {readTime ? `${readTime} min read` : "5 min read"}
+            </Typography>
             <Typography variant="body2">·</Typography>
             <Typography variant="body2" color={"text.secondary"}>
-              {new Date(created || "").toDateString()}
+              {new Date(created || Date.now()).toDateString()}
             </Typography>
           </Stack>
         </Stack>

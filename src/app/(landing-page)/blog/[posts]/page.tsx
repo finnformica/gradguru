@@ -31,9 +31,8 @@ const Post = ({ params }: { params: { posts: string } }) => {
     getBlog();
   }, [params.posts]);
 
-  if (!loadedDoc) {
-    return <LoadingScreen />;
-  }
+  if (!loadedDoc) return <LoadingScreen />;
+
   return (
     <Container maxWidth="md" sx={{ my: 2 }}>
       <Button
