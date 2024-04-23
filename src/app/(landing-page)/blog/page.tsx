@@ -7,10 +7,10 @@ import { Container, Grid } from "@mui/material";
 import { getBlogs } from "api/blog";
 import BlogCard from "components/blog/BlogCard";
 import { LoadingScreen } from "components/global-components";
-import { IBlogCard } from "types/blog";
+import { IBlog } from "types/blog";
 
 const BlogPage = () => {
-  const [posts, setPosts] = useState<IBlogCard[]>([]);
+  const [posts, setPosts] = useState<IBlog[]>([]);
 
   useEffect(() => {
     // add event listener on firestore collection

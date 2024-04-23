@@ -6,25 +6,34 @@ import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { IBlog } from "types/blog";
 
+const calculateReadTime = (text: string) => {
+  const wordsPerMinute = 200;
+  const noOfWords = text.split(/\s/g).length;
+  const minutes = noOfWords / wordsPerMinute;
+  return Math.ceil(minutes);
+};
+
 const AddBlogForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
 
   const onSubmit = (data: IBlog): void => {
-    let imageId;
-    let blogSlug;
-    if (!session?.user?.name || !data.blogHeroPhoto) return;
+    if (!session?.user?.name || !data.heroPhoto) return;
 
-    const { name } = session.user;
-    const { blogHeroPhoto, ...dbUpload } = data;
+    const { name: author } = session.user;
+    const { heroPhoto, ...payload } = data;
 
-    blogStorage(blogHeroPhoto, data.title).then((res) => {
-      ({ imageId, blogSlug } = res);
+    blogStorage(heroPhoto as File, data.title).then((res) => {
+      const { imageId, blogSlug } = res;
+
+      const strippedContent = payload.content.replace(/<[^>]*>?/gm, "");
+
       addBlog(blogSlug, {
-        ...dbUpload,
-        author: name,
-        imageId: imageId,
+        ...payload,
+        author,
+        heroPhoto: imageId,
         slug: blogSlug,
+        readTime: calculateReadTime(strippedContent),
         created: Date.now(),
       })
         .then(() => enqueueSnackbar("Blog has been added"))

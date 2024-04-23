@@ -1,29 +1,28 @@
 "use client";
 
-import { Container } from "@mui/material";
-import BlogBack from "components/blog/BlogBack";
-import BlogPost from "components/blog/BlogPost";
-import { IBlogPage } from "types/blog";
-import { LoadingScreen } from "components/global-components";
 import { doc, getDoc } from "firebase/firestore";
+import { notFound, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { ArrowBack } from "@mui/icons-material";
+import { Button, Container } from "@mui/material";
+
+import BlogPost from "components/blog/BlogPost";
+import { LoadingScreen } from "components/global-components";
+
 import { db } from "lib/firebase/config";
+import { IBlog } from "types/blog";
 
-import { notFound } from "next/navigation";
-import { FC, useEffect, useState } from "react";
-
-interface pageProps {
-  params: { posts: string };
-}
-
-const Post: FC<pageProps> = ({ params }) => {
-  const [loadedDoc, setLoadedDoc] = useState<IBlogPage | null>(null);
+const Post = ({ params }: { params: { posts: string } }) => {
+  const router = useRouter();
+  const [loadedDoc, setLoadedDoc] = useState<IBlog | null>(null);
 
   useEffect(() => {
     const getBlog = async () => {
       const docRef = doc(db, "blogs", params.posts);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setLoadedDoc(docSnap.data() as IBlogPage);
+        setLoadedDoc(docSnap.data() as IBlog);
       } else {
         notFound();
       }
@@ -37,7 +36,13 @@ const Post: FC<pageProps> = ({ params }) => {
   }
   return (
     <Container maxWidth="md" sx={{ my: 2 }}>
-      <BlogBack />
+      <Button
+        sx={{ my: 2, color: "black" }}
+        startIcon={<ArrowBack />}
+        onClick={() => router.push("/blog")}
+      >
+        Back
+      </Button>
       <BlogPost {...loadedDoc} />
     </Container>
   );

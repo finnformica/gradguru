@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import {
   collection,
   deleteDoc,
@@ -8,15 +10,16 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { deleteObject, getBytes, ref } from "firebase/storage";
+
 import { db, storage } from "lib/firebase/config";
 import { fileStorage } from "lib/firebase/utils";
-import _ from "lodash";
-import { ICreateBlogPost } from "types/blog";
+import { IBlog } from "types/blog";
 import { endpoints } from "utils/axios";
 
-export function addBlog(slug: string, data: ICreateBlogPost) {
+export function addBlog(slug: string, data: IBlog) {
   const ref = doc(db, "blogs", slug);
   const payload = { ...data, created: Date.now() };
+
   return setDoc(ref, payload, { merge: true });
 }
 

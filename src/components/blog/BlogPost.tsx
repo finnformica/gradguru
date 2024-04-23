@@ -1,26 +1,31 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
 import { Box, Skeleton, Stack, Typography } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "lib/firebase/config";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { IBlogPage } from "types/blog";
-import "./styles.css";
 
-const DEFAULT_FONT_SIZE = 14;
+import { IBlog } from "types/blog";
+
+import "./styles.css";
 
 const BlogPost = ({
   content,
   author,
   created,
-  imageId,
+  heroPhoto,
   slug,
   summary,
   tags,
   title,
-}: IBlogPage) => {
+  readTime,
+}: IBlog) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+
   useEffect(() => {
-    const pathReference = ref(storage, `blog/${slug}/${imageId}`);
+    const pathReference = ref(storage, `blog/${slug}/${heroPhoto}`);
     getDownloadURL(pathReference)
       .then((url) => {
         setImageUrl(url);
@@ -28,7 +33,7 @@ const BlogPost = ({
       .catch((error) => {
         setImageUrl(null);
       });
-  }, [slug, imageId]);
+  }, [slug, heroPhoto]);
 
   return (
     <Box
@@ -47,13 +52,13 @@ const BlogPost = ({
       <Stack direction={"row"}>
         <Stack direction={"column"}>
           <Typography>{author}</Typography>
-          <Stack direction={"row"} gap={1} sx={{ color: "rgb(107, 107, 107)" }}>
-            <Typography fontSize={DEFAULT_FONT_SIZE}>{tags}</Typography>
-            <Typography fontSize={DEFAULT_FONT_SIZE}>·</Typography>
-            <Typography fontSize={DEFAULT_FONT_SIZE}>5 min read</Typography>
-            <Typography fontSize={DEFAULT_FONT_SIZE}>·</Typography>
-            <Typography fontSize={DEFAULT_FONT_SIZE}>
-              {new Date(created).toDateString()}
+          <Stack direction={"row"} gap={1}>
+            <Typography variant="body2">{tags}</Typography>
+            <Typography variant="body2">·</Typography>
+            <Typography variant="body2">{readTime} min read</Typography>
+            <Typography variant="body2">·</Typography>
+            <Typography variant="body2" color={"text.secondary"}>
+              {new Date(created || "").toDateString()}
             </Typography>
           </Stack>
         </Stack>
@@ -71,7 +76,7 @@ const BlogPost = ({
             src={imageUrl}
             width={400}
             height={300}
-            alt="blog image"
+            alt="Blog image"
             style={{
               borderRadius: "16px",
               objectFit: "cover",

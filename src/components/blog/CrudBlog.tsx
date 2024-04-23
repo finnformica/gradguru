@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Autocomplete,
   Box,
@@ -23,6 +24,7 @@ type addBlogProps = {
 };
 
 const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
+  // TODO: react-quill throwing error with SSR
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -31,23 +33,23 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
     summary: "",
     tags: "",
     content: "",
-    blogHeroPhoto: null,
+    heroPhoto: null,
   };
 
   const { control, handleSubmit, reset, setValue, watch } = useForm<IBlog>({
     defaultValues: defaultValues || dv2,
   });
 
-  const blogHeroPhoto = watch("blogHeroPhoto");
+  const blogHeroPhoto = watch("heroPhoto");
 
   const handleClearChange = () => {
-    setValue("blogHeroPhoto", null);
+    setValue("heroPhoto", null);
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
-      setValue("blogHeroPhoto", files[0]);
+      setValue("heroPhoto", files[0]);
     } else {
       enqueueSnackbar("No file selected.", { variant: "error" });
     }
@@ -110,11 +112,11 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
           {blogHeroPhoto ? (
             <AddingHeroImage
               handleClearChange={handleClearChange}
-              photoFile={blogHeroPhoto}
+              photoFile={blogHeroPhoto as File}
             />
           ) : (
             <Controller
-              name="blogHeroPhoto"
+              name="heroPhoto"
               control={control}
               rules={{ required: true }}
               render={({ field: { value }, fieldState: { error } }: any) => (

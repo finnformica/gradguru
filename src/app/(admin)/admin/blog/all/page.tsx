@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteBlogDB, deleteBlogStorage, getBlogs } from "api/blog";
@@ -14,12 +14,12 @@ import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import { IBlogPage } from "types/blog";
+import { IBlog } from "types/blog";
 
 const BlogEditTable = () => {
-  const [blogToDelete, setBlogToDelete] = useState<IBlogPage | null>(null);
-  const [blogs, setBlogs] = useState<IBlogPage[]>([]);
-  const [editBlog, setEditBlog] = useState<IBlogPage | null>(null);
+  const [blogToDelete, setBlogToDelete] = useState<IBlog | null>(null);
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
+  const [editBlog, setEditBlog] = useState<IBlog | null>(null);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const BlogEditTable = () => {
     {
       field: "title",
       headerName: "Title",
-      width: 500,
+      flex: 1,
     },
     { field: "author", headerName: "Author", width: 120 },
     {
@@ -63,9 +63,11 @@ const BlogEditTable = () => {
   const handleDeleteblog = async () => {
     if (!blogToDelete) return;
 
-    deleteBlogStorage(blogToDelete.imageId, blogToDelete.slug).catch(() =>
-      enqueueSnackbar("Error deleting hero image")
-    );
+    deleteBlogStorage(
+      blogToDelete.heroPhoto as string,
+      blogToDelete.slug
+    ).catch(() => enqueueSnackbar("Error deleting hero image"));
+
     deleteBlogDB(blogToDelete.slug)
       .then(() => {
         enqueueSnackbar("Blog post deleted");
@@ -76,12 +78,16 @@ const BlogEditTable = () => {
       });
   };
 
-  if (!session && !blogs) return <LoadingScreen />;
+  if (!session || !blogs) return <LoadingScreen />;
 
   return (
-    <Container maxWidth="lg" sx={{ gap: 4 }}>
-      <Typography variant="h4">All Blog Posts</Typography>
+    <>
+      <Typography variant="h4" pb={4}>
+        All Blog Posts
+      </Typography>
+
       <AdminDataGrid rows={blogs} columns={columns} />
+
       {blogToDelete && (
         <ConfirmationDialog
           open={!!blogToDelete}
@@ -91,13 +97,15 @@ const BlogEditTable = () => {
           confirmText="Delete"
         />
       )}
+
       {editBlog && (
         <BlogEditModal
+          open={!!editBlog}
           onClose={() => setEditBlog(null)}
           blogObject={editBlog}
         />
       )}
-    </Container>
+    </>
   );
 };
 
