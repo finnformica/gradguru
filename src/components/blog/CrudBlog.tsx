@@ -1,92 +1,64 @@
 "use client";
-
-import { Delete } from "@mui/icons-material";
 import {
   Autocomplete,
   Box,
   Button,
   Container,
-  IconButton,
   Stack,
   TextField,
-  Tooltip,
-  Typography,
 } from "@mui/material";
-import { blogStorage, postBlog } from "api/blog";
 import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useSnackbar } from "notistack";
-import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css";
 import "react-quill/dist/quill.snow.css";
-import { modules } from "./constants";
-import { BlogForm } from "./types";
+import { IBlog } from "types/blog";
+import AddingHeroImage from "./AddingHeroImage";
+import { modules, tagOptions } from "./constants";
 
-const tagOptions = ["Finance", "Jobs", "Education"];
+type addBlogProps = {
+  onSubmitBlog: (data: IBlog) => void;
+  defaultValues?: IBlog;
+};
 
-const AddBlog = () => {
+const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-  const [content, setContent] = useState("");
-  const [heroPhoto, setHeroPhoto] = useState<File | null>(null);
-  const { control, handleSubmit, reset, setValue } = useForm({
-    defaultValues: {
-      title: "",
-      summary: "",
-      tags: null,
-    },
+
+  const dv2 = {
+    title: "",
+    summary: "",
+    tags: "",
+    content: "",
+    blogHeroPhoto: null,
+  };
+
+  const { control, handleSubmit, reset, setValue, watch } = useForm<IBlog>({
+    defaultValues: defaultValues || dv2,
   });
+
+  const blogHeroPhoto = watch("blogHeroPhoto");
+
+  const handleClearChange = () => {
+    setValue("blogHeroPhoto", null);
+  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
-      setHeroPhoto(files[0]);
+      setValue("blogHeroPhoto", files[0]);
     } else {
       enqueueSnackbar("No file selected.", { variant: "error" });
     }
   };
 
-  const handleClearChange = () => {
-    setHeroPhoto(null);
+  const onSubmit = (data: IBlog) => {
+    onSubmitBlog(data);
+    reset();
   };
 
-  if (!session?.user) {
-    return <LoadingScreen />;
-  }
-  const { user } = session;
-
-  const onSubmit = (data: BlogForm) => {
-    if (!heroPhoto) {
-      return enqueueSnackbar("No here image selected.", { variant: "error" });
-    }
-    let imageId;
-    let blogSlug;
-
-    blogStorage(heroPhoto, data.title).then((res) => {
-      ({ imageId, blogSlug } = res);
-      postBlog(blogSlug, {
-        ...data,
-        author: user.name,
-        imageId: imageId,
-        slug: blogSlug,
-        content: content,
-      })
-        .then(() => enqueueSnackbar("Blog card has been added"))
-        .catch((e) =>
-          enqueueSnackbar(`Error adding the blog card: ${e.message}`, {
-            variant: "error",
-          })
-        )
-        .finally(() => {
-          reset();
-          setHeroPhoto(null);
-          setContent("");
-        });
-    });
-  };
+  if (!session) return <LoadingScreen />;
 
   return (
     <Container maxWidth="md">
@@ -103,7 +75,7 @@ const AddBlog = () => {
               <TextField
                 onChange={onChange}
                 value={value}
-                label={"Blog Title"}
+                label={"Title"}
                 error={!!error}
                 helperText={!!error && "A title is required"}
                 size="small"
@@ -135,6 +107,28 @@ const AddBlog = () => {
             )}
           />
 
+          {blogHeroPhoto ? (
+            <AddingHeroImage
+              handleClearChange={handleClearChange}
+              photoFile={blogHeroPhoto}
+            />
+          ) : (
+            <Controller
+              name="blogHeroPhoto"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value }, fieldState: { error } }: any) => (
+                <TextField
+                  type={"file"}
+                  error={!!error}
+                  helperText={!!error && "A hero image is required"}
+                  size="small"
+                  onChange={handleImageChange}
+                />
+              )}
+            />
+          )}
+
           <Controller
             name="summary"
             control={control}
@@ -155,45 +149,21 @@ const AddBlog = () => {
             )}
           />
 
-          {heroPhoto ? (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              <Image
-                src={URL.createObjectURL(heroPhoto)}
-                width={400}
-                height={300}
-                alt="Selected hero photo"
-                style={{
-                  borderRadius: "12px",
-                }}
-              />
-              <Typography variant="body1">{heroPhoto.name}</Typography>
-              <Tooltip title="Clear Image">
-                <IconButton onClick={handleClearChange}>
-                  <Delete />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          ) : (
-            <TextField
-              type={"file"}
-              size="small"
-              onChange={handleImageChange}
-            />
-          )}
-
           <Box>
-            <ReactQuill
-              theme="snow"
-              value={content}
-              onChange={(newValue) => setContent(newValue)}
-              modules={modules}
+            <Controller
+              name="content"
+              control={control}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }: any) => (
+                <ReactQuill
+                  theme="snow"
+                  value={value}
+                  onChange={onChange}
+                  modules={modules}
+                />
+              )}
             />
           </Box>
           <Button type="submit" variant="contained">
@@ -205,4 +175,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default CrudBlog;

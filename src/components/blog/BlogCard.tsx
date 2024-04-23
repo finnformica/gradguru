@@ -1,25 +1,25 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import {
   Box,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Chip,
-  Link,
   Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
-import { initializeApp } from "firebase/app";
 
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { config } from "lib/firebase/config";
-import { useEffect, useState } from "react";
-import { IBlogCard } from "./types";
+import { getDownloadURL, ref } from "firebase/storage";
 
-initializeApp(config);
+import { storage } from "lib/firebase/config";
+import { useRouter } from "next/navigation";
+import { IBlogCard } from "types/blog";
 
 const BlogCard = ({
   author,
@@ -30,10 +30,10 @@ const BlogCard = ({
   tags,
   title,
 }: IBlogCard) => {
+  const router = useRouter();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const storage = getStorage();
     const pathReference = ref(storage, `blog/${slug}/${imageId}`);
     getDownloadURL(pathReference)
       .then((url) => {
@@ -47,58 +47,68 @@ const BlogCard = ({
   const date = new Date(created).toDateString();
 
   return (
-    <Card sx={{ width: 800 }}>
-      <Link color="inherit" underline="none" href={`/blog/${slug}`}>
-        <CardActionArea sx={{ p: 2 }}>
-          <CardHeader
-            title={
-              <Stack direction={"row"} gap={1}>
-                <Typography variant="body2">{author}</Typography>
-                <Typography variant="body2">·</Typography>
-                <Typography variant="body2" color={"text.secondary"}>
-                  {date}
-                </Typography>
-              </Stack>
-            }
-          />
-          <Stack direction="row">
-            <CardContent>
-              <Typography variant="h6">{title}</Typography>
-              <Box
-                sx={{
-                  width: 500,
-                  display: "-webkit-box",
-                  textAlign: "left",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  WebkitLineClamp: 4,
-                  WebkitBoxOrient: "vertical",
-                }}
-              >
-                <Typography variant="body1">{summary}</Typography>
-              </Box>
-            </CardContent>
-            {imageUrl ? (
-              <CardMedia
-                component="img"
-                height={150}
-                width={200}
-                image={imageUrl}
-                alt={imageId}
-                sx={{ pt: 2, pr: 2 }}
-              />
-            ) : (
-              <Skeleton variant="rectangular" width={200} height={150} />
-            )}
-          </Stack>
-        </CardActionArea>
-      </Link>
-      <CardActions sx={{ p: 2 }}>
-        <Stack direction={"row"} gap={2} sx={{ alignContent: "center" }}>
-          <Chip label={tags} variant="outlined" color="primary" />
-          <Chip label={date} variant="outlined" color="primary" />
+    <Card>
+      <CardActionArea
+        sx={{ p: 1 }}
+        onClick={() => router.push(`/blog/${slug}`)}
+      >
+        <Stack direction="row" justifyContent="space-between">
+          <CardContent>
+            <Typography variant="h6" sx={{ pb: 1 }}>
+              {title}
+            </Typography>
+            <Box
+              sx={{
+                display: "-webkit-box",
+                textAlign: "left",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                WebkitLineClamp: 4,
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              <Typography variant="body1">{summary}</Typography>
+            </Box>
+          </CardContent>
+          {imageUrl ? (
+            <CardMedia
+              component="img"
+              image={imageUrl}
+              alt={imageId}
+              sx={{
+                mr: 1,
+                mt: 2,
+                objectFit: "cover",
+                width: 200,
+                height: 150,
+                borderRadius: "16px",
+              }}
+            />
+          ) : (
+            <Skeleton variant="rectangular" width={200} height={150} />
+          )}
         </Stack>
-      </CardActions>
+        <CardActions sx={{ mt: 1, px: 1.5 }}>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Stack direction={"row"} gap={1}>
+              <Typography variant="body2">{author}</Typography>
+              <Typography variant="body2">·</Typography>
+              <Typography variant="body2" color={"text.secondary"}>
+                {date}
+              </Typography>
+            </Stack>
+            <Chip label={tags} variant="outlined" size="small" />
+          </Stack>
+        </CardActions>
+      </CardActionArea>
     </Card>
   );
 };
