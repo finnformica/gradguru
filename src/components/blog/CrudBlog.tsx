@@ -66,13 +66,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   };
 
   const renderFormInputs = () => (
-    <Stack
-      direction={"column"}
-      spacing={2}
-      py={5}
-      visibility={reviewBlog ? "hidden" : "initial"}
-      position={reviewBlog ? "absolute" : "initial"}
-    >
+    <Stack direction={"column"} spacing={2} py={5}>
       <Controller
         name="title"
         control={control}
@@ -178,8 +172,14 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
       <Button
         variant="contained"
         onClick={() => {
-          window.scrollTo(0, 0);
+          window.scrollTo(0, 0); // scroll to top of page
           setReviewBlog(true);
+
+          // prevent <br> tags from constantly being added
+          setValue(
+            "content",
+            getValues("content").replace(/(<p><br><\/p>)+/g, "<p><br></p>")
+          );
         }}
       >
         Review
@@ -187,12 +187,8 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
     </Stack>
   );
 
-  // TODO: scrolling on hidden content
   const renderReview = () => (
-    <Box
-      visibility={!reviewBlog ? "hidden" : "initial"}
-      position={!reviewBlog ? "absolute" : "initial"}
-    >
+    <Box>
       <Typography variant="h4" color="error" py={2}>
         Review Blog
       </Typography>
@@ -219,9 +215,13 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
 
   return (
     <Container maxWidth="md">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {renderFormInputs()}
-        {renderReview()}
+      <form
+        onSubmit={handleSubmit((data: any) => {
+          setReviewBlog(false);
+          onSubmit(data);
+        })}
+      >
+        {!reviewBlog ? renderFormInputs() : renderReview()}
       </form>
     </Container>
   );
