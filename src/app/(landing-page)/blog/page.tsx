@@ -27,9 +27,6 @@ const BlogPage = () => {
     <Container
       maxWidth="lg"
       sx={{
-        borderRight: `1px solid ${borderColor}`,
-        borderLeft: `1px solid ${borderColor}`,
-
         my: 4,
         py: 2,
       }}
