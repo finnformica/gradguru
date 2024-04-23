@@ -84,11 +84,7 @@ const BlogPost = ({
 
       {content ? (
         <Box>
-          <div
-            className="blog"
-            dangerouslySetInnerHTML={{ __html: content }}
-            style={{ textAlign: "justify", borderRadius: 16 }}
-          />
+          <div className="blog" dangerouslySetInnerHTML={{ __html: content }} />
         </Box>
       ) : (
         <Typography>No Content Found</Typography>

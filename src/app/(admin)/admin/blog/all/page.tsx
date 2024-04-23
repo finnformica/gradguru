@@ -1,6 +1,12 @@
 "use client";
+
+import { useSession } from "next-auth/react";
+import { enqueueSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+
 import { Container, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+
 import { deleteBlogDB, deleteBlogStorage, getBlogs } from "api/blog";
 import BlogEditModal from "components/blog/BlogEditModal";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
@@ -8,9 +14,6 @@ import {
   ConfirmationDialog,
   LoadingScreen,
 } from "components/global-components";
-import { useSession } from "next-auth/react";
-import { enqueueSnackbar } from "notistack";
-import { useEffect, useState } from "react";
 import { IBlogPage } from "types/blog";
 
 const BlogEditTable = () => {
@@ -20,8 +23,9 @@ const BlogEditTable = () => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    // add event listener on firestore collectionxX
+    // add event listener on firestore collection
     const unsubscribe = getBlogs(setBlogs);
+
     // remove event listener on unmount
     return () => unsubscribe();
   }, []);
@@ -66,7 +70,7 @@ const BlogEditTable = () => {
       .then(() => {
         enqueueSnackbar("Blog post deleted");
       })
-      .catch(() => enqueueSnackbar("Error deleting test"))
+      .catch(() => enqueueSnackbar("Error deleting blog"))
       .finally(() => {
         setBlogToDelete(null);
       });

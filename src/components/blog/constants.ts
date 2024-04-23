@@ -4,8 +4,6 @@ import ImageResize from "quill-image-resize-module-react";
 
 Quill.register("modules/imageResize", ImageResize);
 
-// export const quill = new Quill("#editor", { theme: "snow" });
-
 export const tagOptions = ["Finance", "Jobs", "Education"];
 
 export const modules = {

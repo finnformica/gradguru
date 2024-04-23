@@ -12,6 +12,7 @@ export interface FirebaseBlog {
   summary: string;
   title: string;
   author: string | null;
+  readTime: number | null; // in minutes
 }
 
 export interface IBlogCard extends FirebaseBlog {
