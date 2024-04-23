@@ -7,14 +7,53 @@
 }
 
 .blog p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 div,
 span,
 pre {
   font-family: Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.blog h1 {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.blog h2 {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.blog h3 {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.blog h4 {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.blog h5 {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.blog h6 {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  font-size: 0.75 rem;
+  line-height: 1.5;
 }
