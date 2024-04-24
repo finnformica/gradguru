@@ -16,11 +16,16 @@ import { fileStorage } from "lib/firebase/utils";
 import { IBlog } from "types/blog";
 import { endpoints } from "utils/axios";
 
-export function addBlog(slug: string, data: IBlog) {
+export function createBlog(slug: string, data: IBlog) {
   const ref = doc(db, "blogs", slug);
   const payload = { ...data, created: Date.now() };
 
   return setDoc(ref, payload, { merge: true });
+}
+
+export function updateBlog(slug: string, data: IBlog) {
+  const ref = doc(db, "blogs", slug);
+  return setDoc(ref, data, { merge: true });
 }
 
 export function blogStorage(file: File, blogName: string) {

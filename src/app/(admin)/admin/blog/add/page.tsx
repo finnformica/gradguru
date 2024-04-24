@@ -1,5 +1,5 @@
 "use client";
-import { addBlog, blogStorage } from "api/blog";
+import { createBlog, blogStorage } from "api/blog";
 import CrudBlog from "components/blog/CrudBlog";
 import { LoadingScreen } from "components/global-components";
 import { useSession } from "next-auth/react";
@@ -28,7 +28,7 @@ const AddBlogForm = () => {
 
       const strippedContent = payload.content.replace(/<[^>]*>?/gm, "");
 
-      addBlog(blogSlug, {
+      createBlog(blogSlug, {
         ...payload,
         author,
         heroPhoto: imageId,

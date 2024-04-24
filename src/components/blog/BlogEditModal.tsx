@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 import {
-  addBlog,
+  updateBlog,
   blogStorage,
   deleteBlogStorage,
   getHeroPhotoFile,
@@ -45,7 +45,7 @@ const BlogEditModal = ({ open, onClose, blogObject }: EditModalProps) => {
     blogStorage(heroPhoto as File, data.title).then((res) => {
       const { imageId, blogSlug } = res;
 
-      addBlog(blogSlug, {
+      updateBlog(blogSlug, {
         ...payload,
         heroPhoto: imageId,
         slug: blogSlug,
