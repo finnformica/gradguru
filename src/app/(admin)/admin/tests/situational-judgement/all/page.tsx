@@ -9,7 +9,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import { EditDeleteActions } from "components/data-grid-custom";
-import { ConfirmationDialog } from "components/global-components";
+import { ConfirmationDialog } from "components/global";
 import { ISJTest } from "types";
 
 const AllSJTTests = () => {

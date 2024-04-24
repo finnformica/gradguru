@@ -10,7 +10,7 @@ import {
   updateBlog,
 } from "api/blog";
 import { CrudBlog } from "components/blog";
-import { FormModalWrapper, LoadingScreen } from "components/global-components";
+import { FormModalWrapper, LoadingScreen } from "components/global";
 
 import { IBlog } from "types/blog";
 

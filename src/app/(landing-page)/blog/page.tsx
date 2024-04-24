@@ -6,7 +6,7 @@ import { Container, Grid } from "@mui/material";
 
 import { getBlogs } from "api/blog";
 import { BlogCard } from "components/blog";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { IBlog } from "types/blog";
 
 const BlogPage = () => {

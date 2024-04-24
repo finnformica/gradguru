@@ -10,10 +10,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { deleteBlogDB, deleteBlogStorage, getBlogs } from "api/blog";
 import { BlogEditModal } from "components/blog";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
-import {
-  ConfirmationDialog,
-  LoadingScreen,
-} from "components/global-components";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { IBlog } from "types/blog";
 
 const BlogEditTable = () => {

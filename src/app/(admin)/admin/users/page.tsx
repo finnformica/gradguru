@@ -14,10 +14,10 @@ import { SubmitHandler } from "react-hook-form";
 import { indexToRoleMapping } from "utils/permissions";
 import { deleteUser, postUser, useUsers } from "api/user";
 
-import FullFeaturedCrudGrid from "components/global-components/FullFeaturedCrudGrid";
+import FullFeaturedCrudGrid from "components/global/FullFeaturedCrudGrid";
 import UserEditModal from "components/admin/users/user-edit-modal";
-import { LoadingScreen } from "components/global-components";
-import ConfirmationDialog from "components/global-components/confirmation-dialog";
+import { LoadingScreen } from "components/global";
+import ConfirmationDialog from "components/global/confirmation-dialog";
 import { IUserFormInput } from "types";
 
 const columns: GridColDef[] = [

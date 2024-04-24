@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";

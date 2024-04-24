@@ -8,7 +8,7 @@ import { Button, Stack, Typography } from "@mui/material";
 
 import { blogStorage, createBlog } from "api/blog";
 import { AddBlogTagModal, CrudBlog } from "components/blog";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { IBlog } from "types/blog";
 import { useState } from "react";
 

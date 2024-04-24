@@ -8,7 +8,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Button, Container } from "@mui/material";
 
 import { BlogPost } from "components/blog";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 
 import { db } from "lib/firebase/config";
 import { IBlog } from "types/blog";

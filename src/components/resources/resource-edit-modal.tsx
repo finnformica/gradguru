@@ -3,7 +3,7 @@
 import { useSnackbar } from "notistack";
 
 import { patchResource } from "api/resources";
-import { FormModalWrapper } from "components/global-components";
+import { FormModalWrapper } from "components/global";
 import { deleteStorageItem, uploadToStorage } from "lib/firebase/utils";
 import { IResource } from "types";
 import { generateRandomString, getFileExtension } from "utils/format-string";

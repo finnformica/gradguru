@@ -15,7 +15,7 @@ import {
   NRTestCard,
   TopPanel,
 } from "components/aptitude-tests/numerical-reasoning";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 
 import { INRTest, NRQuestionFlat } from "types";
 import { formatGmat, formatTableOrGraph } from "utils/user-tests";

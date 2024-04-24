@@ -5,7 +5,7 @@ import { Controller } from "react-hook-form";
 
 import { Card, Stack, Typography } from "@mui/material";
 
-import { ConfirmationDialog } from "components/global-components";
+import { ConfirmationDialog } from "components/global";
 import { useStepsForm } from "hooks/useStepsForm";
 
 import CardActions from "../common/card-actions";

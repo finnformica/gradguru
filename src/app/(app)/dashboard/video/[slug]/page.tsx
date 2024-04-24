@@ -10,7 +10,7 @@ import {
   VideoControls,
   VideoPlayer,
 } from "components/CourseVideoPage";
-import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
+import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { useCourse as useCourseContext } from "context/course";
 import { useSession } from "next-auth/react";
 
