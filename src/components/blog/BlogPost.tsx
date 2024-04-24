@@ -18,7 +18,7 @@ const BlogPost = ({
   heroPhoto,
   slug,
   summary,
-  tags,
+  tag,
   title,
   readTime,
 }: IBlog) => {
@@ -62,7 +62,7 @@ const BlogPost = ({
         <Stack direction={"column"}>
           <Typography>{author || "John Smith"}</Typography>
           <Stack direction={"row"} gap={1}>
-            <Typography variant="body2">{tags}</Typography>
+            <Typography variant="body2">{tag}</Typography>
             <Typography variant="body2">·</Typography>
             <Typography variant="body2">
               {readTime ? `${readTime} min read` : "5 min read"}

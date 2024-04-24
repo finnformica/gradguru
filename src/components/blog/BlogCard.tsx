@@ -27,7 +27,7 @@ const BlogCard = ({
   heroPhoto,
   slug,
   summary,
-  tags,
+  tag,
   title,
   readTime,
 }: IBlog) => {
@@ -108,7 +108,7 @@ const BlogCard = ({
                 {date}
               </Typography>
             </Stack>
-            <Chip label={tags} variant="outlined" size="small" />
+            <Chip label={tag} variant="outlined" size="small" />
           </Stack>
         </CardActions>
       </CardActionArea>

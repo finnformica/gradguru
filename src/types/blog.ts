@@ -3,7 +3,7 @@ import { IFirestoreData } from "types";
 export type IBlog = {
   title: string;
   summary: string;
-  tags: string | null;
+  tag: string | null;
   heroPhoto: File | string | null;
   content: string;
   readTime: number; // in minutes

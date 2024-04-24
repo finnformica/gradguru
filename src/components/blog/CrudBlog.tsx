@@ -35,7 +35,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   const dv2 = {
     title: "",
     summary: "",
-    tags: "",
+    tag: "",
     content: "",
     heroPhoto: null,
   };
@@ -86,25 +86,20 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
         )}
       />
       <Controller
-        name="tags"
+        name="tag"
         control={control}
         rules={{ required: false }}
         render={({ field, fieldState: { error } }: any) => (
           <Autocomplete
-            id="tags"
+            id="tag"
             fullWidth
             value={field.value}
             options={tagOptions}
             onChange={(_, data) => {
-              setValue("tags", data);
+              setValue("tag", data);
             }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Tags"
-                size="small"
-                error={!!error}
-              />
+              <TextField {...params} label="Tag" size="small" error={!!error} />
             )}
           />
         )}
