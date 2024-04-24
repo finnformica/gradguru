@@ -3,16 +3,13 @@
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
-import {
-  blogStorage,
-  deleteBlogStorage,
-  getHeroPhotoFile,
-  updateBlog,
-} from "api/blog";
+import { deleteBlogStorage, getHeroPhotoFile, updateBlog } from "api/blog";
 import { CrudBlog } from "components/blog";
 import { FormModalWrapper, LoadingScreen } from "components/global";
 
+import { fileStorage } from "lib/firebase/utils";
 import { IBlog } from "types/blog";
+import { endpoints } from "utils/axios";
 
 type EditModalProps = {
   open: boolean;
@@ -38,25 +35,26 @@ const BlogEditModal = ({ open, onClose, blogObject }: EditModalProps) => {
   } as IBlog;
 
   const onSubmit = (data: IBlog) => {
-    const { heroPhoto, ...payload } = data;
+    const { heroPhoto, slug, ...payload } = data;
 
     deleteBlogStorage(blogObject.heroPhoto as string, blogObject.slug);
-    blogStorage(heroPhoto as File, data.title).then((res) => {
-      const { imageId, blogSlug } = res;
 
-      updateBlog(blogSlug, {
-        ...payload,
-        heroPhoto: imageId,
-        slug: blogSlug,
-      })
-        .then(() => enqueueSnackbar("Blog has been updated"))
-        .catch((e) =>
-          enqueueSnackbar(`Error updating the blog: ${e.message}`, {
-            variant: "error",
-          })
-        )
-        .finally(onClose);
-    });
+    fileStorage(heroPhoto as File, `${endpoints.storage.blog}/${slug}`).then(
+      (imageId) => {
+        updateBlog(slug, {
+          ...payload,
+          heroPhoto: imageId,
+          slug,
+        })
+          .then(() => enqueueSnackbar("Blog has been updated"))
+          .catch((e) =>
+            enqueueSnackbar(`Error updating the blog: ${e.message}`, {
+              variant: "error",
+            })
+          )
+          .finally(onClose);
+      }
+    );
   };
 
   if (!blogHeroPhotoFile) return <LoadingScreen />;

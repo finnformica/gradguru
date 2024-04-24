@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 import {
   collection,
   deleteDoc,
@@ -28,11 +26,8 @@ export function updateBlog(slug: string, data: IBlog) {
   return setDoc(ref, data, { merge: true });
 }
 
-export function blogStorage(file: File, blogName: string) {
-  const blogSlug = _.kebabCase(blogName);
-  return fileStorage(file, `${endpoints.storage.blog}/${blogSlug}`).then(
-    (imageId) => ({ imageId, blogSlug })
-  );
+export function blogStorage(file: File, slug: string) {
+  return fileStorage(file, `${endpoints.storage.blog}/${slug}`);
 }
 
 export function deleteBlogStorage(fileName: string, folderName: string) {

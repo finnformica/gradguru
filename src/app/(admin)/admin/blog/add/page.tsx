@@ -1,16 +1,19 @@
 "use client";
 
+import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 
 import { Add } from "@mui/icons-material";
 import { Button, Stack, Typography } from "@mui/material";
 
-import { blogStorage, createBlog } from "api/blog";
+import { createBlog } from "api/blog";
 import { AddBlogTagModal, CrudBlog } from "components/blog";
 import { LoadingScreen } from "components/global";
+import { fileStorage } from "lib/firebase/utils";
 import { IBlog } from "types/blog";
-import { useState } from "react";
+import { endpoints } from "utils/axios";
 
 const calculateReadTime = (text: string) => {
   const wordsPerMinute = 200;
@@ -28,28 +31,31 @@ const AddBlogForm = () => {
     if (!session?.user?.name || !data.heroPhoto) return;
 
     const { name: author } = session.user;
-    const { heroPhoto, ...payload } = data;
+    const { heroPhoto, title, ...payload } = data;
 
-    blogStorage(heroPhoto as File, data.title).then((res) => {
-      const { imageId, blogSlug } = res;
+    const slug = _.kebabCase(title);
 
-      const strippedContent = payload.content.replace(/<[^>]*>?/gm, "");
+    fileStorage(heroPhoto as File, `${endpoints.storage.blog}/${slug}`).then(
+      (heroPhoto) => {
+        const strippedContent = payload.content.replace(/<[^>]*>?/gm, "");
 
-      createBlog(blogSlug, {
-        ...payload,
-        author,
-        heroPhoto: imageId,
-        slug: blogSlug,
-        readTime: calculateReadTime(strippedContent),
-        created: Date.now(),
-      })
-        .then(() => enqueueSnackbar("Blog has been added"))
-        .catch((e) =>
-          enqueueSnackbar(`Error adding the blog: ${e.message}`, {
-            variant: "error",
-          })
-        );
-    });
+        createBlog(slug, {
+          ...payload,
+          title,
+          author,
+          heroPhoto: heroPhoto,
+          slug,
+          readTime: calculateReadTime(strippedContent),
+          created: Date.now(),
+        })
+          .then(() => enqueueSnackbar("Blog has been added"))
+          .catch((e) =>
+            enqueueSnackbar(`Error adding the blog: ${e.message}`, {
+              variant: "error",
+            })
+          );
+      }
+    );
   };
 
   if (!session?.user) return <LoadingScreen />;
