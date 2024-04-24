@@ -66,7 +66,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   };
 
   const renderFormInputs = () => (
-    <Stack direction={"column"} spacing={2} py={5}>
+    <Stack direction={"column"} spacing={2} pt={5}>
       <Controller
         name="title"
         control={control}

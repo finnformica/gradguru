@@ -1,9 +1,14 @@
 "use client";
-import { createBlog, blogStorage } from "api/blog";
-import CrudBlog from "components/blog/CrudBlog";
-import { LoadingScreen } from "components/global-components";
+
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
+
+import { Add } from "@mui/icons-material";
+import { Button, Stack, Typography } from "@mui/material";
+
+import { blogStorage, createBlog } from "api/blog";
+import CrudBlog from "components/blog/CrudBlog";
+import { LoadingScreen } from "components/global-components";
 import { IBlog } from "types/blog";
 
 const calculateReadTime = (text: string) => {
@@ -47,7 +52,29 @@ const AddBlogForm = () => {
 
   if (!session?.user) return <LoadingScreen />;
 
-  return <CrudBlog onSubmitBlog={onSubmit} />;
+  return (
+    <>
+      <Stack
+        spacing={2}
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography variant="h4" gutterBottom>
+          Add New Blog Post
+        </Typography>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<Add />}
+          size="medium"
+        >
+          Update Tags
+        </Button>
+      </Stack>
+      <CrudBlog onSubmitBlog={onSubmit} />
+    </>
+  );
 };
 
 export default AddBlogForm;
