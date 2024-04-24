@@ -62,6 +62,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
 
   const onSubmit = (data: IBlog) => {
     onSubmitBlog(data);
+    setReviewBlog(false);
     reset();
   };
 
