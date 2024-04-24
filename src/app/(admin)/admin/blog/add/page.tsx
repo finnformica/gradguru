@@ -22,6 +22,15 @@ const calculateReadTime = (text: string) => {
   return Math.ceil(minutes);
 };
 
+const removeEmojis = (text: string) =>
+  text.replace(
+    /[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]| /g,
+    ""
+  );
+
+const sanitiseSlug = (text: string) =>
+  removeEmojis(text).replace(/[^\w\s]/gi, ""); // remove special characters
+
 const AddBlogForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
@@ -33,7 +42,7 @@ const AddBlogForm = () => {
     const { name: author } = session.user;
     const { heroPhoto, title, ...payload } = data;
 
-    const slug = _.kebabCase(title);
+    const slug = sanitiseSlug(_.kebabCase(title));
 
     fileStorage(heroPhoto as File, `${endpoints.storage.blog}/${slug}`).then(
       (heroPhoto) => {
