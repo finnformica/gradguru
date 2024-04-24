@@ -7,9 +7,10 @@ import { Add } from "@mui/icons-material";
 import { Button, Stack, Typography } from "@mui/material";
 
 import { blogStorage, createBlog } from "api/blog";
-import CrudBlog from "components/blog/CrudBlog";
+import { AddBlogTagModal, CrudBlog } from "components/blog";
 import { LoadingScreen } from "components/global-components";
 import { IBlog } from "types/blog";
+import { useState } from "react";
 
 const calculateReadTime = (text: string) => {
   const wordsPerMinute = 200;
@@ -21,6 +22,7 @@ const calculateReadTime = (text: string) => {
 const AddBlogForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { data: session } = useSession();
+  const [tagModal, setTagModal] = useState(false);
 
   const onSubmit = (data: IBlog): void => {
     if (!session?.user?.name || !data.heroPhoto) return;
@@ -68,11 +70,18 @@ const AddBlogForm = () => {
           color="primary"
           startIcon={<Add />}
           size="medium"
+          onClick={() => setTagModal(true)}
         >
           Update Tags
         </Button>
       </Stack>
       <CrudBlog onSubmitBlog={onSubmit} />
+
+      <AddBlogTagModal
+        open={tagModal}
+        handleClose={() => setTagModal(false)}
+        setOpen={setTagModal}
+      />
     </>
   );
 };

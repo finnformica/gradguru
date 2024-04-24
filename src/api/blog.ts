@@ -49,7 +49,10 @@ export function getBlogs(setState: (state: any[]) => void) {
   const ref = collection(db, "blogs");
   const q = query(ref); // listens on document modifications
   return onSnapshot(q, (snapshot) => {
-    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const data = snapshot.docs
+      .filter((doc) => doc.id !== "tags")
+      .map((doc) => ({ id: doc.id, ...doc.data() }));
+
     setState(data);
   });
 }
@@ -60,6 +63,22 @@ export const getBlog = async (slug: string) => {
   if (docSnap.exists()) {
     return docSnap.data();
   }
+};
+
+export const getBlogTags = async () => {
+  const docRef = doc(db, "blogs", "tags");
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
+};
+
+export const createBlogTag = async (data: string[]) => {
+  const ref = doc(db, "blogs", "tags");
+  await setDoc(ref, { tags: data }, { merge: true });
 };
 
 export const getHeroPhotoFile = async (
