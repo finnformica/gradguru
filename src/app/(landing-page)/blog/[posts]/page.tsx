@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { ArrowBack } from "@mui/icons-material";
 import { Button, Container } from "@mui/material";
 
-import BlogPost from "components/blog/BlogPost";
+import { BlogPost } from "components/blog";
 import { LoadingScreen } from "components/global-components";
 
 import { db } from "lib/firebase/config";

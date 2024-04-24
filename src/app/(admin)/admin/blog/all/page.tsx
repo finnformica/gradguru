@@ -8,7 +8,7 @@ import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteBlogDB, deleteBlogStorage, getBlogs } from "api/blog";
-import BlogEditModal from "components/blog/BlogEditModal";
+import { BlogEditModal } from "components/blog";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import {
   ConfirmationDialog,

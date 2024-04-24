@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Container, Grid } from "@mui/material";
 
 import { getBlogs } from "api/blog";
-import BlogCard from "components/blog/BlogCard";
+import { BlogCard } from "components/blog";
 import { LoadingScreen } from "components/global-components";
 import { IBlog } from "types/blog";
 

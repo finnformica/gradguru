@@ -4,14 +4,13 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 import {
-  updateBlog,
   blogStorage,
   deleteBlogStorage,
   getHeroPhotoFile,
+  updateBlog,
 } from "api/blog";
-import CrudBlog from "components/blog/CrudBlog";
-import { LoadingScreen } from "components/global-components";
-import FormModalWrapper from "components/global-components/FormModalWrapper";
+import { CrudBlog } from "components/blog";
+import { FormModalWrapper, LoadingScreen } from "components/global-components";
 
 import { IBlog } from "types/blog";
 
