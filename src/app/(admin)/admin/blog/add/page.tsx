@@ -42,7 +42,7 @@ const AddBlogForm = () => {
     const { name: author } = session.user;
     const { heroPhoto, title, ...payload } = data;
 
-    const slug = sanitiseSlug(_.kebabCase(title));
+    const slug = _.kebabCase(sanitiseSlug(title));
 
     fileStorage(heroPhoto as File, `${endpoints.storage.blog}/${slug}`).then(
       (heroPhoto) => {
