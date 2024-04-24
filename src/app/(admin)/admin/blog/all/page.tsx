@@ -38,6 +38,13 @@ const BlogEditTable = () => {
     },
     { field: "author", headerName: "Author", width: 120 },
     {
+      field: "readTime",
+      headerName: "Read Time",
+      width: 120,
+      valueGetter: (params) => `${params.value} min read`,
+    },
+    { field: "tag", headerName: "Tag", width: 120 },
+    {
       field: "created",
       headerName: "Created",
       width: 200,
