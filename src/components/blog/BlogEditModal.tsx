@@ -1,15 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 import { deleteBlogStorage, getHeroPhotoFile, updateBlog } from "api/blog";
-import { CrudBlog } from "components/blog";
 import { FormModalWrapper, LoadingScreen } from "components/global";
-
 import { fileStorage } from "lib/firebase/utils";
 import { IBlog } from "types/blog";
 import { endpoints } from "utils/axios";
+
+// react-quill throwing error with SSR
+const CrudBlog = dynamic(() => import("components/blog/CrudBlog"), {
+  ssr: false,
+  loading: () => <LoadingScreen />,
+});
 
 type EditModalProps = {
   open: boolean;

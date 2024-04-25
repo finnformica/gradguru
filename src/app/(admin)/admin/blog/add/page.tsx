@@ -2,6 +2,7 @@
 
 import _ from "lodash";
 import { useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 
@@ -9,11 +10,17 @@ import { Add } from "@mui/icons-material";
 import { Button, Stack, Typography } from "@mui/material";
 
 import { createBlog } from "api/blog";
-import { AddBlogTagModal, CrudBlog } from "components/blog";
+import { AddBlogTagModal } from "components/blog";
 import { LoadingScreen } from "components/global";
 import { fileStorage } from "lib/firebase/utils";
 import { IBlog } from "types/blog";
 import { endpoints } from "utils/axios";
+
+// react-quill throwing error with SSR
+const CrudBlog = dynamic(() => import("components/blog/CrudBlog"), {
+  ssr: false,
+  loading: () => <LoadingScreen />,
+});
 
 const calculateReadTime = (text: string) => {
   const wordsPerMinute = 200;

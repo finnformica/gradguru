@@ -1,5 +1,15 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+// @ts-ignore
+import ImageResize from "quill-image-resize-module-react";
+
 import {
   Autocomplete,
   Box,
@@ -9,17 +19,34 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
 import { LoadingScreen } from "components/global";
-import { useSession } from "next-auth/react";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { IBlog } from "types/blog";
+
 import AddingHeroImage from "./AddingHeroImage";
-import { modules, tagOptions } from "./constants";
-import { useState } from "react";
 import BlogPost from "./BlogPost";
+import { tagOptions } from "./constants";
+
+Quill.register("modules/imageResize", ImageResize);
+
+const modules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+    ["bold", "italic", "underline"], // toggled buttons
+    ["blockquote", "code-block"],
+    ["link", "image", "formula"],
+
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+  ],
+  imageResize: {
+    parchment: Quill.import("parchment"),
+    modules: ["Resize", "DisplaySize"],
+  },
+};
 
 type addBlogProps = {
   onSubmitBlog: (data: IBlog) => void;
