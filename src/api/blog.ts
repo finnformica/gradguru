@@ -46,7 +46,8 @@ export function getBlogs(setState: (state: any[]) => void) {
   return onSnapshot(q, (snapshot) => {
     const data = snapshot.docs
       .filter((doc) => doc.id !== "tags")
-      .map((doc) => ({ id: doc.id, ...doc.data() }));
+      .map((doc) => ({ id: doc.id, ...doc.data() }) as IBlog)
+      .sort((a, b) => (b.created ?? 0) - (a.created ?? 0));
 
     setState(data);
   });
