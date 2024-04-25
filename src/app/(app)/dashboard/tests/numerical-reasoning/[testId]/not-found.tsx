@@ -1,4 +1,4 @@
-import { NotFoundComponent } from "components/global-components";
+import { NotFoundComponent } from "components/global";
 
 // TODO: not working for unknown testIds - need to fix
 const NotFound = () => {

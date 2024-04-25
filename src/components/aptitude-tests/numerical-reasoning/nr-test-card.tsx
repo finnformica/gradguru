@@ -16,7 +16,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 
 import { BarChart, LineChart, PieChart } from "components/chartjs";
-import { ConfirmationDialog } from "components/global-components";
+import { ConfirmationDialog } from "components/global";
 import { useStepsForm } from "hooks/useStepsForm";
 import { NRAnswer, NRQuestionFlat } from "types";
 

@@ -11,7 +11,7 @@ import {
   graphForm,
   tableForm,
 } from "components/aptitude-tests/numerical-reasoning/constants";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { INRQuestion } from "types";
 
 const AddNRQuestion = () => {

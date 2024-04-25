@@ -1,4 +1,4 @@
-import { PageBreadcrumbs } from "components/global-components";
+import { PageBreadcrumbs } from "components/global";
 
 const CoursePage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;

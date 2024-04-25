@@ -9,10 +9,7 @@ import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
-import {
-  ConfirmationDialog,
-  LoadingScreen,
-} from "components/global-components";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { IResource } from "types";
 import { deleteResource, getResources } from "api/resources";
 import { deleteStorageItem, retrieveStorageItem } from "lib/firebase/utils";

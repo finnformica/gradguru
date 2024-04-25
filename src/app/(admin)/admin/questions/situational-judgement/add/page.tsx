@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 import { createQuestion } from "api/tests";
 import { SJTForm } from "components/aptitude-tests/situational-judgement";
 import { initialForm } from "components/aptitude-tests/situational-judgement/constants";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { ISJScenario } from "types";
 
 const AddSJTQuestion = () => {

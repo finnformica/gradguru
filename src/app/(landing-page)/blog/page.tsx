@@ -1,34 +1,36 @@
 "use client";
-import { Container, Grid, Stack } from "@mui/material";
-import { useBlogs } from "api/blog";
-import BlogCard from "components/blog/BlogCard";
-import { LoadingScreen } from "components/global-components";
 
-const borderColor = "lightgrey";
+import { useEffect, useState } from "react";
+
+import { Container, Grid } from "@mui/material";
+
+import { getBlogs } from "api/blog";
+import { BlogCard } from "components/blog";
+import { LoadingScreen } from "components/global";
+import { IBlog } from "types/blog";
 
 const BlogPage = () => {
-  const { blogs: posts } = useBlogs();
+  const [posts, setPosts] = useState<IBlog[]>([]);
+
+  useEffect(() => {
+    // add event listener on firestore collection
+    const unsubscribe = getBlogs(setPosts);
+
+    // remove event listener on unmount
+    return () => unsubscribe();
+  }, []);
 
   if (!posts) return <LoadingScreen />;
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        borderRight: `1px solid ${borderColor}`,
-        borderLeft: `1px solid ${borderColor}`,
-
-        my: 4,
-        py: 2,
-      }}
-    >
-      <Stack direction={"column"} gap={2} alignItems={"center"}>
+    <Container maxWidth="md" sx={{ my: 4 }}>
+      <Grid container spacing={4}>
         {posts.map((post) => (
-          <Grid key={post.slug} item>
-            <BlogCard key={post.slug} id={post.slug} {...post} />
+          <Grid key={post.slug} item width="100%">
+            <BlogCard key={post.slug} {...post} />
           </Grid>
         ))}
-      </Stack>
+      </Grid>
     </Container>
   );
 };

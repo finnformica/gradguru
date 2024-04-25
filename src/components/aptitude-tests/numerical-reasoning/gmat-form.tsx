@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { MathJax } from "better-react-mathjax";
 
-import { ClientWrapper } from "components/global-components";
+import { ClientWrapper } from "components/global";
 import { IGmatQuestion } from "types";
 import { answerOptions } from "./constants";
 import { renderHelperText, textFieldInputValidation } from "./utils";

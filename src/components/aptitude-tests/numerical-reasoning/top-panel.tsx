@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { PageBreadcrumbs } from "components/global-components";
+import { PageBreadcrumbs } from "components/global";
 
 const TopPanel = ({ testId }: { testId: string }) => {
   return (

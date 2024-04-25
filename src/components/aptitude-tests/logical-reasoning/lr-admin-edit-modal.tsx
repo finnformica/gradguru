@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 
 import { patchQuestion } from "api/tests";
-import FormModalWrapper from "components/global-components/FormModalWrapper";
+import { FormModalWrapper } from "components/global";
 import { deleteStorageFolder } from "lib/firebase/utils";
 import { ILRQuestion } from "types";
 import { endpoints } from "utils/axios";

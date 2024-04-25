@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { Typography } from "@mui/material";
 
-import { Iconify } from "components/global-components";
+import { Iconify } from "components/global";
 import { storage } from "lib/firebase/config";
 import { CellData, Grid } from "types";
 import { endpoints } from "utils/axios";

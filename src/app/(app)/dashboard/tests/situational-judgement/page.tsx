@@ -9,7 +9,7 @@ import { Card, IconButton, Stack, Tooltip } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { getTestRecords, getTests } from "api/tests";
-import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
+import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { ISJTest, ITestRecord } from "types";
 import { combineTestsAndRecords, sortAlphaNumeric } from "utils/user-tests";
 
