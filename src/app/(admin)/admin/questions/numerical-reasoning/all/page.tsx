@@ -12,10 +12,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { deleteQuestion, getQuestions } from "api/tests";
 import { NRModal } from "components/aptitude-tests/numerical-reasoning";
 import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
-import {
-  ConfirmationDialog,
-  LoadingScreen,
-} from "components/global-components";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { INRQuestion } from "types";
 
 const AllNRQuestions = () => {

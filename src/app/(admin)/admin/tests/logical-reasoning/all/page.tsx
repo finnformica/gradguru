@@ -9,7 +9,7 @@ import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
-import { ConfirmationDialog } from "components/global-components";
+import { ConfirmationDialog } from "components/global";
 import { ILRTest } from "types";
 
 const AllLRTests = () => {

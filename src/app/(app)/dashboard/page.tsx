@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 
 import { Box, Stack, Typography } from "@mui/material";
 
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import Image from "next/image";
 import Link from "next/link";
 

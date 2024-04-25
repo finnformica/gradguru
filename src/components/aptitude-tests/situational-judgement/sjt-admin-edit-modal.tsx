@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 
 import { patchQuestion } from "api/tests";
-import FormModalWrapper from "components/global-components/FormModalWrapper";
+import { FormModalWrapper } from "components/global";
 
 import { ISJScenario } from "types";
 import SJTForm from "./sjt-admin-form";

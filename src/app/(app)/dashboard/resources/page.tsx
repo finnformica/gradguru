@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 
 import { getResources } from "api/resources";
-import { LoadingScreen, PageBreadcrumbs } from "components/global-components";
+import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { ResourceSection } from "components/resources";
 import { IResource } from "types";
 

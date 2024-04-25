@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { createTest, getQuestions, patchQuestion } from "api/tests";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { useEffect, useState } from "react";
 import { INRQuestion } from "types";
 

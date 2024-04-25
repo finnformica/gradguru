@@ -16,10 +16,7 @@ import {
   mapObjectToNestedArray,
 } from "components/aptitude-tests/logical-reasoning/utils";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
-import {
-  ConfirmationDialog,
-  LoadingScreen,
-} from "components/global-components";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { ILRQuestion } from "types";
 import { deleteStorageFolder } from "lib/firebase/utils";
 import { endpoints } from "utils/axios";

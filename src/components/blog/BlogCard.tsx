@@ -19,22 +19,23 @@ import { getDownloadURL, ref } from "firebase/storage";
 
 import { storage } from "lib/firebase/config";
 import { useRouter } from "next/navigation";
-import { IBlogCard } from "types/blog";
+import { IBlog } from "types/blog";
 
 const BlogCard = ({
   author,
   created,
-  imageId,
+  heroPhoto,
   slug,
   summary,
-  tags,
+  tag,
   title,
-}: IBlogCard) => {
+  readTime,
+}: IBlog) => {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const pathReference = ref(storage, `blog/${slug}/${imageId}`);
+    const pathReference = ref(storage, `blog/${slug}/${heroPhoto}`);
     getDownloadURL(pathReference)
       .then((url) => {
         setImageUrl(url);
@@ -42,9 +43,9 @@ const BlogCard = ({
       .catch((error) => {
         setImageUrl(null);
       });
-  }, [slug, imageId]);
+  }, [slug, heroPhoto]);
 
-  const date = new Date(created).toDateString();
+  const date = new Date(created || "").toDateString();
 
   return (
     <Card>
@@ -74,7 +75,7 @@ const BlogCard = ({
             <CardMedia
               component="img"
               image={imageUrl}
-              alt={imageId}
+              alt="Blog image"
               sx={{
                 mr: 1,
                 mt: 2,
@@ -101,11 +102,13 @@ const BlogCard = ({
             <Stack direction={"row"} gap={1}>
               <Typography variant="body2">{author}</Typography>
               <Typography variant="body2">·</Typography>
+              <Typography variant="body2">{readTime} min read</Typography>
+              <Typography variant="body2">·</Typography>
               <Typography variant="body2" color={"text.secondary"}>
                 {date}
               </Typography>
             </Stack>
-            <Chip label={tags} variant="outlined" size="small" />
+            <Chip label={tag} variant="outlined" size="small" />
           </Stack>
         </CardActions>
       </CardActionArea>

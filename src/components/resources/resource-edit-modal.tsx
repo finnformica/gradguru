@@ -1,10 +1,14 @@
-import FormModalWrapper from "components/global-components/FormModalWrapper";
-import ResourceAdminForm from "./resource-admin-form";
+"use client";
+
+import { useSnackbar } from "notistack";
+
+import { patchResource } from "api/resources";
+import { FormModalWrapper } from "components/global";
+import { deleteStorageItem, uploadToStorage } from "lib/firebase/utils";
 import { IResource } from "types";
 import { generateRandomString, getFileExtension } from "utils/format-string";
-import { deleteStorageItem, uploadToStorage } from "lib/firebase/utils";
-import { patchResource } from "api/resources";
-import { useSnackbar } from "notistack";
+
+import ResourceAdminForm from "./resource-admin-form";
 
 type ResourceEditModalProps = {
   resource: IResource;

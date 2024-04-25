@@ -11,10 +11,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { deleteQuestion, getQuestions } from "api/tests";
 import { SJTModal } from "components/aptitude-tests/situational-judgement";
 import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
-import {
-  ConfirmationDialog,
-  LoadingScreen,
-} from "components/global-components";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { ISJScenario } from "types";
 
 const AllSJTQuestions = () => {
