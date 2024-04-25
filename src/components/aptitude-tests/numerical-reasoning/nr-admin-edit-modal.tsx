@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { patchQuestion } from "api/tests";
 
 import { INRQuestion } from "types";
-import FormModalWrapper from "../../global/FormModalWrapper";
+import { FormModalWrapper } from "components/global";
 import NRForm from "./nr-admin-form";
 
 const NRModal = ({

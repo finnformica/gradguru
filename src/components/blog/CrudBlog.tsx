@@ -53,8 +53,8 @@ type addBlogProps = {
   defaultValues?: IBlog;
 };
 
+// import component using next.js dynamic to avoid SSR
 const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
-  // TODO: react-quill throwing error with SSR
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [reviewBlog, setReviewBlog] = useState(false);
