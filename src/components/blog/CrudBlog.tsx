@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -20,12 +20,12 @@ import {
   Typography,
 } from "@mui/material";
 
+import { getBlogTags } from "api/blog";
 import { LoadingScreen } from "components/global";
 import { IBlog } from "types/blog";
 
 import AddingHeroImage from "./AddingHeroImage";
 import BlogPost from "./BlogPost";
-import { tagOptions } from "./constants";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -58,6 +58,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [reviewBlog, setReviewBlog] = useState(false);
+  const [options, setOptions] = useState<string[]>([]);
 
   const dv2 = {
     title: "",
@@ -73,6 +74,17 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
     });
 
   const blogHeroPhoto = watch("heroPhoto");
+
+  useEffect(() => {
+    const fetchTypes = async () => {
+      const res = await getBlogTags();
+      setOptions(res?.tags || []);
+
+      console.log("tags", res?.tags || []);
+    };
+
+    fetchTypes();
+  }, []);
 
   const handleClearChange = () => {
     setValue("heroPhoto", null);
@@ -122,7 +134,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
             id="tag"
             fullWidth
             value={field.value}
-            options={tagOptions}
+            options={options}
             onChange={(_, data) => {
               setValue("tag", data);
             }}
