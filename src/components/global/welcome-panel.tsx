@@ -6,9 +6,11 @@ import { Box, Stack, Typography } from "@mui/material";
 
 export const WelcomePanel = ({
   name,
+  image,
   children,
 }: {
   name: string;
+  image?: string;
   children?: React.ReactNode;
 }) => (
   <Box
@@ -31,7 +33,7 @@ export const WelcomePanel = ({
         {children}
       </Stack>
       <Image
-        src="/imgs/3d/dashboard.svg"
+        src={image || "/imgs/3d/dashboard.svg"}
         alt="dashboard"
         width={300}
         height={300}
