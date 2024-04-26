@@ -4,7 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import { AccountCircle } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 
 const AuthButton = () => {
@@ -20,7 +20,7 @@ const AuthButton = () => {
   };
 
   if (status !== "authenticated") {
-    return null;
+    return <AccountCircle sx={{ color: "grey.400" }} />;
   }
 
   return (
