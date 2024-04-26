@@ -139,7 +139,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               }}
               onClick={() => router.push("/admin")}
             />
-            <Typography pl={2} variant="h5" fontWeight={500}>
+            <Typography pl={2} variant="h6" color="text.secondary">
               Gradguru Admin Panel
             </Typography>
           </Stack>
