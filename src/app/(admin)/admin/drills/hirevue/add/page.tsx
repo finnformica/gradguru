@@ -8,6 +8,7 @@ const AddHirevueQuestion = () => {
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
   return (
     <>
       <Typography variant="h4">Add Hirevue Question</Typography>
