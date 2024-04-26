@@ -2,22 +2,20 @@
 
 import { useEffect, useState } from "react";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
-import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
-import { ConfirmationDialog, LoadingScreen } from "components/global";
-import { IResource } from "types";
 import { deleteResource, getResources } from "api/resources";
-import { deleteStorageItem, retrieveStorageItem } from "lib/firebase/utils";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { ResourceEditModal } from "components/resources";
+import { deleteStorageItem, retrieveStorageItem } from "lib/firebase/utils";
+import { IResource } from "types";
 
 const AllResources = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
   const [resourceToEdit, setResourceToEdit] = useState<IResource | null>(null);
   const [resourceToDelete, setResourceToDelete] = useState<IResource | null>(
     null
@@ -32,7 +30,7 @@ const AllResources = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!resources || !session) return <LoadingScreen />;
+  if (!resources) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -64,7 +62,6 @@ const AllResources = () => {
       renderCell: (params) => {
         return (
           <EditDeleteActions
-            session={session}
             onEditClick={() => {
               const { file: path } = params.row;
               retrieveStorageItem(path).then((file) =>

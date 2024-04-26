@@ -1,17 +1,20 @@
+"use client";
+
 import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
+import { useSession } from "next-auth/react";
 
 type EditDeleteActionsProps = {
-  session: any;
   onEditClick?: () => void;
   onDeleteClick?: () => void;
 };
 
 const EditDeleteActions = ({
-  session,
   onEditClick,
   onDeleteClick,
 }: EditDeleteActionsProps) => {
+  const { data: session } = useSession();
+
   return (
     <Stack direction="row" justifyContent="center">
       {onEditClick && (
