@@ -96,13 +96,16 @@ const Drawer = styled(MuiDrawer, {
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
+  const [userOpen, setUserOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    setUserOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setUserOpen(false);
   };
 
   return (
@@ -136,7 +139,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         variant="permanent"
         open={open}
         onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onMouseLeave={() => setOpen(false || userOpen)}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
