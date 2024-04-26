@@ -132,7 +132,12 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
