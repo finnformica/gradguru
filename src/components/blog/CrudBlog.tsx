@@ -154,7 +154,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
           rules={{ required: true }}
           render={({ field: { value }, fieldState: { error } }: any) => (
             <TextField
-              type={"file"}
+              type="file"
               error={!!error}
               helperText={!!error && "A hero image is required"}
               size="small"

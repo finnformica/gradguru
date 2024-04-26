@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 
 import { createTest, getQuestions, patchQuestion } from "api/tests";
-import { LoadingScreen } from "components/global";
 import { useEffect, useState } from "react";
 import { INRQuestion } from "types";
 
@@ -65,6 +64,7 @@ const renderInput = ({
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  size="small"
                   label={`${title} Question ${i + 1}`}
                   error={!!error}
                   helperText={!!error && "Question is required"}
@@ -118,8 +118,6 @@ const AddNRTest = () => {
       .finally(() => reset()); // TODO: autcomplete label not resetting
   };
 
-  if (!questions) return <LoadingScreen />;
-
   const available = questions.filter((question) => !question.testId);
 
   const gmatOptions = available
@@ -160,6 +158,7 @@ const AddNRTest = () => {
             render={({ field, fieldState: { error } }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Name"
                 error={!!error}
                 helperText={!!error && "Name is required"}
