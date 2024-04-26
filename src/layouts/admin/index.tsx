@@ -96,7 +96,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   return (
