@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -21,7 +20,6 @@ import {
 } from "@mui/material";
 
 import { getBlogTags } from "api/blog";
-import { LoadingScreen } from "components/global";
 import { IBlog } from "types/blog";
 
 import AddingHeroImage from "./AddingHeroImage";
@@ -55,7 +53,6 @@ type addBlogProps = {
 
 // import component using next.js dynamic to avoid SSR
 const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [reviewBlog, setReviewBlog] = useState(false);
   const [options, setOptions] = useState<string[]>([]);
@@ -245,8 +242,6 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
       </Stack>
     </Box>
   );
-
-  if (!session) return <LoadingScreen />;
 
   return (
     <Container maxWidth="md">
