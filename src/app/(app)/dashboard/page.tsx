@@ -1,13 +1,12 @@
 "use client";
+
 import { useSession } from "next-auth/react";
-
-import { Box, Stack, Typography } from "@mui/material";
-
-import { LoadingScreen } from "components/global";
 import Image from "next/image";
 import Link from "next/link";
 
-const WelcomePanel = ({ name, courses }: { name: string; courses: any[] }) => (
+import { Box, Stack, Typography } from "@mui/material";
+
+const WelcomePanel = ({ name, courses }: { name: string; courses?: any[] }) => (
   <Box
     sx={{
       backgroundColor: (theme) => theme.palette.primary.light,
@@ -25,7 +24,7 @@ const WelcomePanel = ({ name, courses }: { name: string; courses: any[] }) => (
           Welcome back, {name} 👋
         </Typography>
 
-        {courses.length > 0 ? (
+        {courses?.length || 0 > 0 ? (
           <Typography variant="body2" fontWeight={200} gutterBottom>
             Your courses are available via the side navigation
           </Typography>
@@ -60,11 +59,12 @@ const WelcomePanel = ({ name, courses }: { name: string; courses: any[] }) => (
 const Dashboard = () => {
   const { data: session } = useSession();
 
-  if (!session?.user) return <LoadingScreen />;
-
-  const { courses, name } = session.user;
-
-  return <WelcomePanel name={name || ""} courses={courses} />;
+  return (
+    <WelcomePanel
+      name={session?.user?.name || ""}
+      courses={session?.user?.courses}
+    />
+  );
 };
 
 export default Dashboard;
