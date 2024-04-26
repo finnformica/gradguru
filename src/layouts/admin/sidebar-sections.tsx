@@ -156,8 +156,28 @@ export const sidebarSections = [
   {
     name: "Drills",
     icon: <Hardware />,
-    active: false,
-    children: [],
+    active: true,
+    children: [
+      {
+        name: "Hirevue",
+        icon: <Hardware />,
+        active: true,
+        children: [
+          {
+            name: "All questions",
+            icon: <AllInclusive />,
+            route: "/admin/drills/hirevue/all",
+            active: true,
+          },
+          {
+            name: "Add question",
+            icon: <AddBox />,
+            route: "/admin/drills/hirevue/add",
+            active: true,
+          },
+        ],
+      },
+    ],
   },
   {
     name: "Resources",
