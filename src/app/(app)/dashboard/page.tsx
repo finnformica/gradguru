@@ -11,7 +11,7 @@ const Dashboard = () => {
   const { data: session } = useSession();
 
   return (
-    <WelcomePanel name={session?.user?.name || ""}>
+    <WelcomePanel name={session?.user?.name || "Gradguru user"}>
       {session?.user?.courses?.length || 0 > 0 ? (
         <Typography variant="body2" fontWeight={200} gutterBottom>
           Your courses are available via the side navigation
