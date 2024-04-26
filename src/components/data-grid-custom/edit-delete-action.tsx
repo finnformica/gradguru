@@ -1,7 +1,7 @@
 "use client";
 
 import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
-import { IconButton, Stack } from "@mui/material";
+import { CircularProgress, IconButton, Stack } from "@mui/material";
 import { useSession } from "next-auth/react";
 
 type EditDeleteActionsProps = {
@@ -14,6 +14,13 @@ const EditDeleteActions = ({
   onDeleteClick,
 }: EditDeleteActionsProps) => {
   const { data: session } = useSession();
+
+  if (!session)
+    return (
+      <Stack direction="row" justifyContent="center">
+        <CircularProgress size={25} />
+      </Stack>
+    );
 
   return (
     <Stack direction="row" justifyContent="center">
