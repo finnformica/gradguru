@@ -1,28 +1,30 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
-import { CSSObject, Theme, styled, useTheme } from "@mui/material/styles";
+import { CSSObject, Theme, styled } from "@mui/material/styles";
 
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
   CssBaseline,
-  Divider,
-  IconButton,
   List,
+  Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
 
+import AuthButton from "layouts/auth-button";
+
+import { useRouter } from "next/navigation";
 import ListCollapse from "./list-collapse";
 import ListCollapseItem from "./list-collapse-item";
 import { sidebarSections } from "./sidebar-sections";
 
 const drawerWidth = 240;
+const appBarHeight = 72;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -49,7 +51,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
+  height: appBarHeight,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -94,51 +96,64 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <Box
       sx={{
         display: "flex",
-        height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+        height: `calc(100vh - ${appBarHeight}px)`,
       }}
     >
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ color: "white" }}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
+      <AppBar
+        position="fixed"
+        sx={{
+          background: "transparent",
+          backdropFilter: "blur(10px)",
+          pr: 4,
+          pl: 1,
+          height: `${appBarHeight}px`,
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+          boxShadow: "none",
+        }}
+      >
+        <Toolbar sx={{ my: "auto" }} disableGutters>
+          <Stack
+            flexGrow={1}
+            alignItems="center"
+            direction="row"
+            justifyContent="flex-start"
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Gradguru Admin Panel
-          </Typography>
+            <Image
+              src="/logos/small-logo.png"
+              alt="Gradguru logo"
+              width={55}
+              height={55}
+              priority
+              style={{
+                display: "block",
+                cursor: "pointer",
+                marginBottom: "6px",
+              }}
+              onClick={() => router.push("/admin")}
+            />
+            <Typography pl={2} variant="h6" color="text.secondary">
+              Gradguru Admin Panel
+            </Typography>
+          </Stack>
+
+          <AuthButton />
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
+      <Drawer
+        variant="permanent"
+        open={open}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <DrawerHeader />
         <List sx={{ p: 0 }}>
           {sidebarSections.map((section, key) =>
             section.children ? (
