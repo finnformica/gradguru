@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar } from "@mui/material";
 
-import AuthButton from "./auth-button";
+import AuthButton from "layouts/auth-button";
 
 const DashboardHeader = ({ height }: { height: number }) => {
   return (

@@ -7,6 +7,7 @@ import ConfirmationDialog from "./confirmation-dialog";
 import Iconify from "./iconify";
 import LoadingScreen from "./loading-screen";
 import PageBreadcrumbs from "./page-breadcrumbs";
+import { WelcomePanel } from "./welcome-panel";
 
 export {
   ClientWrapper,
@@ -18,4 +19,5 @@ export {
   LoadingWrapper,
   NotFoundComponent,
   PageBreadcrumbs,
+  WelcomePanel,
 };
