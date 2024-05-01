@@ -6,7 +6,6 @@ type NewSkeletonProps = {
 };
 
 const NavSkeleton = ({ count }: NewSkeletonProps) => {
-  //   return <List>{components}</List>;
   return (
     <Stack spacing={2}>
       {_.range(count).map((c) => (

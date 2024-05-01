@@ -14,7 +14,7 @@ import NavSkeleton from "./nav-skeleton";
 export const NavItems = () => {
   const { data: session } = useSession();
 
-  if (!session) return <NavSkeleton count={6} />; // TODO: return skeleton
+  if (!session) return <NavSkeleton count={6} />;
 
   const home = {
     name: "Home",
