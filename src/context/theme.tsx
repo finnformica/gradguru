@@ -27,7 +27,7 @@ const theme = createTheme({
     borderRadius: 2.5,
   },
   components: {
-    MuiPaper: {
+    MuiCard: {
       styleOverrides: {
         root: {
           borderRadius: "8px",

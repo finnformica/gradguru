@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 
 import { createTest, getQuestions, patchQuestion } from "api/tests";
-import { LoadingScreen } from "components/global";
 import { useEffect, useState } from "react";
 import { Grid, GridTemplate, GridType, ILRQuestion } from "types";
 
@@ -93,8 +92,6 @@ const AddLRTest = () => {
       .finally(() => reset()); // TODO: autcomplete label not resetting
   };
 
-  if (!questions) return <LoadingScreen />;
-
   const options = questions
     .filter((question) => !question.testId)
     .map((question) => ({
@@ -120,6 +117,7 @@ const AddLRTest = () => {
             render={({ field, fieldState: { error } }) => (
               <TextField
                 {...field}
+                size="small"
                 label="Name"
                 error={!!error}
                 helperText={!!error && "Name is required"}
@@ -150,6 +148,7 @@ const AddLRTest = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      size="small"
                       label={`Question ${i + 1}`}
                       error={!!error}
                       helperText={!!error && "Question is required"}

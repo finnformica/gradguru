@@ -44,7 +44,10 @@ const AddBlogForm = () => {
   const [tagModal, setTagModal] = useState(false);
 
   const onSubmit = (data: IBlog): void => {
-    if (!session?.user?.name || !data.heroPhoto) return;
+    if (!session?.user?.name || !data.heroPhoto) {
+      enqueueSnackbar("Invalid data, please try again.", { variant: "error" });
+      return;
+    }
 
     const { name: author } = session.user;
     const { heroPhoto, title, ...payload } = data;
@@ -73,8 +76,6 @@ const AddBlogForm = () => {
       }
     );
   };
-
-  if (!session?.user) return <LoadingScreen />;
 
   return (
     <>
