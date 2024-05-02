@@ -9,11 +9,12 @@ import {
 import { List, SxProps } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { NavListItem } from "./nav-list-item";
+import NavSkeleton from "./nav-skeleton";
 
 export const NavItems = () => {
   const { data: session } = useSession();
 
-  if (!session) return null; // TODO: return skeleton
+  if (!session) return <NavSkeleton count={6} />;
 
   const home = {
     name: "Home",
