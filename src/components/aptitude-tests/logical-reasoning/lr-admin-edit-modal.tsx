@@ -63,7 +63,7 @@ const LRModal = ({
 
   return (
     <FormModalWrapper
-      title="Edit NR question"
+      title="Edit LR question"
       open={!!question}
       handleClose={() => setQuestion(null)}
     >
