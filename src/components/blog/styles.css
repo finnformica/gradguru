@@ -1,0 +1,61 @@
+.blog img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+.blog p, h1, h2, h3, h4, h5, h6, ul, ol, pre, span, div {
+  font-family: Roboto, sans-serif;
+}
+
+.blog p,
+div,
+span,
+pre {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.blog h1, h2, h3 {
+  font-weight: 500;
+}
+
+.blog h4 {
+  font-weight: 300;
+}
+
+.blog h5, h6 {
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Individual styling */
+
+.blog h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.blog h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.blog h3 {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.blog h4 {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.blog h5 {
+  font-size: 0.875rem;
+}
+
+.blog h6 {
+  font-size: 0.75 rem;
+}
