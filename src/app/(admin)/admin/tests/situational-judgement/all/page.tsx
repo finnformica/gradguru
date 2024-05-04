@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
@@ -13,7 +12,6 @@ import { ConfirmationDialog } from "components/global";
 import { ISJTest } from "types";
 
 const AllSJTTests = () => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [tests, setTests] = useState<ISJTest[]>([]);
   const [testToDelete, setTestToDelete] = useState<ISJTest | null>(null);
@@ -49,10 +47,7 @@ const AllSJTTests = () => {
       headerName: "Actions",
       width: 100,
       renderCell: (params) => (
-        <EditDeleteActions
-          session={session}
-          onDeleteClick={() => setTestToDelete(params.row)}
-        />
+        <EditDeleteActions onDeleteClick={() => setTestToDelete(params.row)} />
       ),
     },
   ];

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
@@ -17,12 +16,11 @@ import {
 } from "components/aptitude-tests/logical-reasoning/utils";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog, LoadingScreen } from "components/global";
-import { ILRQuestion } from "types";
 import { deleteStorageFolder } from "lib/firebase/utils";
+import { ILRQuestion } from "types";
 import { endpoints } from "utils/axios";
 
 const AllLRQuestions = () => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [questions, setQuestions] = useState<ILRQuestion[] | null>(null);
   const [questionToEdit, setQuestionToEdit] = useState<ILRQuestion | null>(
@@ -38,7 +36,7 @@ const AllLRQuestions = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!questions || !session) return <LoadingScreen />;
+  if (!questions) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -97,7 +95,6 @@ const AllLRQuestions = () => {
       width: 100,
       renderCell: (params) => (
         <EditDeleteActions
-          session={session}
           onEditClick={() => {
             const question = params.row;
 
