@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
@@ -9,25 +9,39 @@ import { GridColDef } from "@mui/x-data-grid";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog, LoadingScreen } from "components/global";
 
-import { mock } from "components/drills/hirevue/constants";
 import { IHirevueQuestion } from "types/hirevue";
 import { HirevueQuestionEditModal } from "components/drills/hirevue";
+import { deleteHirevueQuestion, getHirevueQuestions } from "api/drills";
 
 const AddHirevueQuestion = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const [hirevueQuestions, setHirevueQuestions] = useState<
+    IHirevueQuestion[] | null
+  >(null);
   const [questionToDelete, setQuestionToDelete] = useState<string | null>(null);
   const [questionToEdit, setQuestionToEdit] = useState<IHirevueQuestion | null>(
     null
   );
 
-  if (!mock) return <LoadingScreen />;
+  useEffect(() => {
+    // add event listener on firestore collection
+    const unsubscribe = getHirevueQuestions("consulting", setHirevueQuestions);
+
+    // remove event listener on unmount
+    return () => unsubscribe();
+  }, []);
+
+  if (!hirevueQuestions) return <LoadingScreen />;
 
   const handleDelete = () => {
-    console.log(questionToDelete);
+    if (!questionToDelete) return;
 
-    enqueueSnackbar("Hirevue question deleted");
-
-    setQuestionToDelete(null);
+    deleteHirevueQuestion("consulting", questionToDelete)
+      .then(() => enqueueSnackbar("Question deleted"))
+      .catch(() =>
+        enqueueSnackbar("Failed to delete question", { variant: "error" })
+      )
+      .finally(() => setQuestionToDelete(null));
   };
 
   const columns: GridColDef[] = [
@@ -40,6 +54,7 @@ const AddHirevueQuestion = () => {
       field: "type",
       headerName: "Type",
       width: 120,
+      valueGetter: (params) => params.value.label,
     },
     {
       field: "created",
@@ -61,13 +76,14 @@ const AddHirevueQuestion = () => {
       },
     },
   ];
+
   return (
     <>
       <Typography variant="h4" pb={2}>
         All Hirevue Questions
       </Typography>
 
-      <AdminDataGrid columns={columns} rows={mock} />
+      <AdminDataGrid columns={columns} rows={hirevueQuestions} />
 
       {questionToEdit && (
         <HirevueQuestionEditModal
