@@ -6,8 +6,9 @@ import { FormModalWrapper } from "components/global";
 import { IHirevueQuestion } from "types/hirevue";
 
 import HirevueQuestionAdminForm from "./hirevue-question-admin-form";
+import { patchHirevueQuestion } from "api/drills";
 
-const SJTModal = ({
+const HirevueQuestionEditModal = ({
   open,
   setQuestion,
   question,
@@ -18,12 +19,13 @@ const SJTModal = ({
 }) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-
-    enqueueSnackbar("Hirevue question saved");
-
-    setQuestion(null);
+  const onSubmit = async (data: any) => {
+    return patchHirevueQuestion("consulting", data.id, data)
+      .then(() => enqueueSnackbar("Question updated"))
+      .catch(() =>
+        enqueueSnackbar("Failed to update question", { variant: "error" })
+      )
+      .finally(() => setQuestion(null));
   };
 
   return (
@@ -37,4 +39,4 @@ const SJTModal = ({
   );
 };
 
-export default SJTModal;
+export default HirevueQuestionEditModal;
