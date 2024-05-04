@@ -1,13 +1,13 @@
 "use client";
 
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { getHirevueQuestionTypes } from "api/drills";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IHirevueQuestion } from "types/hirevue";
 
-const options = ["Personal", "Leadership", "Kindness", "Teamwork"];
-
 type HirevueQuestionAdminFormProps = {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => Promise<string | number>;
   defaultValues?: IHirevueQuestion;
 };
 
@@ -15,7 +15,9 @@ const HirevueQuestionAdminForm = ({
   onSubmit,
   defaultValues,
 }: HirevueQuestionAdminFormProps) => {
-  const { handleSubmit, control, setValue } = useForm<IHirevueQuestion>({
+  const [options, setOptions] = useState([]);
+
+  const { handleSubmit, control, setValue, reset } = useForm<IHirevueQuestion>({
     defaultValues: defaultValues || {
       question: "",
       explanation: "",
@@ -24,8 +26,19 @@ const HirevueQuestionAdminForm = ({
     },
   });
 
+  useEffect(() => {
+    const fetchTypes = async () => {
+      const res = await getHirevueQuestionTypes("consulting");
+      setOptions(res?.types || []);
+    };
+
+    fetchTypes();
+  }, []);
+
+  const submitWithReset = (data: any) => onSubmit(data).finally(() => reset());
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submitWithReset)}>
       <Stack spacing={2} py={2}>
         <Controller
           name="type"
