@@ -1,19 +1,48 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Button, Stack, Typography } from "@mui/material";
+import { createHirevueQuestion } from "api/drills";
 
-import { HirevueQuestionAdminForm } from "components/drills/hirevue";
+import {
+  AddHirevueTypeModal,
+  HirevueQuestionAdminForm,
+} from "components/drills/hirevue";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
 
 const AddHirevueQuestion = () => {
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const { enqueueSnackbar } = useSnackbar();
+  const [typeModalOpen, setTypeModalOpen] = useState(false);
+
+  const onSubmit = async (data: any) => {
+    return createHirevueQuestion("consulting", data)
+      .then(() => enqueueSnackbar("Question added"))
+      .catch(() =>
+        enqueueSnackbar("Failed to add question", { variant: "error" })
+      );
   };
 
   return (
     <>
-      <Typography variant="h4">Add Hirevue Question</Typography>
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="h4">Add Hirevue Question</Typography>
+        <Button
+          variant="outlined"
+          startIcon={<Add />}
+          onClick={() => setTypeModalOpen(true)}
+        >
+          Add Type
+        </Button>
+      </Stack>
 
       <HirevueQuestionAdminForm onSubmit={onSubmit} />
+
+      <AddHirevueTypeModal
+        open={typeModalOpen}
+        handleClose={() => setTypeModalOpen(false)}
+        setOpen={setTypeModalOpen}
+      />
     </>
   );
 };
