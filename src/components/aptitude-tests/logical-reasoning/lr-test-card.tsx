@@ -1,21 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { Controller } from "react-hook-form";
 
-import { Box, Card, Stack, Typography } from "@mui/material";
+import _ from "lodash";
+
+import {
+  Autocomplete,
+  Box,
+  Card,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { ConfirmationDialog } from "components/global";
 import { useStepsForm } from "hooks/useStepsForm";
+import { ILRQuestion } from "types";
 
 import CardActions from "../common/card-actions";
 import CardHeader from "../common/card-header";
-import { Grid, ILRQuestion } from "types";
-import TestSolution from "./test-solution";
-import SquareGrid from "./square-grid";
-import TriangleGrid from "./triangle-grid";
 import { numericToAlphaMapping, squareSizeMapping } from "./constants";
-import QuestionGrid from "./question-grid";
+import SquareGrid from "./square-grid";
+import TestSolution from "./test-solution";
+import TriangleGrid from "./triangle-grid";
+import { Controller } from "react-hook-form";
 
 type LRTestCardProps = {
   questions: ILRQuestion[];
@@ -44,6 +52,10 @@ const LRTestCard = ({
   } = questions[currentStep].grid;
 
   const { type: questionType } = questions[currentStep];
+  const answerOptions = _.range(
+    questions[currentStep].grid.options.length ||
+      questions[currentStep].grid.data.length
+  ).map((i) => numericToAlphaMapping[i]);
 
   const renderQuestionGrid = () => {
     if (template === "grid") {
@@ -172,6 +184,34 @@ const LRTestCard = ({
               {renderAnswerGrid()}
             </Box>
           </Stack>
+
+          <Box>
+            <Typography variant="h6" pb={2}>
+              Answer
+            </Typography>
+            <Controller
+              key={currentStep.toString()}
+              name={currentStep.toString()}
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value }, fieldState: { error } }: any) => (
+                <Autocomplete
+                  onChange={(e, data) => setValue(currentStep.toString(), data)}
+                  value={value}
+                  options={answerOptions}
+                  sx={{ width: "150px" }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Answer"
+                      error={!!error}
+                      helperText={!!error && "Answer is required."}
+                    />
+                  )}
+                />
+              )}
+            />
+          </Box>
 
           {testComplete && (
             <TestSolution currentStep={currentStep} questions={questions} />
