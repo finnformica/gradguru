@@ -64,6 +64,7 @@ const LRTestCard = ({
         <Stack
           display="grid"
           gridTemplateColumns={`repeat(3, ${squareSizeMapping[numRows]})`}
+          gridTemplateRows={`repeat(3, ${squareSizeMapping[numRows]})`}
         >
           {gridData.map((item, index) =>
             gridType === "triangle" ? (
@@ -166,7 +167,14 @@ const LRTestCard = ({
 
   return (
     <form onSubmit={handleSubmit(handleEndTest)}>
-      <Card sx={{ borderRadius: 6, height: "100%", position: "relative" }}>
+      <Card
+        sx={{
+          borderRadius: 6,
+          height: "100%",
+          position: "relative",
+          minWidth: "800px",
+        }}
+      >
         <CardHeader
           questions={questions}
           gotoStep={gotoStep}
@@ -183,7 +191,11 @@ const LRTestCard = ({
             </Typography>
           </Stack>
 
-          <Stack direction={template === "grid" ? "row" : "column"} spacing={4}>
+          <Stack
+            direction={template === "grid" ? "row" : "column"}
+            spacing={4}
+            justifyContent={template === "grid" ? "space-around" : "center"}
+          >
             {renderQuestionGrid()}
             <Box>
               <Typography variant="h6" pb={2}>
