@@ -16,7 +16,7 @@ import SquareGrid from "./square-grid";
 import TestSolution from "./test-solution";
 import TriangleGrid from "./triangle-grid";
 
-const OptionLabel = ({ value, index }: { value: number; index: number }) => (
+const OptionLabel = ({ value, index }: { value?: number; index: number }) => (
   <Typography
     variant="h5"
     sx={{
@@ -58,7 +58,7 @@ const LRTestCard = ({
 
   const { type: questionType } = questions[currentStep];
 
-  const renderQuestionGrid = () => {
+  const renderQuestionGrid = (value?: number) => {
     if (template === "grid") {
       return (
         <Stack
@@ -85,7 +85,16 @@ const LRTestCard = ({
     return (
       <Stack display="flex" direction="row" spacing={3}>
         {gridData.map((item, index) => (
-          <Stack key={index} direction="column" spacing={1} alignItems="center">
+          <Stack
+            key={index}
+            direction="column"
+            spacing={1}
+            alignItems="center"
+            sx={value ? { cursor: "pointer" } : {}}
+            onClick={
+              value ? () => setValue(currentStep.toString(), index) : () => {}
+            }
+          >
             {gridType === "triangle" ? (
               <TriangleGrid grid={item} />
             ) : (
@@ -96,7 +105,7 @@ const LRTestCard = ({
               />
             )}
 
-            <Typography variant="h5">{numericToAlphaMapping[index]}</Typography>
+            <OptionLabel value={value} index={index} />
           </Stack>
         ))}
       </Stack>
@@ -196,11 +205,7 @@ const LRTestCard = ({
             spacing={4}
             justifyContent={template === "grid" ? "space-around" : "center"}
           >
-            {renderQuestionGrid()}
-            <Box>
-              <Typography variant="h6" pb={2}>
-                Options
-              </Typography>
+            {questionType === "odd-one-out" ? (
               <Controller
                 key={currentStep.toString()}
                 name={currentStep.toString()}
@@ -213,11 +218,37 @@ const LRTestCard = ({
                         Please select an option.
                       </FormHelperText>
                     )}
-                    {renderAnswerGrid(value)}
+                    {renderQuestionGrid(value)}
                   </>
                 )}
               />
-            </Box>
+            ) : (
+              renderQuestionGrid()
+            )}
+
+            {questionType !== "odd-one-out" && (
+              <Box>
+                <Typography variant="h6" pb={2}>
+                  Options
+                </Typography>
+                <Controller
+                  key={currentStep.toString()}
+                  name={currentStep.toString()}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value }, fieldState: { error } }) => (
+                    <>
+                      {!!error && (
+                        <FormHelperText error={!!error} sx={{ pb: 2 }}>
+                          Please select an option.
+                        </FormHelperText>
+                      )}
+                      {renderAnswerGrid(value)}
+                    </>
+                  )}
+                />
+              </Box>
+            )}
           </Stack>
 
           {testComplete && (
