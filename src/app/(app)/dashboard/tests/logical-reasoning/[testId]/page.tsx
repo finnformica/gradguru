@@ -18,7 +18,6 @@ import {
 import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { useBeforeUnload, useLocalStorage } from "hooks";
 import { ILRQuestion, ILRTest } from "types";
-import { numericToAlphaMapping } from "components/aptitude-tests/logical-reasoning/constants";
 
 type LogicalReasoningTestProps = {
   params: {
@@ -108,8 +107,7 @@ const LogicalReasoningTest = ({
       return {
         // mc answer may be string or number
         ...question,
-        success:
-          numericToAlphaMapping[question.answer as number] == data[index],
+        success: question.answer === data[index],
       };
     });
 
