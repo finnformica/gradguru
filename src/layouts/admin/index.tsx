@@ -100,12 +100,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        height: `calc(100vh - ${appBarHeight}px)`,
-      }}
-    >
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
