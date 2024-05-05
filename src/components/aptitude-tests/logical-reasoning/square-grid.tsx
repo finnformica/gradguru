@@ -35,7 +35,7 @@ const SquareElement = ({
       sx={{
         width: size,
         height: size,
-        cursor: hover ? "pointer" : "auto",
+        cursor: hover ? "pointer" : "inherit",
         display: "grid",
         placeItems: "center",
         transition: "background-color 0.3s ease-out",

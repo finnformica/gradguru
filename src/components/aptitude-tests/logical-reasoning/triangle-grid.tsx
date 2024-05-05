@@ -35,7 +35,7 @@ const TriangleCell = ({
         margin: `0 calc(-1 * ${TRIANGLE_SIZE} / 4)`,
         backgroundColor: "black",
         transition: "background-color 0.3s ease-out",
-        cursor: hover ? "pointer" : "auto",
+        cursor: hover ? "pointer" : "inherit",
         clipPath:
           index % 2 === 0
             ? "polygon(50%   0%, 0% 100%, 100% 100%)"
