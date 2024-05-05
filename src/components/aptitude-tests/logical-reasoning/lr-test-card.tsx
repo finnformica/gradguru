@@ -17,13 +17,13 @@ import { ConfirmationDialog } from "components/global";
 import { useStepsForm } from "hooks/useStepsForm";
 import { ILRQuestion } from "types";
 
+import { Controller } from "react-hook-form";
 import CardActions from "../common/card-actions";
 import CardHeader from "../common/card-header";
 import { numericToAlphaMapping, squareSizeMapping } from "./constants";
 import SquareGrid from "./square-grid";
 import TestSolution from "./test-solution";
 import TriangleGrid from "./triangle-grid";
-import { Controller } from "react-hook-form";
 
 type LRTestCardProps = {
   questions: ILRQuestion[];
@@ -72,7 +72,6 @@ const LRTestCard = ({
                 key={index}
                 innerGrid={innerGrid}
                 showBorders={outerGrid}
-                numRows={numRows}
                 grid={item}
               />
             )
@@ -91,7 +90,6 @@ const LRTestCard = ({
               <SquareGrid
                 innerGrid={innerGrid}
                 showBorders={outerGrid}
-                numRows={numRows}
                 grid={item}
               />
             )}
@@ -121,7 +119,6 @@ const LRTestCard = ({
                 <SquareGrid
                   innerGrid={innerGrid}
                   showBorders={outerGrid}
-                  numRows={numRows}
                   grid={item}
                 />
               )}
@@ -144,7 +141,6 @@ const LRTestCard = ({
               <SquareGrid
                 innerGrid={innerGrid}
                 showBorders={outerGrid}
-                numRows={numRows}
                 grid={item}
               />
             )}
