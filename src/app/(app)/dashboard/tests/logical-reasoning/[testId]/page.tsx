@@ -3,23 +3,22 @@
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import _ from "lodash";
 import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useStopwatch } from "react-timer-hook";
 
-import { createTestRecord, getQuestionsById, getTestById } from "api/tests";
-import { useBeforeUnload } from "hooks/useBeforeUnload";
-
-import { LRTestCard } from "components/aptitude-tests/logical-reasoning";
-import { LoadingScreen, PageBreadcrumbs } from "components/global";
-import { ILRQuestion, ILRTest } from "types";
 import { Stack } from "@mui/material";
+
+import { createTestRecord, getQuestionsById, getTestById } from "api/tests";
+import { LRTestCard } from "components/aptitude-tests/logical-reasoning";
 import {
   downloadImagesFromStorage,
   mapObjectToNestedArray,
 } from "components/aptitude-tests/logical-reasoning/utils";
-import { useLocalStorage } from "hooks";
+import { LoadingScreen, PageBreadcrumbs } from "components/global";
+import { useBeforeUnload, useLocalStorage } from "hooks";
+import { ILRQuestion, ILRTest } from "types";
+import { numericToAlphaMapping } from "components/aptitude-tests/logical-reasoning/constants";
 
 type LogicalReasoningTestProps = {
   params: {
@@ -96,6 +95,8 @@ const LogicalReasoningTest = ({
     } else {
       createTest();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testId]);
 
   useBeforeUnload(!testComplete);
@@ -107,7 +108,8 @@ const LogicalReasoningTest = ({
       return {
         // mc answer may be string or number
         ...question,
-        success: question.answer == data[index],
+        success:
+          numericToAlphaMapping[question.answer as number] == data[index],
       };
     });
 
@@ -123,25 +125,29 @@ const LogicalReasoningTest = ({
     const type = { label: "Logical Reasoning", name: "lr" };
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
-    // store results
-    createTestRecord("logical-reasoning", session!.user.id, testId, {
-      score,
-      date,
-      type,
-      questionIds,
-      time: timeTaken,
-    })
-      .then(() => enqueueSnackbar("Test result saved"))
-      .catch((err) =>
-        enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => {
-        setQuestions(marked);
-        setTestComplete(true);
-        setTestLoading(false);
-      });
+    // // store results
+    // createTestRecord("logical-reasoning", session!.user.id, testId, {
+    //   score,
+    //   date,
+    //   type,
+    //   questionIds,
+    //   time: timeTaken,
+    // })
+    //   .then(() => enqueueSnackbar("Test result saved"))
+    //   .catch((err) =>
+    //     enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
+    //       variant: "error",
+    //     })
+    //   )
+    //   .finally(() => {
+    //     setQuestions(marked);
+    //     setTestComplete(true);
+    //     setTestLoading(false);
+    //   });
+
+    setQuestions(marked);
+    setTestComplete(true);
+    setTestLoading(false);
   };
 
   const handleEndTest = (data: any) => {
