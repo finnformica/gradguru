@@ -15,49 +15,52 @@ const TriangleCell = ({
   index,
   onClick,
   cell,
+  hover,
 }: {
   children: React.ReactNode;
   index: number;
   onClick?: (e: any) => void;
   cell: CellData;
-}) => (
-  <Box
-    onClick={onClick}
-    sx={{
-      display: "grid",
-      placeItems: "center",
-      width: TRIANGLE_SIZE,
-      height: TRIANGLE_SIZE,
-      margin: `0 calc(-1 * ${TRIANGLE_SIZE} / 4)`,
-      backgroundColor: "black",
-      transition: "background-color 0.3s ease-out",
-      cursor: "pointer",
-      clipPath:
-        index % 2 === 0
-          ? "polygon(50%   0%, 0% 100%, 100% 100%)"
-          : "polygon(50% 100%, 0%   0%, 100%   0%)",
-      "&:hover:before": {
-        backgroundColor: "#DFDFDF",
-      },
-
-      "&:before": {
-        content: '""',
-        width: `calc(${TRIANGLE_SIZE} * 0.98)`,
-        height: `calc(${TRIANGLE_SIZE} * 0.98)`,
-        position: "absolute",
-        backgroundColor: `${cell.backgroundColor}`,
+  hover: boolean;
+}) => {
+  const hoverCss = hover ? { backgroundColor: "#DFDFDF" } : {};
+  return (
+    <Box
+      onClick={onClick}
+      sx={{
+        display: "grid",
+        placeItems: "center",
+        width: TRIANGLE_SIZE,
+        height: TRIANGLE_SIZE,
+        margin: `0 calc(-1 * ${TRIANGLE_SIZE} / 4)`,
+        backgroundColor: "black",
         transition: "background-color 0.3s ease-out",
-        zIndex: -1,
+        cursor: hover ? "pointer" : "auto",
         clipPath:
           index % 2 === 0
             ? "polygon(50%   0%, 0% 100%, 100% 100%)"
             : "polygon(50% 100%, 0%   0%, 100%   0%)",
-      },
-    }}
-  >
-    {children}
-  </Box>
-);
+        "&:hover:before": hoverCss,
+
+        "&:before": {
+          content: '""',
+          width: `calc(${TRIANGLE_SIZE} * 0.98)`,
+          height: `calc(${TRIANGLE_SIZE} * 0.98)`,
+          position: "absolute",
+          backgroundColor: `${cell.backgroundColor}`,
+          transition: "background-color 0.3s ease-out",
+          zIndex: -1,
+          clipPath:
+            index % 2 === 0
+              ? "polygon(50%   0%, 0% 100%, 100% 100%)"
+              : "polygon(50% 100%, 0%   0%, 100%   0%)",
+        },
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
 
 type TriangleGridProps = {
   grid: Grid;
@@ -95,6 +98,7 @@ const TriangleGrid = ({ grid, setGrid }: TriangleGridProps) => {
                   key={colIndex}
                   index={colIndex}
                   cell={cell}
+                  hover={!!setGrid}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                     handleClick(e, { row: rowIndex, col: colIndex })
                   }
