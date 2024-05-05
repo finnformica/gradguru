@@ -2,16 +2,7 @@
 
 import { useState } from "react";
 
-import _ from "lodash";
-
-import {
-  Autocomplete,
-  Box,
-  Card,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Card, FormHelperText, Stack, Typography } from "@mui/material";
 
 import { ConfirmationDialog } from "components/global";
 import { useStepsForm } from "hooks/useStepsForm";
@@ -24,6 +15,21 @@ import { numericToAlphaMapping, squareSizeMapping } from "./constants";
 import SquareGrid from "./square-grid";
 import TestSolution from "./test-solution";
 import TriangleGrid from "./triangle-grid";
+
+const OptionLabel = ({ value, index }: { value: number; index: number }) => (
+  <Typography
+    variant="h5"
+    sx={{
+      transition: "200ms all ease-in-out",
+      textDecoration: value === index ? "underline" : "none",
+      textDecorationColor: "red",
+      fontWeight: value === index ? 700 : "inherit",
+      color: value === index ? "red" : "inherit",
+    }}
+  >
+    {numericToAlphaMapping[index]}
+  </Typography>
+);
 
 type LRTestCardProps = {
   questions: ILRQuestion[];
@@ -51,10 +57,6 @@ const LRTestCard = ({
   } = questions[currentStep].grid;
 
   const { type: questionType } = questions[currentStep];
-  const answerOptions = _.range(
-    questions[currentStep].grid.options.length ||
-      questions[currentStep].grid.data.length
-  ).map((i) => numericToAlphaMapping[i]);
 
   const renderQuestionGrid = () => {
     if (template === "grid") {
@@ -100,8 +102,9 @@ const LRTestCard = ({
     );
   };
 
-  const renderAnswerGrid = () => {
-    if (questionType === "odd-one-out") return null;
+  const renderAnswerGrid = (value: number) => {
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    if (questionType === "odd-one-out") return <></>;
 
     if (template === "grid") {
       return (
@@ -111,7 +114,12 @@ const LRTestCard = ({
           gap={2}
         >
           {questions[currentStep].grid.options.map((item, index) => (
-            <Stack key={index} alignItems="center">
+            <Stack
+              key={index}
+              alignItems="center"
+              sx={{ cursor: "pointer" }}
+              onClick={() => setValue(currentStep.toString(), index)}
+            >
               {gridType === "triangle" ? (
                 <TriangleGrid grid={item} />
               ) : (
@@ -121,9 +129,7 @@ const LRTestCard = ({
                   grid={item}
                 />
               )}
-              <Typography variant="h5">
-                {numericToAlphaMapping[index]}
-              </Typography>
+              <OptionLabel value={value} index={index} />
             </Stack>
           ))}
         </Stack>
@@ -133,7 +139,14 @@ const LRTestCard = ({
     return (
       <Stack display="flex" direction="row" spacing={3}>
         {questions[currentStep].grid.options.map((item, index) => (
-          <Stack key={index} direction="column" spacing={1} alignItems="center">
+          <Stack
+            key={index}
+            direction="column"
+            spacing={1}
+            alignItems="center"
+            sx={{ cursor: "pointer" }}
+            onClick={() => setValue(currentStep.toString(), index)}
+          >
             {gridType === "triangle" ? (
               <TriangleGrid grid={item} />
             ) : (
@@ -144,7 +157,7 @@ const LRTestCard = ({
               />
             )}
 
-            <Typography variant="h5">{numericToAlphaMapping[index]}</Typography>
+            <OptionLabel value={value} index={index} />
           </Stack>
         ))}
       </Stack>
@@ -176,37 +189,24 @@ const LRTestCard = ({
               <Typography variant="h6" pb={2}>
                 Options
               </Typography>
-              {renderAnswerGrid()}
+              <Controller
+                key={currentStep.toString()}
+                name={currentStep.toString()}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value }, fieldState: { error } }) => (
+                  <>
+                    {!!error && (
+                      <FormHelperText error={!!error} sx={{ pb: 2 }}>
+                        Please select an option.
+                      </FormHelperText>
+                    )}
+                    {renderAnswerGrid(value)}
+                  </>
+                )}
+              />
             </Box>
           </Stack>
-
-          <Box>
-            <Typography variant="h6" pb={2}>
-              Answer
-            </Typography>
-            <Controller
-              key={currentStep.toString()}
-              name={currentStep.toString()}
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value }, fieldState: { error } }: any) => (
-                <Autocomplete
-                  onChange={(e, data) => setValue(currentStep.toString(), data)}
-                  value={value}
-                  options={answerOptions}
-                  sx={{ width: "150px" }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Answer"
-                      error={!!error}
-                      helperText={!!error && "Answer is required."}
-                    />
-                  )}
-                />
-              )}
-            />
-          </Box>
 
           {testComplete && (
             <TestSolution currentStep={currentStep} questions={questions} />
