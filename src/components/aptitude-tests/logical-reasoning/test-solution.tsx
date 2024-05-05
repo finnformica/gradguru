@@ -1,7 +1,12 @@
-import { Stack, Typography } from "@mui/material";
+"use client";
+
 import { useState } from "react";
+
+import { Stack, Typography } from "@mui/material";
+
 import { ILRQuestion } from "types";
 import UnderlineButton from "../common/underline-button";
+import { numericToAlphaMapping } from "./constants";
 
 type TestSolutionProps = {
   currentStep: number;
@@ -26,7 +31,12 @@ const TestSolution = ({ currentStep, questions }: TestSolutionProps) => {
       {showSolution[currentStep] && (
         <Stack spacing={2} mt={2}>
           <Typography variant="body1">
-            Correct answer: {questions[currentStep].answer}
+            Correct answer:{" "}
+            {
+              numericToAlphaMapping[
+                parseInt(questions[currentStep].answer as string)
+              ]
+            }
           </Typography>
           <Typography variant="body1">
             {questions[currentStep].explanation}
