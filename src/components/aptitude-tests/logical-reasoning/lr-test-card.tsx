@@ -48,7 +48,6 @@ const LRTestCard = ({
     rows: numRows,
     data: gridData,
     border: { inner: innerGrid, outer: outerGrid },
-    questionMark,
   } = questions[currentStep].grid;
 
   const { type: questionType } = questions[currentStep];
