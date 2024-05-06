@@ -76,8 +76,6 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
     const fetchTypes = async () => {
       const res = await getBlogTags();
       setOptions(res?.tags || []);
-
-      console.log("tags", res?.tags || []);
     };
 
     fetchTypes();

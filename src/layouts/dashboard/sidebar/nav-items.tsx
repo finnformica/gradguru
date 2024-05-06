@@ -6,8 +6,9 @@ import {
   Quiz,
   VideoLibrary,
 } from "@mui/icons-material";
-import { List, SxProps } from "@mui/material";
+import { SxProps } from "@mui/material";
 import { useSession } from "next-auth/react";
+
 import { NavListItem } from "./nav-list-item";
 import NavSkeleton from "./nav-skeleton";
 
@@ -58,7 +59,7 @@ export const NavItems = () => {
       : [];
 
   return (
-    <List disablePadding>
+    <>
       <NavListItem item={home} key="home" />
       {courses.length > 0 &&
         courses &&
@@ -66,6 +67,6 @@ export const NavItems = () => {
           <NavListItem item={item} key={item.name} />
         ))}
       {session.user.role > 1 && <NavListItem key="admin" item={admin} />}
-    </List>
+    </>
   );
 };

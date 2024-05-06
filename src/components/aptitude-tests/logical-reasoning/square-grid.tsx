@@ -16,6 +16,7 @@ type SquareElementProps = {
   size: string;
   onClick: any;
   children: React.ReactNode;
+  hover: boolean;
 };
 
 const SquareElement = ({
@@ -24,20 +25,23 @@ const SquareElement = ({
   cell,
   innerGrid,
   children,
+  hover,
 }: SquareElementProps) => {
+  const hoverCss = hover ? { backgroundColor: "rgba(0, 0, 0, 0.1)" } : {};
+
   return (
     <Box
       onClick={onClick}
       sx={{
         width: size,
         height: size,
-        cursor: "pointer",
+        cursor: hover ? "pointer" : "inherit",
         display: "grid",
         placeItems: "center",
         transition: "background-color 0.3s ease-out",
         backgroundColor: `${cell.backgroundColor}`,
         border: innerGrid ? `1px solid black` : "none",
-        "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
+        "&:hover": hoverCss,
       }}
     >
       {children}
@@ -54,12 +58,12 @@ type SquareGridProps = {
 };
 
 const SquareGrid = ({
-  numRows = 1,
   innerGrid = true,
   showBorders = true,
   grid,
   setGrid,
 }: SquareGridProps) => {
+  const numRows = grid.length;
   const size = squareSizeMapping[numRows];
   const [coord, setCoord] = useState<GridCoord>({
     row: 0,
@@ -82,33 +86,36 @@ const SquareGrid = ({
 
   return (
     <>
-      <Stack direction="row" spacing={1}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${numRows}, ${size})`,
-            border: showBorders
-              ? `${innerGrid ? "1px" : "2px"} solid black`
-              : "none",
-          }}
-        >
-          {grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) => (
-              <SquareElement
-                key={colIndex}
-                size={size}
-                innerGrid={innerGrid}
-                cell={cell}
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                  handleClick(e, { row: rowIndex, col: colIndex })
-                }
-              >
-                {renderCell(cell)}
-              </SquareElement>
-            ))
-          )}
-        </Box>
-      </Stack>
+      <Box>
+        <Stack direction="row">
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${numRows}, ${size})`,
+              border: showBorders
+                ? `${innerGrid ? "1px" : "2px"} solid black`
+                : "none",
+            }}
+          >
+            {grid.map((row, rowIndex) =>
+              row.map((cell, colIndex) => (
+                <SquareElement
+                  key={colIndex}
+                  size={size}
+                  innerGrid={innerGrid}
+                  cell={cell}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    handleClick(e, { row: rowIndex, col: colIndex })
+                  }
+                  hover={!!setGrid}
+                >
+                  {renderCell(cell)}
+                </SquareElement>
+              ))
+            )}
+          </Box>
+        </Stack>
+      </Box>
       {setGrid && (
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           <MenuContent
