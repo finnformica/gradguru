@@ -209,8 +209,8 @@ const LRTestCard = ({
           loading={testLoading}
           onSubmit={() => setEndTestDialogOpen(true)}
         />
-        <Stack p={6} spacing={4}>
-          <Stack spacing={2} mb={4}>
+        <Stack pl={6} pb={6} pt={3} spacing={4}>
+          <Stack spacing={2}>
             <Typography variant="h5">Question {currentStep + 1}</Typography>
             <Typography variant="body1">
               {questions[currentStep].question}
