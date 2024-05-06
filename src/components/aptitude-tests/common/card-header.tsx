@@ -43,7 +43,7 @@ const CardHeader = ({
       >
         {questions.map((question, index) => {
           const color =
-            question.success === null
+            question.success === null || question.success === undefined
               ? currentStep !== index
                 ? "text.secondary"
                 : "text.primary"
