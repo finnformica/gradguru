@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 
-import { Box, Card, FormHelperText, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  Checkbox,
+  FormControlLabel,
+  FormHelperText,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { ConfirmationDialog } from "components/global";
 import { useStepsForm } from "hooks/useStepsForm";
@@ -16,20 +24,25 @@ import SquareGrid from "./square-grid";
 import TestSolution from "./test-solution";
 import TriangleGrid from "./triangle-grid";
 
-const OptionLabel = ({ value, index }: { value?: number; index: number }) => (
-  <Typography
-    variant="h5"
-    sx={{
-      transition: "200ms all ease-in-out",
-      textDecoration: value === index ? "underline" : "none",
-      textDecorationColor: "red",
-      fontWeight: value === index ? 700 : "inherit",
-      color: value === index ? "red" : "inherit",
-    }}
-  >
-    {numericToAlphaMapping[index]}
-  </Typography>
-);
+const OptionLabel = ({
+  value,
+  index,
+  input,
+}: {
+  value?: number;
+  index: number;
+  input?: boolean;
+}) =>
+  input ? (
+    <FormControlLabel
+      control={<Checkbox checked={value === index} color="default" />}
+      label={numericToAlphaMapping[index]}
+      labelPlacement="start"
+      componentsProps={{ typography: { variant: "h5" } }}
+    />
+  ) : (
+    <Typography variant="h5">{numericToAlphaMapping[index]}</Typography>
+  );
 
 type LRTestCardProps = {
   questions: ILRQuestion[];
@@ -105,7 +118,11 @@ const LRTestCard = ({
               />
             )}
 
-            <OptionLabel value={value} index={index} />
+            <OptionLabel
+              value={value}
+              index={index}
+              input={questionType === "odd-one-out"}
+            />
           </Stack>
         ))}
       </Stack>
@@ -139,7 +156,7 @@ const LRTestCard = ({
                   grid={item}
                 />
               )}
-              <OptionLabel value={value} index={index} />
+              <OptionLabel value={value} index={index} input />
             </Stack>
           ))}
         </Stack>
@@ -167,7 +184,7 @@ const LRTestCard = ({
               />
             )}
 
-            <OptionLabel value={value} index={index} />
+            <OptionLabel value={value} index={index} input />
           </Stack>
         ))}
       </Stack>
