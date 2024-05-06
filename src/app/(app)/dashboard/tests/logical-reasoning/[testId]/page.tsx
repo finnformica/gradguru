@@ -123,29 +123,25 @@ const LogicalReasoningTest = ({
     const type = { label: "Logical Reasoning", name: "lr" };
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
-    // // store results
-    // createTestRecord("logical-reasoning", session!.user.id, testId, {
-    //   score,
-    //   date,
-    //   type,
-    //   questionIds,
-    //   time: timeTaken,
-    // })
-    //   .then(() => enqueueSnackbar("Test result saved"))
-    //   .catch((err) =>
-    //     enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
-    //       variant: "error",
-    //     })
-    //   )
-    //   .finally(() => {
-    //     setQuestions(marked);
-    //     setTestComplete(true);
-    //     setTestLoading(false);
-    //   });
-
-    setQuestions(marked);
-    setTestComplete(true);
-    setTestLoading(false);
+    // store results
+    createTestRecord("logical-reasoning", session!.user.id, testId, {
+      score,
+      date,
+      type,
+      questionIds,
+      time: timeTaken,
+    })
+      .then(() => enqueueSnackbar("Test result saved"))
+      .catch((err) =>
+        enqueueSnackbar(`Test result not saved - ${err.statusText}`, {
+          variant: "error",
+        })
+      )
+      .finally(() => {
+        setQuestions(marked);
+        setTestComplete(true);
+        setTestLoading(false);
+      });
   };
 
   const handleEndTest = (data: any) => {
