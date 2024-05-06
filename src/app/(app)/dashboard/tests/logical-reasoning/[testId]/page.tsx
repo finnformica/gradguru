@@ -43,36 +43,6 @@ const LogicalReasoningTest = ({
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
-  const mapQuestions = (q: ILRQuestion[]) => {
-    let res = q.map(async (question) => {
-      question.grid.data = mapObjectToNestedArray(question.grid.data);
-      question.grid.options = mapObjectToNestedArray(question.grid.options);
-
-      const dataPromise = downloadImagesFromStorage(question.grid.data);
-      const optionsPromise = downloadImagesFromStorage(question.grid.options);
-
-      return Promise.all([dataPromise, optionsPromise]).then(
-        ([dataGrid, optionsGrid]) => {
-          const questionWithImageFiles = {
-            ...question,
-            grid: {
-              ...question.grid,
-              data: dataGrid,
-              options: optionsGrid,
-            },
-          };
-
-          return questionWithImageFiles;
-        }
-      );
-    });
-
-    Promise.all(res).then((questions) => {
-      setQuestions(questions); // set questions in local state
-      setStoredTest({ ...storedTest, [testId]: questions }); // store questions in local storage
-    });
-  };
-
   useEffect(() => {
     if (testComplete) return pause();
   }, [testComplete, pause]);
@@ -80,6 +50,42 @@ const LogicalReasoningTest = ({
   useEffect(() => {
     const createTest = async () => {
       const test = await getTestById("logical-reasoning", testId);
+
+      const mapQuestions = (q: ILRQuestion[]) => {
+        let res = q.map(async (question) => {
+          question.grid.data = mapObjectToNestedArray(question.grid.data);
+          question.grid.options = mapObjectToNestedArray(question.grid.options);
+
+          const dataPromise = downloadImagesFromStorage(question.grid.data);
+          const optionsPromise = downloadImagesFromStorage(
+            question.grid.options
+          );
+
+          return Promise.all([dataPromise, optionsPromise]).then(
+            ([dataGrid, optionsGrid]) => {
+              const questionWithImageFiles = {
+                ...question,
+                grid: {
+                  ...question.grid,
+                  data: dataGrid,
+                  options: optionsGrid,
+                },
+              };
+
+              return questionWithImageFiles;
+            }
+          );
+        });
+
+        Promise.all(res).then((questions) => {
+          setQuestions(questions); // set questions in local state
+          setStoredTest({
+            ...storedTest,
+            [testId]: { questions, name: test.name },
+          }); // store questions in local storage
+        });
+      };
+
       if (!test.questions) {
         notFound();
       } else {
@@ -90,7 +96,8 @@ const LogicalReasoningTest = ({
     };
 
     if (storedTest[testId]) {
-      setQuestions(storedTest[testId]);
+      setQuestions(storedTest[testId].questions);
+      setTest({ name: storedTest[testId].name, questions: [] });
     } else {
       createTest();
     }
@@ -103,13 +110,10 @@ const LogicalReasoningTest = ({
   if (!questions || questions.length === 0) return <LoadingScreen />;
 
   const markTest = (data: any) => {
-    const marked = questions.map((question, index) => {
-      return {
-        // mc answer may be string or number
-        ...question,
-        success: question.answer === data[index],
-      };
-    });
+    const marked = questions.map((question, index) => ({
+      ...question,
+      success: question.answer === data[index],
+    }));
 
     // calculate test metrics
     const correct = marked.filter((q) => q.success).length;
