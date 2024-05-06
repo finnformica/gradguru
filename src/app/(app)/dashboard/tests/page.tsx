@@ -34,7 +34,7 @@ const CourseTests = () => {
   return (
     <>
       <PageBreadcrumbs
-        sx={{ pb: 2 }}
+        sx={{ pb: 4 }}
         header=" Aptitude Tests"
         links={[
           { label: "Consulting", href: "/dashboard/courses/consulting" },
@@ -43,7 +43,7 @@ const CourseTests = () => {
       />
       <Grid container spacing={2}>
         {aptitudeTests.map((test) => (
-          <Grid key={test.label} item xs={12} sm={6} md={4}>
+          <Grid key={test.label} item xs={12} md={4}>
             <Card sx={{ mb: 2, borderRadius: 4 }}>
               <CardActionArea
                 sx={{
