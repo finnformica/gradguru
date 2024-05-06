@@ -53,8 +53,6 @@ const AddBlogTagModal = ({
   const onSubmit = (data: any) => {
     const { tags } = data;
 
-    console.log(tags);
-
     createBlogTag(tags.map((tag: string) => tag.trim()))
       .then(() => enqueueSnackbar("Blog tags saved"))
       .catch(() =>

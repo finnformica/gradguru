@@ -29,7 +29,7 @@ const BlogEditModal = ({ open, onClose, blogObject }: EditModalProps) => {
   useEffect(() => {
     getHeroPhotoFile(blogObject.slug, blogObject.heroPhoto as string)
       .then((file) => setBlogHeroPhotoFile(file))
-      .catch((e) => console.log(e));
+      .catch((e) => {});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
