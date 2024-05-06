@@ -35,7 +35,7 @@ const OptionLabel = ({
 }) =>
   input ? (
     <FormControlLabel
-      control={<Checkbox checked={value === index} color="default" />}
+      control={<Checkbox checked={value === index} />}
       label={numericToAlphaMapping[index]}
       labelPlacement="start"
       componentsProps={{ typography: { variant: "h5" } }}
