@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 
 import { patchQuestion } from "api/tests";
-import FormModalWrapper from "components/global-components/FormModalWrapper";
+import { FormModalWrapper } from "components/global";
 
 import { ISJScenario } from "types";
 import SJTForm from "./sjt-admin-form";
@@ -31,7 +31,9 @@ const SJTModal = ({
       return;
     }
 
-    patchQuestion(form.id, "situational-judgement", form)
+    const { id, ...payload } = form;
+
+    patchQuestion("situational-judgement", id, payload)
       .then(() => enqueueSnackbar("SJT question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {

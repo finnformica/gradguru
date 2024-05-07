@@ -3,23 +3,18 @@
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import { NRModal } from "components/aptitude-tests/numerical-reasoning";
-import { EditDeleteActions } from "components/data-grid-custom";
-import {
-  ConfirmationDialog,
-  LoadingScreen,
-} from "components/global-components";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
+import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { INRQuestion } from "types";
 
 const AllNRQuestions = () => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [questions, setQuestions] = useState<any[] | null>(null);
   const [questionToEdit, setQuestionToEdit] = useState<INRQuestion | null>(
@@ -35,7 +30,7 @@ const AllNRQuestions = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!questions || !session) return <LoadingScreen />;
+  if (!questions) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -52,20 +47,29 @@ const AllNRQuestions = () => {
             return params.value;
         }
       },
+      valueGetter: (params) => {
+        switch (params.row.type) {
+          case "table":
+            return params.row.questions[0].question;
+          case "graph":
+            return params.row.scenario;
+          default:
+            return params.value;
+        }
+      },
     },
     {
       field: "type",
       headerName: "Type",
       width: 80,
-      renderCell: (params) => _.startCase(params.value as string),
+      renderCell: (params) => _.startCase(params.value),
     },
     {
       field: "created",
       headerName: "Created",
       width: 150,
-      renderCell: (params) => {
-        return new Date(params.value as number).toLocaleString();
-      },
+      renderCell: (params) => new Date(params.value).toLocaleString(),
+      valueGetter: (params) => new Date(params.value).toLocaleString(),
     },
     {
       field: "actions",
@@ -74,7 +78,6 @@ const AllNRQuestions = () => {
       renderCell: (params) => {
         return (
           <EditDeleteActions
-            session={session}
             onEditClick={() => {
               setQuestionToEdit(params.row as INRQuestion);
             }}
@@ -111,27 +114,8 @@ const AllNRQuestions = () => {
         All NR questions
       </Typography>
 
-      <DataGrid
-        rows={questions}
-        columns={columns}
-        disableDensitySelector
-        disableRowSelectionOnClick
-        rowHeight={40}
-        autoHeight
-        pageSizeOptions={[15, 25, 50, 100]}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 15 } },
-          sorting: { sortModel: [{ field: "created", sort: "desc" }] },
-        }}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-            printOptions: { disableToolbarButton: true },
-            csvOptions: { disableToolbarButton: true },
-          },
-        }}
-      />
+      <AdminDataGrid columns={columns} rows={questions} />
+
       {questionToEdit && (
         <NRModal
           question={questionToEdit}

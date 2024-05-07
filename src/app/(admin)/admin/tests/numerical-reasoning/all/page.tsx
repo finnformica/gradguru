@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
@@ -9,11 +8,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { deleteTest, getTests, patchQuestion } from "api/tests";
 import { EditDeleteActions } from "components/data-grid-custom";
-import { ConfirmationDialog } from "components/global-components";
+import { ConfirmationDialog } from "components/global";
 import { INRTest } from "types";
 
 const AllNRTests = () => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
 
   const [tests, setTests] = useState<INRTest[]>([]);
@@ -50,10 +48,7 @@ const AllNRTests = () => {
       headerName: "Actions",
       width: 100,
       renderCell: (params) => (
-        <EditDeleteActions
-          session={session}
-          onDeleteClick={() => setTestToDelete(params.row)}
-        />
+        <EditDeleteActions onDeleteClick={() => setTestToDelete(params.row)} />
       ),
     },
   ];
@@ -67,7 +62,7 @@ const AllNRTests = () => {
 
     // delete reference to testId from each question
     const questionsUpdated = await flattenedQuestions.forEach((question) =>
-      patchQuestion(question, "numerical-reasoning", { testId: null })
+      patchQuestion("numerical-reasoning", question, { testId: null })
     );
 
     // delete the test

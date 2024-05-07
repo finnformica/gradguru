@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Stack, Typography } from "@mui/material";
 import { MathJax } from "better-react-mathjax";
 
-import { ClientWrapper } from "components/global-components";
+import { ClientWrapper } from "components/global";
 
 import UnderlineButton from "../common/underline-button";
 import { NRQuestionFlat } from "types";

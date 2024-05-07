@@ -15,7 +15,7 @@ import {
   SJTTestCard,
   TopPanel,
 } from "components/aptitude-tests/situational-judgement";
-import { LoadingScreen } from "components/global-components";
+import { LoadingScreen } from "components/global";
 import { ISJScenario, ISJTest, SJQuestionFlat } from "types";
 
 type SituationalJudgementTestProps = {

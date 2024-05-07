@@ -8,7 +8,14 @@ import {
   getFirestore,
   setDoc,
 } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import {
+  ref as storageRef,
+  uploadBytes,
+  deleteObject as deleteStorage,
+  listAll,
+  getBytes,
+} from "firebase/storage";
+
 import { v4 as uuid } from "uuid";
 import { app, storage } from "./config";
 import { FirestoreCollectionType, FirestoreDataType } from "./types";
@@ -67,13 +74,44 @@ const retrieveDocument = async (
   return docSnap.exists() ? docSnap.data() : null;
 };
 
-export function fileStorage(file: File, folder: string, subfolder?: string) {
+export async function fileStorage(
+  file: File,
+  folder: string,
+  subfolder?: string
+) {
   const address = file.name + "_" + uuid();
-  const _ref = ref(
+  const _ref = storageRef(
     storage,
     `${folder}/${subfolder ? `${subfolder}/` : ""}${address}`
   );
   return uploadBytes(_ref, file).then(() => address);
+}
+
+export async function uploadToStorage(file: File, path: string) {
+  const _ref = storageRef(storage, path);
+  return uploadBytes(_ref, file);
+}
+
+export async function retrieveStorageItem(path: string) {
+  const _ref = storageRef(storage, path);
+
+  return getBytes(_ref).then(
+    (bytes) => new File([bytes], path.split("/").pop() as string)
+  );
+}
+
+export async function deleteStorageFolder(pathToFolder: string) {
+  const _ref = storageRef(storage, pathToFolder);
+  return listAll(_ref).then((res) => {
+    res.items.forEach((itemRef) => {
+      deleteStorage(itemRef);
+    });
+  });
+}
+
+export async function deleteStorageItem(path: string) {
+  const _ref = storageRef(storage, path);
+  return deleteStorage(_ref);
 }
 
 export {

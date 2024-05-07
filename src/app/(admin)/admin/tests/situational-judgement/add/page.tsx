@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 
 import { createTest, getQuestions, patchQuestion } from "api/tests";
-import { LoadingScreen } from "components/global-components";
 import { useEffect, useState } from "react";
 import { ISJScenario } from "types";
 
@@ -47,7 +46,7 @@ const AddSJTTest = () => {
       .then((id) => {
         // add testId to each question
         uniqueQuestions.forEach((question) =>
-          patchQuestion(question, "situational-judgement", { testId: id })
+          patchQuestion("situational-judgement", question, { testId: id })
         );
       })
       .then(() => enqueueSnackbar("Test created successfully"))
@@ -56,8 +55,6 @@ const AddSJTTest = () => {
       )
       .finally(() => reset()); // TODO: autcomplete label not resetting
   };
-
-  if (!questions) return <LoadingScreen />;
 
   const options = questions
     .filter((question) => !question.testId)
@@ -81,6 +78,7 @@ const AddSJTTest = () => {
               <TextField
                 {...field}
                 label="Name"
+                size="small"
                 error={!!error}
                 helperText={!!error && "Name is required"}
               />
@@ -106,6 +104,7 @@ const AddSJTTest = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      size="small"
                       label={`Question ${i + 1}`}
                       error={!!error}
                       helperText={!!error && "Question is required"}

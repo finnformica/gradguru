@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { patchQuestion } from "api/tests";
 
 import { INRQuestion } from "types";
-import FormModalWrapper from "../../global-components/FormModalWrapper";
+import { FormModalWrapper } from "components/global";
 import NRForm from "./nr-admin-form";
 
 const NRModal = ({
@@ -28,7 +28,9 @@ const NRModal = ({
       return;
     }
 
-    patchQuestion("numerical-reasoning", form.id, form)
+    const { id, ...payload } = form;
+
+    patchQuestion("numerical-reasoning", id, payload)
       .then(() => enqueueSnackbar("NR question updated"))
       .catch((err) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
