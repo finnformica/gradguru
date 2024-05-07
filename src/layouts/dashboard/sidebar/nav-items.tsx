@@ -20,13 +20,13 @@ export const NavItems = () => {
   const home = {
     name: "Home",
     href: "/",
-    icon: (sx: SxProps) => <Home sx={sx} />,
+    icon: "ion:home",
   };
 
   const admin = {
     name: "Admin",
     href: "/admin",
-    icon: (sx: SxProps) => <AdminPanelSettings sx={sx} />,
+    icon: "ri:admin-fill",
   };
 
   const { courses: userCourses } = session.user;
@@ -34,7 +34,7 @@ export const NavItems = () => {
     ? userCourses.map((course) => ({
         name: course,
         href: `/courses/${course}`,
-        icon: (sx: SxProps) => <Mail sx={sx} />,
+        icon: "mdi:briefcase",
       }))
     : [];
   const links =
@@ -43,17 +43,17 @@ export const NavItems = () => {
           {
             name: "Videos",
             href: "/video/consulting",
-            icon: (sx: SxProps) => <VideoLibrary sx={sx} />,
+            icon: "material-symbols:video-library-rounded",
           },
           {
             name: "Tests",
             href: "/tests",
-            icon: (sx: SxProps) => <Quiz sx={sx} />,
+            icon: "healthicons:i-exam-multiple-choice",
           },
           {
             name: "Resources",
             href: "/resources",
-            icon: (sx: SxProps) => <FilePresent sx={sx} />,
+            icon: "icon-park-solid:folder-one",
           },
         ]
       : [];
