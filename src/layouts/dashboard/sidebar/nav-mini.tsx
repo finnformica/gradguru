@@ -16,7 +16,6 @@ import {
 import _ from "lodash";
 
 import {
-  AccountCircle,
   AdminPanelSettings,
   FilePresent,
   Home,
@@ -24,12 +23,10 @@ import {
   Quiz,
   VideoLibrary,
 } from "@mui/icons-material";
-import { Session } from "inspector";
 import AuthButton from "../header/auth-button";
 
 const NavMini = ({ width }: { width: number }) => {
   const { data: session } = useSession();
-
   const router = useRouter();
 
   if (!session) return null; // TODO: return skeleton
