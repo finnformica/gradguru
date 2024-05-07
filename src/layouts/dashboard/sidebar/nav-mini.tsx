@@ -14,15 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import _ from "lodash";
-
-import {
-  IconAdmin,
-  IconConsulting,
-  IconHome,
-  IconResources,
-  IconTest,
-  IconVideo,
-} from "components/Icons/dashbord-nav";
+import { Icon } from "@iconify/react";
 import AuthButton from "../header/auth-button";
 
 const NavMini = ({ width }: { width: number }) => {
@@ -34,13 +26,17 @@ const NavMini = ({ width }: { width: number }) => {
   const home = {
     name: "Home",
     href: "/",
-    icon: (sx: SxProps) => <IconHome />,
+    icon: (sx: SxProps) => (
+      <Icon icon="ion:home" width="32" height="32" color="#BDBDBD" />
+    ),
   };
 
   const admin = {
     name: "Admin",
     href: "/admin",
-    icon: (sx: SxProps) => <IconAdmin />,
+    icon: (sx: SxProps) => (
+      <Icon icon="ri:admin-fill" width="32" height="32" color="#BDBDBD" />
+    ),
   };
 
   const { courses: userCourses } = session.user;
@@ -48,7 +44,9 @@ const NavMini = ({ width }: { width: number }) => {
     ? userCourses.map((course) => ({
         name: course,
         href: `/courses/${course}`,
-        icon: (sx: SxProps) => <IconConsulting />,
+        icon: (sx: SxProps) => (
+          <Icon icon="mdi:briefcase" width="32" height="32" color="#BDBDBD" />
+        ),
       }))
     : [];
   const links =
@@ -57,17 +55,38 @@ const NavMini = ({ width }: { width: number }) => {
           {
             name: "Videos",
             href: "/video/consulting",
-            icon: (sx: SxProps) => <IconVideo />,
+            icon: (sx: SxProps) => (
+              <Icon
+                icon="material-symbols:video-library-rounded"
+                width="32"
+                height="32"
+                color="#BDBDBD"
+              />
+            ),
           },
           {
             name: "Tests",
             href: "/tests",
-            icon: (sx: SxProps) => <IconTest />,
+            icon: (sx: SxProps) => (
+              <Icon
+                icon="healthicons:i-exam-multiple-choice"
+                width="32"
+                height="32"
+                color="#BDBDBD"
+              />
+            ),
           },
           {
             name: "Resources",
             href: "/resources",
-            icon: (sx: SxProps) => <IconResources />,
+            icon: (sx: SxProps) => (
+              <Icon
+                icon="icon-park-solid:folder-one"
+                width="32"
+                height="32"
+                color="#BDBDBD"
+              />
+            ),
           },
         ]
       : [];

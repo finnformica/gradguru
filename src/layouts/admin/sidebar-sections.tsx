@@ -1,23 +1,20 @@
 import {
-  Abc,
   AddBox,
   AllInclusive,
   Book,
   Dashboard,
-  Description,
-  Extension,
-  GolfCourse,
   Group,
   Hardware,
   LibraryBooks,
-  Pin,
   ViewInAr,
 } from "@mui/icons-material";
+
+import { Icon } from "@iconify/react";
 
 export const sidebarSections = [
   {
     name: "Courses",
-    icon: <GolfCourse />,
+    icon: <Icon icon="mdi:golf" width="32" height="32" />,
     active: true,
     children: [
       {
@@ -55,12 +52,14 @@ export const sidebarSections = [
   },
   {
     name: "Tests",
-    icon: <Description />,
+    icon: (
+      <Icon icon="healthicons:i-exam-multiple-choice" width="32" height="32" />
+    ),
     active: true,
     children: [
       {
         name: "SJT",
-        icon: <Abc />,
+        icon: <Icon icon="mdi:head-thinking" width="24" height="24" />,
         active: true,
         children: [
           {
@@ -91,7 +90,13 @@ export const sidebarSections = [
       },
       {
         name: "NR",
-        icon: <Pin />,
+        icon: (
+          <Icon
+            icon="fluent-emoji-high-contrast:input-numbers"
+            width="24"
+            height="24"
+          />
+        ),
         active: true,
         children: [
           {
@@ -122,7 +127,13 @@ export const sidebarSections = [
       },
       {
         name: "LR",
-        icon: <Extension />,
+        icon: (
+          <Icon
+            icon="streamline:module-puzzle-3-solid"
+            width="24"
+            height="24"
+          />
+        ),
         active: false,
         children: [
           {
