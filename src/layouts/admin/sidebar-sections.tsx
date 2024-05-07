@@ -1,14 +1,3 @@
-import {
-  AddBox,
-  AllInclusive,
-  Book,
-  Dashboard,
-  Group,
-  Hardware,
-  LibraryBooks,
-  ViewInAr,
-} from "@mui/icons-material";
-
 import { Icon } from "@iconify/react";
 
 export const sidebarSections = [
@@ -19,13 +8,15 @@ export const sidebarSections = [
     children: [
       {
         name: "All Courses",
-        icon: <AllInclusive />,
+        icon: <Icon icon="ep:files" width="24" height="24" />,
         route: "/admin/courses/all",
         active: true,
       },
       {
         name: "Add Course",
-        icon: <AddBox />,
+        icon: (
+          <Icon icon="fluent:add-square-24-regular" width="24" height="24" />
+        ),
         route: "/admin/courses/add",
         active: true,
       },
@@ -33,18 +24,20 @@ export const sidebarSections = [
   },
   {
     name: "Blog",
-    icon: <Book />,
+    icon: <Icon icon="ri:article-fill" width="32" height="32" />,
     active: true,
     children: [
       {
         name: "All Posts",
-        icon: <LibraryBooks />,
+        icon: <Icon icon="ep:files" width="24" height="24" />,
         route: "/admin/blog/all",
         active: true,
       },
       {
         name: "Add Post",
-        icon: <AddBox />,
+        icon: (
+          <Icon icon="fluent:add-square-24-regular" width="24" height="24" />
+        ),
         route: "/admin/blog/add",
         active: true,
       },
@@ -59,30 +52,42 @@ export const sidebarSections = [
     children: [
       {
         name: "SJT",
-        icon: <Icon icon="mdi:head-thinking" width="24" height="24" />,
+        icon: <Icon icon="mdi:head-thinking-outline" width="24" height="24" />,
         active: true,
         children: [
           {
             name: "All questions",
-            icon: <AllInclusive />,
+            icon: <Icon icon="ep:files" width="24" height="24" />,
             route: "/admin/questions/situational-judgement/all",
             active: true,
           },
           {
             name: "Add question",
-            icon: <AddBox />,
+            icon: (
+              <Icon
+                icon="fluent:add-square-24-regular"
+                width="24"
+                height="24"
+              />
+            ),
             route: "/admin/questions/situational-judgement/add",
             active: true,
           },
           {
             name: "All tests",
-            icon: <AllInclusive />,
+            icon: <Icon icon="ep:files" width="24" height="24" />,
             route: "/admin/tests/situational-judgement/all",
             active: true,
           },
           {
             name: "Add test",
-            icon: <AddBox />,
+            icon: (
+              <Icon
+                icon="fluent:add-square-24-regular"
+                width="24"
+                height="24"
+              />
+            ),
             route: "/admin/tests/situational-judgement/add",
             active: true,
           },
@@ -101,25 +106,37 @@ export const sidebarSections = [
         children: [
           {
             name: "All questions",
-            icon: <AllInclusive />,
+            icon: <Icon icon="ep:files" width="24" height="24" />,
             route: "/admin/questions/numerical-reasoning/all",
             active: true,
           },
           {
             name: "Add question",
-            icon: <AddBox />,
+            icon: (
+              <Icon
+                icon="fluent:add-square-24-regular"
+                width="24"
+                height="24"
+              />
+            ),
             route: "/admin/questions/numerical-reasoning/add",
             active: true,
           },
           {
             name: "All tests",
-            icon: <AllInclusive />,
+            icon: <Icon icon="ep:files" width="24" height="24" />,
             route: "/admin/tests/numerical-reasoning/all",
             active: true,
           },
           {
             name: "Add test",
-            icon: <AddBox />,
+            icon: (
+              <Icon
+                icon="fluent:add-square-24-regular"
+                width="24"
+                height="24"
+              />
+            ),
             route: "/admin/tests/numerical-reasoning/add",
             active: true,
           },
@@ -127,24 +144,24 @@ export const sidebarSections = [
       },
       {
         name: "LR",
-        icon: (
-          <Icon
-            icon="streamline:module-puzzle-3-solid"
-            width="24"
-            height="24"
-          />
-        ),
+        icon: <Icon icon="streamline:module-puzzle-3" width="24" height="24" />,
         active: false,
         children: [
           {
             name: "All LR",
-            icon: <AllInclusive />,
+            icon: <Icon icon="ep:files" width="24" height="24" />,
             route: "/admin/tests/logical-reasoning/all",
             active: true,
           },
           {
             name: "Add LR",
-            icon: <AddBox />,
+            icon: (
+              <Icon
+                icon="fluent:add-square-24-regular"
+                width="24"
+                height="24"
+              />
+            ),
             route: "/admin/tests/logical-reasoning/add",
             active: true,
           },
@@ -154,26 +171,28 @@ export const sidebarSections = [
   },
   {
     name: "Drills",
-    icon: <Hardware />,
+    icon: (
+      <Icon icon="material-symbols:tools-power-drill" width="32" height="32" />
+    ),
     active: false,
     children: [],
   },
   {
     name: "Resources",
-    icon: <ViewInAr />,
+    icon: <Icon icon="icon-park-solid:folder-one" width="32" height="32" />,
     active: false,
     children: [],
   },
   {
     name: "Users",
-    icon: <Group />,
+    icon: <Icon icon="ph:users-four-fill" width="32" height="32" />,
     route: "/admin/users",
     active: true,
   },
   // leave this last
   {
     name: "Dashboard",
-    icon: <Dashboard />,
+    icon: <Icon icon="streamline:dashboard-3-solid" width="32" height="32" />,
     route: "/dashboard",
     active: true,
   },
