@@ -16,6 +16,7 @@ import {
 import _ from "lodash";
 
 import {
+  AccountCircle,
   AdminPanelSettings,
   FilePresent,
   Home,
@@ -23,9 +24,12 @@ import {
   Quiz,
   VideoLibrary,
 } from "@mui/icons-material";
+import { Session } from "inspector";
+import AuthButton from "../header/auth-button";
 
 const NavMini = ({ width }: { width: number }) => {
   const { data: session } = useSession();
+
   const router = useRouter();
 
   if (!session) return null; // TODO: return skeleton
@@ -75,6 +79,7 @@ const NavMini = ({ width }: { width: number }) => {
     <Box
       position="fixed"
       component="nav"
+      textAlign={"center"}
       sx={{
         height: "100vh",
         width: `${width}px`,
@@ -85,24 +90,37 @@ const NavMini = ({ width }: { width: number }) => {
         backdropFilter: "blur(10px)",
       }}
     >
-      <Image
-        src="/logos/small-logo.png"
-        alt="Gradguru logo"
-        width={55}
-        height={55}
-        priority
-        style={{ margin: "0 auto 2rem", display: "block", cursor: "pointer" }}
-        onClick={() => router.push("/dashboard")}
-      />
-      <List disablePadding>
-        <NavListItem item={home} key="home" />
-        {courses.length > 0 &&
-          courses &&
-          [...courses, ...links].map((item: any) => (
-            <NavListItem item={item} key={item.name} />
-          ))}
-        {session.user.role > 1 && <NavListItem key="admin" item={admin} />}
-      </List>
+      <Stack
+        direction={"column"}
+        justifyContent={"space-between"}
+        sx={{ height: "100%" }}
+      >
+        <Stack>
+          <Image
+            src="/logos/small-logo.png"
+            alt="Gradguru logo"
+            width={55}
+            height={55}
+            priority
+            style={{
+              margin: "0 auto 2rem",
+              display: "block",
+              cursor: "pointer",
+            }}
+            onClick={() => router.push("/dashboard")}
+          />
+          <List disablePadding>
+            <NavListItem item={home} key="home" />
+            {courses.length > 0 &&
+              courses &&
+              [...courses, ...links].map((item: any) => (
+                <NavListItem item={item} key={item.name} />
+              ))}
+            {session.user.role > 1 && <NavListItem key="admin" item={admin} />}
+          </List>
+        </Stack>
+        <AuthButton />
+      </Stack>
     </Box>
   );
 };

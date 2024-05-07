@@ -44,7 +44,7 @@ const VideoPage = ({ params }: VideoPageProps) => {
           { label: "Video" },
         ]}
       />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ pt: 4 }}>
         <VideoPlayer />
         <VideoControls />
         <CourseDescription />

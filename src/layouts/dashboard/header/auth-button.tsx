@@ -24,7 +24,7 @@ const AuthButton = () => {
   }
 
   return (
-    <div>
+    <div style={{ marginBottom: "2rem" }}>
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
@@ -38,7 +38,11 @@ const AuthButton = () => {
             src={data.user.image}
             width={30}
             height={30}
-            style={{ borderRadius: "50%" }}
+            style={{
+              borderRadius: "50%",
+              display: "block",
+              cursor: "pointer",
+            }}
           />
         ) : (
           <AccountCircle />

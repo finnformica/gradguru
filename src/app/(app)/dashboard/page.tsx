@@ -11,6 +11,7 @@ const WelcomePanel = ({ name, courses }: { name: string; courses: any[] }) => (
   <Box
     sx={{
       backgroundColor: (theme) => theme.palette.primary.light,
+
       width: { xs: "100%", lg: "60%" },
       borderRadius: 10,
     }}
