@@ -16,13 +16,13 @@ import {
 import _ from "lodash";
 
 import {
-  AdminPanelSettings,
-  FilePresent,
-  Home,
-  Mail,
-  Quiz,
-  VideoLibrary,
-} from "@mui/icons-material";
+  IconAdmin,
+  IconConsulting,
+  IconHome,
+  IconResources,
+  IconTest,
+  IconVideo,
+} from "components/Icons/dashbord-nav";
 import AuthButton from "../header/auth-button";
 
 const NavMini = ({ width }: { width: number }) => {
@@ -34,13 +34,13 @@ const NavMini = ({ width }: { width: number }) => {
   const home = {
     name: "Home",
     href: "/",
-    icon: (sx: SxProps) => <Home sx={sx} />,
+    icon: (sx: SxProps) => <IconHome />,
   };
 
   const admin = {
     name: "Admin",
     href: "/admin",
-    icon: (sx: SxProps) => <AdminPanelSettings sx={sx} />,
+    icon: (sx: SxProps) => <IconAdmin />,
   };
 
   const { courses: userCourses } = session.user;
@@ -48,7 +48,7 @@ const NavMini = ({ width }: { width: number }) => {
     ? userCourses.map((course) => ({
         name: course,
         href: `/courses/${course}`,
-        icon: (sx: SxProps) => <Mail sx={sx} />,
+        icon: (sx: SxProps) => <IconConsulting />,
       }))
     : [];
   const links =
@@ -57,17 +57,17 @@ const NavMini = ({ width }: { width: number }) => {
           {
             name: "Videos",
             href: "/video/consulting",
-            icon: (sx: SxProps) => <VideoLibrary sx={sx} />,
+            icon: (sx: SxProps) => <IconVideo />,
           },
           {
             name: "Tests",
             href: "/tests",
-            icon: (sx: SxProps) => <Quiz sx={sx} />,
+            icon: (sx: SxProps) => <IconTest />,
           },
           {
             name: "Resources",
             href: "/resources",
-            icon: (sx: SxProps) => <FilePresent sx={sx} />,
+            icon: (sx: SxProps) => <IconResources />,
           },
         ]
       : [];
