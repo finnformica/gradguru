@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import ListCollapse from "./list-collapse";
+import { Icon } from "@iconify/react";
 
 const ListCollapseItem = ({ section }: any) => {
   return section.children ? (
@@ -30,7 +31,7 @@ const ListCollapseItem = ({ section }: any) => {
             }}
           >
             <Tooltip title={section.name} placement="right">
-              {section.icon}
+              <Icon icon={section.icon} width="32" height="32" />
             </Tooltip>
           </ListItemIcon>
           <ListItemText primary={section.name} />
