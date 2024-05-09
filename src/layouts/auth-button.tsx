@@ -36,8 +36,8 @@ const AuthButton = () => {
           <Image
             alt="user profile image"
             src={data.user.image}
-            width={30}
-            height={30}
+            width={35}
+            height={35}
             style={{
               borderRadius: "50%",
               display: "block",

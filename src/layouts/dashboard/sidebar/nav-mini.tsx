@@ -1,9 +1,9 @@
 "use client";
 
+import { Drawer, List } from "@mui/material";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { Drawer, List } from "@mui/material";
 
 import { NavItems } from "./nav-items";
 
