@@ -1,12 +1,3 @@
-import {
-  AdminPanelSettings,
-  FilePresent,
-  Home,
-  Mail,
-  Quiz,
-  VideoLibrary,
-} from "@mui/icons-material";
-import { SxProps } from "@mui/material";
 import { useSession } from "next-auth/react";
 
 import { NavListItem } from "./nav-list-item";

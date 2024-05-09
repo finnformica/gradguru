@@ -42,7 +42,12 @@ export const NavListItem = ({
           mx="auto"
           maxWidth="100%"
         >
-          <Icon icon={icon} width="32" height="32" color="#BDBDBD" />
+          <Icon
+            icon={icon}
+            width="32"
+            height="32"
+            color="rgba(0, 0, 0, 0.54)"
+          />
           <Typography
             variant="body2"
             fontSize={12}
