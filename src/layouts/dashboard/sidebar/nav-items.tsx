@@ -17,7 +17,7 @@ export const NavItems = () => {
   const admin = {
     name: "Admin",
     href: "/admin",
-    icon: "ri:admin-fill",
+    icon: "material-symbols:admin-panel-settings",
   };
 
   const { courses: userCourses } = session.user;

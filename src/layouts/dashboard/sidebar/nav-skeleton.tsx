@@ -29,7 +29,7 @@ const NavSkeleton = ({ count }: NewSkeletonProps) => {
           </Stack>
         ))}
       </Stack>
-      <Skeleton variant="circular" width={35} height={35} />
+      {/* <Skeleton variant="circular" width={35} height={35} /> */}
     </Stack>
   );
 };
