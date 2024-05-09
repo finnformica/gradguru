@@ -1,34 +1,18 @@
-import {
-  Abc,
-  AddBox,
-  AllInclusive,
-  Book,
-  Dashboard,
-  Description,
-  Extension,
-  GolfCourse,
-  Group,
-  Hardware,
-  LibraryBooks,
-  Pin,
-  ViewInAr,
-} from "@mui/icons-material";
-
 export const sidebarSections = [
   {
     name: "Courses",
-    icon: <GolfCourse />,
+    icon: "mdi:golf",
     active: true,
     children: [
       {
         name: "All Courses",
-        icon: <AllInclusive />,
+        icon: "ep:files",
         route: "/admin/courses/all",
         active: true,
       },
       {
         name: "Add Course",
-        icon: <AddBox />,
+        icon: "fluent:add-square-24-regular",
         route: "/admin/courses/add",
         active: true,
       },
@@ -36,18 +20,18 @@ export const sidebarSections = [
   },
   {
     name: "Blog",
-    icon: <Book />,
+    icon: "ri:article-fill",
     active: true,
     children: [
       {
         name: "All Posts",
-        icon: <LibraryBooks />,
+        icon: "ep:files",
         route: "/admin/blog/all",
         active: true,
       },
       {
         name: "Add Post",
-        icon: <AddBox />,
+        icon: "fluent:add-square-24-regular",
         route: "/admin/blog/add",
         active: true,
       },
@@ -55,35 +39,35 @@ export const sidebarSections = [
   },
   {
     name: "Tests",
-    icon: <Description />,
+    icon: "healthicons:i-exam-multiple-choice",
     active: true,
     children: [
       {
         name: "SJT",
-        icon: <Abc />,
+        icon: "mdi:head-thinking-outline",
         active: true,
         children: [
           {
             name: "All questions",
-            icon: <AllInclusive />,
+            icon: "ep:files",
             route: "/admin/questions/situational-judgement/all",
             active: true,
           },
           {
             name: "Add question",
-            icon: <AddBox />,
+            icon: "fluent:add-square-24-regular",
             route: "/admin/questions/situational-judgement/add",
             active: true,
           },
           {
             name: "All tests",
-            icon: <AllInclusive />,
+            icon: "ep:files",
             route: "/admin/tests/situational-judgement/all",
             active: true,
           },
           {
             name: "Add test",
-            icon: <AddBox />,
+            icon: "fluent:add-square-24-regular",
             route: "/admin/tests/situational-judgement/add",
             active: true,
           },
@@ -91,30 +75,30 @@ export const sidebarSections = [
       },
       {
         name: "NR",
-        icon: <Pin />,
+        icon: "fluent-emoji-high-contrast:input-numbers",
         active: true,
         children: [
           {
             name: "All questions",
-            icon: <AllInclusive />,
+            icon: "ep:files",
             route: "/admin/questions/numerical-reasoning/all",
             active: true,
           },
           {
             name: "Add question",
-            icon: <AddBox />,
+            icon: "fluent:add-square-24-regular",
             route: "/admin/questions/numerical-reasoning/add",
             active: true,
           },
           {
             name: "All tests",
-            icon: <AllInclusive />,
+            icon: "ep:files",
             route: "/admin/tests/numerical-reasoning/all",
             active: true,
           },
           {
             name: "Add test",
-            icon: <AddBox />,
+            icon: "fluent:add-square-24-regular",
             route: "/admin/tests/numerical-reasoning/add",
             active: true,
           },
@@ -122,30 +106,18 @@ export const sidebarSections = [
       },
       {
         name: "LR",
-        icon: <Extension />,
-        active: true,
+        icon: "streamline:module-puzzle-3",
+        active: false,
         children: [
           {
-            name: "All questions",
-            icon: <AllInclusive />,
-            route: "/admin/questions/logical-reasoning/all",
-            active: true,
-          },
-          {
-            name: "Add question",
-            icon: <AddBox />,
-            route: "/admin/questions/logical-reasoning/add",
-            active: true,
-          },
-          {
-            name: "All tests",
-            icon: <AllInclusive />,
+            name: "All LR",
+            icon: "ep:files",
             route: "/admin/tests/logical-reasoning/all",
             active: true,
           },
           {
-            name: "Add test",
-            icon: <AddBox />,
+            name: "Add LR",
+            icon: "fluent:add-square-24-regular",
             route: "/admin/tests/logical-reasoning/add",
             active: true,
           },
@@ -155,59 +127,26 @@ export const sidebarSections = [
   },
   {
     name: "Drills",
-    icon: <Hardware />,
-    active: true,
-    children: [
-      {
-        name: "Hirevue",
-        icon: <Hardware />,
-        active: true,
-        children: [
-          {
-            name: "All questions",
-            icon: <AllInclusive />,
-            route: "/admin/drills/hirevue/all",
-            active: true,
-          },
-          {
-            name: "Add question",
-            icon: <AddBox />,
-            route: "/admin/drills/hirevue/add",
-            active: true,
-          },
-        ],
-      },
-    ],
+    icon: "material-symbols:tools-power-drill",
+    active: false,
+    children: [],
   },
   {
     name: "Resources",
-    icon: <ViewInAr />,
-    active: true,
-    children: [
-      {
-        name: "All resources",
-        icon: <AllInclusive />,
-        route: "/admin/resources/all",
-        active: true,
-      },
-      {
-        name: "Add resources",
-        icon: <AddBox />,
-        route: "/admin/resources/add",
-        active: true,
-      },
-    ],
+    icon: "icon-park-solid:folder-one",
+    active: false,
+    children: [],
   },
   {
     name: "Users",
-    icon: <Group />,
+    icon: "ph:users-four-fill",
     route: "/admin/users",
     active: true,
   },
   // leave this last
   {
     name: "Dashboard",
-    icon: <Dashboard />,
+    icon: "streamline:dashboard-3-solid",
     route: "/dashboard",
     active: true,
   },

@@ -1,4 +1,6 @@
 "use client";
+import React from "react";
+import NavMini from "layouts/dashboard/sidebar/nav-mini";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,6 +10,7 @@ import {
   CSSObject,
   CssBaseline,
   List,
+  Stack,
   Theme,
   styled,
 } from "@mui/material";
@@ -15,6 +18,7 @@ import MuiDrawer from "@mui/material/Drawer";
 
 import DashboardHeader from "./header";
 import { NavItems } from "./sidebar/nav-items";
+import AuthButton from "layouts/auth-button";
 
 const appBarHeight = 72;
 const drawerWidth = 80;
@@ -65,7 +69,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <CssBaseline />
-      <DashboardHeader height={appBarHeight} />
       <Drawer
         variant="permanent"
         PaperProps={{
@@ -87,12 +90,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             onClick={() => router.push("/dashboard")}
           />
         </DrawerHeader>
-        <List>
-          <NavItems />
-        </List>
+        <Stack
+          direction={"column"}
+          justifyContent={"space-between"}
+          textAlign={"center"}
+          height={"90vh"}
+        >
+          <List>
+            <NavItems />
+          </List>
+          <AuthButton />
+        </Stack>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
         {children}
       </Box>
     </Box>

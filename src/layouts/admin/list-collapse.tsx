@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ListCollapseItem from "./list-collapse-item";
+import { Icon } from "@iconify/react";
 
 const ListCollapse = ({ section }: any) => {
   const [open, setOpen] = useState(false);
@@ -38,7 +39,12 @@ const ListCollapse = ({ section }: any) => {
             }}
           >
             <Tooltip title={section.name} placement="right">
-              {section.icon}
+              <Icon
+                icon={section.icon}
+                width="32"
+                height="32"
+                color="#BDBDBD"
+              />
             </Tooltip>
           </ListItemIcon>
           <ListItemText primary={section.name} />

@@ -19,7 +19,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar open={open} drawerWidth={drawerWidth} />
       {children}
       <Fab
-        sx={{ position: "fixed", bottom: 40, right: 40, zIndex: 1301 }}
+        sx={{
+          position: "fixed",
+          bottom: 40,
+          right: 40,
+          zIndex: 1301,
+        }}
         color="primary"
         aria-label="sidemenu"
         onClick={() => setOpen(!open)}
