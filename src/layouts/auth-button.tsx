@@ -24,7 +24,7 @@ const AuthButton = () => {
   }
 
   return (
-    <div style={{ marginBottom: "2rem" }}>
+    <div>
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
