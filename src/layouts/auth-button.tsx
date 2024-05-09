@@ -20,7 +20,17 @@ const AuthButton = () => {
   };
 
   if (status !== "authenticated") {
-    return <AccountCircle sx={{ color: "grey.400" }} />;
+    return (
+      <AccountCircle
+        sx={{
+          height: 40,
+          width: 40,
+          color: "grey.400",
+          display: "block",
+          margin: "0 auto",
+        }}
+      />
+    );
   }
 
   return (
@@ -45,7 +55,7 @@ const AuthButton = () => {
             }}
           />
         ) : (
-          <AccountCircle />
+          <AccountCircle sx={{ height: 35, width: 35, color: "grey.400" }} />
         )}
       </IconButton>
       <Menu
