@@ -39,7 +39,12 @@ const ListCollapse = ({ section }: any) => {
             }}
           >
             <Tooltip title={section.name} placement="right">
-              <Icon icon={section.icon} width="32" height="32" />
+              <Icon
+                icon={section.icon}
+                width="32"
+                height="32"
+                color="#BDBDBD"
+              />
             </Tooltip>
           </ListItemIcon>
           <ListItemText primary={section.name} />
