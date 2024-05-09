@@ -94,7 +94,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           direction={"column"}
           justifyContent={"space-between"}
           textAlign={"center"}
-          height={"92%"}
+          height={"90vh"}
         >
           <List>
             <NavItems />

@@ -9,7 +9,7 @@ const NavSkeleton = ({ count }: NewSkeletonProps) => {
   return (
     <Stack
       direction={"column"}
-      sx={{ height: "90vh" }}
+      sx={{ height: "90vh", pb: 2 }}
       justifyContent={"space-between"}
       alignItems={"center"}
     >
@@ -29,7 +29,7 @@ const NavSkeleton = ({ count }: NewSkeletonProps) => {
           </Stack>
         ))}
       </Stack>
-      <Skeleton variant="circular" width={35} height={35} sx={{ mb: "2rem" }} />
+      <Skeleton variant="circular" width={35} height={35} />
     </Stack>
   );
 };
