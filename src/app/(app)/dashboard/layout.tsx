@@ -1,12 +1,16 @@
 "use client";
 
-import { useAuthState } from "react-firebase-hooks/auth";
-
-import DashboardLayout from "layouts/dashboard";
-import { auth } from "lib/firebase/config";
-import { LoadingScreen } from "components/global";
 import { redirect } from "next/navigation";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import { useUserMeta } from "api/user";
+import { LoadingScreen } from "components/global";
+import { useSession } from "context/user";
+import DashboardLayout from "layouts/dashboard";
+import { auth } from "lib/firebase/config";
 
 export default function DashboardLayoutPage({
   children,
@@ -15,6 +19,10 @@ export default function DashboardLayoutPage({
 }) {
   const { enqueueSnackbar } = useSnackbar();
   const [user, loading, error] = useAuthState(auth);
+  const { user: userMeta } = useUserMeta();
+  const { setUser } = useSession();
+
+  useEffect(() => setUser(userMeta), [userMeta, setUser]);
 
   if (loading) return <LoadingScreen />;
 

@@ -1,18 +1,20 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { Typography } from "@mui/material";
 
 import { WelcomePanel } from "components/global";
+import { useSession } from "context/user";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
+  const { user } = useSession();
 
   return (
-    <WelcomePanel name={session?.user?.name || "Gradguru user"}>
-      {session?.user?.courses?.length || 0 > 0 ? (
+    <WelcomePanel
+      name={user?.displayName || user?.email?.split("@")[0] || "Gradguru user"}
+    >
+      {user?.courses?.length || 0 > 0 ? (
         <Typography variant="body2" fontWeight={200} gutterBottom>
           Your courses are available via the side navigation
         </Typography>

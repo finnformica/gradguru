@@ -2,7 +2,8 @@
 
 import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
 import { CircularProgress, IconButton, Stack } from "@mui/material";
-import { useSession } from "next-auth/react";
+
+import { useSession } from "context/user";
 
 type EditDeleteActionsProps = {
   onEditClick?: () => void;
@@ -13,9 +14,9 @@ const EditDeleteActions = ({
   onEditClick,
   onDeleteClick,
 }: EditDeleteActionsProps) => {
-  const { data: session } = useSession();
+  const { user } = useSession();
 
-  if (!session)
+  if (!user)
     return (
       <Stack direction="row" justifyContent="center">
         <CircularProgress size={25} />
@@ -27,7 +28,7 @@ const EditDeleteActions = ({
       {onEditClick && (
         <IconButton
           size="small"
-          disabled={(session?.user?.role || 0) < 3}
+          disabled={(user?.role || 0) < 3}
           onClick={onEditClick}
         >
           <DriveFileRenameOutline fontSize="small" />
@@ -36,7 +37,7 @@ const EditDeleteActions = ({
       {onDeleteClick && (
         <IconButton
           size="small"
-          disabled={(session?.user?.role || 0) < 4}
+          disabled={(user?.role || 0) < 4}
           onClick={onDeleteClick}
         >
           <Delete fontSize="small" />

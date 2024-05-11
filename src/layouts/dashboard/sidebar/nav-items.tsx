@@ -1,12 +1,11 @@
-import { useSession } from "next-auth/react";
-
+import { useSession } from "context/user";
 import { NavListItem } from "./nav-list-item";
 import NavSkeleton from "./nav-skeleton";
 
 export const NavItems = () => {
-  const { data: session } = useSession();
+  const { user } = useSession();
 
-  if (!session) return <NavSkeleton count={6} />;
+  if (!user) return <NavSkeleton count={6} />;
 
   const home = {
     name: "Home",
@@ -20,7 +19,7 @@ export const NavItems = () => {
     icon: "material-symbols:admin-panel-settings",
   };
 
-  const { courses: userCourses } = session.user;
+  const { courses: userCourses } = user;
   const courses = userCourses
     ? userCourses.map((course) => ({
         name: course,
@@ -57,7 +56,7 @@ export const NavItems = () => {
         [...courses, ...links].map((item: any) => (
           <NavListItem item={item} key={item.name} />
         ))}
-      {session.user.role > 1 && <NavListItem key="admin" item={admin} />}
+      {user.role > 1 && <NavListItem key="admin" item={admin} />}
     </>
   );
 };

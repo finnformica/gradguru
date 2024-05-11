@@ -1,17 +1,18 @@
 "use client";
 
-import { Drawer, List } from "@mui/material";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { Drawer, List } from "@mui/material";
+
+import { useSession } from "context/user";
 import { NavItems } from "./nav-items";
 
 const NavMini = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { user } = useSession();
 
-  if (!session) return null; // TODO: return skeleton
+  if (!user) return null; // TODO: return skeleton
 
   return (
     <Drawer variant="permanent">
