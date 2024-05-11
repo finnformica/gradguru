@@ -1,19 +1,10 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
 
-import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
+// set the region to europe-west2
+const europeFunctions = functions.region("europe-west2");
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+// delete the user document in the user-meta collection
+exports.deleteUserObject = europeFunctions.auth.user().onDelete((user) => {
+  return admin.firestore().collection("user-meta").doc(user.uid).delete();
+});
