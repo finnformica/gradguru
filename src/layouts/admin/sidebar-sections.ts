@@ -107,16 +107,28 @@ export const sidebarSections = [
       {
         name: "LR",
         icon: "streamline:module-puzzle-3",
-        active: false,
+        active: true,
         children: [
           {
-            name: "All LR",
+            name: "All questions",
             icon: "ep:files",
             route: "/admin/tests/logical-reasoning/all",
             active: true,
           },
           {
-            name: "Add LR",
+            name: "Add question",
+            icon: "fluent:add-square-24-regular",
+            route: "/admin/tests/logical-reasoning/add",
+            active: true,
+          },
+          {
+            name: "All tests",
+            icon: "ep:files",
+            route: "/admin/tests/logical-reasoning/all",
+            active: true,
+          },
+          {
+            name: "Add test",
             icon: "fluent:add-square-24-regular",
             route: "/admin/tests/logical-reasoning/add",
             active: true,
@@ -154,7 +166,7 @@ export const sidebarSections = [
   {
     name: "Resources",
     icon: "icon-park-solid:folder-one",
-    active: false,
+    active: true,
     children: [
       {
         name: "All resources",
