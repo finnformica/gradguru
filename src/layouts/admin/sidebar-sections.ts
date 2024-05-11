@@ -112,13 +112,13 @@ export const sidebarSections = [
           {
             name: "All questions",
             icon: "ep:files",
-            route: "/admin/tests/logical-reasoning/all",
+            route: "/admin/questions/logical-reasoning/all",
             active: true,
           },
           {
             name: "Add question",
             icon: "fluent:add-square-24-regular",
-            route: "/admin/tests/logical-reasoning/add",
+            route: "/admin/questions/logical-reasoning/add",
             active: true,
           },
           {
