@@ -11,7 +11,6 @@ import "next-cloudinary/dist/cld-video-player.css";
 import { CssBaseline } from "@mui/material";
 
 import LatexContext from "context/latex";
-import NextAuthProvider from "context/next-auth";
 import SnackbarContext from "context/snackbar";
 import GradguruThemeProvider from "context/theme";
 
@@ -32,17 +31,15 @@ export default function RootLayout({
   return (
     <GradguruThemeProvider>
       <CssBaseline />
-      <NextAuthProvider>
-        <SessionProvider>
-          <html lang="en">
-            <body suppressHydrationWarning={true}>
-              <SnackbarContext>
-                <LatexContext>{children}</LatexContext>
-              </SnackbarContext>
-            </body>
-          </html>
-        </SessionProvider>
-      </NextAuthProvider>
+      <SessionProvider>
+        <html lang="en">
+          <body suppressHydrationWarning={true}>
+            <SnackbarContext>
+              <LatexContext>{children}</LatexContext>
+            </SnackbarContext>
+          </body>
+        </html>
+      </SessionProvider>
     </GradguruThemeProvider>
   );
 }
