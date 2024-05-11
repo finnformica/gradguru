@@ -23,21 +23,11 @@ const ListCollapse = ({ section }: any) => {
     <>
       <ListItem disablePadding sx={{ display: "block" }}>
         <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: "initial",
-            px: 2.5,
-          }}
+          sx={{ minHeight: 48, justifyContent: "initial" }}
           onClick={() => setOpen(!open)}
           disabled={!section.active}
         >
-          <ListItemIcon
-            sx={{
-              minWidth: 0,
-              mr: 3,
-              justifyContent: "center",
-            }}
-          >
+          <ListItemIcon>
             <Tooltip title={section.name} placement="right">
               <Icon
                 icon={section.icon}
@@ -60,8 +50,6 @@ const ListCollapse = ({ section }: any) => {
           ))}
         </List>
       </Collapse>
-
-      {open && <Divider />}
     </>
   );
 };
