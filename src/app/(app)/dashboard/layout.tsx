@@ -16,8 +16,6 @@ export default function DashboardLayoutPage({
   const { enqueueSnackbar } = useSnackbar();
   const [user, loading, error] = useAuthState(auth);
 
-  console.log(user);
-
   if (loading) return <LoadingScreen />;
 
   if (error) {
@@ -27,7 +25,7 @@ export default function DashboardLayoutPage({
     redirect("/sign-in");
   }
 
-  if (!user && !loading) redirect("/sign-in");
+  if (!user) redirect("/sign-in");
 
   return <DashboardLayout>{children}</DashboardLayout>;
 }

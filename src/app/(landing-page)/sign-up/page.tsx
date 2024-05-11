@@ -34,6 +34,23 @@ const SignUp = () => {
 
   if (user) router.push("/dashboard");
 
+  const signUp = async () => {
+    try {
+      const credential = await createUserWithEmailAndPassword(email, password);
+      const { user } = credential!;
+
+      if (!user) {
+        throw new Error("An error occurred while signing in");
+      }
+
+      router.push("/dashboard");
+    } catch (error) {
+      enqueueSnackbar("An error occurred while signing in", {
+        variant: "error",
+      });
+    }
+  };
+
   return (
     <AuthForm
       title="Create an account"
@@ -44,7 +61,7 @@ const SignUp = () => {
       password={password}
       setEmail={(e) => setEmail(e.target.value)}
       setPassword={(e) => setPassword(e.target.value)}
-      handleSubmit={() => createUserWithEmailAndPassword(email, password)}
+      handleSubmit={signUp}
     />
   );
 };

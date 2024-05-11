@@ -3,6 +3,7 @@
 import { signInWithRedirect } from "firebase/auth";
 import _ from "lodash";
 import Link from "next/link";
+import { enqueueSnackbar } from "notistack";
 
 import { Facebook, Google } from "@mui/icons-material";
 import {
@@ -44,6 +45,16 @@ const AuthForm = ({
   const theme = useTheme();
 
   const linkText = _.upperFirst(method.replace("-", " "));
+
+  const signInWithProvider = async (provider: any) => {
+    try {
+      signInWithRedirect(auth, provider);
+    } catch (error) {
+      enqueueSnackbar("An error occurred while signing in", {
+        variant: "error",
+      });
+    }
+  };
 
   return (
     <Box
@@ -102,7 +113,7 @@ const AuthForm = ({
           size="large"
           variant="outlined"
           startIcon={<Google />}
-          onClick={() => signInWithRedirect(auth, googleProvider)}
+          onClick={() => signInWithProvider(googleProvider)}
           sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
         >
           Google
@@ -112,7 +123,7 @@ const AuthForm = ({
           size="large"
           variant="outlined"
           startIcon={<Facebook />}
-          onClick={() => signInWithRedirect(auth, facebookProvider)}
+          onClick={() => signInWithProvider(facebookProvider)}
           sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
         >
           Facebook
