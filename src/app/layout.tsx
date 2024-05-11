@@ -16,6 +16,7 @@ import SnackbarContext from "context/snackbar";
 import GradguruThemeProvider from "context/theme";
 
 import favicons from "./favicons";
+import { SessionProvider } from "context/user";
 
 export const metadata = {
   title: "gradguru",
@@ -32,13 +33,15 @@ export default function RootLayout({
     <GradguruThemeProvider>
       <CssBaseline />
       <NextAuthProvider>
-        <html lang="en">
-          <body suppressHydrationWarning={true}>
-            <SnackbarContext>
-              <LatexContext>{children}</LatexContext>
-            </SnackbarContext>
-          </body>
-        </html>
+        <SessionProvider>
+          <html lang="en">
+            <body suppressHydrationWarning={true}>
+              <SnackbarContext>
+                <LatexContext>{children}</LatexContext>
+              </SnackbarContext>
+            </body>
+          </html>
+        </SessionProvider>
       </NextAuthProvider>
     </GradguruThemeProvider>
   );
