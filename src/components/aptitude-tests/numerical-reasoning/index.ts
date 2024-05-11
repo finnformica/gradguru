@@ -1,4 +1,4 @@
-import { EditableTable, FullFeaturedCRUDTable } from "./editable-table";
+import { EditableTable } from "./editable-table";
 import { TableQuestionElement } from "./nr-form-question-element";
 import TableForm from "./table-form";
 import GraphForm from "./graph-form";
@@ -13,7 +13,6 @@ import TopPanel from "./top-panel";
 export {
   NRForm,
   EditableTable,
-  FullFeaturedCRUDTable,
   TableQuestionElement,
   TableForm,
   GraphForm,

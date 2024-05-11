@@ -1,8 +1,6 @@
-import ClientWrapper from "./ClientWrapper";
-import FormModalWrapper from "./FormModalWrapper";
-import FullFeaturedCrudGrid from "./FullFeaturedCrudGrid";
-import LoadingWrapper from "./LoadingWrapper";
-import NotFoundComponent from "./NotFoundComponent";
+import ClientWrapper from "./client-side-wrapper";
+import FormModalWrapper from "./form-modal-wrapper";
+import NotFoundComponent from "./not-found-component";
 import ConfirmationDialog from "./confirmation-dialog";
 import Iconify from "./iconify";
 import LoadingScreen from "./loading-screen";
@@ -13,10 +11,8 @@ export {
   ClientWrapper,
   ConfirmationDialog,
   FormModalWrapper,
-  FullFeaturedCrudGrid,
   Iconify,
   LoadingScreen,
-  LoadingWrapper,
   NotFoundComponent,
   PageBreadcrumbs,
   WelcomePanel,
