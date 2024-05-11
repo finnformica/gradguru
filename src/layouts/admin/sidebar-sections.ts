@@ -128,14 +128,47 @@ export const sidebarSections = [
   {
     name: "Drills",
     icon: "material-symbols:tools-power-drill",
-    active: false,
-    children: [],
+    active: true,
+    children: [
+      {
+        name: "Hirevue",
+        icon: "material-symbols-light:computer-outline",
+        active: true,
+        children: [
+          {
+            name: "All questions",
+            icon: "ep:files",
+            route: "/admin/drills/hirevue/all",
+            active: true,
+          },
+          {
+            name: "Add question",
+            icon: "fluent:add-square-24-regular",
+            route: "/admin/drills/hirevue/add",
+            active: true,
+          },
+        ],
+      },
+    ],
   },
   {
     name: "Resources",
     icon: "icon-park-solid:folder-one",
     active: false,
-    children: [],
+    children: [
+      {
+        name: "All resources",
+        icon: "ep:files",
+        route: "/admin/resources/all",
+        active: true,
+      },
+      {
+        name: "Add resources",
+        icon: "fluent:add-square-24-regular",
+        route: "/admin/resources/add",
+        active: true,
+      },
+    ],
   },
   {
     name: "Users",
