@@ -1,10 +1,10 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signInWithRedirect } from "firebase/auth";
+import _ from "lodash";
 import Link from "next/link";
 
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GoogleIcon from "@mui/icons-material/Google";
+import { Facebook, Google } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -15,7 +15,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import _ from "lodash";
+
+import { auth, facebookProvider, googleProvider } from "lib/firebase/config";
 
 type AuthFormProps = {
   title: string;
@@ -72,26 +73,18 @@ const AuthForm = ({
       </Box>
       <Box width="100%">
         <InputLabel sx={{ pb: 1 }}>Email address</InputLabel>
-        <TextField
-          placeholder="Email address login is disabled for now"
-          disabled
-          fullWidth
-          size="small"
-          value={email}
-          onChange={setEmail}
-        />
+        <TextField fullWidth size="small" value={email} onChange={setEmail} />
       </Box>
       <Box width="100%">
         <InputLabel sx={{ pb: 1 }}>Password</InputLabel>
         <TextField
-          disabled
           fullWidth
           size="small"
           value={password}
           onChange={setPassword}
         />
       </Box>
-      <Button disabled fullWidth variant="contained" onClick={handleSubmit}>
+      <Button fullWidth variant="contained" onClick={handleSubmit}>
         {button}
       </Button>
       <Divider sx={{ py: 2 }}>
@@ -108,8 +101,8 @@ const AuthForm = ({
         <Button
           size="large"
           variant="outlined"
-          startIcon={<GoogleIcon />}
-          onClick={() => signIn("google")}
+          startIcon={<Google />}
+          onClick={() => signInWithRedirect(auth, googleProvider)}
           sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
         >
           Google
@@ -118,8 +111,8 @@ const AuthForm = ({
         <Button
           size="large"
           variant="outlined"
-          startIcon={<FacebookIcon />}
-          onClick={() => signIn("facebook")}
+          startIcon={<Facebook />}
+          onClick={() => signInWithRedirect(auth, facebookProvider)}
           sx={{ width: "50%", color: "black", borderColor: "grey.400" }}
         >
           Facebook
