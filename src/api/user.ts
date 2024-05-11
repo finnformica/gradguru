@@ -1,9 +1,11 @@
-import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
-import { useMemo } from "react";
-import useSWR from "swr";
-
-import { db } from "lib/firebase/config";
 import { doc, getDoc } from "firebase/firestore";
+import { useMemo } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useSWR from "swr";
+import { deleteFetcher, endpoints, getFetcher, postFetcher } from "utils/axios";
+
+import { auth, db } from "lib/firebase/config";
+import { IUser } from "types/user";
 
 export function useUsers() {
   const { data, isLoading, error, isValidating, mutate } = useSWR(
@@ -33,7 +35,29 @@ export function deleteUser(id: string) {
   return deleteFetcher(URL);
 }
 
-export function userUserMeta(id: string) {
+export async function getUserMeta(id: string) {
   const docRef = doc(db, "user-meta", id);
-  return getDoc(docRef).then((doc) => doc.data());
+  return getDoc(docRef).then((doc) => doc.data() as IUser);
+}
+
+export function useUserMeta() {
+  const [user] = useAuthState(auth);
+
+  const id = user?.uid || "";
+
+  const { data, isLoading, error, isValidating, mutate } = useSWR(
+    id,
+    getUserMeta
+  );
+
+  return useMemo(
+    () => ({
+      user: data as IUser,
+      loading: isLoading,
+      error,
+      isValidating,
+      refresh: () => mutate(),
+    }),
+    [data, error, isLoading, isValidating, mutate]
+  );
 }
