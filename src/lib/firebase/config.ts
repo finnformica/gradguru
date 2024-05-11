@@ -5,6 +5,8 @@ import { getStorage } from "firebase/storage";
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
+  User,
+  deleteUser,
   getAuth,
 } from "firebase/auth";
 
@@ -28,4 +30,15 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
-export { app, auth, config, db, storage, googleProvider, facebookProvider };
+const deleteUserAuth = () => deleteUser(auth.currentUser as User);
+
+export {
+  app,
+  auth,
+  config,
+  db,
+  storage,
+  googleProvider,
+  facebookProvider,
+  deleteUserAuth,
+};
