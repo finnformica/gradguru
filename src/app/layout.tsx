@@ -8,12 +8,14 @@ import "styles/global.css";
 
 import "next-cloudinary/dist/cld-video-player.css";
 
-import GradguruThemeProvider from "context/theme";
+import { CssBaseline } from "@mui/material";
+
+import LatexContext from "context/latex";
 import NextAuthProvider from "context/next-auth";
 import SnackbarContext from "context/snackbar";
+import GradguruThemeProvider from "context/theme";
 
 import favicons from "./favicons";
-import LatexContext from "context/latex";
 
 export const metadata = {
   title: "gradguru",
@@ -28,6 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <GradguruThemeProvider>
+      <CssBaseline />
       <NextAuthProvider>
         <html lang="en">
           <body suppressHydrationWarning={true}>
