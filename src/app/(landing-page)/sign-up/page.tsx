@@ -1,22 +1,25 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useState } from "react";
+
+import { useRouter } from "next/navigation";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import AuthForm from "components/LandingPage/AuthForm/AuthForm";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { LoadingScreen } from "components/global";
+import { auth } from "lib/firebase/config";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const session = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (session.status === "authenticated") {
-      router.push("/dashboard");
-    }
-  });
+  const [createUserWithEmailAndPassword, user, loading] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  if (loading) return <LoadingScreen />;
+
+  if (user) router.push("/dashboard");
 
   return (
     <AuthForm
@@ -28,7 +31,7 @@ const SignUp = () => {
       password={password}
       setEmail={(e) => setEmail(e.target.value)}
       setPassword={(e) => setPassword(e.target.value)}
-      handleSubmit={() => console.log("submit")}
+      handleSubmit={() => createUserWithEmailAndPassword(email, password)}
     />
   );
 };

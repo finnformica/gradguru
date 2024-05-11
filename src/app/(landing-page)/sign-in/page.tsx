@@ -1,22 +1,24 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import AuthForm from "components/LandingPage/AuthForm/AuthForm";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { LoadingScreen } from "components/global";
+import { auth } from "lib/firebase/config";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const session = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (session.status === "authenticated") {
-      router.push("/dashboard");
-    }
-  });
+  const [signInWithEmailAndPassword, user, loading] =
+    useSignInWithEmailAndPassword(auth);
+
+  if (loading) return <LoadingScreen />;
+
+  if (user) router.push("/dashboard");
 
   return (
     <AuthForm
@@ -28,7 +30,7 @@ const SignIn = () => {
       password={password}
       setEmail={(e) => setEmail(e.target.value)}
       setPassword={(e) => setPassword(e.target.value)}
-      handleSubmit={() => console.log("submit")}
+      handleSubmit={() => signInWithEmailAndPassword(email, password)}
     />
   );
 };
