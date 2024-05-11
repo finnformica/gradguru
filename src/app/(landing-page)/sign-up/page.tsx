@@ -3,19 +3,32 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 
 import AuthForm from "components/LandingPage/AuthForm/AuthForm";
 import { LoadingScreen } from "components/global";
 import { auth } from "lib/firebase/config";
+import { useSnackbar } from "notistack";
 
 const SignUp = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const [createUserWithEmailAndPassword, user, loading] =
+  const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
+
+  const [user, loading, error] = useAuthState(auth);
+
+  if (error) {
+    enqueueSnackbar("An error occurred while signing in", {
+      variant: "error",
+    });
+  }
 
   if (loading) return <LoadingScreen />;
 
