@@ -13,7 +13,7 @@ const NavMini = () => {
       alignItems="center"
       pb={2}
     >
-      <List>
+      <List sx={{ width: "100%" }}>
         <NavItems />
       </List>
       <AuthButton />
