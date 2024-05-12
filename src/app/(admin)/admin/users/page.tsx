@@ -7,20 +7,18 @@ import { SubmitHandler } from "react-hook-form";
 
 import { AccountCircle } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import { GridColDef, GridRowId } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 
 import { updateUser, useUsers } from "api/user";
 import UserEditModal from "components/admin/users/user-edit-modal";
 import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
-import { ConfirmationDialog, LoadingScreen } from "components/global";
-import { deleteUserAuth } from "lib/firebase/config";
+import { LoadingScreen } from "components/global";
 import { IUserFormInput } from "types";
 import { IUser } from "types/user";
 import { indexToRoleMapping } from "utils/permissions";
 
 const UsersPage = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [idToDelete, setIdToDelete] = useState<GridRowId | null>("");
   const [userToEdit, setUserToEdit] = useState<IUser | null>(null);
 
   const { users, loading, refresh } = useUsers();
@@ -45,26 +43,12 @@ const UsersPage = () => {
       )
       .finally(() => {
         cleanUp();
-        refresh(); // TODO: refresh not working
+        refresh();
       });
   };
 
   const cleanUp = () => {
     setUserToEdit(null);
-  };
-
-  const handleUserDelete = () => {
-    deleteUserAuth()
-      .then(() => enqueueSnackbar("User deleted"))
-      .catch((err: any) =>
-        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => {
-        setIdToDelete(null);
-        refresh(); // TODO: refresh not working
-      });
   };
 
   if (!users || loading) return <LoadingScreen />;
@@ -110,7 +94,7 @@ const UsersPage = () => {
             style={{ borderRadius: "50%" }}
           />
         ) : (
-          <AccountCircle />
+          <AccountCircle sx={{ height: 30, width: 30, color: "grey.400" }} />
         ),
       width: 100,
     },
@@ -120,10 +104,7 @@ const UsersPage = () => {
       width: 100,
       renderCell: (params) => {
         return (
-          <EditDeleteActions
-            onEditClick={() => setUserToEdit(params.row)}
-            onDeleteClick={() => setIdToDelete(params.row.id)}
-          />
+          <EditDeleteActions onEditClick={() => setUserToEdit(params.row)} />
         );
       },
     },
@@ -149,15 +130,6 @@ const UsersPage = () => {
             },
           }}
           onSubmit={onSubmit}
-        />
-      )}
-      {idToDelete && (
-        <ConfirmationDialog
-          title="Are you sure you want to delete this user?"
-          open={!!idToDelete}
-          onClose={() => setIdToDelete(null)}
-          onSubmit={handleUserDelete}
-          confirmText="Delete"
         />
       )}
     </>
