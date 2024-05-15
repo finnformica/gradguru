@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, duration } from "@mui/material";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -17,27 +17,22 @@ const containerVariants = {
   show: {
     opacity: 1,
     scale: 1,
-    x: 0,
     transition: {
       type: "spring",
       duration: 1,
       when: "beforeChildren",
-      staggerChildren: 1.5,
+      staggerChildren: 0.2,
     },
   },
 };
 
 const childrenVariants = {
-  hidden: { opacity: 0, scale: 0.5, y: -20 },
+  hidden: { opacity: 0, scale: 0.5, y: -100 },
   show: {
     opacity: 1,
-    type: "spring",
-    duration: 1,
     y: 0,
     scale: 1,
-    tranisition: {
-      delay: 10,
-    },
+    transition: { type: "spring", bounce: 0.6 },
   },
 };
 
