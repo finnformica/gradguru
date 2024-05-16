@@ -21,18 +21,18 @@ const containerVariants = {
       type: "spring",
       duration: 1,
       when: "beforeChildren",
-      staggerChildren: 0.2,
+      staggerChildren: 0.1,
     },
   },
 };
 
 const childrenVariants = {
-  hidden: { opacity: 0, scale: 0.5, y: -100 },
+  hidden: { opacity: 0, scale: 0.5 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", bounce: 0.6 },
+    transition: { type: "spring", damping: 8, stifness: 100 },
   },
 };
 
@@ -56,19 +56,17 @@ const testing = () => {
       <motion.div variants={childrenVariants}>
         <Typography variant="h4">Sorry, Page Not Found!</Typography>
       </motion.div>
-      <div>
-        <motion.div variants={childrenVariants}>
-          <Typography>
-            Sorry, we couldn't find the page you're looking for.
-          </Typography>
+      <motion.div variants={childrenVariants}>
+        <Typography>
+          Sorry, we couldn't find the page you're looking for.
+        </Typography>
 
-          <Typography>
-            Perhaps you've mistyped the URL? Be sure to <br />
-            check your spelling.
-          </Typography>
-        </motion.div>
-      </div>
-      <div>
+        <Typography>
+          Perhaps you've mistyped the URL? Be sure to <br />
+          check your spelling.
+        </Typography>
+      </motion.div>
+      <motion.div variants={childrenVariants}>
         <Image
           src={"/imgs/3d/man-with-laptop.svg"}
           height={300}
@@ -76,7 +74,7 @@ const testing = () => {
           alt="man with laptop"
           style={{ margin: "0 auto", paddingLeft: 45 }}
         />
-      </div>
+      </motion.div>
       <motion.div variants={childrenVariants}>
         <Button variant="contained">Go to home</Button>
       </motion.div>
