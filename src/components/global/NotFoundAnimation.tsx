@@ -6,12 +6,6 @@ import Image from "next/image";
 
 const href = "/";
 
-const spring = {
-  type: "spring",
-  damping: 10,
-  stiffness: 30,
-};
-
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.8 },
   show: {
@@ -36,7 +30,15 @@ const childrenVariants = {
   },
 };
 
-const testing = () => {
+type NotFoundAnimationProps = {
+  relocatedPageName: string;
+  href: string;
+};
+
+const NotFoundAnimation = ({
+  relocatedPageName,
+  href,
+}: NotFoundAnimationProps) => {
   return (
     <motion.div
       variants={containerVariants}
@@ -47,8 +49,8 @@ const testing = () => {
         display: "flex",
         flexDirection: "column",
         gap: 20,
-        height: "100vh",
-        margin: "0 auto",
+        height: "80vh",
+        margin: "auto",
         justifyContent: "center",
         textAlign: "center",
       }}
@@ -76,10 +78,12 @@ const testing = () => {
         />
       </motion.div>
       <motion.div variants={childrenVariants}>
-        <Button variant="contained">Go to home</Button>
+        <Button variant="contained" href={href}>
+          Go to {relocatedPageName}
+        </Button>
       </motion.div>
     </motion.div>
   );
 };
 
-export default testing;
+export default NotFoundAnimation;

@@ -1,11 +1,12 @@
+import { Box } from "@mui/material";
 import PrimaryHeader from "components/LandingPage/PrimaryHeader";
-import { NotFoundComponent } from "components/global";
+import NotFoundAnimation from "components/global/NotFoundAnimation";
 
 export default function NotFound() {
   return (
     <>
       <PrimaryHeader />
-      <NotFoundComponent href="/" />
+      <NotFoundAnimation href="/" relocatedPageName="home" />
     </>
   );
 }
