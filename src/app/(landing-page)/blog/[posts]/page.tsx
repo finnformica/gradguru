@@ -12,11 +12,11 @@ import { LoadingScreen } from "components/global";
 
 import { db } from "lib/firebase/config";
 import { IBlog } from "types/blog";
+import { endpoints } from "utils/axios";
 
 const Post = ({ params }: { params: { posts: string } }) => {
   const router = useRouter();
   const [loadedDoc, setLoadedDoc] = useState<IBlog | null>(null);
-  const [blogExist, setBlogExist] = useState(true);
 
   useEffect(() => {
     const getBlog = async () => {
@@ -25,7 +25,7 @@ const Post = ({ params }: { params: { posts: string } }) => {
       if (docSnap.exists()) {
         setLoadedDoc(docSnap.data() as IBlog);
       } else {
-        setBlogExist(false);
+        router.push(`not-found/${endpoints.paths[404]}`);
       }
     };
 
@@ -33,9 +33,6 @@ const Post = ({ params }: { params: { posts: string } }) => {
   }, [params.posts]);
 
   if (!loadedDoc) {
-    if (!blogExist) {
-      return notFound();
-    }
     return <LoadingScreen />;
   }
 
