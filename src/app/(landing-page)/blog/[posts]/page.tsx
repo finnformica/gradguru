@@ -16,6 +16,7 @@ import { IBlog } from "types/blog";
 const Post = ({ params }: { params: { posts: string } }) => {
   const router = useRouter();
   const [loadedDoc, setLoadedDoc] = useState<IBlog | null>(null);
+  const [blogExist, setBlogExist] = useState(true);
 
   useEffect(() => {
     const getBlog = async () => {
@@ -24,21 +25,26 @@ const Post = ({ params }: { params: { posts: string } }) => {
       if (docSnap.exists()) {
         setLoadedDoc(docSnap.data() as IBlog);
       } else {
-        notFound();
+        setBlogExist(false);
       }
     };
 
     getBlog();
   }, [params.posts]);
 
-  if (!loadedDoc) return <LoadingScreen />;
+  if (!loadedDoc) {
+    if (!blogExist) {
+      return notFound();
+    }
+    return <LoadingScreen />;
+  }
 
   return (
     <Container maxWidth="md" sx={{ my: 2 }}>
       <Button
         sx={{ my: 2, color: "black" }}
         startIcon={<ArrowBack />}
-        onClick={() => router.push("/blog")}
+        onClick={() => router.push("/blogs")}
       >
         Back
       </Button>

@@ -19,6 +19,7 @@ import { LoadingScreen } from "components/global";
 
 import { INRTest, NRQuestionFlat } from "types";
 import { formatGmat, formatTableOrGraph } from "utils/user-tests";
+import NotFoundAnimation from "components/global/NotFoundAnimation";
 
 type NumericalReasoningTestProps = {
   params: {
@@ -36,6 +37,7 @@ const NumericalReasoningTest = ({
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const [test, setTest] = useState<INRTest | null>(null);
+  const [testExist, setTestExist] = useState(true);
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -60,7 +62,7 @@ const NumericalReasoningTest = ({
     const createTest = async () => {
       const test = await getTestById("numerical-reasoning", testId);
       if (!test.questions) {
-        notFound();
+        setTestExist(false);
       } else {
         setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];
@@ -77,7 +79,12 @@ const NumericalReasoningTest = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testId]);
 
-  if (!questions || questions.length === 0) return <LoadingScreen />;
+  if (!questions || questions.length === 0) {
+    if (!testExist) {
+      return notFound();
+    }
+    return <LoadingScreen />;
+  }
 
   const markTest = (data: any) => {
     const marked = questions.map((question, index) => {
