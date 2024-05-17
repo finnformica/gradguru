@@ -38,7 +38,7 @@ const Post = ({ params }: { params: { posts: string } }) => {
       <Button
         sx={{ my: 2, color: "black" }}
         startIcon={<ArrowBack />}
-        onClick={() => router.push("/blog")}
+        onClick={() => router.back()}
       >
         Back
       </Button>
