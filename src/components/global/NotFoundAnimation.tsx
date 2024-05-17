@@ -59,11 +59,8 @@ const NotFoundAnimation = ({
         <Typography variant="h4">Sorry, Page Not Found!</Typography>
       </motion.div>
       <motion.div variants={childrenVariants}>
-        <Typography>
-          Sorry, we couldn't find the page you're looking for.
-        </Typography>
-
-        <Typography>
+        <Typography color={"text.secondary"}>
+          Sorry, we couldn't find the page you're looking for. <br />
           Perhaps you've mistyped the URL? Be sure to <br />
           check your spelling.
         </Typography>
