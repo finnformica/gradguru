@@ -1,6 +1,6 @@
 "use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
@@ -17,6 +17,7 @@ import {
 } from "components/aptitude-tests/situational-judgement";
 import { LoadingScreen } from "components/global";
 import { ISJScenario, ISJTest, SJQuestionFlat } from "types";
+import { endpoints } from "utils/axios";
 
 type SituationalJudgementTestProps = {
   params: {
@@ -34,6 +35,8 @@ const SituationalJudgementTest = ({
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const [test, setTest] = useState<ISJTest | null>(null);
+
+  const router = useRouter();
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -59,7 +62,7 @@ const SituationalJudgementTest = ({
     const createTest = async () => {
       const test = await getTestById("situational-judgement", testId);
       if (!test.questions) {
-        notFound();
+        router.push(`/dashboard/tests/${endpoints.paths[404]}`);
       } else {
         setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];

@@ -1,6 +1,5 @@
 "use client";
 
-import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
@@ -18,6 +17,8 @@ import {
 import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { useBeforeUnload, useLocalStorage } from "hooks";
 import { ILRQuestion, ILRTest } from "types";
+import { useRouter } from "next/navigation";
+import { endpoints } from "utils/axios";
 
 type LogicalReasoningTestProps = {
   params: {
@@ -35,6 +36,7 @@ const LogicalReasoningTest = ({
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const [test, setTest] = useState<ILRTest | null>(null);
+  const router = useRouter();
 
   const [storedTest, setStoredTest] = useLocalStorage(
     "logical-reasoning-consulting",
@@ -87,7 +89,7 @@ const LogicalReasoningTest = ({
       };
 
       if (!test.questions) {
-        notFound();
+        router.push(`/dashboard/tests/${endpoints.paths[404]}`);
       } else {
         setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];

@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
@@ -18,8 +17,9 @@ import {
 import { LoadingScreen } from "components/global";
 
 import { INRTest, NRQuestionFlat } from "types";
+import { endpoints } from "utils/axios";
 import { formatGmat, formatTableOrGraph } from "utils/user-tests";
-import NotFoundAnimation from "components/global/NotFoundAnimation";
+import { useRouter } from "next/navigation";
 
 type NumericalReasoningTestProps = {
   params: {
@@ -37,7 +37,8 @@ const NumericalReasoningTest = ({
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const [test, setTest] = useState<INRTest | null>(null);
-  const [testExist, setTestExist] = useState(true);
+
+  const router = useRouter();
 
   const { seconds, minutes, hours, pause } = useStopwatch({ autoStart: true });
 
@@ -62,7 +63,7 @@ const NumericalReasoningTest = ({
     const createTest = async () => {
       const test = await getTestById("numerical-reasoning", testId);
       if (!test.questions) {
-        setTestExist(false);
+        router.push(`/dashboard/tests/${endpoints.paths[404]}`);
       } else {
         setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];
@@ -80,9 +81,6 @@ const NumericalReasoningTest = ({
   }, [testId]);
 
   if (!questions || questions.length === 0) {
-    if (!testExist) {
-      return notFound();
-    }
     return <LoadingScreen />;
   }
 
