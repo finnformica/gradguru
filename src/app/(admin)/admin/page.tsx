@@ -1,14 +1,14 @@
 "use client";
 
 import { WelcomePanel } from "components/global";
-import { useSession } from "next-auth/react";
+import { useSession } from "context/user";
 
 const AdminHome = () => {
-  const { data: session } = useSession();
+  const { user } = useSession();
 
   return (
     <WelcomePanel
-      name={session?.user?.name || "Secret Gradguru Admin"}
+      name={user?.displayName || "Secret Gradguru Admin"}
       image="/imgs/3d/lady-against-tree.svg"
     />
   );
