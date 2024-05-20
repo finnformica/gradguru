@@ -12,21 +12,21 @@ import {
 } from "components/CourseVideoPage";
 import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { useCourse as useCourseContext } from "context/course";
-import { useSession } from "next-auth/react";
+import { useSession } from "context/user";
 
 type VideoPageProps = {
   params: { slug: string };
 };
 
 const VideoPage = ({ params }: VideoPageProps) => {
-  const { data: session } = useSession();
+  const { user } = useSession();
   const { setCourse } = useCourseContext();
   const { slug } = params;
 
   const { course, loading, error } = useCourse(slug);
 
   // if data has loaded and course is null, or if user does not have access, return 404
-  if ((!loading && !course) || error || !session?.user.courses.includes(slug)) {
+  if ((!loading && !course) || error || user?.courses.includes(slug)) {
     notFound();
   }
 

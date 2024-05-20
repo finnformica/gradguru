@@ -1,14 +1,17 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "firebase/auth";
 import Image from "next/image";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { AccountCircle } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 
+import { auth } from "lib/firebase/config";
+
 const AuthButton = () => {
-  const { data, status } = useSession();
+  const [user] = useAuthState(auth);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -19,20 +22,6 @@ const AuthButton = () => {
     setAnchorEl(null);
   };
 
-  if (status !== "authenticated") {
-    return (
-      <AccountCircle
-        sx={{
-          height: 40,
-          width: 40,
-          color: "grey.400",
-          display: "block",
-          margin: "0 auto",
-        }}
-      />
-    );
-  }
-
   return (
     <div>
       <IconButton
@@ -42,10 +31,10 @@ const AuthButton = () => {
         onClick={handleMenu}
         color="inherit"
       >
-        {data.user?.image ? (
+        {user?.photoURL ? (
           <Image
             alt="user profile image"
-            src={data.user.image}
+            src={user.photoURL}
             width={35}
             height={35}
             style={{
@@ -73,7 +62,7 @@ const AuthButton = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => signOut()}>
+        <MenuItem onClick={() => signOut(auth)}>
           <Typography textAlign="center">Logout</Typography>
         </MenuItem>
       </Menu>

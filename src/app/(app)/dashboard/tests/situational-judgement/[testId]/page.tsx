@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useStopwatch } from "react-timer-hook";
 
@@ -16,6 +15,7 @@ import {
   TopPanel,
 } from "components/aptitude-tests/situational-judgement";
 import { LoadingScreen } from "components/global";
+import { useSession } from "context/user";
 import { ISJScenario, ISJTest, SJQuestionFlat } from "types";
 
 type SituationalJudgementTestProps = {
@@ -28,7 +28,7 @@ const SituationalJudgementTest = ({
   params: { testId },
 }: SituationalJudgementTestProps) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
+  const { user } = useSession();
 
   const [questions, setQuestions] = useState<SJQuestionFlat[]>();
   const [testComplete, setTestComplete] = useState(false);
@@ -76,7 +76,7 @@ const SituationalJudgementTest = ({
 
   useBeforeUnload(!testComplete);
 
-  if (!questions || questions.length === 0) return <LoadingScreen />;
+  if (!questions || questions.length === 0 || !user) return <LoadingScreen />;
 
   const markTest = (data: any) => {
     const marked = questions.map((question, index) => {
@@ -106,7 +106,7 @@ const SituationalJudgementTest = ({
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results
-    createTestRecord("situational-judgement", session!.user.id, testId, {
+    createTestRecord("situational-judgement", user.id, testId, {
       score,
       date,
       type,
