@@ -18,6 +18,9 @@ const SnackbarContext = ({ children }: { children: React.ReactNode }) => {
         fontFamily: "Roboto, sans-serif",
         backgroundColor: "#FFFF",
         color: "black",
+        boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.3)",
+        paddingLeft: "16px",
+        paddingRight: "16px",
       }}
       action={(snackbarId) => (
         <IconButton
