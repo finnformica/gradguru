@@ -8,5 +8,7 @@ export const iconVariants = {
   info: (
     <IconSnackbar iconName="material-symbols:info-outline" iconColor="blue" />
   ),
-  warning: <IconSnackbar iconName="fe:warning" iconColor="orange" />,
+  warning: (
+    <IconSnackbar iconName="ant-design:warning-outlined" iconColor="orange" />
+  ),
 };
