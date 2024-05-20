@@ -2,13 +2,13 @@ import IconSnackbar from "./IconSnackbar";
 
 export const iconVariants = {
   success: (
-    <IconSnackbar iconName="mdi:success-circle-outline" iconColor="green" />
+    <IconSnackbar iconName="mdi:success-circle-outline" iconColor="success" />
   ),
-  error: <IconSnackbar iconName="mi:circle-error" iconColor="red" />,
+  error: <IconSnackbar iconName="mi:circle-error" iconColor="error" />,
   info: (
-    <IconSnackbar iconName="material-symbols:info-outline" iconColor="blue" />
+    <IconSnackbar iconName="material-symbols:info-outline" iconColor="info" />
   ),
   warning: (
-    <IconSnackbar iconName="ant-design:warning-outlined" iconColor="orange" />
+    <IconSnackbar iconName="ant-design:warning-outlined" iconColor="warning" />
   ),
 };
