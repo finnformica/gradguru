@@ -1,27 +1,21 @@
-import { Icon } from "@iconify/react";
-import { Box } from "@mui/material";
+import { BoxProps } from "@mui/material";
+import { Iconify } from "components/global";
 
 type IconSnackbarProps = {
   iconName: string;
-  iconColor: string;
+  iconColor: BoxProps["color"];
 };
 
 const IconSnackbar = ({ iconName, iconColor }: IconSnackbarProps) => {
   return (
-    <Box
+    <Iconify
+      color={`${iconColor}.main`}
+      width={25}
       sx={{
-        display: "flex",
-        width: 25,
-        height: 25,
-        justifyContent: "center",
         mr: 1,
-        alignItems: "center",
-        borderRadius: "4px",
-        color: iconColor,
       }}
-    >
-      <Icon icon={iconName} width="25" height="25" />
-    </Box>
+      icon={iconName}
+    />
   );
 };
 
