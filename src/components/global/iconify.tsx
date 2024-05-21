@@ -1,9 +1,14 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 
-const Iconify = ({ icon, width = 20, sx, ...other }: any) => (
+const Iconify = ({
+  icon,
+  width = 20,
+  sx,
+  ...other
+}: BoxProps & { icon: string }) => (
   <Box
     component={Icon as any}
     className="component-iconify"
