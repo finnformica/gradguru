@@ -1,9 +1,9 @@
 "use client";
 
-import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
 import { Iconify } from "components/global";
 import { iconVariants } from "components/snackbar/Variants";
+
 import { SnackbarProvider, closeSnackbar } from "notistack";
 
 const SnackbarContext = ({ children }: { children: React.ReactNode }) => {
