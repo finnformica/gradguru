@@ -1,22 +1,55 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useState } from "react";
+
+import { useRouter } from "next/navigation";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 
 import AuthForm from "components/LandingPage/AuthForm/AuthForm";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { LoadingScreen } from "components/global";
+import { auth } from "lib/firebase/config";
+import { useSnackbar } from "notistack";
 
 const SignUp = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const session = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (session.status === "authenticated") {
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const [user, loading, error] = useAuthState(auth);
+
+  if (error) {
+    enqueueSnackbar("An error occurred while signing in", {
+      variant: "error",
+    });
+  }
+
+  if (loading) return <LoadingScreen />;
+
+  if (user) router.push("/dashboard");
+
+  const signUp = async () => {
+    try {
+      const credential = await createUserWithEmailAndPassword(email, password);
+      const { user } = credential!;
+
+      if (!user) {
+        throw new Error("An error occurred while signing in");
+      }
+
       router.push("/dashboard");
+    } catch (error) {
+      enqueueSnackbar("An error occurred while signing in", {
+        variant: "error",
+      });
     }
-  });
+  };
 
   return (
     <AuthForm
@@ -28,7 +61,7 @@ const SignUp = () => {
       password={password}
       setEmail={(e) => setEmail(e.target.value)}
       setPassword={(e) => setPassword(e.target.value)}
-      handleSubmit={() => console.log("submit")}
+      handleSubmit={signUp}
     />
   );
 };
