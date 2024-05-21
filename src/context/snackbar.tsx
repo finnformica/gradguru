@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { IconButton } from "@mui/material";
+import { Iconify } from "components/global";
 import { iconVariants } from "components/snackbar/Variants";
 import { SnackbarProvider, closeSnackbar } from "notistack";
 
@@ -27,7 +28,7 @@ const SnackbarContext = ({ children }: { children: React.ReactNode }) => {
           sx={{ color: "grey" }}
           onClick={() => closeSnackbar(snackbarId)}
         >
-          <Icon icon="fluent:dismiss-12-filled" width="16" height="16" />
+          <Iconify icon="fluent:dismiss-12-filled" height="16" />
         </IconButton>
       )}
     >

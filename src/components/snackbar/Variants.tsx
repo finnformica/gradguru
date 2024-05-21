@@ -1,4 +1,4 @@
-import IconSnackbar from "./IconSnackbar";
+import IconSnackbar from "./icon-snackbar";
 
 export const iconVariants = {
   success: (
