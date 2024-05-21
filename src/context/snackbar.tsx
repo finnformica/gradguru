@@ -2,7 +2,7 @@
 
 import { IconButton } from "@mui/material";
 import { Iconify } from "components/global";
-import { iconVariants } from "components/snackbar/Variants";
+import { iconVariants } from "components/snackbar/variants";
 
 import { SnackbarProvider, closeSnackbar } from "notistack";
 
