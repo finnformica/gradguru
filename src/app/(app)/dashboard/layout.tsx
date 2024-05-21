@@ -2,15 +2,15 @@
 
 import { redirect } from "next/navigation";
 import { useSnackbar } from "notistack";
-import { useEffect } from "react";
 
-import { useAuthState } from "react-firebase-hooks/auth";
-
-import { useUserMeta } from "api/user";
 import { LoadingScreen } from "components/global";
-import { useSession } from "context/user";
 import DashboardLayout from "layouts/dashboard";
-import { auth } from "lib/firebase/config";
+import { auth, db } from "lib/firebase/config";
+import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useSession } from "context/user";
+import { doc, onSnapshot } from "firebase/firestore";
+import { IUser } from "types/user";
 
 export default function DashboardLayoutPage({
   children,
@@ -19,10 +19,17 @@ export default function DashboardLayoutPage({
 }) {
   const { enqueueSnackbar } = useSnackbar();
   const [user, loading, error] = useAuthState(auth);
-  const { user: userMeta } = useUserMeta();
   const { setUser } = useSession();
 
-  useEffect(() => setUser(userMeta), [userMeta, setUser]);
+  useEffect(() => {
+    if (!user) return;
+
+    const unsubscribe = onSnapshot(doc(db, "user-meta", user?.uid), (doc) => {
+      setUser(doc.data() as IUser);
+    });
+
+    return () => unsubscribe();
+  }, [user, setUser]);
 
   if (loading) return <LoadingScreen />;
 

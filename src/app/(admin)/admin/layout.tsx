@@ -3,23 +3,35 @@
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 
-import { useUserMeta } from "api/user";
+import { doc, onSnapshot } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import { useSession } from "context/user";
 import AdminLayout from "layouts/admin";
+import { auth, db } from "lib/firebase/config";
+import { IUser } from "types/user";
 
 export default function AdminLayoutPage({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = useUserMeta();
-  const { setUser } = useSession();
+  const [user] = useAuthState(auth);
+  const { setUser, user: session } = useSession();
 
-  useEffect(() => setUser(user), [user, setUser]);
+  useEffect(() => {
+    if (!user) return;
+
+    const unsubscribe = onSnapshot(doc(db, "user-meta", user?.uid), (doc) => {
+      setUser(doc.data() as IUser);
+    });
+
+    return () => unsubscribe();
+  }, [user, setUser]);
 
   // if user is not authenticated,
   // or does not have update, delete, or create permissions
-  const notAdmin = user?.role < 2 || user?.role === undefined;
+  const notAdmin = (session?.role || 0) < 2 || session?.role === undefined;
   if (notAdmin) {
     notFound(); // TODO: nice not found page
   }
