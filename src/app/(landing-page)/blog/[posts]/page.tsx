@@ -25,7 +25,7 @@ const Post = ({ params }: { params: { posts: string } }) => {
       if (docSnap.exists()) {
         setLoadedDoc(docSnap.data() as IBlog);
       } else {
-        router.push(`/${endpoints.paths.error[404]}`);
+        router.push(`${endpoints.paths.error404}`);
       }
     };
 

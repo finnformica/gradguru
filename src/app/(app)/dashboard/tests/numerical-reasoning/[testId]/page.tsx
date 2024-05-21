@@ -63,7 +63,7 @@ const NumericalReasoningTest = ({
     const createTest = async () => {
       const test = await getTestById("numerical-reasoning", testId);
       if (!test.questions) {
-        router.push(`/dashboard/tests/${endpoints.paths.error[404]}`);
+        router.push(`/dashboard/tests/${endpoints.paths.error404}`);
       } else {
         setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];

@@ -108,6 +108,6 @@ export const endpoints = {
     firebase: `${BASE_URL}/firebase/support`,
   },
   paths: {
-    error: { 404: `error/404` },
+    error404: `/error/404`,
   },
 };

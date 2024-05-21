@@ -1,10 +1,8 @@
 "use client";
 
-import { Button, Typography, duration } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
-const href = "/";
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.8 },
