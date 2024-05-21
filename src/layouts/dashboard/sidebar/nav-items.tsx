@@ -1,39 +1,30 @@
-import {
-  AdminPanelSettings,
-  FilePresent,
-  Home,
-  Mail,
-  Quiz,
-  VideoLibrary,
-} from "@mui/icons-material";
-import { List, SxProps } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { useSession } from "context/user";
 import { NavListItem } from "./nav-list-item";
 import NavSkeleton from "./nav-skeleton";
 
 export const NavItems = () => {
-  const { data: session } = useSession();
+  const { user } = useSession();
 
-  if (!session) return <NavSkeleton count={6} />;
+  if (!user) return <NavSkeleton count={6} />;
 
   const home = {
     name: "Home",
     href: "/",
-    icon: (sx: SxProps) => <Home sx={sx} />,
+    icon: "ion:home",
   };
 
   const admin = {
     name: "Admin",
     href: "/admin",
-    icon: (sx: SxProps) => <AdminPanelSettings sx={sx} />,
+    icon: "material-symbols:admin-panel-settings",
   };
 
-  const { courses: userCourses } = session.user;
+  const { courses: userCourses } = user;
   const courses = userCourses
     ? userCourses.map((course) => ({
         name: course,
         href: `/courses/${course}`,
-        icon: (sx: SxProps) => <Mail sx={sx} />,
+        icon: "mdi:briefcase",
       }))
     : [];
   const links =
@@ -42,30 +33,30 @@ export const NavItems = () => {
           {
             name: "Videos",
             href: "/video/consulting",
-            icon: (sx: SxProps) => <VideoLibrary sx={sx} />,
+            icon: "material-symbols:video-library-rounded",
           },
           {
             name: "Tests",
             href: "/tests",
-            icon: (sx: SxProps) => <Quiz sx={sx} />,
+            icon: "healthicons:i-exam-multiple-choice",
           },
           {
             name: "Resources",
             href: "/resources",
-            icon: (sx: SxProps) => <FilePresent sx={sx} />,
+            icon: "icon-park-solid:folder-one",
           },
         ]
       : [];
 
   return (
-    <List disablePadding>
+    <>
       <NavListItem item={home} key="home" />
       {courses.length > 0 &&
         courses &&
         [...courses, ...links].map((item: any) => (
           <NavListItem item={item} key={item.name} />
         ))}
-      {session.user.role > 1 && <NavListItem key="admin" item={admin} />}
-    </List>
+      {user.role > 1 && <NavListItem key="admin" item={admin} />}
+    </>
   );
 };

@@ -433,7 +433,6 @@ const LRQuestionForm = ({
                   <SquareGrid
                     innerGrid={innerGrid}
                     showBorders={outerGrid}
-                    numRows={numRows}
                     grid={value}
                     setGrid={(grid: Grid) =>
                       setValue(`grid.data.${index}`, grid)
@@ -494,7 +493,6 @@ const LRQuestionForm = ({
                       <SquareGrid
                         innerGrid={innerGrid}
                         showBorders={outerGrid}
-                        numRows={numRows}
                         grid={value}
                         setGrid={(grid: Grid) =>
                           setValue(`grid.options.${index}`, grid)

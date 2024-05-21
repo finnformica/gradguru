@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
@@ -10,13 +9,12 @@ import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import { SJTModal } from "components/aptitude-tests/situational-judgement";
-import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { ISJScenario } from "types";
 
 const AllSJTQuestions = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
   const [questionToEdit, setQuestionToEdit] = useState<ISJScenario | null>(
     null
   );
@@ -31,7 +29,7 @@ const AllSJTQuestions = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!questions || !session) return <LoadingScreen />;
+  if (!questions) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -53,7 +51,6 @@ const AllSJTQuestions = () => {
       renderCell: (params) => {
         return (
           <EditDeleteActions
-            session={session}
             onEditClick={() => setQuestionToEdit(params.row as ISJScenario)}
             onDeleteClick={() => setQuestionToDelete(params.row.id)}
           />

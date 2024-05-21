@@ -1,5 +1,6 @@
-import { useTruncatedElement } from "./useTruncatedElement";
-import { useStepsForm } from "./useStepsForm";
+import { useLocalStorage } from "./use-local-storage";
 import { useBeforeUnload } from "./useBeforeUnload";
+import { useStepsForm } from "./useStepsForm";
+import { useTruncatedElement } from "./useTruncatedElement";
 
-export { useTruncatedElement, useStepsForm, useBeforeUnload };
+export { useBeforeUnload, useLocalStorage, useStepsForm, useTruncatedElement };

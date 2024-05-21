@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 
 import { Typography } from "@mui/material";
@@ -11,12 +10,11 @@ import { GridColDef } from "@mui/x-data-grid";
 
 import { deleteQuestion, getQuestions } from "api/tests";
 import { NRModal } from "components/aptitude-tests/numerical-reasoning";
-import { EditDeleteActions, AdminDataGrid } from "components/data-grid-custom";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
 import { ConfirmationDialog, LoadingScreen } from "components/global";
 import { INRQuestion } from "types";
 
 const AllNRQuestions = () => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [questions, setQuestions] = useState<any[] | null>(null);
   const [questionToEdit, setQuestionToEdit] = useState<INRQuestion | null>(
@@ -32,7 +30,7 @@ const AllNRQuestions = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!questions || !session) return <LoadingScreen />;
+  if (!questions) return <LoadingScreen />;
 
   const columns: GridColDef[] = [
     {
@@ -80,7 +78,6 @@ const AllNRQuestions = () => {
       renderCell: (params) => {
         return (
           <EditDeleteActions
-            session={session}
             onEditClick={() => {
               setQuestionToEdit(params.row as INRQuestion);
             }}

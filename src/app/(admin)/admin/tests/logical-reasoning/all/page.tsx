@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
@@ -13,7 +12,6 @@ import { ConfirmationDialog } from "components/global";
 import { ILRTest } from "types";
 
 const AllLRTests = () => {
-  const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const [tests, setTests] = useState<ILRTest[]>([]);
   const [testToDelete, setTestToDelete] = useState<ILRTest | null>(null);
@@ -49,10 +47,7 @@ const AllLRTests = () => {
       headerName: "Actions",
       width: 100,
       renderCell: (params) => (
-        <EditDeleteActions
-          session={session}
-          onDeleteClick={() => setTestToDelete(params.row)}
-        />
+        <EditDeleteActions onDeleteClick={() => setTestToDelete(params.row)} />
       ),
     },
   ];

@@ -1,23 +1,34 @@
+"use client";
+
 import { Delete, DriveFileRenameOutline } from "@mui/icons-material";
-import { IconButton, Stack } from "@mui/material";
+import { CircularProgress, IconButton, Stack } from "@mui/material";
+
+import { useSession } from "context/user";
 
 type EditDeleteActionsProps = {
-  session: any;
   onEditClick?: () => void;
   onDeleteClick?: () => void;
 };
 
 const EditDeleteActions = ({
-  session,
   onEditClick,
   onDeleteClick,
 }: EditDeleteActionsProps) => {
+  const { user } = useSession();
+
+  if (!user)
+    return (
+      <Stack direction="row" justifyContent="center">
+        <CircularProgress size={25} />
+      </Stack>
+    );
+
   return (
     <Stack direction="row" justifyContent="center">
       {onEditClick && (
         <IconButton
           size="small"
-          disabled={(session?.user?.role || 0) < 3}
+          disabled={(user?.role || 0) < 3}
           onClick={onEditClick}
         >
           <DriveFileRenameOutline fontSize="small" />
@@ -26,7 +37,7 @@ const EditDeleteActions = ({
       {onDeleteClick && (
         <IconButton
           size="small"
-          disabled={(session?.user?.role || 0) < 4}
+          disabled={(user?.role || 0) < 4}
           onClick={onDeleteClick}
         >
           <Delete fontSize="small" />

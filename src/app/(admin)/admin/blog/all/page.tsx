@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
@@ -17,7 +16,6 @@ const BlogEditTable = () => {
   const [blogToDelete, setBlogToDelete] = useState<IBlog | null>(null);
   const [blogs, setBlogs] = useState<IBlog[]>([]);
   const [editBlog, setEditBlog] = useState<IBlog | null>(null);
-  const { data: session } = useSession();
 
   useEffect(() => {
     // add event listener on firestore collection
@@ -54,7 +52,6 @@ const BlogEditTable = () => {
       width: 100,
       renderCell: (params) => (
         <EditDeleteActions
-          session={session}
           onDeleteClick={() => setBlogToDelete(params.row)}
           onEditClick={() => {
             setEditBlog(params.row);
@@ -82,7 +79,7 @@ const BlogEditTable = () => {
       });
   };
 
-  if (!session || !blogs) return <LoadingScreen />;
+  if (!blogs) return <LoadingScreen />;
 
   return (
     <>

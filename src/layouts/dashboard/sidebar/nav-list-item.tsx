@@ -3,13 +3,9 @@
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 
-import {
-  ListItemButton,
-  Stack,
-  SxProps,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { ListItemButton, Stack, Tooltip, Typography } from "@mui/material";
+
+import { Icon } from "@iconify/react";
 
 export const NavListItem = ({
   item,
@@ -17,7 +13,7 @@ export const NavListItem = ({
   item: {
     name: string;
     href: string;
-    icon: (sx: SxProps) => React.ReactElement;
+    icon: string;
   };
 }) => {
   const router = useRouter();
@@ -40,7 +36,7 @@ export const NavListItem = ({
           mx="auto"
           maxWidth="100%"
         >
-          {icon({ color: "grey.400" })}
+          <Icon icon={icon} width="32" height="32" color="#BDBDBD" />
           <Typography
             variant="body2"
             fontSize={12}
