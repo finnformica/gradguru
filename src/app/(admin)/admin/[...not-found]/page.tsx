@@ -1,4 +1,4 @@
-import NotFoundAnimation from "components/global/NotFoundAnimation";
+import NotFoundAnimation from "components/global/not-found-animation";
 
 const AdminNotFound = () => (
   <NotFoundAnimation href="/admin" relocatedPageName="admin home" />

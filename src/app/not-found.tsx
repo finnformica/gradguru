@@ -1,5 +1,5 @@
 import PrimaryHeader from "components/LandingPage/PrimaryHeader";
-import NotFoundAnimation from "components/global/NotFoundAnimation";
+import NotFoundAnimation from "components/global/not-found-animation";
 
 export default function NotFound() {
   return (

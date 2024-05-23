@@ -42,11 +42,11 @@ const NotFoundAnimation = ({
       initial="hidden"
       animate="show"
       style={{
-        width: "400px",
         display: "flex",
         flexDirection: "column",
         gap: 20,
-        height: "80vh",
+        height: "100%",
+        width: "100%",
         margin: "auto",
         justifyContent: "center",
         textAlign: "center",
@@ -65,10 +65,10 @@ const NotFoundAnimation = ({
       <motion.div variants={childrenVariants}>
         <Image
           src={"/imgs/3d/man-with-laptop.svg"}
-          height={300}
-          width={300}
+          height={375}
+          width={375}
           alt="man with laptop"
-          style={{ margin: "0 auto", paddingLeft: 45 }}
+          style={{ margin: "auto", paddingLeft: 45 }}
         />
       </motion.div>
       <motion.div variants={childrenVariants}>
