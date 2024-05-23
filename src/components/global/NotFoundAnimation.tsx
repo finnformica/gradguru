@@ -12,7 +12,7 @@ const containerVariants = {
     transition: {
       type: "spring",
       duration: 1,
-      when: "beforeChildren",
+      when: false,
       staggerChildren: 0.1,
     },
   },
