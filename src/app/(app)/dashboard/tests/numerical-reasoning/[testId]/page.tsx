@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import _ from "lodash";
@@ -19,6 +18,7 @@ import { LoadingScreen } from "components/global";
 import { INRTest, NRQuestionFlat } from "types";
 import { endpoints } from "utils/axios";
 import { formatGmat, formatTableOrGraph } from "utils/user-tests";
+import { useSession } from "context/user";
 import { useRouter } from "next/navigation";
 
 type NumericalReasoningTestProps = {
@@ -31,7 +31,7 @@ const NumericalReasoningTest = ({
   params: { testId },
 }: NumericalReasoningTestProps) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
+  const { user } = useSession();
 
   const [questions, setQuestions] = useState<NRQuestionFlat[]>();
   const [testComplete, setTestComplete] = useState(false);
@@ -80,9 +80,7 @@ const NumericalReasoningTest = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testId]);
 
-  if (!questions || questions.length === 0) {
-    return <LoadingScreen />;
-  }
+  if (!questions || questions.length === 0 || !user) return <LoadingScreen />;
 
   const markTest = (data: any) => {
     const marked = questions.map((question, index) => {
@@ -120,7 +118,7 @@ const NumericalReasoningTest = ({
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results
-    createTestRecord("numerical-reasoning", session!.user.id, testId, {
+    createTestRecord("numerical-reasoning", user.id, testId, {
       score,
       date,
       type,

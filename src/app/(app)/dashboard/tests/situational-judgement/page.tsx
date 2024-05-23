@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,6 +11,7 @@ import { getTestRecords, getTests } from "api/tests";
 import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { ISJTest, ITestRecord } from "types";
 import { combineTestsAndRecords, sortAlphaNumeric } from "utils/user-tests";
+import { useSession } from "context/user";
 
 const TopPanel = () => {
   return (
@@ -33,7 +33,7 @@ const TopPanel = () => {
 };
 
 const SituationalJudgementHome = () => {
-  const { data: session } = useSession();
+  const { user } = useSession();
   const router = useRouter();
 
   const [tests, setTests] = useState<ISJTest[] | null>(null);
@@ -48,15 +48,15 @@ const SituationalJudgementHome = () => {
   }, []);
 
   useEffect(() => {
-    if (!session) return;
+    if (!user) return;
     const unsubscribe = getTestRecords(
       "situational-judgement",
-      session?.user?.id,
+      user?.id,
       setTestRecords
     );
 
     return () => unsubscribe();
-  }, [session]);
+  }, [user]);
 
   const columns: GridColDef[] = [
     {

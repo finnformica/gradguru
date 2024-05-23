@@ -1,7 +1,6 @@
 "use client";
 
 import _ from "lodash";
-import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
@@ -12,6 +11,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { createBlog } from "api/blog";
 import { AddBlogTagModal } from "components/blog";
 import { LoadingScreen } from "components/global";
+import { useSession } from "context/user";
 import { fileStorage } from "lib/firebase/utils";
 import { IBlog } from "types/blog";
 import { endpoints } from "utils/axios";
@@ -40,16 +40,16 @@ const sanitiseSlug = (text: string) =>
 
 const AddBlogForm = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
+  const { user } = useSession();
   const [tagModal, setTagModal] = useState(false);
 
   const onSubmit = (data: IBlog): void => {
-    if (!session?.user?.name || !data.heroPhoto) {
+    if (!user?.displayName || !data.heroPhoto) {
       enqueueSnackbar("Invalid data, please try again.", { variant: "error" });
       return;
     }
 
-    const { name: author } = session.user;
+    const { displayName: author } = user;
     const { heroPhoto, title, ...payload } = data;
 
     const slug = _.kebabCase(sanitiseSlug(title));

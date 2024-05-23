@@ -50,7 +50,7 @@ export interface IFirestoreData {
 // ---- Admin - User ----
 
 export type IUserFormInput = IFirestoreData & {
-  name: string;
+  displayName: string;
   email: string;
   role: {
     value: number;
