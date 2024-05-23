@@ -24,7 +24,7 @@ const childrenVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", damping: 8, stifness: 100 },
+    transition: { type: "spring", duration: 1, bounce: 0.6 },
   },
 };
 
