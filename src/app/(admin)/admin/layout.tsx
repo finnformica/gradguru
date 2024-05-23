@@ -10,7 +10,6 @@ import { useSession } from "context/user";
 import AdminLayout from "layouts/admin";
 import { auth, db } from "lib/firebase/config";
 import { IUser } from "types/user";
-import { LoadingScreen } from "components/global";
 
 export default function AdminLayoutPage({
   children,
@@ -30,7 +29,7 @@ export default function AdminLayoutPage({
     return () => unsubscribe();
   }, [user, setUser]);
 
-  if (!session) return <LoadingScreen />;
+  if (!session) return;
 
   // if user is not authenticated,
   // or does not have update, delete, or create permissions
