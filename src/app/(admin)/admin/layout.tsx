@@ -10,6 +10,7 @@ import { useSession } from "context/user";
 import AdminLayout from "layouts/admin";
 import { auth, db } from "lib/firebase/config";
 import { IUser } from "types/user";
+import { LoadingScreen } from "components/global";
 
 export default function AdminLayoutPage({
   children,
@@ -29,11 +30,14 @@ export default function AdminLayoutPage({
     return () => unsubscribe();
   }, [user, setUser]);
 
+  if (!session) return <LoadingScreen />;
+
   // if user is not authenticated,
   // or does not have update, delete, or create permissions
-  const notAdmin = (session?.role || 0) < 2 || session?.role === undefined;
+
+  const notAdmin = (session.role || 0) < 2 || session.role === undefined;
   if (notAdmin) {
-    notFound(); // TODO: nice not found page
+    notFound();
   }
 
   return <AdminLayout>{children}</AdminLayout>;
