@@ -29,7 +29,7 @@ export default function AdminLayoutPage({
     return () => unsubscribe();
   }, [user, setUser]);
 
-  if (!session) return;
+  if (!session) return null;
 
   // if user is not authenticated,
   // or does not have update, delete, or create permissions
