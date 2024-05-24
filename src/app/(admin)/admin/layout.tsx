@@ -29,11 +29,14 @@ export default function AdminLayoutPage({
     return () => unsubscribe();
   }, [user, setUser]);
 
+  if (!session) return;
+
   // if user is not authenticated,
   // or does not have update, delete, or create permissions
-  const notAdmin = (session?.role || 0) < 2 || session?.role === undefined;
+
+  const notAdmin = (session.role || 0) < 2 || session.role === undefined;
   if (notAdmin) {
-    notFound(); // TODO: nice not found page
+    notFound();
   }
 
   return <AdminLayout>{children}</AdminLayout>;
