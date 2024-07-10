@@ -1,7 +1,7 @@
 "use client";
 
 import { doc, getDoc } from "firebase/firestore";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { ArrowBack } from "@mui/icons-material";
