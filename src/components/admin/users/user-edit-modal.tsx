@@ -51,7 +51,7 @@ const UserEditModal = ({
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={2} py={2}>
             <Controller
-              name="name"
+              name="displayName"
               control={control}
               rules={{ required: true }}
               render={({

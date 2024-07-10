@@ -1,9 +1,7 @@
 "use client";
 
-import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { useSession } from "next-auth/react";
 import { useSnackbar } from "notistack";
 import { useStopwatch } from "react-timer-hook";
 
@@ -18,6 +16,9 @@ import {
 import { LoadingScreen, PageBreadcrumbs } from "components/global";
 import { useBeforeUnload, useLocalStorage } from "hooks";
 import { ILRQuestion, ILRTest } from "types";
+import { useSession } from "context/user";
+import { useRouter } from "next/navigation";
+import { endpoints } from "utils/axios";
 
 type LogicalReasoningTestProps = {
   params: {
@@ -29,12 +30,13 @@ const LogicalReasoningTest = ({
   params: { testId },
 }: LogicalReasoningTestProps) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: session } = useSession();
+  const { user } = useSession();
 
   const [questions, setQuestions] = useState<ILRQuestion[]>();
   const [testComplete, setTestComplete] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const [test, setTest] = useState<ILRTest | null>(null);
+  const router = useRouter();
 
   const [storedTest, setStoredTest] = useLocalStorage(
     "logical-reasoning-consulting",
@@ -87,7 +89,7 @@ const LogicalReasoningTest = ({
       };
 
       if (!test.questions) {
-        notFound();
+        router.push(`/dashboard/tests/${endpoints.paths.error404}`);
       } else {
         setTest(test);
         const questionIds = Object.values(test.questions).flat() as string[];
@@ -107,7 +109,7 @@ const LogicalReasoningTest = ({
 
   useBeforeUnload(!testComplete);
 
-  if (!questions || questions.length === 0) return <LoadingScreen />;
+  if (!questions || questions.length === 0 || !user) return <LoadingScreen />;
 
   const markTest = (data: any) => {
     const marked = questions.map((question, index) => ({
@@ -128,7 +130,7 @@ const LogicalReasoningTest = ({
     const questionIds = Array.from(new Set(marked.map((q) => q.id)));
 
     // store results
-    createTestRecord("logical-reasoning", session!.user.id, testId, {
+    createTestRecord("logical-reasoning", user?.id, testId, {
       score,
       date,
       type,

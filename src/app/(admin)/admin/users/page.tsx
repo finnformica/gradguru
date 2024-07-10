@@ -1,63 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { User } from "next-auth";
 import Image from "next/image";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
+import { SubmitHandler } from "react-hook-form";
 
 import { AccountCircle } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import { GridColDef, GridRowId } from "@mui/x-data-grid";
-import { useSnackbar } from "notistack";
-import { SubmitHandler } from "react-hook-form";
+import { GridColDef } from "@mui/x-data-grid";
 
-import { indexToRoleMapping } from "utils/permissions";
-import { deleteUser, postUser, useUsers } from "api/user";
-
+import { updateUser, useUsers } from "api/user";
 import UserEditModal from "components/admin/users/user-edit-modal";
-import {
-  LoadingScreen,
-  FullFeaturedCrudGrid,
-  ConfirmationDialog,
-} from "components/global";
+import { AdminDataGrid, EditDeleteActions } from "components/data-grid-custom";
+import { LoadingScreen } from "components/global";
 import { IUserFormInput } from "types";
-
-const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 250 },
-  { field: "email", headerName: "Email", width: 250 },
-  { field: "name", headerName: "Name", width: 200 },
-  {
-    field: "courses",
-    headerName: "Courses",
-    width: 200,
-    renderCell: (params) => params.value.join(", "),
-  },
-  { field: "roleIndex", headerName: "Role Index", width: 100 },
-  { field: "role", headerName: "Role", width: 200 },
-  {
-    field: "image",
-    headerName: "Image",
-    renderCell: (params) =>
-      params.value ? (
-        <Image
-          alt="user profile image"
-          src={params.value}
-          width={30}
-          height={30}
-          style={{ borderRadius: "50%" }}
-        />
-      ) : (
-        <AccountCircle />
-      ),
-    width: 100,
-  },
-];
+import { IUser } from "types/user";
+import { indexToRoleMapping } from "utils/permissions";
 
 const UsersPage = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [idToEdit, setIdToEdit] = useState<GridRowId | null>(""); // clean up use of ID and user
-  const [idToDelete, setIdToDelete] = useState<GridRowId | null>("");
-  const [userToEdit, setUserToEdit] = useState<User>();
+  const [userToEdit, setUserToEdit] = useState<IUser | null>(null);
 
   const { users, loading, refresh } = useUsers();
 
@@ -65,13 +27,14 @@ const UsersPage = () => {
     form: IUserFormInput
   ) => {
     const data = {
-      name: form.name,
+      ...userToEdit,
       email: form.email,
+      displayName: form.displayName,
       role: form.role.value,
       courses: form.courses,
     };
 
-    postUser(userToEdit!.id as string, data)
+    updateUser(userToEdit!.id as string, data)
       .then(() => enqueueSnackbar("User updated"))
       .catch((err: any) =>
         enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
@@ -80,80 +43,93 @@ const UsersPage = () => {
       )
       .finally(() => {
         cleanUp();
-        refresh(); // TODO: refresh not working
+        refresh();
       });
   };
 
   const cleanUp = () => {
-    setIdToEdit(null);
-    setUserToEdit(undefined);
+    setUserToEdit(null);
   };
-
-  const handleUserDelete = () => {
-    deleteUser(idToDelete as string)
-      .then(() => enqueueSnackbar("User deleted"))
-      .catch((err: any) =>
-        enqueueSnackbar(`Something went wrong - ${err.statusText}`, {
-          variant: "error",
-        })
-      )
-      .finally(() => {
-        setIdToDelete(null);
-        refresh(); // TODO: refresh not working
-      });
-  };
-
-  useEffect(() => {
-    if (idToEdit) {
-      setUserToEdit(users?.find((user) => user.id === idToEdit));
-    }
-  }, [idToEdit, users]);
 
   if (!users || loading) return <LoadingScreen />;
+
+  const columns: GridColDef[] = [
+    { field: "id", headerName: "ID", width: 270 },
+    { field: "email", headerName: "Email", width: 250 },
+    {
+      field: "displayName",
+      headerName: "Name",
+      width: 200,
+      valueGetter: (params) => params.row.displayName || "-",
+    },
+    {
+      field: "courses",
+      headerName: "Courses",
+      width: 200,
+      valueGetter: (params) =>
+        params.row.courses.length > 0 ? params.row.courses.join(", ") : "-",
+    },
+    {
+      field: "roleIndex",
+      headerName: "Role Index",
+      width: 100,
+      valueGetter: (params) => params.row.role,
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      width: 200,
+      valueGetter: (params) => indexToRoleMapping[params.row.role],
+    },
+    {
+      field: "photoURL",
+      headerName: "Image",
+      renderCell: (params) =>
+        params.value ? (
+          <Image
+            alt="User profile image"
+            src={params.value}
+            width={30}
+            height={30}
+            style={{ borderRadius: "50%" }}
+          />
+        ) : (
+          <AccountCircle sx={{ height: 30, width: 30, color: "grey.400" }} />
+        ),
+      width: 100,
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <EditDeleteActions onEditClick={() => setUserToEdit(params.row)} />
+        );
+      },
+    },
+  ];
 
   return (
     <>
       <Typography variant="h4" pb={2}>
         All users
       </Typography>
-      <FullFeaturedCrudGrid
-        rows={users.map((user) => ({
-          id: user.id as string,
-          email: user.email as string,
-          name: user.name as string,
-          courses: user.courses as string[],
-          roleIndex: user.role as number,
-          role: indexToRoleMapping[user.role] as string,
-          image: user.image as string,
-        }))}
-        columns={columns}
-        loading={loading}
-        setIdToEdit={setIdToEdit}
-        setIdToDelete={setIdToDelete}
-      />
+
+      <AdminDataGrid columns={columns} rows={users} />
+
       {userToEdit && (
         <UserEditModal
-          open={!!idToEdit}
+          open={!!userToEdit}
           onClose={cleanUp}
           defaultValues={{
-            name: userToEdit.name as string,
-            email: userToEdit.email as string,
+            ...userToEdit,
             role: {
-              value: userToEdit.role,
+              value: userToEdit.role as number,
               label: indexToRoleMapping[userToEdit.role],
             },
-            courses: userToEdit.courses,
           }}
           onSubmit={onSubmit}
-        />
-      )}
-      {idToDelete && (
-        <ConfirmationDialog
-          title="Are you sure you want to delete this user?"
-          open={!!idToDelete}
-          onClose={() => setIdToDelete(null)}
-          onSubmit={handleUserDelete}
-          confirmText="Delete"
         />
       )}
     </>

@@ -3,13 +3,7 @@
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 
-import {
-  ListItemButton,
-  Stack,
-  SxProps,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { ListItemButton, Stack, Tooltip, Typography } from "@mui/material";
 
 import { Icon } from "@iconify/react";
 
