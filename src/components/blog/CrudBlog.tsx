@@ -216,7 +216,6 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
         onClick={() => {
           window.scrollTo(0, 0); // scroll to top of page
           setReviewBlog(true);
-          console.log(getValues("content"));
 
           // prevent <br> tags from constantly being added
           setValue(
