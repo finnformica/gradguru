@@ -45,6 +45,11 @@ export const NavItems = () => {
             href: "/resources",
             icon: "icon-park-solid:folder-one",
           },
+          {
+            name: "Practice",
+            href: "/practice",
+            icon: "gridicons:video-camera",
+          },
         ]
       : [];
 
