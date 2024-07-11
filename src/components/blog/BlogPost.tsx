@@ -9,7 +9,7 @@ import { storage } from "lib/firebase/config";
 
 import { IBlog } from "types/blog";
 
-import "./styles.css";
+// import "./styles.css";
 
 const BlogPost = ({
   content,

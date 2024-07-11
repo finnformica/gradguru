@@ -17,6 +17,8 @@ pre,
 span,
 div {
   font-family: Roboto, sans-serif;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .blog p,

@@ -35,7 +35,14 @@ const modules = {
     ["link", "image"],
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }], // dropdown with defaults from theme
+    [
+      { align: "" }, // alignment of just and images
+      { align: "center" },
+      { align: "right" },
+      { align: "justify" },
+    ],
   ],
+  clipboard: { matchVisual: false },
   imageResize: {
     parchment: Quill.import("parchment"),
     modules: ["Resize", "DisplaySize"],
@@ -209,11 +216,12 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
         onClick={() => {
           window.scrollTo(0, 0); // scroll to top of page
           setReviewBlog(true);
+          console.log(getValues("content"));
 
           // prevent <br> tags from constantly being added
           setValue(
             "content",
-            getValues("content").replace(/(<p><br><\/p>)+/g, "<p><br></p>")
+            getValues("content").replace(/(<p><br><\/p>)+/g, "<br>")
           );
         }}
       >
