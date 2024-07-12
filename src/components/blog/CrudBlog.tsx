@@ -217,11 +217,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
           window.scrollTo(0, 0); // scroll to top of page
           setReviewBlog(true);
 
-          // prevent <br> tags from constantly being added
-          setValue(
-            "content",
-            getValues("content").replace(/(<p><br><\/p>)+/g, "<br>")
-          );
+          setValue("content", getValues("content"));
         }}
       >
         Review
