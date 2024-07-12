@@ -2,7 +2,7 @@
 
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { PageBreadcrumbs } from "components/global";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import Webcam from "react-webcam";
 
 const VideoAssessmentPractice = () => {
@@ -12,21 +12,45 @@ const VideoAssessmentPractice = () => {
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
   const [showRecordedVideo, setShowRecordedVideo] = useState<boolean>(false);
 
-  const handleDataAvailable = useCallback(
-    ({ data }: BlobEvent) => {
-      if (data.size > 0) {
-        setRecordedChunks((prev) => prev.concat(data));
+  useEffect(() => {
+    const initStream = async () => {
+      try {
+        const constraints = {
+          video: true,
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        if (webcamRef.current && webcamRef.current.video) {
+          webcamRef.current.video.srcObject = stream;
+        }
+      } catch (error) {
+        console.error("Error accessing media devices:", error);
       }
-    },
-    [setRecordedChunks]
-  );
+    };
 
-  const handleStartCaptureClick = useCallback(() => {
-    setCapturing(true);
-    setShowRecordedVideo(false); // Hide recorded video if shown
+    initStream();
+  }, []);
 
-    if (webcamRef.current && webcamRef.current.stream) {
-      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
+  const startCapture = useCallback(async () => {
+    try {
+      const audioConstraints = {
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      };
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        ...audioConstraints,
+        video: true,
+      });
+
+      if (webcamRef.current && webcamRef.current.video) {
+        webcamRef.current.video.srcObject = stream;
+      }
+
+      mediaRecorderRef.current = new MediaRecorder(stream, {
         mimeType: "video/webm",
       });
 
@@ -36,8 +60,16 @@ const VideoAssessmentPractice = () => {
       );
 
       mediaRecorderRef.current.start();
+      setCapturing(true);
+      setShowRecordedVideo(false); // Hide recorded video if shown
+    } catch (error) {
+      console.error("Error starting capture:", error);
     }
-  }, [webcamRef, setCapturing, mediaRecorderRef, handleDataAvailable]);
+  }, [webcamRef, mediaRecorderRef, setCapturing, setShowRecordedVideo]);
+
+  const handleStartCaptureClick = useCallback(() => {
+    startCapture();
+  }, [startCapture]);
 
   const handleStopCaptureClick = useCallback(() => {
     if (mediaRecorderRef.current) {
@@ -47,6 +79,15 @@ const VideoAssessmentPractice = () => {
     setCapturing(false);
     setShowRecordedVideo(true); // Show recorded video
   }, [mediaRecorderRef, setCapturing, setShowRecordedVideo]);
+
+  const handleDataAvailable = useCallback(
+    ({ data }: BlobEvent) => {
+      if (data.size > 0) {
+        setRecordedChunks((prev) => prev.concat(data));
+      }
+    },
+    [setRecordedChunks]
+  );
 
   const handleReset = useCallback(() => {
     setRecordedChunks([]);
@@ -70,7 +111,7 @@ const VideoAssessmentPractice = () => {
         sx={{ width: "100%", alignItems: "center" }}
       >
         <Typography variant="h4" textAlign={"center"}>
-          Question: This is the question that the person will be asnwering
+          Question: This is the question that the person will be answering
         </Typography>
         <Stack
           direction={"row"}
