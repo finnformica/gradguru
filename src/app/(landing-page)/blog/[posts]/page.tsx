@@ -1,7 +1,7 @@
 "use client";
 
 import { doc, getDoc } from "firebase/firestore";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { ArrowBack } from "@mui/icons-material";
@@ -41,7 +41,7 @@ const Post = ({ params }: { params: { posts: string } }) => {
       <Button
         sx={{ my: 2, color: "black" }}
         startIcon={<ArrowBack />}
-        onClick={() => router.push("/blogs")}
+        onClick={() => router.back()}
       >
         Back
       </Button>
