@@ -1,15 +1,14 @@
 "use client";
-import _ from "lodash";
 import {
   Card,
   CardActionArea,
   CardContent,
   CardHeader,
-  CardMedia,
   Container,
   Grid,
 } from "@mui/material";
 import { Iconify, PageBreadcrumbs } from "components/global";
+import _ from "lodash";
 import { useRouter } from "next/navigation";
 
 const hireViewTests = [
@@ -52,7 +51,7 @@ const HireViewHome = () => {
                   p: 1,
                 }}
                 onClick={() =>
-                  router.push(`/dashboard/tests/${_.kebabCase(test.label)}`)
+                  router.push(`/dashboard/hireview/${_.kebabCase(test.label)}`)
                 }
               >
                 <CardContent>
