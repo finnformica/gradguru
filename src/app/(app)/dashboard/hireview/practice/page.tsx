@@ -1,8 +1,7 @@
 "use client";
 
 import { Button, Container, Stack, Typography } from "@mui/material";
-import { PageBreadcrumbs } from "components/global";
-import { useCallback, useRef, useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
 const VideoAssessmentPractice = () => {
@@ -96,14 +95,6 @@ const VideoAssessmentPractice = () => {
 
   return (
     <Container maxWidth={"lg"}>
-      <PageBreadcrumbs
-        header={"Video Assessment Practice"}
-        links={[
-          { label: "Dashboard", href: "/dashboard" },
-          { label: "Video Assessment Practice" },
-        ]}
-      />
-
       <Stack
         direction={"column"}
         mt={6}
