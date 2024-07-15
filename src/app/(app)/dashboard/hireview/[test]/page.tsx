@@ -1,5 +1,4 @@
 import { Container, Stack, Typography } from "@mui/material";
-import test from "node:test";
 
 const page = ({ params }: { params: { test: string } }) => {
   console.log(params);
