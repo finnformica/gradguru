@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import _ from "lodash";
 import { useRouter } from "next/navigation";
 import { sortAlphaNumeric } from "utils/user-tests";
 
@@ -58,13 +59,13 @@ const QuestionSelection = ({ params }: { params: { test: string } }) => {
       headerName: "Actions",
       width: 80,
       renderCell: (params) => (
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} sx={{ mx: "auto" }}>
           <Tooltip title="Start Test">
             <IconButton
               size="small"
               onClick={() =>
                 router.push(
-                  `/dashboard/tests/logical-reasoning/${params.row.id}`
+                  `/dashboard/hierview/${_.kebabCase(params.row.name)}`
                 )
               }
             >
