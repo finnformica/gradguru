@@ -1,6 +1,6 @@
 "use client";
 
-import { signInWithRedirect } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import _ from "lodash";
 import Link from "next/link";
 import { enqueueSnackbar } from "notistack";
@@ -48,7 +48,7 @@ const AuthForm = ({
 
   const signInWithProvider = async (provider: any) => {
     try {
-      signInWithRedirect(auth, provider);
+      signInWithPopup(auth, provider);
     } catch (error) {
       enqueueSnackbar("An error occurred while signing in", {
         variant: "error",

@@ -4,7 +4,8 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
+import "./styles.css";
 
 // @ts-ignore
 import ImageResize from "quill-image-resize-module-react";
@@ -29,17 +30,19 @@ Quill.register("modules/imageResize", ImageResize);
 
 const modules = {
   toolbar: [
-    [{ font: [] }],
     [{ size: ["small", false, "large", "huge"] }], // custom dropdown
     ["bold", "italic", "underline"], // toggled buttons
-    ["blockquote", "code-block"],
-    ["link", "image", "formula"],
-
+    ["link", "image"],
     [{ list: "ordered" }, { list: "bullet" }],
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ color: [] }], // dropdown with defaults from theme
+    [
+      { align: "" }, // alignment of just and images
+      { align: "center" },
+      { align: "right" },
+      { align: "justify" },
+    ],
   ],
+  clipboard: { matchVisual: false },
   imageResize: {
     parchment: Quill.import("parchment"),
     modules: ["Resize", "DisplaySize"],
@@ -182,7 +185,14 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
         )}
       />
 
-      <Box>
+      <Box
+        sx={{
+          border: "1px solid rgba(0, 0, 0, 0.87)",
+          borderRadius: 4,
+          zIndex: 1,
+          overflow: "visible",
+        }}
+      >
         <Controller
           name="content"
           control={control}
@@ -191,10 +201,12 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
             fieldState: { error },
           }: any) => (
             <ReactQuill
-              theme="snow"
+              theme="bubble"
+              placeholder="Compose a blog here"
               value={value}
               onChange={onChange}
               modules={modules}
+              bounds={"self"}
             />
           )}
         />
@@ -205,11 +217,7 @@ const CrudBlog = ({ onSubmitBlog, defaultValues }: addBlogProps) => {
           window.scrollTo(0, 0); // scroll to top of page
           setReviewBlog(true);
 
-          // prevent <br> tags from constantly being added
-          setValue(
-            "content",
-            getValues("content").replace(/(<p><br><\/p>)+/g, "<p><br></p>")
-          );
+          setValue("content", getValues("content"));
         }}
       >
         Review
