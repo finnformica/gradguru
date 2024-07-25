@@ -4,27 +4,15 @@ export const pages = [
     route: "/",
   },
   {
-    name: "Blog",
-    route: "/blog",
+    name: "Courses",
+    route: "/courses",
   },
-  // {
-  //   name: "Courses",
-  //   route: "/courses",
-  // },
   {
     name: "Learn More",
     route: "/learn-more",
   },
-  // {
-  //   name: "Practice",
-  //   route: "/practice",
-  // },
-  // {
-  //   name: "Coaching",
-  //   route: "/coaching",
-  // },
-  // {
-  //   name: "Resources",
-  //   route: "/resources",
-  // },
+  {
+    name: "Blog",
+    route: "/blog",
+  },
 ];
