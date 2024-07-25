@@ -1,7 +1,32 @@
-import { Box, Container, Divider, Stack, Typography } from "@mui/material";
+"use client";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Stack,
+  Typography,
+} from "@mui/material";
+
+import { auth } from "lib/firebase/config";
+import { createCheckoutSession } from "lib/stripe/utils";
 
 const CourseSalesPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const [user] = useAuthState(auth);
+
+  if (!user) {
+    return (
+      <Container maxWidth="xl" sx={{ textAlign: "center", pt: 8 }}>
+        <Typography variant="h3" fontSize={48}>
+          Please sign in to access this page
+        </Typography>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="xl" sx={{ textAlign: "center", pt: 8 }}>
@@ -16,6 +41,10 @@ const CourseSalesPage = ({ params }: { params: { id: string } }) => {
       </Stack>
 
       <Divider sx={{ mx: "auto", width: "200px", my: 8 }} />
+
+      <Button onClick={() => createCheckoutSession(user.uid)}>
+        Stripe Checkout
+      </Button>
 
       <Box textAlign="left">
         <h2>Unlock Your Potential and Kickstart Your Career with the Big 4!</h2>

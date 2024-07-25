@@ -19,6 +19,7 @@
     "@mui/material": "^5.13.3",
     "@mui/x-data-grid": "^6.19.3",
     "@mui/x-data-grid-generator": "^6.19.3",
+    "@stripe/stripe-js": "^4.1.0",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "better-react-mathjax": "^2.0.3",
